@@ -15,12 +15,17 @@ class TDE:
             self.fancySources = self._fancySources()
         else:
             self.fancySources = ''
+
+        self.path = self._getpath()
         
     def _fancySources(self):
 
         for s in self.sources:
             print(s)
 
+    def _getpath(self):
+        return '' # for now
+            
     def __str__(self):
         return f'''
         TDE: {self.name}

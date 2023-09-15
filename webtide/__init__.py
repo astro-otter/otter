@@ -22,15 +22,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/')
-    def index():
-        retStr = ''
-        retStr += 'This is the home page.'
-        return retStr
-
     # get the database setup
     from . import db
     db.init_app(app)
+
+    # build the pages
+    from . import catalog
+    app.register_blueprint(catalog.bp)
+    app.add_url_rule('/', endpoint='home')
     
     return app

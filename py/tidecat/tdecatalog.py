@@ -100,6 +100,12 @@ class TDECatalog(Database):
         wrapper on AQLQuery
         '''
 
+    def close(self) -> None:
+        '''
+        closes the database connection
+        '''
+        del self
+    
     def __str__(self):
         ret = ''
         for tde in self.tdes:
