@@ -20,13 +20,13 @@
 	  <th>Source List</th>
 	</tr>
 	
-	{% for item in tdes %}
+	{% for name, tde in tdes.items() %}
           <tr>
-	    <td><a href='./{{ item.path }}'>{{ item.name }}</td>
-	    <td>{{ item.ra }}</td>
-	    <td>{{ item.dec }}</td>
-	    <td>{{ item.z }}</td>
-	    <td>{{ item.sourcesFormatted }}</td>
+	    <td><a href="{{ url_for('catalog.genTDEpages', tdename=name)  }}">{{ name }}</td>
+	    <td>{{ tde.ra }}</td>
+	    <td>{{ tde.dec }}</td>
+	    <td>{{ tde.z }}</td>
+	    <td>{{ tde.sourcesFormatted }}</td>
 	  </tr>
 	{% endfor %}
 

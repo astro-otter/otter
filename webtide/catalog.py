@@ -1,3 +1,4 @@
+
 '''
 The home page
 '''
@@ -12,3 +13,12 @@ bp = Blueprint('catalog', __name__)
 def home():
     database = db.get_db()
     return render_template('index.html', tdes=database.tdes)
+
+@bp.route('/<tdename>')
+def genTDEpages(tdename):
+    '''
+    Generate a tde page from a tde object
+    '''
+    tdes = db.get_db().tdes
+    return render_template('tde.html', tde=tdes[tdename])
+    

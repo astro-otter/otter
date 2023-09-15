@@ -11,8 +11,46 @@
 	}
         </style>
 
-      <!--INSERTINFOHERE-->
-
+      <h1>TDE: {{ tde.name }}</h1>
+      <table>
+	{% if tde.photometry is defined and tde.spectra is defined %}
+	  <tr>
+            <th>Photometry</th>
+            <th>Spectra</th>
+            <th>Information</th>
+          </tr>
+          <tr>
+            <td>{{ tde.plotPhotometry()|safe }}</td>
+            <td>{{ tde.plotSpectra()|safe }}</td>
+            <td><table>{{ tde.__str__(html=True)|safe }}</table></td>
+          </tr>
+	{% elif tde.photometry is defined and tde.spectra is not defined %}
+	  <tr>
+            <th>Photometry</th>
+            <th>Information</th>
+          </tr>
+          <tr>
+            <td>{{ tde.plotPhotometry()|safe }}</td>
+            <td><table>{{ tde.__str__(html=True)|safe }}</table></td>
+          </tr>  
+	{% elif tde.photometry is not defined and tde.spectra is defined %}
+  	  <tr>
+            <th>Spectra</th>
+            <th>Information</th>
+          </tr>
+          <tr>
+            <td>{{ tde.plotSpectra()|safe }}</td>
+            <td><table>{{ tde.__str__(html=True)|safe }}</table></td>
+          </tr>
+	{% else %}
+          <tr>
+            <th>Information</th>
+          </tr>
+          <tr>
+            <td><table>{{ tde.__str__(html=True)|safe }}</table></td>
+          </tr>
+	{% endif %}
+	</table>
     </center>
   </body>
 </html>
