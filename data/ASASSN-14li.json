@@ -1,0 +1,68 @@
+
+    [
+        {
+        "name": "ASASSN-14li",
+        "ra": [
+        {
+          "value": "12 48 15.2253"
+        }
+        ],
+        "dec": [
+        {
+            "value": "+17 46 26.475"
+        }
+        ],
+    	"z": [ { "value": "0.0206"  } ], 
+	"nu_GHz": [ { "value": "5.0"  } ], 
+	"aliases": [ { "value": "ASASSN-14li"  } ], 
+	"upperlimit": [ { "value": "False"  } ], 
+	"photometry": [
+        {
+                "t_MJD":null,
+                "t_disc":null,
+                "dt_days":141.871,
+                "dt_years":0.3886876712,
+                "F_mJy":1.91,
+                "luminosity":8.895796627e+37,
+                "time":141.871
+        },
+        {
+                "t_MJD":null,
+                "t_disc":null,
+                "dt_days":207.83,
+                "dt_years":0.5693972603,
+                "F_mJy":1.7417,
+                "luminosity":8.111941877e+37,
+                "time":207.83
+        },
+        {
+                "t_MJD":null,
+                "t_disc":null,
+                "dt_days":246.75,
+                "dt_years":0.6760273973,
+                "F_mJy":1.562,
+                "luminosity":7.274991796e+37,
+                "time":246.75
+        },
+        {
+                "t_MJD":null,
+                "t_disc":null,
+                "dt_days":303.5145833,
+                "dt_years":0.8315468036,
+                "F_mJy":1.2565,
+                "luminosity":5.852130084e+37,
+                "time":303.5145833
+        },
+        {
+                "t_MJD":null,
+                "t_disc":null,
+                "dt_days":379.7,
+                "dt_years":1.0402739726,
+                "F_mJy":0.873150048,
+                "luminosity":4.066683378e+37,
+                "time":379.7
+        }
+]
+        }
+    ]
+    

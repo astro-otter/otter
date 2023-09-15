@@ -1,0 +1,41 @@
+
+    [
+        {
+        "name": "Sw J2058+05",
+        "ra": [
+        {
+          "value": ""
+        }
+        ],
+        "dec": [
+        {
+            "value": ""
+        }
+        ],
+    	"t_disc": [ { "value": "55698.0"  } ], 
+	"z": [ { "value": "1.1853"  } ], 
+	"aliases": [ { "value": "Sw J2058+05"  } ], 
+	"upperlimit": [ { "value": "False"  } ], 
+	"photometry": [
+        {
+                "t_MJD":55741.0,
+                "dt_days":43.0,
+                "dt_years":0.1178082192,
+                "nu_GHz":4.5,
+                "F_mJy":0.88,
+                "luminosity":1.221233722e+41,
+                "time":43.0
+        },
+        {
+                "t_MJD":57522.0,
+                "dt_days":1824.0,
+                "dt_years":4.997260274,
+                "nu_GHz":5.5,
+                "F_mJy":0.225,
+                "luminosity":3.816355382e+40,
+                "time":1824.0
+        }
+]
+        }
+    ]
+    

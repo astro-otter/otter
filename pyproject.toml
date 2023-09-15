@@ -1,0 +1,42 @@
+[build-system]
+requires = ['setuptools>=42']
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tidecat"
+authors = [{name = "Noah Franz", email = "nfranz@arizona.edu"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+dynamic = ["version"]
+
+requires-python = ">=3.9"
+
+classifiers = [
+  "License :: OSI Approved :: BSD License",
+  "Topic :: Scientific/Engineering",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Development Status :: 1 - Planning"
+]
+
+dependencies = [
+  "numpy>=1.13.3",
+  "pyArango",
+  "flask"
+  ]
+
+[project.urls]
+Home = "https://github.com/noahfranz13/tide"
+
+[tool.setuptools.packages.find]
+where = ['py']
+
+[tool.setuptools.dynamic]
+version = {attr = 'tidecat._version.__version__'}

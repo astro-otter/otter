@@ -1,0 +1,38 @@
+<html>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <body>
+    <center>
+      <h1>TDE Catalog</h1>
+      <style type="text/css">
+	table, td, th {
+	    padding: 5px;
+	    text-align: center;
+	    border: 1px solid black;
+	}	
+      </style>
+
+      <table>
+	<tr>
+	  <th>TDE Name</th>
+	  <th>RA</th>
+	  <th>Dec</th>
+	  <th>Z</th>
+	  <th>Source List</th>
+	</tr>
+	
+	{% for item in tdes %}
+          <tr>
+	    <td><a href='./{{ item.path }}'>{{ item.name }}</td>
+	    <td>{{ item.ra }}</td>
+	    <td>{{ item.dec }}</td>
+	    <td>{{ item.z }}</td>
+	    <td>{{ item.sourcesFormatted }}</td>
+	  </tr>
+	{% endfor %}
+
+      </table>
+	
+    </center>
+  </body>
+</html>
+
