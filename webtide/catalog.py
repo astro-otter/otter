@@ -1,18 +1,27 @@
-
 '''
-The home page
+The catalog pages
 '''
-
-from flask import render_template, Blueprint
+from tidecat import TDECatalog
+from flask import render_template, Blueprint, request
+from . import plotSummary
 from . import db
 
 bp = Blueprint('catalog', __name__)
 
 # a simple page that says hello
-@bp.route('/')
+@bp.route('/', methods=['GET', 'POST'])
 def home():
-    database = db.get_db()
-    return render_template('index.html', tdes=database.tdes)
+
+    if request.method == 'POST':
+        # here we can query the database differently
+        tdename = request.form['tdename']
+        catalog = TDECatalog()
+        tdes = {tdename: catalog.tdes[tdename]}
+    else:
+        tdes = db.get_db().tdes
+
+    plotHTML = plotSummary.plotAll(tdes)
+    return render_template('index.html', tdes=tdes, otherHTML=plotHTML)
 
 @bp.route('/<tdename>')
 def genTDEpages(tdename):
@@ -21,4 +30,3 @@ def genTDEpages(tdename):
     '''
     tdes = db.get_db().tdes
     return render_template('tde.html', tde=tdes[tdename])
-    
