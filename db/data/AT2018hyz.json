@@ -14,6 +14,9 @@
         ],
     	"z": [ { "value": "0.0457"  } ], 
 	"aliases": [ { "value": "AT2018hyz"  } ], 
+	"sources": [ { "name": "Cendes et al. (2022)",
+		       "bibcode": "2022ApJ...938...28C",
+		       "alias": "1" }],
 	"photometry": [
         {
                 "t_MJD":null,
@@ -24,7 +27,8 @@
                 "F_mJy":0.085,
                 "luminosity":6.039904298e+37,
                 "time":32.0,
-                "upperlimit":true
+                "upperlimit":true,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -35,7 +39,8 @@
                 "F_mJy":0.9,
                 "luminosity":3.713337747e+37,
                 "time":697.0,
-                "upperlimit":true
+                "upperlimit":true,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -46,7 +51,8 @@
                 "F_mJy":0.45,
                 "luminosity":6.188896245e+37,
                 "time":705.0,
-                "upperlimit":true
+                "upperlimit":true,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -57,7 +63,8 @@
                 "F_mJy":1.388,
                 "luminosity":3.181551107e+38,
                 "time":972.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -68,7 +75,8 @@
                 "F_mJy":2.939,
                 "luminosity":6.736728172e+38,
                 "time":1126.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -79,7 +87,8 @@
                 "F_mJy":4.381,
                 "luminosity":1.00420572e+39,
                 "time":1199.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -90,7 +99,8 @@
                 "F_mJy":4.807,
                 "luminosity":1.10185275e+39,
                 "time":1251.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -101,7 +111,8 @@
                 "F_mJy":7.837,
                 "luminosity":1.976022884e+39,
                 "time":1296.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         }
 ]
         }

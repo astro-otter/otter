@@ -17,6 +17,9 @@
 	"nu_GHz": [ { "value": "8.4"  } ], 
 	"aliases": [ { "value": "ARP 299-B AT1"  } ], 
 	"upperlimit": [ { "value": "False"  } ], 
+	"sources": [ { "name": "Mattila et al. (2018)",
+		       "bibcode": "2018Sci...361..482M",
+		       "alias": "1" } ],
 	"photometry": [
         {
                 "t_MJD":53568.5,
@@ -24,15 +27,17 @@
                 "dt_years":0.4589041096,
                 "F_mJy":1.15,
                 "luminosity":2.29831236e+37,
-                "time":167.5
+                "time":167.5,
+	        "source":"1"
         },
         {
-                "t_MJD":53840.5,
-                "dt_days":null,
-                "dt_years":1.204109589,
-                "F_mJy":7.67,
-                "luminosity":1.532874418e+38,
-                "time":439.5
+               "t_MJD":53840.5,
+               "dt_days":null,
+               "dt_years":1.204109589,
+               "F_mJy":7.67,
+               "luminosity":1.532874418e+38,
+               "time":439.5,
+	       "source":"1"
         },
         {
                 "t_MJD":56074.5,
@@ -40,7 +45,8 @@
                 "dt_years":7.3246575342,
                 "F_mJy":1.557,
                 "luminosity":3.111715082e+37,
-                "time":2673.5
+                "time":2673.5,
+	        "source":"1"
         },
         {
                 "t_MJD":56358.5,
@@ -48,7 +54,8 @@
                 "dt_years":8.102739726,
                 "F_mJy":2.416,
                 "luminosity":4.828454489e+37,
-                "time":2957.5
+                "time":2957.5,
+	        "source":"1"
         },
         {
                 "t_MJD":56452.5,
@@ -56,15 +63,17 @@
                 "dt_years":8.3602739726,
                 "F_mJy":0.77,
                 "luminosity":1.538870015e+37,
-                "time":3051.5
-        },
+                "time":3051.5,
+	        "source":"1"
+	},
         {
                 "t_MJD":56601.5,
                 "dt_days":null,
                 "dt_years":8.7684931507,
                 "F_mJy":1.349,
                 "luminosity":2.696020325e+37,
-                "time":3200.5
+                "time":3200.5,
+	        "source":"1"
         },
         {
                 "t_MJD":57176.5,
@@ -72,7 +81,8 @@
                 "dt_years":10.3438356164,
                 "F_mJy":0.878,
                 "luminosity":1.754711524e+37,
-                "time":3775.5
+                "time":3775.5,
+	        "source":"1"
         },
         {
                 "t_MJD":57605.5,
@@ -80,7 +90,8 @@
                 "dt_years":11.5191780822,
                 "F_mJy":0.562,
                 "luminosity":1.123175258e+37,
-                "time":4204.5
+                "time":4204.5,
+	        "source":"1"
         }
 ]
         }

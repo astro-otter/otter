@@ -16,6 +16,11 @@
   <body>
 
     <style type="text/css">
+      header {
+	  background-color: black;
+	  color: white;
+      }
+
       table {
 	  padding: 10px;
 	  text-align: center;
@@ -32,6 +37,7 @@
       td {
 	    padding: 5px;
 	    text-align: center;
+	    border-bottom: 1px solid #bebebebe;
       }
 
       tr:hover {
@@ -39,13 +45,27 @@
       }      
     </style>
 
-    <!-- Header -->
-    <header class="w3-container w3-theme w3-padding" id="myHeader">
-      <div class="w3-center">
-	<h1 class="w3-xxxlarge">The New Open TDE Catalog</h1>
+    <!-- Navbar -->
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-card w3-left-align w3-large">
+	<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-grey w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+	<a href="{{ url_for('catalog.home') }}" class="w3-bar-item w3-button w3-padding-large w3-white">Catalog Home</a>
+	<a href="https://github.com/noahfranz13/tide" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large">API</a>
       </div>
-    </header>
+      
+      <!-- Navbar on small screens -->
+      <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+	<a href="https://github.com/noahfranz13/tide" target="_blank" class="w3-bar-item w3-button w3-padding-large">API</a>
+      </div>
+    </div>
 
+    
+    <!-- Header -->
+    <header class="w3-container w3-center" style="padding: 64px 16px">
+      <h1 class="w3-margin w3-jumbo">TiDE Catalog</h1>
+      <p class="w3-xlarge">The New Tidal Disruption Event Catalog</p>
+    </header>
+    
     <!-- Search Function for the Catalog -->
     <div class="w3-center">
       <h2>Search TDE's</h2>
@@ -78,7 +98,7 @@
 		<td>{{ tde.ra }}</td>
 		<td>{{ tde.dec }}</td>
 		<td>{{ tde.z }}</td>
-		<td>{{ tde.sourcesFormatted }}</td>
+		<td>{{ tde.fancySources|safe }}</td>
 	      </tr>
 	    {% endfor %}
 	  </table>
@@ -86,7 +106,8 @@
       </div>
       <div class="w3-half w3-container w3-center">
 	<div class="w3-center">
-	    <h2>Catalog Summary</h2>
+	  <h2>Catalog Summary</h2>
+	  <h3>Number of TDEs: {{ tdes.values()|length }}</h3>
 	</div>
 	{{ otherHTML|safe }}
       </div>

@@ -29,8 +29,11 @@ class TDE:
         
     def _fancySources(self):
 
+        html = ''
         for s in self.sources:
-            print(s)
+            html += f"<a href='https://ui.adsabs.harvard.edu/abs/{s['bibcode']}' target='_blank'>{s['name']}</a><br>"
+
+        return html
 
     def _getpath(self):
         return '' # for now

@@ -15,6 +15,15 @@
     	"z": [ { "value": "0.00411"  } ], 
 	"aliases": [ { "value": "IGR J12580+0134"  } ], 
 	"upperlimit": [ { "value": "False"  } ], 
+	"sources": [ { "name": "Irwin et al. (2015)",
+		       "bibcode": "2015ApJ...809..172I",
+		       "alias": "1" },
+		     { "name": "Yuan et al. (2016)",
+		       "bibcode": "2016MNRAS.461.3375Y",
+		       "alias": "2" },
+		     { "name": "Perlman et al. (2017)",
+		       "bibcode": "2017ApJ...842..126P",
+		       "alias": "3"} ],
 	"photometry": [
         {
                 "t_MJD":null,
@@ -24,7 +33,8 @@
                 "nu_GHz":6.0,
                 "F_mJy":432.0,
                 "luminosity":9.610935756e+38,
-                "time":422.0
+                "time":422.0,
+	        "source": "3"
         },
         {
                 "t_MJD":null,
@@ -34,7 +44,8 @@
                 "nu_GHz":6.0,
                 "F_mJy":362.0,
                 "luminosity":8.053608203e+38,
-                "time":489.0
+                "time":489.0,
+	        "source": "3"
         },
         {
                 "t_MJD":null,
@@ -44,7 +55,8 @@
                 "nu_GHz":5.5,
                 "F_mJy":36.32,
                 "luminosity":7.406946477e+37,
-                "time":1704.0
+                "time":1704.0,
+	        "source": "3"
         },
         {
                 "t_MJD":null,
@@ -54,7 +66,8 @@
                 "nu_GHz":6.0,
                 "F_mJy":33.6,
                 "luminosity":7.475172255e+37,
-                "time":1739.0
+                "time":1739.0,
+	        "source": "3"
         },
         {
                 "t_MJD":null,
@@ -64,7 +77,8 @@
                 "nu_GHz":6.0,
                 "F_mJy":27.0,
                 "luminosity":6.006834848e+37,
-                "time":1971.0
+                "time":1971.0,
+	        "source": "3"
         },
         {
                 "t_MJD":null,
@@ -74,7 +88,8 @@
                 "nu_GHz":6.0,
                 "F_mJy":61.0,
                 "luminosity":1.357099725e+38,
-                "time":2037.0
+                "time":2037.0,
+	        "source": "3"
         }
 ]
         }

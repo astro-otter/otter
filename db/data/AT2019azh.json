@@ -15,6 +15,9 @@
     	"z": [ { "value": "0.022"  } ], 
 	"aliases": [ { "value": "AT2019azh"  } ], 
 	"upperlimit": [ { "value": "False"  } ], 
+	"sources": [ {"name": "Goodwin et al. (2022)",
+	   	      "bibcode": "2022MNRAS.511.5328G",
+		      "alias": "1" }],
 	"photometry": [
         {
                 "t_MJD":null,
@@ -24,7 +27,8 @@
                 "nu_GHz":5.511,
                 "F_mJy":0.383,
                 "luminosity":2.242443864e+37,
-                "time":65.09306
+                "time":65.09306,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -34,7 +38,8 @@
                 "nu_GHz":5.5,
                 "F_mJy":0.375,
                 "luminosity":2.191221862e+37,
-                "time":93.86042
+                "time":93.86042,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -44,7 +49,8 @@
                 "nu_GHz":5.51,
                 "F_mJy":0.401,
                 "luminosity":2.347406844e+37,
-                "time":101.99375
+                "time":101.99375,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -54,7 +60,8 @@
                 "nu_GHz":5.511,
                 "F_mJy":0.522,
                 "luminosity":3.056281193e+37,
-                "time":131.98611
+                "time":131.98611,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -64,7 +71,8 @@
                 "nu_GHz":5.511,
                 "F_mJy":0.707,
                 "luminosity":4.139445984e+37,
-                "time":182.79583
+                "time":182.79583,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -74,7 +82,8 @@
                 "nu_GHz":5.511,
                 "F_mJy":1.55,
                 "luminosity":9.075164462e+37,
-                "time":458.92986
+                "time":458.92986,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -84,7 +93,8 @@
                 "nu_GHz":5.511,
                 "F_mJy":2.163,
                 "luminosity":1.266424563e+38,
-                "time":666.33
+                "time":666.33,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -94,7 +104,8 @@
                 "nu_GHz":5.512,
                 "F_mJy":1.505,
                 "luminosity":8.813290873e+37,
-                "time":749.294
+                "time":749.294,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -104,7 +115,8 @@
                 "nu_GHz":5.51,
                 "F_mJy":1.035,
                 "luminosity":6.058768288e+37,
-                "time":848.83472
+                "time":848.83472,
+	        "source": "1"
         }
 ]
         }

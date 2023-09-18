@@ -14,6 +14,9 @@
         ],
     	"z": [ { "value": "0.0484"  } ], 
 	"aliases": [ { "value": "ASASSN-15oi"  } ], 
+	"sources": [ { "name": "Horesh et al. (2021)",
+		       "bibcode": "2021NatAs...5..491H",
+		       "alias": "1" } ],
 	"photometry": [
         {
                 "t_MJD":null,
@@ -24,7 +27,8 @@
                 "F_mJy":0.033,
                 "luminosity":1.035098148e+37,
                 "time":8.0,
-                "upperlimit":true
+                "upperlimit":true,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -35,7 +39,8 @@
                 "F_mJy":0.036,
                 "luminosity":1.129197979e+37,
                 "time":23.0,
-                "upperlimit":true
+                "upperlimit":true,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -46,7 +51,8 @@
                 "F_mJy":0.06,
                 "luminosity":1.881996632e+37,
                 "time":90.0,
-                "upperlimit":true
+                "upperlimit":true,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -57,7 +63,8 @@
                 "F_mJy":1.114,
                 "luminosity":2.749566228e+38,
                 "time":182.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -68,7 +75,8 @@
                 "F_mJy":0.899,
                 "luminosity":2.218904882e+38,
                 "time":190.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -79,7 +87,8 @@
                 "F_mJy":0.881,
                 "luminosity":2.491588711e+38,
                 "time":197.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -90,7 +99,8 @@
                 "F_mJy":0.824,
                 "luminosity":2.330384901e+38,
                 "time":233.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -101,7 +111,8 @@
                 "F_mJy":0.854,
                 "luminosity":2.195662738e+38,
                 "time":283.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -112,7 +123,8 @@
                 "F_mJy":0.617,
                 "luminosity":1.586327763e+38,
                 "time":369.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -123,7 +135,8 @@
                 "F_mJy":0.262,
                 "luminosity":6.736108165e+37,
                 "time":576.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         },
         {
                 "t_MJD":null,
@@ -134,7 +147,8 @@
                 "F_mJy":8.0,
                 "luminosity":1.234096152e+39,
                 "time":1417.0,
-                "upperlimit":false
+                "upperlimit":false,
+	        "source": "1"
         }
 ]
         }

@@ -16,6 +16,18 @@
 	"nu_GHz": [ { "value": "5.0"  } ], 
 	"aliases": [ { "value": "ASASSN-14li"  } ], 
 	"upperlimit": [ { "value": "False"  } ], 
+	"sources": [ { "name": "Alexander et al. (2016)",
+		       "bibcode": "2016ApJ...819L..25A",
+		       "alias": "1"},
+		     { "name": "van Velzen et al. (2016)",
+		       "bibcode": "2016Sci...351...62V",
+		       "alias": "2"},
+		     { "name": "Romero-Canizales et al. (2016)",
+		       "bibcode": "2016ApJ...832L..10R",
+		       "alias": "3"},
+		     { "name": "Bright et al. (2018)",
+		       "bibcode": "2018MNRAS.475.4011B",
+		       "alias": "4"} ],
 	"photometry": [
         {
                 "t_MJD":null,
@@ -24,7 +36,8 @@
                 "dt_years":0.3886876712,
                 "F_mJy":1.91,
                 "luminosity":8.895796627e+37,
-                "time":141.871
+                "time":141.871,
+	        "source": "unknown"
         },
         {
                 "t_MJD":null,
@@ -33,7 +46,8 @@
                 "dt_years":0.5693972603,
                 "F_mJy":1.7417,
                 "luminosity":8.111941877e+37,
-                "time":207.83
+                "time":207.83,
+	        "source": "unknown"
         },
         {
                 "t_MJD":null,
@@ -42,7 +56,8 @@
                 "dt_years":0.6760273973,
                 "F_mJy":1.562,
                 "luminosity":7.274991796e+37,
-                "time":246.75
+                "time":246.75,
+	        "source": "unknown"
         },
         {
                 "t_MJD":null,
@@ -51,7 +66,8 @@
                 "dt_years":0.8315468036,
                 "F_mJy":1.2565,
                 "luminosity":5.852130084e+37,
-                "time":303.5145833
+                "time":303.5145833,
+	        "source": "unknown"
         },
         {
                 "t_MJD":null,
@@ -60,7 +76,8 @@
                 "dt_years":1.0402739726,
                 "F_mJy":0.873150048,
                 "luminosity":4.066683378e+37,
-                "time":379.7
+                "time":379.7,
+	        "source": "unknown"
         }
 ]
         }

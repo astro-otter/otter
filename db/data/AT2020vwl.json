@@ -15,6 +15,9 @@
     	"z": [ { "value": "0.0325"  } ], 
 	"aliases": [ { "value": "AT2020vwl"  } ], 
 	"upperlimit": [ { "value": "False"  } ], 
+	"sources": [ { "name": "Goodwin et al. (2023)",
+		       "bibcode": "2023MNRAS.522.5084G",
+		       "alias": "1" } ],
 	"photometry": [
         {
                 "t_MJD":null,
@@ -24,7 +27,8 @@
                 "nu_GHz":5.5,
                 "F_mJy":0.543,
                 "luminosity":6.924306356e+37,
-                "time":120.0
+                "time":120.0,
+	        "source":"1"
         },
         {
                 "t_MJD":null,
@@ -34,7 +38,8 @@
                 "nu_GHz":5.5,
                 "F_mJy":0.504,
                 "luminosity":6.426980485e+37,
-                "time":209.0
+                "time":209.0,
+	        "source":"1"
         },
         {
                 "t_MJD":null,
@@ -44,7 +49,8 @@
                 "nu_GHz":5.5,
                 "F_mJy":0.284,
                 "luminosity":3.621552495e+37,
-                "time":305.0
+                "time":305.0,
+	        "source":"1"
         },
         {
                 "t_MJD":null,
@@ -54,7 +60,8 @@
                 "nu_GHz":5.6,
                 "F_mJy":0.156,
                 "luminosity":2.025472638e+37,
-                "time":373.0
+                "time":373.0,
+	        "source":"1"
         },
         {
                 "t_MJD":null,
@@ -64,7 +71,8 @@
                 "nu_GHz":5.0,
                 "F_mJy":0.145,
                 "luminosity":1.680938258e+37,
-                "time":430.0
+                "time":430.0,
+	        "source":"1"
         },
         {
                 "t_MJD":null,
@@ -74,7 +82,8 @@
                 "nu_GHz":5.5,
                 "F_mJy":0.179,
                 "luminosity":2.282598228e+37,
-                "time":575.0
+                "time":575.0,
+	        "source":"1"
         }
 ]
         }

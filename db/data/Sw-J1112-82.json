@@ -17,6 +17,9 @@
 	"nu_GHz": [ { "value": "5.5"  } ], 
 	"aliases": [ { "value": "Sw J1112-82"  } ], 
 	"upperlimit": [ { "value": "False"  } ], 
+	"sources": [ { "name": "Brown et al. (2017)",
+		       "bibcode": "2017MNRAS.472.4469B",
+		       "alias": "1" } ],
 	"photometry": [
         {
                 "t_MJD":57052.0,
@@ -24,7 +27,8 @@
                 "dt_years":3.6232876712,
                 "F_mJy":0.076,
                 "luminosity":7.267806037e+39,
-                "time":1322.5
+                "time":1322.5,
+	        "source": "1"
         },
         {
                 "t_MJD":57521.5,
@@ -32,7 +36,8 @@
                 "dt_years":4.9095890411,
                 "F_mJy":0.07,
                 "luminosity":6.694031876e+39,
-                "time":1792.0
+                "time":1792.0,
+	        "source": "1"
         }
 ]
         }

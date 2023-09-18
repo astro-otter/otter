@@ -15,6 +15,13 @@
     	"z": [ { "value": "0.051"  } ], 
 	"aliases": [ { "value": "AT2019dsg"  } ], 
 	"upperlimit": [ { "value": "False"  } ], 
+	"sources": [ {"name": "Stein et al. (2021)",
+	              "bibcode": "2021NatAs...5..510S",
+		      "alias": "1" },
+		     {"name": "Cendes et al. (2021)",
+		      "bibcode": "2021ApJ...919..127C",
+		      "alias": "2" }
+		   ],	 
 	"photometry": [
         {
                 "t_MJD":null,
@@ -24,7 +31,8 @@
                 "nu_GHz":5.0,
                 "F_mJy":0.09,
                 "luminosity":2.569211748e+37,
-                "time":55.0
+                "time":55.0,
+	        "source": "2"
         },
         {
                 "t_MJD":null,
@@ -34,7 +42,8 @@
                 "nu_GHz":5.0,
                 "F_mJy":0.26,
                 "luminosity":7.422167273e+37,
-                "time":82.0
+                "time":82.0,
+	        "source": "2"
         },
         {
                 "t_MJD":null,
@@ -44,7 +53,8 @@
                 "nu_GHz":5.0,
                 "F_mJy":0.56,
                 "luminosity":1.598620643e+38,
-                "time":161.0
+                "time":161.0,
+	        "source": "2"
         },
         {
                 "t_MJD":null,
@@ -54,7 +64,8 @@
                 "nu_GHz":5.0,
                 "F_mJy":0.79,
                 "luminosity":2.255196979e+38,
-                "time":300.0
+                "time":300.0,
+	        "source": "2"
         },
         {
                 "t_MJD":null,
@@ -64,7 +75,8 @@
                 "nu_GHz":6.0,
                 "F_mJy":0.13,
                 "luminosity":4.453300364e+37,
-                "time":561.0
+                "time":561.0,
+	        "source": "2"
         }
 ]
         }
