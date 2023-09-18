@@ -1,0 +1,166 @@
+[{
+    "name": "ASASSN-15oi",
+    "ra": [
+        {
+            "value": "20 39 09.096"
+        }
+    ],
+    "dec": [
+        {
+            "value": "-30 45 20.71"
+        }
+    ],
+    "z": [
+        {
+            "value": "0.0484"
+        }
+    ],
+    "aliases": [
+        {
+            "value": "ASASSN-15oi"
+        }
+    ],
+    "sources": [
+        {
+            "name": "Horesh et al. (2021)",
+            "bibcode": "2021NatAs...5..491H",
+            "alias": "1"
+        }
+    ],
+    "photometry": {
+        "radio": [
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 8.0,
+                "dt_years": 0.0219178082,
+                "nu_GHz": 6.1,
+                "F_mJy": 0.033,
+                "luminosity": 1.035098148e+37,
+                "time": 8.0,
+                "upperlimit": true,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 23.0,
+                "dt_years": 0.0630136986,
+                "nu_GHz": 6.1,
+                "F_mJy": 0.036,
+                "luminosity": 1.129197979e+37,
+                "time": 23.0,
+                "upperlimit": true,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 90.0,
+                "dt_years": 0.2465753425,
+                "nu_GHz": 6.1,
+                "F_mJy": 0.06,
+                "luminosity": 1.881996632e+37,
+                "time": 90.0,
+                "upperlimit": true,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 182.0,
+                "dt_years": 0.498630137,
+                "nu_GHz": 4.8,
+                "F_mJy": 1.114,
+                "luminosity": 2.749566228e+38,
+                "time": 182.0,
+                "upperlimit": false,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 190.0,
+                "dt_years": 0.5205479452,
+                "nu_GHz": 4.8,
+                "F_mJy": 0.899,
+                "luminosity": 2.218904882e+38,
+                "time": 190.0,
+                "upperlimit": false,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 197.0,
+                "dt_years": 0.5397260274,
+                "nu_GHz": 5.5,
+                "F_mJy": 0.881,
+                "luminosity": 2.491588711e+38,
+                "time": 197.0,
+                "upperlimit": false,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 233.0,
+                "dt_years": 0.6383561644,
+                "nu_GHz": 5.5,
+                "F_mJy": 0.824,
+                "luminosity": 2.330384901e+38,
+                "time": 233.0,
+                "upperlimit": false,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 283.0,
+                "dt_years": 0.7753424658,
+                "nu_GHz": 5.0,
+                "F_mJy": 0.854,
+                "luminosity": 2.195662738e+38,
+                "time": 283.0,
+                "upperlimit": false,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 369.0,
+                "dt_years": 1.0109589041,
+                "nu_GHz": 5.0,
+                "F_mJy": 0.617,
+                "luminosity": 1.586327763e+38,
+                "time": 369.0,
+                "upperlimit": false,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 576.0,
+                "dt_years": 1.5780821918,
+                "nu_GHz": 5.0,
+                "F_mJy": 0.262,
+                "luminosity": 6.736108165e+37,
+                "time": 576.0,
+                "upperlimit": false,
+                "source": "1"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 1417.0,
+                "dt_years": 3.8821917808,
+                "nu_GHz": 3.0,
+                "F_mJy": 8.0,
+                "luminosity": 1.234096152e+39,
+                "time": 1417.0,
+                "upperlimit": false,
+                "source": "1"
+            }
+        ]
+    }
+}]

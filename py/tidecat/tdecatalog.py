@@ -1,4 +1,3 @@
-
 '''
 Class for to make queries in the catalog
 '''
@@ -36,8 +35,7 @@ class TDECatalog(Database):
         
         Returns: names, sources, ra, dec, z
         '''
-        names = [tde['name'] for tde in self.rawData]
-        
+        names = [tde['name'] for tde in self.rawData]        
             
         tdes = {}
         sourceWarningThrown = False
@@ -96,9 +94,7 @@ class TDECatalog(Database):
             try:
                 spec = tde['spectra']
             except KeyError as err:
-                spec = None
-
-            
+                spec = None            
                     
             thisTDE = TDE(name, ra, dec, z, sources, photometry=photo, spectra=spec)
             tdes[thisTDE.name] = thisTDE

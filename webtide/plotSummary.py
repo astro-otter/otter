@@ -22,18 +22,22 @@ def skymap(fig, tdes):
                     row=1, col=1
                     )
     
-    info = {'RA [deg]':[], 'Dec [deg]':[], 'TDE Name':[] }
+    info = {'RA [deg]':[],
+            'Dec [deg]':[],
+            'TDE Name':[],
+            'Z': []
+            }
 
     for t in tdes.values():
         if t.ra is not None and t.dec is not None and len(t.ra) > 0 and len(t.dec) > 0:
             info['RA [deg]'].append(t.ra)
             info['Dec [deg]'].append(t.dec)
             info['TDE Name'].append(t.name)
+            info['Z'].append(float(t.z))
             
     info['RA [deg]'] = coord.Angle(info['RA [deg]'], unit=u.hourangle)
     info['Dec [deg]'] = coord.Angle(info['Dec [deg]'], unit=u.deg)
-    #info['RA [deg]'] = info['RA [deg]'].wrap_at(180*u.deg)
-
+    
     info['RA [deg]'] = info['RA [deg]'].deg
     info['Dec [deg]'] = info['Dec [deg]'].deg
     
@@ -58,7 +62,11 @@ def skymap(fig, tdes):
                                 hovertext=info['TDE Name'],
                                 hovertemplate="TDE Name: %{hovertext}\nRA: %{lon}\nDec: %{lat}", 
                                 name='Coordinates',
-                                marker={"color": "red"}
+                                marker=dict(color=info['Z'],
+                                            autocolorscale=True,
+                                            colorbar=dict(thickness=20),
+                                            colorscale="magma"
+                                            )
                                 ),
                   row=1, col=1)
         

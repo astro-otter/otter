@@ -1,4 +1,3 @@
-
     [
         {
         "name": "AT2022cmc",
@@ -16,8 +15,8 @@
 	"nu_GHz": [ { "value": "8.5"  } ], 
 	"aliases": [ { "value": "AT2022cmc"  } ], 
 	"upperlimit": [ { "value": "False"  } ], 
-	"sources": [ { "name": "" ,
-		       "bibcode": "",
+	"sources": [ { "name": "Igor et al. (2022)" ,
+		       "bibcode": "2022Natur.612..430A",
 		       "alias": "1" } ],
 	"photometry": [
         {

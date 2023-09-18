@@ -7,16 +7,33 @@
     <center>
       <style type="text/css">
 
-	table, td, th {
-	    padding: 5px;
-	    text-align: center;
-	    border: none;
-	}
-
 	header {
 	  background-color: black;
 	  color: white;
 	}
+
+	table {
+	  padding: 10px;
+	  text-align: center;
+	  border-collapse: collapse;
+	  width: 100%;
+      }
+	
+	th {
+	    padding: 5px;
+	    text-align: center;
+	    border-bottom: 3px solid black;
+	}
+	
+	td {
+	    padding: 5px;
+	    text-align: center;
+	    border-bottom: 1px solid #bebebebe;
+	}
+
+	tr:hover {
+	    background-color:#bebebebe;
+	}      
 	
         </style>
 
@@ -40,43 +57,51 @@
 	<p class="w3-xlarge">TiDE Catalog Data for {{ tde.name }}</p>
       </header>
       
-      <table>
+      <div class="w3-container w3-center">
 	{% if tde.photometry is defined and tde.spectra is defined %}
-	  <tr>
-            <th>Photometry</th>
-            <th>Spectra</th>
-            <th>Information</th>
-          </tr>
-          <tr>
-            <td>{{ tde.plotPhotometry()|safe }}</td>
-            <td>{{ tde.plotSpectra()|safe }}</td>
-            <td><table>{{ tde.__str__(html=True)|safe }}</table></td>
-          </tr>
+	  <div class="w3-container w3-third w3-center">
+	    <center>
+	      <h3>Photometry</h3>
+	      {{ tde.plotPhotometry()|safe }}
+	    </center>
+	  </div>
+	  <div class="w3-container w3-third w3-center">
+	    <center>
+	      <h3>Spectra</h3>
+	      {{ tde.plotSpectra()|safe }}
+	    </center>
+	  </div>
+	  <div class="w3-container w3-third w3-center">
+            <h3>Information</h3>
+	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__(html=True)|safe }}</table>
+          </div>
 	{% elif tde.photometry is defined and tde.spectra is not defined %}
-	  <tr>
-            <th>Photometry</th>
-            <th>Information</th>
-          </tr>
-          <tr>
-            <td>{{ tde.plotPhotometry()|safe }}</td>
-            <td><table>{{ tde.__str__(html=True)|safe }}</table></td>
-          </tr>  
+	  <div class="w3-container w3-half w3-center">
+	    <center>
+	      <h3>Photometry</h3>
+	      {{ tde.plotPhotometry()|safe }}
+	    </center>
+	  </div>
+	  <div class="w3-container w3-half w3-center">
+            <h3>Information</h3>
+	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__(html=True)|safe }}</table>
+          </div>
 	{% elif tde.photometry is not defined and tde.spectra is defined %}
-  	  <tr>
-            <th>Spectra</th>
-            <th>Information</th>
-          </tr>
-          <tr>
-            <td>{{ tde.plotSpectra()|safe }}</td>
-            <td><table>{{ tde.__str__(html=True)|safe }}</table></td>
-          </tr>
+	  <div class="w3-container w3-half w3-center">
+	    <center>
+	      <h3>Spectra</h3>
+	      {{ tde.plotSpectra()|safe }}
+	    </center>
+	  </div>
+	  <div class="w3-container w3-half w3-center">
+            <h3>Information</h3>
+	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__(html=True)|safe }}</table>
+          </div>
 	{% else %}
-          <tr>
-            <th>Information</th>
-          </tr>
-          <tr>
-            <td><table>{{ tde.__str__(html=True)|safe }}</table></td>
-          </tr>
+	  <div class="w3-container w3-center">
+            <h3>Information</h3>
+	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__(html=True)|safe }}</table>
+          </div>
 	{% endif %}
 	</table>
     </center>

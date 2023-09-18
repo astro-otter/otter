@@ -2,7 +2,7 @@
 Simple TDE class with information about an individual TDE
 '''
 import pandas as pd
-import plotly.express as px
+import plotly.graph_objects as go
 from plotly.io import to_html
 
 class TDE:
@@ -47,67 +47,88 @@ class TDE:
 
         keywords = ['telescope', 
                 'observatory',
-                'instrument'] 
-    
-        data = {'Time [MJD]': [],
-                'Luminosity [erg/s]': [],
-                'symbols': [],
-                'telescope': [],
-                'observatory': [],
-                'instrument': [],
-                'sources': []}
-
+                'instrument']
+        
+        def create_layout_button(key):
+            return dict(label = key,
+                        method = 'update',
+                        args = [{'visible': key in self.photometry.keys(),
+                                 'title': key,
+                                 'showlegend': True}])
+        
         if self.photometry is None:
             raise Exception("There is no photometry associated with this object!")
 
-        for d in self.photometry:
-            
-            if 'time' not in d: continue
-                
-            time = d['time']
-            if isinstance(time, list):
-                time = float(d['time'][0])
-            else:
-                time = float(d['time'])
-                
-            if 'magnitude' in d:
-                lum = float(d['magnitude'])
-                ylabel = 'Apparent Magnitude'
-            elif 'luminosity' in d:
-                lum = float(d['luminosity'])
-                ylabel = 'Luminosity [erg/s]'
-                #ax.set_yscale('log')
-            else:
-                continue
-            
-            for key in keywords:
-                if key in d:
-                    data[key].append(d[key])
-                else:
-                    data[key].append('')
-            
-            data['Time [MJD]'].append(time)
-            data['Luminosity [erg/s]'].append(lum)
-            
-            if 'sources' in d:
-                data['sources'].append(d['sources'])
-            else:
-                data['sources'].append('')
-                
-            if 'upperlimit' in d and d['upperlimit'] == True:
-                data['symbols'].append('triangle-down')
-            else:
-                data['symbols'].append('circle')
+        fig = go.Figure()
+        
+        for key in self.photometry:
 
-        df = pd.DataFrame(data)
-        fig = px.scatter(df,
-                         x='Time [MJD]',
-                         y='Luminosity [erg/s]',
-                         hover_data=keywords+['sources'],
-                         symbol='symbols',
-                         symbol_map='identity',
-                         **kwargs)
+            data = {'Time [MJD]': [],
+                    'Luminosity [erg/s]': [],
+                    'symbols': [],
+                    'telescope': [],
+                    'observatory': [],
+                    'instrument': [],
+                    'sources': []}
+            
+            for d in self.photometry[key]:
+            
+                if 'time' not in d: continue
+                
+                time = d['time']
+                if isinstance(time, list):
+                    time = float(d['time'][0])
+                else:
+                    time = float(d['time'])
+                    
+                if 'magnitude' in d:
+                    lum = float(d['magnitude'])
+                    ylabel = 'Apparent Magnitude'
+                elif 'luminosity' in d:
+                    lum = float(d['luminosity'])
+                    ylabel = 'Luminosity [erg/s]'
+                    #ax.set_yscale('log')
+                else:
+                    continue
+            
+                for key in keywords:
+                    if key in d:
+                        data[key].append(d[key])
+                    else:
+                        data[key].append('')
+            
+                data['Time [MJD]'].append(time)
+                data['Luminosity [erg/s]'].append(lum)
+            
+                if 'sources' in d:
+                    data['sources'].append(d['sources'])
+                else:
+                    data['sources'].append('')
+                
+                if 'upperlimit' in d and d['upperlimit'] == True:
+                    data['symbols'].append('triangle-down')
+                else:
+                    data['symbols'].append('circle')
+
+            df = pd.DataFrame(data)
+            fig.add_trace(go.Scatter(x=df['Time [MJD]'],
+                                     y=df['Luminosity [erg/s]'],
+                                     text=df[keywords+['sources']],
+                                     hoverinfo='text',
+                                     marker_symbol=df['symbols'],
+                                     **kwargs))
         #fig.update_traces(mode="markers+lines")
+
+        fig.update_layout(
+            updatemenus=[go.layout.Updatemenu(
+                x = 1.25,
+                y = 1,
+                active = 0,
+                buttons = [create_layout_button(key) for key in self.photometry],
+                pad = dict(l=10)
+            )
+                         ])
+        
         return to_html(fig, full_html=False,
                        default_width='500px',
                        default_height='500px')
@@ -133,7 +154,11 @@ class TDE:
         else:
             html = ''
 
-            infoKeys = ['ra', 'dec', 'z', 'sources']
+            infoKeys = {'ra': 'RA [hrs]',
+                        'dec': 'Dec [deg]',
+                        'z': 'Redshift',
+                        'fancySources': 'Sources'
+                        }
             
             for key in infoKeys:
 
@@ -146,7 +171,7 @@ class TDE:
 
                 html += f'''
                 <tr>
-                <td style="text-align=left">{key}</td>
+                <td style="text-align=left">{infoKeys[key]}</td>
                 <td style="text-align=right">{info}</td>
                 <tr>
                 '''
