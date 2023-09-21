@@ -6,6 +6,9 @@ from pyArango.database import Database
 from pyArango.connection import Connection
 from .tde import TDE
 
+import astropy.units as u
+from astropy.coordinates import SkyCoord
+
 class TDECatalog(Database):
 
     def __init__(self,
@@ -26,7 +29,7 @@ class TDECatalog(Database):
         # clean up the raw data for easier parsing and return a list of TDEs
         self.tdes = self._clean()
         
-    def _clean(self) -> list[TDE]:
+    def _clean(self, dataDict=None) -> list[TDE]:
         '''
         Get the data from the database and clean it 
     
@@ -35,15 +38,21 @@ class TDECatalog(Database):
         
         Returns: names, sources, ra, dec, z
         '''
-        names = [tde['name'] for tde in self.rawData]        
+
+        if dataDict is not None:
+            data = dataDict
+        else:
+            data = self.rawData
+        
+        names = [tde['name'] for tde in data]        
             
         tdes = {}
         sourceWarningThrown = False
         coordWarningThrown = False
         zWarningThrown = False
-        for i in range(len(self.rawData)):
+        for i in range(len(data)):
 
-            tde = self.rawData[i]
+            tde = data[i]
             
             # try to get the name of the TDE, this will be the key
             try:
@@ -106,11 +115,104 @@ class TDECatalog(Database):
         Will be used to import new JSON files
         '''
 
-    def query(self) -> list[TDE]:
+    def query(self,
+              names:list[str]=None,
+              z:list[float]=None,
+              minZ:float=None,
+              maxZ:float=None,
+              ra:list[str]=None,
+              dec:list[str]=None,
+              photometryType:str=None,
+              spectraType:str=None
+              ) -> list[TDE]:
         '''
-        wrapper on AQLQuery
+        Wrapper on AQLQuery.
+
+        If no arguments are provided it returns everything. 
+
+        Args:
+            names [list]: A list of the TDE names to grab, default is None. If just a 
+                          string is provided it is interpreted as the only names to 
+                          get data for.
+            z [list] : A list of redshifts as floats. If only one float is provided then
+                       it gets all TDEs with that redshift.
+            minZ [float]: minimum redshift 
+            maxZ [float]: max redshift
+            ra [list] : A astring with the exact RA
+            dec [list]: A string with the exact Dec
         '''
 
+        # clean up inputs
+        queryFilters = ''
+        
+        if minZ is not None:
+            sfilt = f'''
+            FOR z1 in tde.z
+                FILTER TO_NUMBER(z1.value) >= {minZ}\n
+            '''
+            queryFilters += sfilt
+        if maxZ is not None:
+            sfilt = f'''
+            FOR z2 in tde.z
+                FILTER TO_NUMBER(z2.value) <= {maxZ}\n
+            '''
+            queryFilters += sfilt
+                    
+        if names is not None:
+            if isinstance(names, str):
+                queryFilters += f"FILTER tde.name LIKE '%{names}%'\n"
+            elif isinstance(names, list):
+                queryFilters += f'FILTER tde.name IN {names}\n'
+            else:
+                raise Exception('Names must be either a string or list')
+            
+        if z is not None:
+            if isinstance(z, float):
+                sfilt = f'''
+                FOR z3 in tde.z
+                    FILTER TO_NUMBER(z3.value) == {z} \n
+                '''
+                queryFilters += sfilt
+            elif isinstance(names, list):
+                sfilt = f'''
+                FOR z3 in tde.z
+                    FILTER TO_NUMBER(z3.value) IN {z} \n
+                '''
+                queryFilters += sfilt
+            else:
+                raise Exception('Redshifts must be either a float or list')
+
+        if ra is not None:
+            filt = f'''
+            FOR ra in tde.ra
+                FILTER ra.value == '{ra}'\n
+            '''
+            queryFilters += filt
+            
+        if dec is not None:
+            filt = f'''
+            FOR d in tde.dec
+                FILTER d.value == '{dec}'\n
+            '''
+            queryFilters += filt
+
+        if photometryType is not None:
+            queryFilters += f"FILTER '{photometryType}' IN ATTRIBUTES(tde.photometry)"
+
+        if spectraType is not None:
+            queryFilters += f"FILTER '{spectraType}' IN ATTRIBUTES(tde.spectra)"
+
+        # define the query
+        query = f'''
+        FOR tde IN tdes
+            {queryFilters}
+            RETURN tde
+        '''
+
+        print(query)
+        result = self.AQLQuery(query, rawResults=True)
+        return self._clean(result)
+            
     def close(self) -> None:
         '''
         closes the database connection

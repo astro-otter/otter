@@ -2,6 +2,7 @@
 Simple TDE class with information about an individual TDE
 '''
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 from plotly.io import to_html
 
@@ -26,6 +27,10 @@ class TDE:
 
         if spectra is not None:
             self.spectra = spectra
+
+        # create a mapping from the source aliases to the source names
+        self._sourcemap = {s['alias']:s['name'] for s in sources}
+        self._sourcemap['unknown'] = 'unknown' # THIS IS FOR PHOTOMETRY WE ARENT SURE ABOUT
         
     def _fancySources(self):
 
@@ -69,7 +74,7 @@ class TDE:
                     'telescope': [],
                     'observatory': [],
                     'instrument': [],
-                    'sources': []}
+                    'source': []}
             
             for d in self.photometry[key]:
             
@@ -100,10 +105,11 @@ class TDE:
                 data['Time [MJD]'].append(time)
                 data['Luminosity [erg/s]'].append(lum)
             
-                if 'sources' in d:
-                    data['sources'].append(d['sources'])
+                if 'source' in d:
+                    print(self.sources)
+                    data['source'].append(self._sourcemap[d['source']])
                 else:
-                    data['sources'].append('')
+                    data['source'].append('')
                 
                 if 'upperlimit' in d and d['upperlimit'] == True:
                     data['symbols'].append('triangle-down')
@@ -113,9 +119,18 @@ class TDE:
             df = pd.DataFrame(data)
             fig.add_trace(go.Scatter(x=df['Time [MJD]'],
                                      y=df['Luminosity [erg/s]'],
-                                     text=df[keywords+['sources']],
-                                     hoverinfo='text',
                                      marker_symbol=df['symbols'],
+                                     customdata=np.stack((df['telescope'],
+                                                          df['observatory'],
+                                                          df['instrument'],
+                                                          df['source']
+                                                          ), axis=-1),
+                                     hovertemplate=
+                                         'Telescope: %{customdata[0]}<br>'+
+                                         'Observatory: %{customdata[1]}<br>'+
+                                         'Instrument: %{customdata[2]} <br>'+
+                                         'Sources: %{customdata[3]}'+
+                                         '<extra></extra>',
                                      **kwargs))
         #fig.update_traces(mode="markers+lines")
 

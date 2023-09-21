@@ -63,9 +63,8 @@ def skymap(fig, tdes):
                                 hovertemplate="TDE Name: %{hovertext}\nRA: %{lon}\nDec: %{lat}", 
                                 name='Coordinates',
                                 marker=dict(color=info['Z'],
-                                            autocolorscale=True,
                                             colorbar=dict(thickness=20),
-                                            colorscale="magma"
+                                            colorscale="Thermal"
                                             )
                                 ),
                   row=1, col=1)

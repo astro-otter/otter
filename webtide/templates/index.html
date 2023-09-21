@@ -43,6 +43,13 @@
       tr:hover {
 	  background-color:#bebebebe;
       }      
+
+      input[type=text] {
+	  width: 80%;
+	  padding: 12px 20px;
+	  margin: 8px 0;
+	  box-sizing: border-box;
+      }
     </style>
 
     <!-- Navbar -->
@@ -67,18 +74,42 @@
     </header>
     
     <!-- Search Function for the Catalog -->
-    <div class="w3-center">
+    <div class="w3-center w3-container" style="padding: 32px 16px; background-color: #bebebebe;">
       <h2>Search TDE's</h2>
       <form method="POST">
-	<label for="name">TDE Name</label>
-	<input name="tdename" type="text">
-	<input type='submit' value='Submit'>
+	<div class="w3-half" style="margin-bottom:3%">
+	  <label for="name">TDE Name (string)</label><br>
+	  <input name="tdename" type="text"><br>
+	  
+	  <label for="RA">RA (string formatted like the table below)</label><br>
+	  <input name="ra" type="text"><br>
+	  
+	  <label for="Dec">Dec (string formatted like the table below)</label><br>
+	  <input name="dec" type="text"><br>
+
+	  <label for="PhotometryType">Type of Photometry Available (Optical, Radio, X-Ray, UV, Infrared are valid inputs)</label><br>
+	  <input name="photoType" type="text"><br>
+	</div>
+	<div class="w3-half" style="margin-bottom:3%">
+	  <label for="Z">Redshift (can be float or comma separated list)</label><br>
+	  <input name="z" type="text"><br>
+
+	  <label for="Z">Minimum Redshift (float)</label><br>
+	  <input name="minZ" type="text"><br>
+
+	  <label for="Z">Maximum Redshift (float)</label><br>
+	  <input name="maxZ" type="text"><br>
+
+	  <label for="SpectraType">Type of Spectra Available (Optical, Radio, X-Ray, UV, Infrared are valid inputs)</label><br>
+	  <input name="spectraType" type="text"><br>
+	</div>
+	<input type='submit' value='Submit' style='width: 20%; height:50%'>
       </form>
     </div>
     
     <!-- Catalog -->
     <div class="w3-row w3-border">
-      <div class="w3-half w3-container w3-white w3-center">
+      <div class="w3-half w3-container w3-white w3-center" style="margin-top:3%">
 	<center>
 	  <div class="w3-center">
 	    <h2>TDE Catalog</h2>
@@ -104,7 +135,7 @@
 	  </table>
 	</center>
       </div>
-      <div class="w3-half w3-container w3-center">
+      <div class="w3-half w3-container w3-center" style="margin-top:3%">
 	<div class="w3-center">
 	  <h2>Catalog Summary</h2>
 	  <h3>Number of TDEs: {{ tdes.values()|length }}</h3>
