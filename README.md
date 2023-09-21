@@ -1,12 +1,10 @@
-# TiDE Catalog
-### **Ti**dal **D**isruption **E**vent Catalog
-
-The new open TDE Catalog.
+# OTTER
+### **O**pen **T**idal disrup**T**ion **E**vent **R**epository
 
 ## Developer Instructions
 1. Clone this repo:
    ```
-   git clone https://github.com/noahfranz13/tide.git
+   git clone https://github.com/noahfranz13/otter.git
    ```	 
 2. Build the database. First install arangodb from
    https://www.arangodb.com/download-major/ubuntu/.

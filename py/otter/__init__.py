@@ -3,7 +3,7 @@ from ._version import __version__
 
 
 # explicitly set the package variable to ensure relative import work
-__package__ = "tidecat"
+__package__ = "otter"
 
 # import important stuff
 from .tde import TDE

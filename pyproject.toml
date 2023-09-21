@@ -3,7 +3,7 @@ requires = ['setuptools>=42']
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tidecat"
+name = "otter"
 authors = [{name = "Noah Franz", email = "nfranz@arizona.edu"}]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -39,4 +39,4 @@ Home = "https://github.com/noahfranz13/tide"
 where = ['py']
 
 [tool.setuptools.dynamic]
-version = {attr = 'tidecat._version.__version__'}
+version = {attr = 'otter._version.__version__'}
