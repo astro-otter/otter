@@ -7,6 +7,120 @@ import numpy as np
 import plotly.graph_objects as go
 from plotly.io import to_html
 
+class Source:
+    def __init__(self, sourceDict):
+        '''
+        Args:
+            source [dict]: Contains at least keys with "name", "bibcode", "alias"
+        '''
+
+        self.name = sourceDict['name']
+        self.bibcode = sourceDict['bibcode']
+        self.alias = sourceDict['alias']
+        self.strname = 'source'
+        
+class RAs:
+    def __init__(self, ra):
+        '''
+        Args:
+            ra [dict]: RA dict that can be in any of the following formats and must contain
+                       the keys "ra" and "source"
+                      - HH MM SS.SSSS
+                      - HH:MM:SS.SSSS
+        '''
+        self.strname = 'ra'
+        self.ra = []
+        self.sources = []
+        for r in ra:
+            self.ra.append(r[self.strname])
+            if 'source' in r:
+                src = Source(r['source'])
+                self.sources.append(src)
+            else:
+                self.sources.append(None)
+            
+class Decs:
+    def __init__(self, dec):
+        '''
+        Args:
+            dec [dict]: Declination dict that can be in any of the following formats and must contain
+                       the keys "dec" and "source"
+                      - HH MM SS.SSSS
+                      - HH:MM:SS.SSSS
+        '''
+        self.strname = 'dec'
+        self.dec = []
+        self.sources = []
+        for r in dec:
+            self.dec.append(r[self.strname])
+            if 'source' in r:
+                src = Source(r['source'])
+                self.sources.append(src)
+            else:
+                self.sources.append(None)
+        
+class Redshifts:
+    def __init__(self, zs):
+        '''
+        Args:
+            z [list[dict]]: List of redshift dictionaries with keys 'z' and 'source'
+        '''
+        self.strname = 'z'
+        self.z = []
+        self.sources = []
+        for z in zs:
+            self.z.append(float(z[self.strname]))
+            if 'source' in z:
+                src = Source(z['source'])
+                self.source.append(src)
+            else:
+                self.source.append(None)
+
+class Name:
+    def __init__(self, name, aliases):
+        '''
+        Args:
+            name [str]: Primary key of the TDE 
+            aliases [list[str]]: other names the TDE goes by
+        '''
+        self.strname = 'name'
+        self.name = name
+        self.aliases = aliases
+
+class DiscoveryDates:
+    def __init__(self, discoveryDates):
+        '''
+        Args:
+            discoveryDate[list[dict]]: list of dictionaries of discover dates
+        '''
+        self.strname = 'discover_date'
+        self.discoveryDates = []
+        self.sources = []
+        for dd in discoveryDates:
+            self.discoveryDates.append(dd[self.strname])
+            if 'source' in dd:
+                src = Source(dd['source'])
+                self.source.append(src)
+            else:
+                self.source.append(None)
+
+        
+class Spectra:
+    def __init__(self, spectra):
+        '''
+        Args:
+            spectra [list[dict]]: list of dictioanries of spectra
+        '''
+        pass
+
+class Photometry:
+    def __init__(self, photometry):
+        '''
+        Args:
+            photometry [list[dict]]: list of photometry dictionaries
+        '''
+        attrs = ['flux', 'luminosity', 'time', 'telescope', 'wavelength']
+        
 class TDE:
 
     def __init__(self, attrs):
@@ -51,9 +165,8 @@ class TDE:
         - Luminosity: ergs/s
         '''
 
-        self.requiredInputs = {'name', 'ra', 'dec', 'sources'}
-        self.optionalInputs = {'z', 'spectra', 'photometry', 'discovery_date'}
-
+        self.requiredInputs = {Name, RAs, Decs, Source}
+        self.optionalInputs = {Z, Spectra, Photometry, DiscoveryDate}
         
         self._unpackInput(attrs)
         
@@ -69,7 +182,7 @@ class TDE:
         self._sourcemap['unknown'] = 'unknown' # THIS IS FOR PHOTOMETRY WE ARENT SURE ABOUT
 
         # now clean up the photometry and make sure it complies
-        
+
     def _unpackInput(self, attrs):
 
         # verify input
@@ -90,7 +203,25 @@ class TDE:
                         assert 'alias' in val
                 
                 setattr(self, a, attrs[a])
+        
+    def _unpackInput_new(self, attrs):
 
+        # verify input
+        if not self.requiredInputs.issubset(attrs.keys()):
+            raise Exception(f'The required input keys are {requiredInputs}')
+
+        # first unpack the required inputs
+        self.sources = [Source(s) for s in attrs['sources']]
+
+        for a in self.requiredInputs:
+            if a.strname == 'source': continue
+            setattr(self, a.strname, a(attrs[a.strname]))
+        
+        # now unpack optional inputs
+        for a in self.optionalInputs:
+            if a.strname in attrs:
+                setattr(self, a.strname, a(attrs[a.strname]))
+        
     def _cleanPhotometry(self):
 
         # possible instrument types
