@@ -2,17 +2,20 @@
     "name": "Sw J2058+05",
     "ra": [
         {
-            "value": ""
+            "value": "20 58 19.90",
+	    "source": "1"
         }
     ],
     "dec": [
         {
-            "value": ""
+            "value": "+05 13 32.0",
+	    "source": "1"
         }
     ],
     "t_disc": [
         {
-            "value": "55698.0"
+            "value": "55698.0",
+	    "source": "1"
         }
     ],
     "z": [

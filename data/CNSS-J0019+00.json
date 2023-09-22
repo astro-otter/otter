@@ -2,12 +2,14 @@
     "name": "CNSS J0019+00",
     "ra": [
         {
-            "value": ""
+            "value": "00 19 47.335038",
+	    "source": "1"
         }
     ],
     "dec": [
         {
-            "value": ""
+            "value": "+00 35 26.8102",
+	    "source": "1"
         }
     ],
     "t_disc": [

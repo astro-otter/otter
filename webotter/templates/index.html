@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TDE Catalog</title>
+    <title>OTTER</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -69,8 +69,8 @@
     
     <!-- Header -->
     <header class="w3-container w3-center" style="padding: 64px 16px">
-      <h1 class="w3-margin w3-jumbo">TiDE Catalog</h1>
-      <p class="w3-xlarge">The New Tidal Disruption Event Catalog</p>
+      <h1 class="w3-margin w3-jumbo">OTTER</h1>
+      <p class="w3-xlarge">The Open Tidal disrupTion Event Repository</p>
     </header>
     
     <!-- Search Function for the Catalog -->
@@ -117,8 +117,8 @@
 	  <table style="font-size:14pt">
 	    <tr>
 	      <th>TDE Name</th>
-	      <th>RA</th>
-	      <th>Dec</th>
+	      <th>RA [hrs]</th>
+	      <th>Dec [deg]</th>
 	      <th>Z</th>
 	      <th>Source List</th>
 	    </tr>
@@ -126,9 +126,9 @@
 	    {% for name, tde in tdes.items() %}
               <tr>
 		<td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=name)  }}">{{ name }}</td>
-		<td>{{ tde.ra }}</td>
-		<td>{{ tde.dec }}</td>
-		<td>{{ tde.z }}</td>
+		<td>{{ tde.ra[0]['value'] }}</td>
+		<td>{{ tde.dec[0]['value'] }}</td>
+		<td>{{ tde.z[0]['value']}}</td>
 		<td>{{ tde.fancySources|safe }}</td>
 	      </tr>
 	    {% endfor %}

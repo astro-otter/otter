@@ -1,4 +1,4 @@
-from tidecat import TDECatalog
+from otter import TDECatalog
 from flask import current_app, g
 
 def get_db():

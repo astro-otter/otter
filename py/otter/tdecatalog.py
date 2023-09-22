@@ -17,11 +17,15 @@ class TDECatalog(Database):
                  db='tide',
                  collection='tdes'):
 
+        # save inputs
+        self.dbName = db
+        self.collectionName = collection
+        
         c = Connection(username=username, password=password)
-
+        
         # initiate the tdes database
         super().__init__(c, db)
-
+        
         # for now, just get all data
         # THIS IS NOT SCALABLE, FIX LATER
         self.rawData = self[collection].fetchAll(rawResults=True)
@@ -43,69 +47,10 @@ class TDECatalog(Database):
             data = dataDict
         else:
             data = self.rawData
-        
-        names = [tde['name'] for tde in data]        
             
         tdes = {}
-        sourceWarningThrown = False
-        coordWarningThrown = False
-        zWarningThrown = False
-        for i in range(len(data)):
-
-            tde = data[i]
-            
-            # try to get the name of the TDE, this will be the key
-            try:
-                name = tde['name']
-            except KeyError as err:
-                raise Exception('Name must be provided for every TDE!!!') from err
-
-            # try to get any sources for the TDE
-            try:
-                sources = tde['sources']
-            except KeyError:
-                if not sourceWarningThrown:
-                    warnings.warn('No sources found at least one TDE!')
-                    sourceWarningThrown = True
-                sources = None
-
-            # try to get the ra and dec, these aren't necessary since they
-            # aren't measured well for some
-            try:
-                ra = tde['ra'][0]['value']
-                dec = tde['dec'][0]['value']
-            except KeyError as err:
-                if not coordWarningThrown:
-                    warnings.warn(f"No RA and DEC found for {tde['name']}!!")
-                    coordWarningThrown = True
-                ra = None
-                dec = None
-
-            # try to get the redshift
-            try:
-                z = tde['redshift'][0]['value']
-            except KeyError as err:
-                try:
-                    z = tde['z'][0]['value']
-                except KeyError as err:
-                    if not zWarningThrown:
-                        warnings.warn(f"No redshift found for {tde['name']}!!")
-                        zWarningThrown = True
-                    z = None
-
-            # try to pull out the photometry
-            try:
-                photo = tde['photometry']
-            except KeyError as err:
-                photo = None
-
-            # try pulling out the spectra
-            try:
-                spec = tde['spectra']
-            except KeyError as err:
-                spec = None            
-                    
-            thisTDE = TDE(name, ra, dec, z, sources, photometry=photo, spectra=spec)
+        for tde in data:
+            thisTDE = TDE(tde)
             tdes[thisTDE.name] = thisTDE
         
         return tdes
@@ -115,6 +60,70 @@ class TDECatalog(Database):
         Will be used to import new JSON files
         '''
 
+        c = self[self.collectionName] # collection to add data to
+
+        for tde in tdes:
+
+            if tde.name in self.tdes:
+                print('This tde already exists in the catalog! Appending!')
+                getKey = f"FOR tde IN tdes FILTER tde.name == '{tde.name}' RETURN tde._key"
+                key = int(self.AQLQuery(getKey, rawResults=True)[0])
+                doc = self._append(tde, c[key])
+            else:
+                print('This tde isnt in the catalog yet, adding it now!')
+                json = tde.tojson()
+                doc = c.createDocument(json)
+
+            doc.save() # update the database
+
+    def _append(self, tde, doc):
+        '''
+        Appends data to an existing entry in the catalog and returns the new 
+        collection for upload
+        '''
+        
+        aliases = [int(s['alias']) for s in doc['sources']]
+        bibcodes = {s['bibcode']:s['alias'] for s in doc['sources']}
+        if len(aliases) == 0:
+            newAlias = 1
+        else:
+            newAlias = max(aliases)+1    
+            
+        json = tde.tojson()
+
+        # get the correct alias to handle sources well
+        sourcemap = {} # key is old source number and value is new source number
+        for val in json['sources']:
+            if val['bibcode'] in bibcodes:
+                # this source is already in the database!!!
+                alias = bibcodes[val['bibcode']]
+            else:
+                alias = newAlias
+                newAlias += 1
+
+            sourcemap[str(val['alias'])] = str(alias)
+
+            val['alias'] = str(alias)
+            
+        # append or add keys now
+        for key in json:
+            if key == 'name': continue            
+            if key in doc:                
+                for val in json[key]:
+
+                    if key == 'sources' and val['bibcode'] in bibcodes: continue
+                    
+                    # update the source alias for specific content
+                    if 'source' in val:
+                        val['source'] = sourcemap[val['source']]
+                        
+                    # append the value to the corresponding key!
+                    doc[key].append(val)
+            else:
+                doc[key] = json[key]
+
+        return doc
+        
     def query(self,
               names:list[str]=None,
               z:list[float]=None,
@@ -225,4 +234,3 @@ class TDECatalog(Database):
             ret += str(tde)
             ret += '\n'
         return ret
-

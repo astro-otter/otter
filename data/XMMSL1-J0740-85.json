@@ -2,12 +2,14 @@
     "name": "XMMSL1 J0740-85",
     "ra": [
         {
-            "value": ""
+            "value": "07 40 08.19",
+	    "source": "1"
         }
     ],
     "dec": [
         {
-            "value": ""
+            "value": "85 39 31.25",
+	    "source": "1"
         }
     ],
     "z": [

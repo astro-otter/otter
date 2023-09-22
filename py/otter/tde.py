@@ -1,6 +1,7 @@
 '''
 Simple TDE class with information about an individual TDE
 '''
+import json
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
@@ -8,13 +9,54 @@ from plotly.io import to_html
 
 class TDE:
 
-    def __init__(self, name, ra, dec, z, sources, photometry=None, spectra=None):
+    def __init__(self, attrs):
+        '''        
+        `attrs` should be a dictionary with the following keys:
+        
+        Required Keys:
+        - name
+        - ra
+        - dec
+        - sources
+        - discovery_date
+        
+        Optional Keys:
+        - redshift
+        - spectra
+        - photometry
 
-        self.name = name
-        self.ra = ra
-        self.dec = dec
-        self.z = z
-        self.sources = sources
+        NOTE: if the TDE is already in the database, only the name is required! Other 
+              information will be appended to the existing database object.
+        
+        All other data will be ignored because it is not stored in the
+        database. If photometry is provided it must have the following properties. All
+        numerical values should be in CGS!
+        - source (corresponding to a source in "sources")
+        - flux
+        - luminosity
+        - time (MJD since discovery)
+        - telescope (this can be the telescope, observatory, instrument, or some combination)
+        - wavelength (the central wavelength of the band)
+
+        If spectra is provided it must have the following keys
+        - source (corresponding to a source in "sources")
+        - time (MJD since discovery date)
+        - telescope (instrument/observatory used)
+        - wavelength (Array of wavelengths in REST FRAME corresponding to flux)
+        - flux (array of fluxes)
+
+        Here is a list of acceptable units:
+        - Time: MJD
+        - Flux: ergs/s/cm^2
+        - Luminosity: ergs/s
+        '''
+
+        self.requiredInputs = {'name', 'ra', 'dec', 'sources'}
+        self.optionalInputs = {'z', 'spectra', 'photometry', 'discovery_date'}
+
+        
+        self._unpackInput(attrs)
+        
         if self.sources is not None:
             self.fancySources = self._fancySources()
         else:
@@ -22,16 +64,42 @@ class TDE:
 
         self.path = self._getpath()
 
-        if photometry is not None:
-            self.photometry = photometry
-
-        if spectra is not None:
-            self.spectra = spectra
-
         # create a mapping from the source aliases to the source names
-        self._sourcemap = {s['alias']:s['name'] for s in sources}
+        self._sourcemap = {s['alias']:s['name'] for s in self.sources if 'alias' in s}
         self._sourcemap['unknown'] = 'unknown' # THIS IS FOR PHOTOMETRY WE ARENT SURE ABOUT
+
+        # now clean up the photometry and make sure it complies
         
+    def _unpackInput(self, attrs):
+
+        # verify input
+        if not self.requiredInputs.issubset(attrs.keys()):
+            raise Exception(f'The required input keys are {requiredInputs}')
+
+        # now unpack
+        for a in attrs:
+            if a in self.requiredInputs or a in self.optionalInputs:
+
+                # make sure sources is formatted correctly
+                if a == 'sources':
+                    for val in attrs[a]:
+                        # these things are needed for later analysis
+                        # even if they are meaningless
+                        assert 'bibcode' in val
+                        assert 'name' in val
+                        assert 'alias' in val
+                
+                setattr(self, a, attrs[a])
+
+    def _cleanPhotometry(self):
+
+        # possible instrument types
+        instrumentTypes = {'radio', 'optical', 'xray', 'infared', 'uv'}
+
+    def _cleanSpectra(self):
+        # I'm not sure how to do these things yet
+        return
+    
     def _fancySources(self):
 
         html = ''
@@ -153,6 +221,23 @@ class TDE:
         '''
         Plots the spectra for this TDE using plotly
         '''
+
+    def tojson(self):
+        '''
+        Writes the attributes of the TDE to a JSON formatted string
+        '''
+
+        json = {'name':self.name,
+                'sources':self.sources,
+                'ra': self.ra,
+                'dec': self.dec
+                }
+        
+        for opt in self.optionalInputs:
+            if opt in dir(self):
+                json[opt] = getattr(self, opt)
+
+        return json
     
     def __str__(self, html=False):
 
@@ -180,7 +265,7 @@ class TDE:
                 info = ''
                 if isinstance(getattr(self,key), list):
                     for val in getattr(self,key):
-                        info += f"{val}<br>\n"
+                        info += f"{val['value']}<br>\n"
                 else:
                     info = getattr(self,key)    
 

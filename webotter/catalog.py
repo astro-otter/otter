@@ -2,7 +2,7 @@
 The catalog pages
 '''
 from ast import literal_eval
-from tidecat import TDECatalog
+from otter import TDECatalog
 from flask import render_template, Blueprint, request
 from . import plotSummary
 from . import db

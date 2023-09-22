@@ -2,12 +2,14 @@
     "name": "Sw J1112-82",
     "ra": [
         {
-            "value": ""
+            "value": "11 11 47.6",
+	    "source": "1"
         }
     ],
     "dec": [
         {
-            "value": ""
+            "value": "-82 38 44.44",
+	    "source": "1"
         }
     ],
     "t_disc": [
