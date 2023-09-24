@@ -51,7 +51,7 @@ class TDECatalog(Database):
         tdes = {}
         for tde in data:
             thisTDE = TDE(tde)
-            tdes[thisTDE.name] = thisTDE
+            tdes[thisTDE.name.name] = thisTDE
         
         return tdes
     
