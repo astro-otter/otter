@@ -87,21 +87,22 @@
 	  <label for="Dec">Dec (string formatted like the table below)</label><br>
 	  <input name="dec" type="text"><br>
 
-	  <label for="PhotometryType">Type of Photometry Available (Optical, Radio, X-Ray, UV, Infrared are valid inputs)</label><br>
-	  <input name="photoType" type="text"><br>
+	  <label for="SearchRadius">Search Radius (arcsec)</label><br>
+	  <input name="searchRadius" type="text"><br>
+	  
 	</div>
 	<div class="w3-half" style="margin-bottom:3%">
-	  <label for="Z">Redshift (can be float or comma separated list)</label><br>
-	  <input name="z" type="text"><br>
-
 	  <label for="Z">Minimum Redshift (float)</label><br>
 	  <input name="minZ" type="text"><br>
 
 	  <label for="Z">Maximum Redshift (float)</label><br>
 	  <input name="maxZ" type="text"><br>
 
-	  <label for="SpectraType">Type of Spectra Available (Optical, Radio, X-Ray, UV, Infrared are valid inputs)</label><br>
+	  <label for="SpectraType">Type of Spectra Available (optical, radio, x-ray, uv, infared are valid inputs)</label><br>
 	  <input name="spectraType" type="text"><br>
+
+	  <label for="PhotometryType">Type of Photometry Available (optical, radio, x-ray, uv, infared are valid inputs)</label><br>
+	  <input name="photoType" type="text"><br>
 	</div>
 	<input type='submit' value='Submit' style='width: 20%; height:50%'>
       </form>
@@ -126,9 +127,13 @@
 	    {% for name, tde in tdes.items() %}
               <tr>
 		<td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=name)  }}">{{ name }}</td>
-		<td>{{ tde.ra[0]['value'] }}</td>
-		<td>{{ tde.dec[0]['value'] }}</td>
-		<td>{{ tde.z[0]['value']}}</td>
+		<td>{{ tde.ra[0].valueString }}</td>
+		<td>{{ tde.dec[0].valueString }}</td>
+		{% if tde.z is defined %}
+		  <td>{{ tde.z[0]['value'] }}</td>
+		{% else %}
+		  <td></td>
+		{% endif %}
 		<td>{{ tde.fancySources|safe }}</td>
 	      </tr>
 	    {% endfor %}

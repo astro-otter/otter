@@ -76,7 +76,6 @@ class TDE:
         # now clean up the photometry and make sure it complies
         
     def _unpackInput(self, attrs):
-        
         for a in self.requiredInputs:
             if a.strname == 'sources': continue
             try:
@@ -84,6 +83,7 @@ class TDE:
                     attr = attrs[a.strname]
                     if 'alias' in attrs:
                         attrToSet = a(attr, aliases=attrs['alias'])
+                        del attrs['alias']
                     else:
                         attrToSet = a(attr)
                 else:
@@ -92,17 +92,29 @@ class TDE:
 
                 setattr(self, a.strname, attrToSet)
 
+                del attrs[a.strname] # remove from the dictionary
+                
             except KeyError:
                 # verify input
-                raise Exception(f'Missing "{a.strname}", which is a required input key')
+                print(attrs)
+                raise Exception(f'Missing "{a.strname}" from {attrs["name"]}, which is a required input key')
 
         # now unpack optional inputs
         for a in self.optionalInputs:
             if a.strname in attrs:
                 if a.strname == 'photometry' or a.strname == 'spectra':
                     setattr(self, a.strname, [a(val, key, sourcemap=self._sourcemap) for key, val in attrs[a.strname].items()])
+                  
                 else:
                     setattr(self, a.strname, [a(val, sourcemap=self._sourcemap) for val in attrs[a.strname]])
+
+                del attrs[a.strname] # remove from the dictionary
+        
+        # save the rest of the data in the "other" attribute
+        if len(attrs) > 0:
+            self.other = [attrs]
+        else:
+            self.other = None
                 
     def _cleanPhotometry(self):
 
@@ -137,24 +149,18 @@ class TDE:
 
         bands = [p.band for p in self.photometry]
         
-        def create_layout_button(key):
-            return dict(label = key,
-                        method = 'update',
-                        args = [{'visible': key in bands,
-                                 'title': key,
-                                 'showlegend': True}])
-        
         if self.photometry is None:
             raise Exception("There is no photometry associated with this object!")
 
         fig = go.Figure()
+        visible = True
         for photo in self.photometry:
 
             data = {'Time Since Discovery [MJD]': photo.time,
                     'Luminosity [erg/s]': photo.luminosity,
                     'symbols': [],
                     'source': photo.source}
-
+            
             for b in photo.upperlimit:
                 if b:
                     data['symbols'].append('triangle-down')
@@ -165,19 +171,33 @@ class TDE:
             fig.add_trace(go.Scatter(x=df['Time Since Discovery [MJD]'],
                                      y=df['Luminosity [erg/s]'],
                                      marker_symbol=df['symbols'],
-                                     customdata=np.stack((df['source']), axis=-1),
+                                     customdata=df['source'],
                                      hovertemplate=
-                                         'Sources: %{customdata[0]}'+
+                                         'Sources: %{customdata}'+
                                          '<extra></extra>',
+                                     visible = visible,
                                      **kwargs))
-        #fig.update_traces(mode="markers+lines")
+            visible = False
 
+
+        buttons = []
+        for ii, p in enumerate(self.photometry):
+            vis = [False]*len(self.photometry)
+            vis[ii] = True
+            d = dict(label=p.band,
+                     method='update',
+                     args=[{"visible": vis},
+                           {'title':'',
+                            'annotations':[]}]
+                     )
+            buttons.append(d)
+            
         fig.update_layout(
             updatemenus=[go.layout.Updatemenu(
                 x = 1.25,
                 y = 1,
                 active = 0,
-                buttons = [create_layout_button(key) for key in bands],
+                buttons = buttons,
                 pad = dict(l=10)
             )
                          ])
@@ -196,16 +216,24 @@ class TDE:
         '''
         Writes the attributes of the TDE to a JSON formatted string
         '''
-
-        json = {'name':self.name,
-                'sources':self.sources,
-                'ra': self.ra,
-                'dec': self.dec
-                }
         
+        json = {'name':self.name.name,
+                'ra': [s.tojson() for s in self.ra],
+                'dec': [s.tojson() for s in self.dec],
+                'sources':[s.tojson() for s in self.sources]
+                }
+    
         for opt in self.optionalInputs:
-            if opt in dir(self):
-                json[opt] = getattr(self, opt)
+            if opt.strname in dir(self):
+                if opt.strname == 'spectra': continue # JUST FOR NOW
+                if opt.strname == 'photometry':
+                    attr = getattr(self, opt.strname)
+                    json[opt.strname] = {a.band:a.json for a in attr} 
+                else:
+                    json[opt.strname] = [s.tojson() for s in getattr(self, opt.strname)]
+
+        if self.other is not None:
+            json['other'] = self.other
 
         return json
     
@@ -215,9 +243,8 @@ class TDE:
             return f'''
             TDE: {self.name}
             --------------------------------
-            RA      : {self.ra}
-            DEC     : {self.dec}
-            Z       : {self.z}
+            RA      : {self.ra.value}
+            DEC     : {self.dec.value}
             Sources : {self.fancySources}
             '''
 
@@ -233,6 +260,7 @@ class TDE:
             for key in infoKeys:
 
                 info = ''
+                if not hasattr(self, key): continue
                 if isinstance(getattr(self,key), list):
                     for val in getattr(self,key):
                         info += f"{val['value']}<br>\n"

@@ -33,7 +33,10 @@ def skymap(fig, tdes):
             info['RA [deg]'].append(t.ra[0]['value'])
             info['Dec [deg]'].append(t.dec[0]['value'])
             info['TDE Name'].append(t.name)
-            info['Z'].append(float(t.z[0]['value']))
+            if hasattr(t, 'z'):
+                info['Z'].append(float(t.z[0]['value']))
+            else:
+                info['Z'].append(0)
             
     info['RA [deg]'] = coord.Angle(info['RA [deg]'], unit=u.hourangle)
     info['Dec [deg]'] = coord.Angle(info['Dec [deg]'], unit=u.deg)
@@ -76,7 +79,7 @@ def redshifts(fig, tdes):
     Generates a plot of the redshifts
     '''
 
-    z = np.array([t.z[0]['value'] for t in tdes.values() if t.z is not None]).astype(float)
+    z = np.array([t.z[0]['value'] for t in tdes.values() if hasattr(t, 'z')]).astype(float)
     
     fig.add_trace(go.Histogram(x=z, nbinsx=5, name='Redshifts',
                                marker={"color": "grey"}),

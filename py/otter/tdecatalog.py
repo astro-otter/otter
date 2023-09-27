@@ -1,6 +1,7 @@
 '''
 Class for to make queries in the catalog
 '''
+from copy import deepcopy
 import warnings
 from pyArango.database import Database
 from pyArango.connection import Connection
@@ -55,7 +56,7 @@ class TDECatalog(Database):
         
         return tdes
     
-    def upload(self, tdes:list[TDE]) -> None:
+    def upload(self, tdes:list[TDE], test=False) -> None:
         '''
         Will be used to import new JSON files
         '''
@@ -63,25 +64,37 @@ class TDECatalog(Database):
         c = self[self.collectionName] # collection to add data to
 
         for tde in tdes:
-
-            if tde.name in self.tdes:
-                print('This tde already exists in the catalog! Appending!')
-                getKey = f"FOR tde IN tdes FILTER tde.name == '{tde.name}' RETURN tde._key"
-                key = int(self.AQLQuery(getKey, rawResults=True)[0])
-                doc = self._append(tde, c[key])
-            else:
-                print('This tde isnt in the catalog yet, adding it now!')
+            inCatalog = tde.name.name in self.tdes
+            if inCatalog:
+                query = f"FOR tde IN tdes FILTER tde.name == '{tde.name.name}' RETURN tde"
+                catdata = self.AQLQuery(query, rawResults=True)
+                if len(catdata) != 0:
+                    catjson = TDE(catdata[0]).tojson()
+                    out = self._append(tde, catjson)
+                    out['_key'] = catdata[0]['_key']
+                    replaceQuery = f"REPLACE {out} IN tdes"
+                    if test:
+                        print(replaceQuery)
+                        print()
+                    else:
+                        self.AQLQuery(replaceQuery)
+                else:
+                    inCatalog = False
+            if not inCatalog:
                 json = tde.tojson()
                 doc = c.createDocument(json)
-
-            doc.save() # update the database
-
+            
+                if not test:
+                    doc.save() # update the database
+                else:
+                    print(doc['name'])
+                    print()
+            
     def _append(self, tde, doc):
         '''
         Appends data to an existing entry in the catalog and returns the new 
         collection for upload
         '''
-        
         aliases = [int(s['alias']) for s in doc['sources']]
         bibcodes = {s['bibcode']:s['alias'] for s in doc['sources']}
         if len(aliases) == 0:
@@ -90,7 +103,6 @@ class TDECatalog(Database):
             newAlias = max(aliases)+1    
             
         json = tde.tojson()
-
         # get the correct alias to handle sources well
         sourcemap = {} # key is old source number and value is new source number
         for val in json['sources']:
@@ -115,15 +127,33 @@ class TDECatalog(Database):
                     
                     # update the source alias for specific content
                     if 'source' in val:
-                        val['source'] = sourcemap[val['source']]
+                        src = val['source']
+                        if ',' in str(src):
+                            srcs = src.split(',')
+                            val['source'] = ','.join([sourcemap[s] for s in srcs])
+                        else:
+                            val['source'] = sourcemap[src]
+
                         
                     # append the value to the corresponding key!
-                    doc[key].append(val)
+                    if key == 'photometry' or key == 'spectra':
+                        for filt in json[key]: # loop over the filters
+                            if filt in doc[key]: # already have data for this band
+                                for item in json[key][filt]:
+                                    doc[key][filt].append(item)
+                            else: # no data for this filter
+                                doc[key][filt] = deepcopy(json[key][filt])
+                    else:
+                        if isinstance(val, dict):
+                            doc[key].append(val)
+                        else:
+                            for item in val:
+                                doc[key].append(item)
             else:
                 doc[key] = json[key]
-
+        print(doc['photometry'])
         return doc
-        
+
     def query(self,
               names:list[str]=None,
               z:list[float]=None,
@@ -131,8 +161,9 @@ class TDECatalog(Database):
               maxZ:float=None,
               ra:list[str]=None,
               dec:list[str]=None,
+              searchRadius:int=5,
               photometryType:str=None,
-              spectraType:str=None
+              spectraType:str=None,
               ) -> list[TDE]:
         '''
         Wrapper on AQLQuery.
@@ -191,20 +222,6 @@ class TDECatalog(Database):
             else:
                 raise Exception('Redshifts must be either a float or list')
 
-        if ra is not None:
-            filt = f'''
-            FOR ra in tde.ra
-                FILTER ra.value == '{ra}'\n
-            '''
-            queryFilters += filt
-            
-        if dec is not None:
-            filt = f'''
-            FOR d in tde.dec
-                FILTER d.value == '{dec}'\n
-            '''
-            queryFilters += filt
-
         if photometryType is not None:
             queryFilters += f"FILTER '{photometryType}' IN ATTRIBUTES(tde.photometry)"
 
@@ -217,10 +234,27 @@ class TDECatalog(Database):
             {queryFilters}
             RETURN tde
         '''
-
-        print(query)
+        
         result = self.AQLQuery(query, rawResults=True)
-        return self._clean(result)
+
+        # now that we have the query results do the RA and Dec queries if they exist
+        cleanResult = self._clean(result) 
+        if ra is not None and dec is not None:
+            # get the catalog RAs and Decs to compare against
+            queryCoords = SkyCoord(ra, dec, unit=u.deg)
+            goodTDEs = {}
+            for tde in cleanResult.values():
+                for ra, dec in zip(tde.ra, tde.dec):
+                    coord = SkyCoord(ra.valueString, dec.valueString)
+                    if queryCoords.separation(coord) < searchRadius*u.arcsec:
+                        goodTDEs[tde.name.name] = tde
+            return goodTDEs
+
+        elif ra is not None or dec is not None:
+            raise Exception('You must provide both an RA and Dec')
+
+        else:
+            return cleanResult
             
     def close(self) -> None:
         '''

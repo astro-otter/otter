@@ -13,14 +13,14 @@ def fix(key):
 
     val = request.form[key]
     
-    trueType = {'z':float,
-                'minZ':float,
+    trueType = {'minZ':float,
                 'maxZ':float,
                 'ra':str,
                 'dec':str,
                 'tdename':str,
                 'spectraType':str,
-                'photoType':str
+                'photoType':str,
+                'searchRadius':float
                 }
     
     if len(val) == 0:
@@ -40,21 +40,21 @@ def home():
         tdename = fix('tdename')
         ra = fix('ra')
         dec = fix('dec')
-        z = fix('z')
         minZ = fix('minZ')
         maxZ = fix('maxZ')
         photoType = fix('photoType')
         spectraType = fix('spectraType')
-
+        searchRadius = fix('searchRadius')
+        
         cat = TDECatalog()
         tdes = cat.query(names=tdename,
                          ra=ra,
                          dec=dec,
-                         z=z,
                          minZ=minZ,
                          maxZ=maxZ,
                          photometryType=photoType,
-                         spectraType=spectraType
+                         spectraType=spectraType,
+                         searchRadius=searchRadius
                          )
         
     else:
