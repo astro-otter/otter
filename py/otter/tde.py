@@ -171,6 +171,7 @@ class TDE:
             fig.add_trace(go.Scatter(x=df['Time Since Discovery [MJD]'],
                                      y=df['Luminosity [erg/s]'],
                                      marker_symbol=df['symbols'],
+                                     mode='markers',
                                      customdata=df['source'],
                                      hovertemplate=
                                          'Sources: %{customdata}'+

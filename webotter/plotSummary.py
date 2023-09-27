@@ -19,7 +19,7 @@ def skymap(fig, tdes):
                     showcoastlines=False, showframe=True,
                     lonaxis=dict(showgrid=True, dtick=30),
                     lataxis=dict(showgrid=True, dtick=30),
-                    row=1, col=1
+                    row=1, col=2
                     )
     
     info = {'RA [deg]':[],
@@ -63,14 +63,15 @@ def skymap(fig, tdes):
     fig.add_trace(go.Scattergeo(lon=info['RA [deg]'],
                                 lat=info['Dec [deg]'],
                                 hovertext=info['TDE Name'],
-                                hovertemplate="TDE Name: %{hovertext}\nRA: %{lon}\nDec: %{lat}", 
-                                name='Coordinates',
-                                marker=dict(color=info['Z'],
-                                            colorbar=dict(thickness=20),
+                                hovertemplate="TDE Name: %{hovertext}\nRA: %{lon}\nDec: %{lat}",
+                                showlegend=False,
+                                marker=dict(color=np.log10(info['Z']),
+                                            colorbar=dict(thickness=20,
+                                                          title='log(z)'),
                                             colorscale="Thermal"
                                             )
                                 ),
-                  row=1, col=1)
+                  row=1, col=2)
         
     return fig
     
@@ -81,18 +82,19 @@ def redshifts(fig, tdes):
 
     z = np.array([t.z[0]['value'] for t in tdes.values() if hasattr(t, 'z')]).astype(float)
     
-    fig.add_trace(go.Histogram(x=z, nbinsx=5, name='Redshifts',
-                               marker={"color": "grey"}),
-                  row=2, col=1)
+    fig.add_trace(go.Histogram(x=z,
+                               marker={"color": "grey"},
+                               showlegend=False),
+                  row=1, col=1)
     return fig    
 
 def plotAll(tdes):
     '''
     makes a subplot with all of them and returns the html
     '''
-    fig = make_subplots(rows=2, cols=1, specs=[[{"type":"scattergeo"}],
-                                              [{"type":"histogram"}]
-                                              ]
+    fig = make_subplots(rows=1, cols=2, specs=[[{"type":"histogram"},
+                                               {"type":"scattergeo"}]
+                                               ]
                         )
     fig.update_xaxes(title_text="Right Ascension [deg]", row=1, col=1)
     fig.update_xaxes(title_text="Redshift", row=2, col=1)
@@ -105,5 +107,5 @@ def plotAll(tdes):
     fig = redshifts(fig, tdes)
 
     return to_html(fig, full_html=False,
-                       default_width='750px',
-                       default_height='1000px')
+                       default_width='100%',
+                       default_height='500px')

@@ -37,7 +37,7 @@
       td {
 	    padding: 5px;
 	    text-align: center;
-	    border-bottom: 1px solid #bebebebe;
+	    border-bottom: 2px solid #bebebebe;
       }
 
       tr:hover {
@@ -107,47 +107,51 @@
 	<input type='submit' value='Submit' style='width: 20%; height:50%'>
       </form>
     </div>
+
+    <!-- Summary Plots -->
+    <center>
+    <div class="w3-container w3-center" style="margin-top:3%; width=80%; text-align:'center'">
+      <div class="w3-center">
+	<h2>Catalog Summary</h2>
+	<h3>Number of TDEs: {{ tdes.values()|length }}</h3>
+      </div>
+      {{ otherHTML|safe }}
+    </div>
+    </center>
     
     <!-- Catalog -->
-    <div class="w3-row w3-border">
-      <div class="w3-half w3-container w3-white w3-center" style="margin-top:3%">
-	<center>
-	  <div class="w3-center">
-	    <h2>TDE Catalog</h2>
-	  </div>
-	  <table style="font-size:14pt">
-	    <tr>
-	      <th>TDE Name</th>
-	      <th>RA [hrs]</th>
-	      <th>Dec [deg]</th>
-	      <th>Z</th>
-	      <th>Source List</th>
-	    </tr>
-	    
-	    {% for name, tde in tdes.items() %}
-              <tr>
-		<td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=name)  }}">{{ name }}</td>
-		<td>{{ tde.ra[0].valueString }}</td>
-		<td>{{ tde.dec[0].valueString }}</td>
-		{% if tde.z is defined %}
-		  <td>{{ tde.z[0]['value'] }}</td>
-		{% else %}
-		  <td></td>
-		{% endif %}
-		<td>{{ tde.fancySources|safe }}</td>
-	      </tr>
-	    {% endfor %}
-	  </table>
-	</center>
-      </div>
-      <div class="w3-half w3-container w3-center" style="margin-top:3%">
+    <center>
+    <div class="w3-container w3-white w3-center" style="margin-top:3%; width:80%">
+      <center>
 	<div class="w3-center">
-	  <h2>Catalog Summary</h2>
-	  <h3>Number of TDEs: {{ tdes.values()|length }}</h3>
+	  <h2>TDE Catalog</h2>
 	</div>
-	{{ otherHTML|safe }}
-      </div>
-    </div>    
-  </body>
+	<table style="font-size:14pt">
+	  <tr>
+	    <th>TDE Name</th>
+	    <th>RA [hrs]</th>
+	    <th>Dec [deg]</th>
+	    <th>Z</th>
+	      <th>Source List</th>
+	  </tr>
+	  
+	  {% for name, tde in tdes.items() %}
+          <tr>
+	    <td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=name)  }}">{{ name }}</td>
+	    <td>{{ tde.ra[0].valueString }}</td>
+	    <td>{{ tde.dec[0].valueString }}</td>
+	    {% if tde.z is defined %}
+	    <td>{{ tde.z[0]['value'] }}</td>
+	    {% else %}
+	    <td></td>
+	    {% endif %}
+	    <td>{{ tde.fancySources|safe }}</td>
+	  </tr>
+	  {% endfor %}
+	  </table>
+      </center>
+    </div>
+    </center>
+</body>
 </html>
 
