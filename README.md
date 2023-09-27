@@ -1,6 +1,14 @@
 # OTTER
 ### **O**pen **T**idal disrup**T**ion **E**vent **R**epository
 
+## Repo Organization
+| Directory | Contents |
+------------------------
+| `data` | Testing data for the catalog |
+| `db` | scripts to create the arangdb database |
+| `py/otter` | A pip installable API for interfacing with the ArangoDB database|
+| `webotter` | The flask app directory |
+
 ## Developer Instructions
 1. Clone this repo:
    ```
