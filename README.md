@@ -3,7 +3,7 @@
 
 ## Repo Organization
 | Directory | Contents |
-------------------------
+|------------|------------|
 | `data` | Testing data for the catalog |
 | `db` | scripts to create the arangdb database |
 | `py/otter` | A pip installable API for interfacing with the ArangoDB database|
