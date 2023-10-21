@@ -3,13 +3,13 @@
     "ra": [
         {
             "value": "07 40 08.19",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "dec": [
         {
             "value": "85 39 31.25",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "z": [
@@ -50,7 +50,8 @@
                 "F_mJy": 1.19,
                 "luminosity": 1.196127931e+37,
                 "time": 609.0,
-                "source": "2"
+                "source": "2",
+                "uuid": "e6c1fa63-a985-431a-9a53-15ed09f38b30"
             },
             {
                 "t_MJD": null,
@@ -61,7 +62,8 @@
                 "F_mJy": 0.89,
                 "luminosity": 9.939811938e+36,
                 "time": 769.0,
-                "source": "2"
+                "source": "2",
+                "uuid": "095ec8d5-c27d-4277-bf8a-30cae627d3cc"
             },
             {
                 "t_MJD": null,
@@ -72,7 +74,44 @@
                 "F_mJy": 0.65,
                 "luminosity": 6.832388906e+36,
                 "time": 875.0,
-                "source": "2"
+                "source": "2",
+                "uuid": "effdcaae-02b2-4960-81bc-13da9aec6bcd"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 609.0,
+                "dt_years": 1.6684931507,
+                "nu_GHz": 1.53,
+                "luminosity": 1.196127931e+37,
+                "time": 609.0,
+                "source": "e6c1fa63-a985-431a-9a53-15ed09f38b30",
+                "computed": true,
+                "magnitude": 22.31113259651867
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 769.0,
+                "dt_years": 2.1068493151,
+                "nu_GHz": 1.7,
+                "luminosity": 9.939811938e+36,
+                "time": 769.0,
+                "source": "095ec8d5-c27d-4277-bf8a-30cae627d3cc",
+                "computed": true,
+                "magnitude": 22.626524983387718
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 875.0,
+                "dt_years": 2.397260274,
+                "nu_GHz": 1.6,
+                "luminosity": 6.832388906e+36,
+                "time": 875.0,
+                "source": "effdcaae-02b2-4960-81bc-13da9aec6bcd",
+                "computed": true,
+                "magnitude": 22.967716608392863
             }
         ]
     }

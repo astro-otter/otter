@@ -53,7 +53,8 @@
                 "F_mJy": 432.0,
                 "luminosity": 9.610935756e+38,
                 "time": 422.0,
-                "source": "3"
+                "source": "3",
+                "uuid": "a3da0283-ec42-4d37-9b8e-ada612c0484d"
             },
             {
                 "t_MJD": null,
@@ -64,7 +65,8 @@
                 "F_mJy": 362.0,
                 "luminosity": 8.053608203e+38,
                 "time": 489.0,
-                "source": "3"
+                "source": "3",
+                "uuid": "455cf70e-fa06-4a02-989e-ef01c32745b6"
             },
             {
                 "t_MJD": null,
@@ -75,7 +77,8 @@
                 "F_mJy": 36.32,
                 "luminosity": 7.406946477e+37,
                 "time": 1704.0,
-                "source": "3"
+                "source": "3",
+                "uuid": "7cd2fe92-e7dd-48f8-841a-9f87093b2d07"
             },
             {
                 "t_MJD": null,
@@ -86,7 +89,8 @@
                 "F_mJy": 33.6,
                 "luminosity": 7.475172255e+37,
                 "time": 1739.0,
-                "source": "3"
+                "source": "3",
+                "uuid": "446e44ab-2862-4178-bc91-a573263b21d8"
             },
             {
                 "t_MJD": null,
@@ -97,7 +101,8 @@
                 "F_mJy": 27.0,
                 "luminosity": 6.006834848e+37,
                 "time": 1971.0,
-                "source": "3"
+                "source": "3",
+                "uuid": "987a6123-cffe-47d6-a75d-6f0db7b73052"
             },
             {
                 "t_MJD": null,
@@ -108,7 +113,80 @@
                 "F_mJy": 61.0,
                 "luminosity": 1.357099725e+38,
                 "time": 2037.0,
-                "source": "3"
+                "source": "3",
+                "uuid": "f9e9e386-3e08-4f9e-ab0a-4f40555e403d"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 422.0,
+                "dt_years": 1.1561643836,
+                "nu_GHz": 6.0,
+                "luminosity": 9.610935756e+38,
+                "time": 422.0,
+                "source": "a3da0283-ec42-4d37-9b8e-ada612c0484d",
+                "computed": true,
+                "magnitude": 15.91129063296272
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 489.0,
+                "dt_years": 1.3397260274,
+                "nu_GHz": 6.0,
+                "luminosity": 8.053608203e+38,
+                "time": 489.0,
+                "source": "455cf70e-fa06-4a02-989e-ef01c32745b6",
+                "computed": true,
+                "magnitude": 16.103228573667085
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 1704.0,
+                "dt_years": 4.6684931507,
+                "nu_GHz": 5.5,
+                "luminosity": 7.406946477e+37,
+                "time": 1704.0,
+                "source": "7cd2fe92-e7dd-48f8-841a-9f87093b2d07",
+                "computed": true,
+                "magnitude": 18.59963540037738
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 1739.0,
+                "dt_years": 4.76,
+                "nu_GHz": 6.0,
+                "luminosity": 7.475172255e+37,
+                "time": 1739.0,
+                "source": "446e44ab-2862-4178-bc91-a573263b21d8",
+                "computed": true,
+                "magnitude": 18.68415180652539
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 1971.0,
+                "dt_years": 5.4,
+                "nu_GHz": 6.0,
+                "luminosity": 6.006834848e+37,
+                "time": 1971.0,
+                "source": "987a6123-cffe-47d6-a75d-6f0db7b73052",
+                "computed": true,
+                "magnitude": 18.92159058960253
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 2037.0,
+                "dt_years": 5.58,
+                "nu_GHz": 6.0,
+                "luminosity": 1.357099725e+38,
+                "time": 2037.0,
+                "source": "f9e9e386-3e08-4f9e-ab0a-4f40555e403d",
+                "computed": true,
+                "magnitude": 18.03667541247308
             }
         ]
     }

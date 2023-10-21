@@ -16,7 +16,8 @@ class TDECatalog(Database):
                  username='user@tide',
                  password='password',
                  db='tide',
-                 collection='tdes'):
+                 collection='tdes',
+                 debug=False):
 
         # save inputs
         self.dbName = db
@@ -26,14 +27,15 @@ class TDECatalog(Database):
         
         # initiate the tdes database
         super().__init__(c, db)
-        
-        # for now, just get all data
-        # THIS IS NOT SCALABLE, FIX LATER
-        self.rawData = self[collection].fetchAll(rawResults=True)
 
-        # clean up the raw data for easier parsing and return a list of TDEs
-        self.tdes = self._clean()
-        
+        if not debug:
+            # for now, just get all data
+            # THIS IS NOT SCALABLE, FIX LATER
+            self.rawData = self[collection].fetchAll(rawResults=True)
+            
+            # clean up the raw data for easier parsing and return a list of TDEs
+            self.tdes = self._clean()
+            
     def _clean(self, dataDict=None) -> list[TDE]:
         '''
         Get the data from the database and clean it 

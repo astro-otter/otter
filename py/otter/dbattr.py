@@ -59,6 +59,8 @@ class Source(DBAttr):
         alias = str(alias) # make sure it is a string
         if ',' in alias:
             return [sourcemap[a] for a in alias.split(',')]
+        elif '-' in alias: # these are uuids
+            return 'computed'
         else:
             return sourcemap[alias]
     
@@ -194,6 +196,7 @@ class Photometry(DBAttr):
         self.time = []
         self.luminosity = []
         self.flux = []
+        self.mag = []
         self.wavelength = []
         self.source = []
         self.upperlimit = []
@@ -208,14 +211,23 @@ class Photometry(DBAttr):
             else:
                 self.time.append(float(d['time']))
             
-            self.luminosity.append(float(d['luminosity']))
             self.source.append(Source.aliasToSource(d['source'], sourcemap))
 
             # some other optional ones
+            if 'luminosity' in d:
+                self.luminosity.append(float(d['luminosity']))
+            else:
+                self.luminosity.append(None)
+
             if 'flux' in d:
                 self.flux.append(float(d['flux']))
             else:
-                self.flux.append(None)
+                self.luminosity.append(None)
+
+            if 'magnitude' in d:
+                self.mag.append(float(d['magnitude']))
+            else:
+                self.mag.append(None)
                 
             if 'wavelength' in d:
                 self.wavelength.append(d['wavelength'])

@@ -155,11 +155,17 @@ class TDE:
         fig = go.Figure()
         visible = True
         for photo in self.photometry:
-
+            sources = []
+            for src in photo.source:
+                if isinstance(src, Source):
+                    sources.append(src.name)
+                else:
+                    sources.append(src)
+                    
             data = {'Time Since Discovery [MJD]': photo.time,
-                    'Luminosity [erg/s]': photo.luminosity,
+                    'Magnitude [Apparent]': photo.mag,
                     'symbols': [],
-                    'source': photo.source}
+                    'source': sources}
             
             for b in photo.upperlimit:
                 if b:
@@ -169,7 +175,7 @@ class TDE:
 
             df = pd.DataFrame(data)
             fig.add_trace(go.Scatter(x=df['Time Since Discovery [MJD]'],
-                                     y=df['Luminosity [erg/s]'],
+                                     y=df['Magnitude [Apparent]'],
                                      marker_symbol=df['symbols'],
                                      mode='markers',
                                      customdata=df['source'],
@@ -179,7 +185,6 @@ class TDE:
                                      visible = visible,
                                      **kwargs))
             visible = False
-
 
         buttons = []
         for ii, p in enumerate(self.photometry):
@@ -200,8 +205,11 @@ class TDE:
                 active = 0,
                 buttons = buttons,
                 pad = dict(l=10)
-            )
-                         ])
+            )],
+            xaxis_title='Date [MJD]',
+            yaxis_title='Apparent Magnitude'
+            
+        )
         
         return to_html(fig, full_html=False,
                        default_width='500px',
