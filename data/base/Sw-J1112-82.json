@@ -3,13 +3,13 @@
     "ra": [
         {
             "value": "11 11 47.6",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "dec": [
         {
             "value": "-82 38 44.44",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "t_disc": [
@@ -53,7 +53,8 @@
                 "F_mJy": 0.076,
                 "luminosity": 7.267806037e+39,
                 "time": 1322.5,
-                "source": "1"
+                "source": "1",
+                "uuid": "d776e97a-cf41-4ee5-934e-94283ea92879"
             },
             {
                 "t_MJD": 57521.5,
@@ -62,7 +63,28 @@
                 "F_mJy": 0.07,
                 "luminosity": 6.694031876e+39,
                 "time": 1792.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "8390a2f0-c6e6-431a-bdf0-79dae3f6a6be"
+            },
+            {
+                "t_MJD": 57052.0,
+                "dt_days": 1322.5,
+                "dt_years": 3.6232876712,
+                "luminosity": 7.267806037e+39,
+                "time": 1322.5,
+                "source": "d776e97a-cf41-4ee5-934e-94283ea92879",
+                "computed": true,
+                "magnitude": 25.297966019298023
+            },
+            {
+                "t_MJD": 57521.5,
+                "dt_days": 1792.0,
+                "dt_years": 4.9095890411,
+                "luminosity": 6.694031876e+39,
+                "time": 1792.0,
+                "source": "8390a2f0-c6e6-431a-bdf0-79dae3f6a6be",
+                "computed": true,
+                "magnitude": 25.387254899964358
             }
         ]
     }

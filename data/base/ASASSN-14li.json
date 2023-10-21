@@ -62,7 +62,8 @@
                 "F_mJy": 1.91,
                 "luminosity": 8.895796627e+37,
                 "time": 141.871,
-                "source": "unknown"
+                "source": "unknown",
+                "uuid": "edb09fe8-aa41-45dd-bbe5-ff502dcc3583"
             },
             {
                 "t_MJD": null,
@@ -72,7 +73,8 @@
                 "F_mJy": 1.7417,
                 "luminosity": 8.111941877e+37,
                 "time": 207.83,
-                "source": "unknown"
+                "source": "unknown",
+                "uuid": "9b264df6-fd27-4eec-af01-ee32adcb43e1"
             },
             {
                 "t_MJD": null,
@@ -82,7 +84,8 @@
                 "F_mJy": 1.562,
                 "luminosity": 7.274991796e+37,
                 "time": 246.75,
-                "source": "unknown"
+                "source": "unknown",
+                "uuid": "3ef0f9b8-f1f4-45f3-b6e9-cfcfe6917904"
             },
             {
                 "t_MJD": null,
@@ -92,7 +95,8 @@
                 "F_mJy": 1.2565,
                 "luminosity": 5.852130084e+37,
                 "time": 303.5145833,
-                "source": "unknown"
+                "source": "unknown",
+                "uuid": "8a932c71-d337-4459-a6c1-5d4d209b1971"
             },
             {
                 "t_MJD": null,
@@ -102,7 +106,63 @@
                 "F_mJy": 0.873150048,
                 "luminosity": 4.066683378e+37,
                 "time": 379.7,
-                "source": "unknown"
+                "source": "unknown",
+                "uuid": "447baf81-c129-4e89-ab75-347423677563"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 141.871,
+                "dt_years": 0.3886876712,
+                "luminosity": 8.895796627e+37,
+                "time": 141.871,
+                "source": "edb09fe8-aa41-45dd-bbe5-ff502dcc3583",
+                "computed": true,
+                "magnitude": 21.797416581880682
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 207.83,
+                "dt_years": 0.5693972603,
+                "luminosity": 8.111941877e+37,
+                "time": 207.83,
+                "source": "9b264df6-fd27-4eec-af01-ee32adcb43e1",
+                "computed": true,
+                "magnitude": 21.897566620399992
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 246.75,
+                "dt_years": 0.6760273973,
+                "luminosity": 7.274991796e+37,
+                "time": 246.75,
+                "source": "3ef0f9b8-f1f4-45f3-b6e9-cfcfe6917904",
+                "computed": true,
+                "magnitude": 22.015797426146797
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 303.5145833,
+                "dt_years": 0.8315468036,
+                "luminosity": 5.852130084e+37,
+                "time": 303.5145833,
+                "source": "8a932c71-d337-4459-a6c1-5d4d209b1971",
+                "computed": true,
+                "magnitude": 22.252093767678513
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 379.7,
+                "dt_years": 1.0402739726,
+                "luminosity": 4.066683378e+37,
+                "time": 379.7,
+                "source": "447baf81-c129-4e89-ab75-347423677563",
+                "computed": true,
+                "magnitude": 22.647277794462017
             }
         ]
     }

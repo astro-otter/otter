@@ -3,19 +3,19 @@
     "ra": [
         {
             "value": "20 58 19.90",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "dec": [
         {
             "value": "+05 13 32.0",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "t_disc": [
         {
             "value": "55698.0",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "z": [
@@ -60,7 +60,8 @@
                 "F_mJy": 0.88,
                 "luminosity": 1.221233722e+41,
                 "time": 43.0,
-                "source": "unknown"
+                "source": "unknown",
+                "uuid": "d9e02f6e-2c88-4af3-836a-e593218a5537"
             },
             {
                 "t_MJD": 57522.0,
@@ -70,7 +71,30 @@
                 "F_mJy": 0.225,
                 "luminosity": 3.816355382e+40,
                 "time": 1824.0,
-                "source": "unknown"
+                "source": "unknown",
+                "uuid": "691cdf44-c296-494c-bcbc-4d26a8aecaa5"
+            },
+            {
+                "t_MJD": 55741.0,
+                "dt_days": 43.0,
+                "dt_years": 0.1178082192,
+                "nu_GHz": 4.5,
+                "luminosity": 1.221233722e+41,
+                "time": 43.0,
+                "source": "d9e02f6e-2c88-4af3-836a-e593218a5537",
+                "computed": true,
+                "magnitude": 22.63879331962458
+            },
+            {
+                "t_MJD": 57522.0,
+                "dt_days": 1824.0,
+                "dt_years": 4.997260274,
+                "nu_GHz": 5.5,
+                "luminosity": 3.816355382e+40,
+                "time": 1824.0,
+                "source": "691cdf44-c296-494c-bcbc-4d26a8aecaa5",
+                "computed": true,
+                "magnitude": 24.119543704721593
             }
         ]
     }

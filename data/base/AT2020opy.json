@@ -43,7 +43,8 @@
                 "F_mJy": 0.047,
                 "luminosity": 1.314527501e+38,
                 "time": 39.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "ed27b490-b52c-4d29-8ada-c172414a598f"
             },
             {
                 "t_MJD": null,
@@ -54,7 +55,8 @@
                 "F_mJy": 0.091,
                 "luminosity": 2.777444336e+38,
                 "time": 162.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "a34c1467-ef2b-4869-bafd-ca1ff86bf51f"
             },
             {
                 "t_MJD": null,
@@ -65,7 +67,44 @@
                 "F_mJy": 0.256,
                 "luminosity": 7.813469779e+38,
                 "time": 330.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "dcc96aec-9311-430e-825b-b31bbdd16c3e"
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 39.0,
+                "dt_years": 0.1068493151,
+                "nu_GHz": 5.04,
+                "luminosity": 1.314527501e+38,
+                "time": 39.0,
+                "source": "ed27b490-b52c-4d29-8ada-c172414a598f",
+                "computed": true,
+                "magnitude": 25.819755355160705
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 162.0,
+                "dt_years": 0.4438356164,
+                "nu_GHz": 5.5,
+                "luminosity": 2.777444336e+38,
+                "time": 162.0,
+                "source": "a34c1467-ef2b-4869-bafd-ca1ff86bf51f",
+                "computed": true,
+                "magnitude": 25.102396519197267
+            },
+            {
+                "t_MJD": null,
+                "t_disc": null,
+                "dt_days": 330.0,
+                "dt_years": 0.904109589,
+                "nu_GHz": 5.5,
+                "luminosity": 7.813469779e+38,
+                "time": 330.0,
+                "source": "dcc96aec-9311-430e-825b-b31bbdd16c3e",
+                "computed": true,
+                "magnitude": 23.979400086720375
             }
         ]
     }

@@ -32,7 +32,7 @@ def skymap(fig, tdes):
         if t.ra is not None and t.dec is not None:
             info['RA [deg]'].append(t.ra[0]['value'])
             info['Dec [deg]'].append(t.dec[0]['value'])
-            info['TDE Name'].append(t.name)
+            info['TDE Name'].append(t.name.name)
             if hasattr(t, 'z'):
                 info['Z'].append(float(t.z[0]['value']))
             else:
@@ -63,7 +63,7 @@ def skymap(fig, tdes):
     fig.add_trace(go.Scattergeo(lon=info['RA [deg]'],
                                 lat=info['Dec [deg]'],
                                 hovertext=info['TDE Name'],
-                                hovertemplate="TDE Name: %{hovertext}\nRA: %{lon}\nDec: %{lat}",
+                                hovertemplate="TDE Name: %{hovertext}\nRA: %{lon}\nDec: %{lat}}",
                                 showlegend=False,
                                 marker=dict(color=np.log10(info['Z']),
                                             colorbar=dict(thickness=20,
@@ -96,10 +96,10 @@ def plotAll(tdes):
                                                {"type":"scattergeo"}]
                                                ]
                         )
-    fig.update_xaxes(title_text="Right Ascension [deg]", row=1, col=1)
-    fig.update_xaxes(title_text="Redshift", row=2, col=1)
-    fig.update_yaxes(title_text="Declination [deg]", row=1, col=1)
-    fig.update_yaxes(title_text="Number of TDEs", row=2, col=1)
+    fig.update_xaxes(title_text="Right Ascension [deg]", row=1, col=2)
+    fig.update_xaxes(title_text="Redshift", row=1, col=1)
+    fig.update_yaxes(title_text="Declination [deg]", row=1, col=2)
+    fig.update_yaxes(title_text="Number of TDEs", row=1, col=1)
     
     #fig.update_layout(title = {'text':f'Number of TDEs: {len(tdes)}'})
     

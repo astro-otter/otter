@@ -3,13 +3,13 @@
     "ra": [
         {
             "value": "00 19 47.335038",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "dec": [
         {
             "value": "+00 35 26.8102",
-	    "source": "1"
+            "source": "1"
         }
     ],
     "t_disc": [
@@ -49,7 +49,8 @@
                 "F_mJy": 4.4,
                 "luminosity": 9.074918176e+37,
                 "time": 522.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "f247cad8-7e27-4cca-9160-8919ae8eef0f"
             },
             {
                 "t_MJD": 57131.0,
@@ -59,7 +60,8 @@
                 "F_mJy": 5.1,
                 "luminosity": 1.051865516e+38,
                 "time": 551.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "99dd3638-fbb4-4511-9d8f-a09f7886d80c"
             },
             {
                 "t_MJD": 57152.0,
@@ -69,7 +71,8 @@
                 "F_mJy": 7.49,
                 "luminosity": 1.544798571e+38,
                 "time": 572.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "c16c6b72-089f-408d-a4c3-a7a4b5f8cd55"
             },
             {
                 "t_MJD": 57185.0,
@@ -79,7 +82,8 @@
                 "F_mJy": 7.77,
                 "luminosity": 1.657808328e+38,
                 "time": 605.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "c4358d8d-b1fb-4a9a-b46d-9597a2c5c79e"
             },
             {
                 "t_MJD": 57310.0,
@@ -89,7 +93,8 @@
                 "F_mJy": 7.25,
                 "luminosity": 1.495299018e+38,
                 "time": 730.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "f0b16f2e-b34d-408d-bc1a-109f06a5b470"
             },
             {
                 "t_MJD": 57577.0,
@@ -99,7 +104,74 @@
                 "F_mJy": 4.44,
                 "luminosity": 7.894325372e+37,
                 "time": 997.0,
-                "source": "1"
+                "source": "1",
+                "uuid": "cc869f4b-1abf-4671-a625-7c3ca984e2ee"
+            },
+            {
+                "t_MJD": 57102.0,
+                "dt_days": 522.0,
+                "dt_years": 1.4301369863,
+                "nu_GHz": 2.9,
+                "luminosity": 9.074918176e+37,
+                "time": 522.0,
+                "source": "f247cad8-7e27-4cca-9160-8919ae8eef0f",
+                "computed": true,
+                "magnitude": 20.891368308784532
+            },
+            {
+                "t_MJD": 57131.0,
+                "dt_days": 551.0,
+                "dt_years": 1.5095890411,
+                "nu_GHz": 2.9,
+                "luminosity": 1.051865516e+38,
+                "time": 551.0,
+                "source": "99dd3638-fbb4-4511-9d8f-a09f7886d80c",
+                "computed": true,
+                "magnitude": 20.731074559755157
+            },
+            {
+                "t_MJD": 57152.0,
+                "dt_days": 572.0,
+                "dt_years": 1.5671232877,
+                "nu_GHz": 2.9,
+                "luminosity": 1.544798571e+38,
+                "time": 572.0,
+                "source": "c16c6b72-089f-408d-a4c3-a7a4b5f8cd55",
+                "computed": true,
+                "magnitude": 20.313795455751332
+            },
+            {
+                "t_MJD": 57185.0,
+                "dt_days": 605.0,
+                "dt_years": 1.6575342466,
+                "nu_GHz": 3.0,
+                "luminosity": 1.657808328e+38,
+                "time": 605.0,
+                "source": "c4358d8d-b1fb-4a9a-b46d-9597a2c5c79e",
+                "computed": true,
+                "magnitude": 20.273947452997714
+            },
+            {
+                "t_MJD": 57310.0,
+                "dt_days": 730.0,
+                "dt_years": 2.0,
+                "nu_GHz": 2.9,
+                "luminosity": 1.495299018e+38,
+                "time": 730.0,
+                "source": "f0b16f2e-b34d-408d-bc1a-109f06a5b470",
+                "computed": true,
+                "magnitude": 20.349154983572515
+            },
+            {
+                "t_MJD": 57577.0,
+                "dt_days": 997.0,
+                "dt_years": 2.7315068493,
+                "nu_GHz": 2.5,
+                "luminosity": 7.894325372e+37,
+                "time": 997.0,
+                "source": "cc869f4b-1abf-4671-a625-7c3ca984e2ee",
+                "computed": true,
+                "magnitude": 20.88154257471345
             }
         ]
     }
