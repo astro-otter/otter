@@ -210,6 +210,8 @@ class TDE:
             yaxis_title='Apparent Magnitude'
             
         )
+
+        fig.update_yaxes(autorange="reversed")
         
         return to_html(fig, full_html=False,
                        default_width='500px',
