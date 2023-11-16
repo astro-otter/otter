@@ -1,183 +1,148 @@
 [{
-    "name": "AT2020vwl",
-    "ra": [
-        {
-            "value": "15 30 37.800"
-        }
-    ],
-    "dec": [
-        {
-            "value": "+26 58 56.90"
-        }
-    ],
-    "z": [
-        {
-            "value": "0.0325"
-        }
-    ],
-    "aliases": [
-        {
-            "value": "AT2020vwl"
-        }
-    ],
-    "upperlimit": [
-        {
-            "value": "False"
-        }
-    ],
-    "sources": [
-        {
-            "name": "Goodwin et al. (2023)",
-            "bibcode": "2023MNRAS.522.5084G",
-            "alias": "1"
-        }
-    ],
-    "photometry": {
-        "radio": [
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "AT2020vwl",
+        "alias": [
             {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 120.0,
-                "dt_years": 0.3287671233,
-                "nu_GHz": 5.5,
-                "F_mJy": 0.543,
-                "luminosity": 6.924306356e+37,
-                "time": 120.0,
-                "source": "1",
-                "uuid": "eef0282f-f992-463c-9621-72daeb8cbbb4"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 209.0,
-                "dt_years": 0.5726027397,
-                "nu_GHz": 5.5,
-                "F_mJy": 0.504,
-                "luminosity": 6.426980485e+37,
-                "time": 209.0,
-                "source": "1",
-                "uuid": "d200a139-00d3-4b1f-be33-5493dfb94107"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 305.0,
-                "dt_years": 0.8356164384,
-                "nu_GHz": 5.5,
-                "F_mJy": 0.284,
-                "luminosity": 3.621552495e+37,
-                "time": 305.0,
-                "source": "1",
-                "uuid": "2c5b76ef-b788-4249-8d8a-121c271ed766"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 373.0,
-                "dt_years": 1.0219178082,
-                "nu_GHz": 5.6,
-                "F_mJy": 0.156,
-                "luminosity": 2.025472638e+37,
-                "time": 373.0,
-                "source": "1",
-                "uuid": "e62cecf1-9127-449e-971d-0e79dbb08a59"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 430.0,
-                "dt_years": 1.1780821918,
-                "nu_GHz": 5.0,
-                "F_mJy": 0.145,
-                "luminosity": 1.680938258e+37,
-                "time": 430.0,
-                "source": "1",
-                "uuid": "f97c28d3-3fe0-43a2-b8c3-483b0ebc34c6"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 575.0,
-                "dt_years": 1.5753424658,
-                "nu_GHz": 5.5,
-                "F_mJy": 0.179,
-                "luminosity": 2.282598228e+37,
-                "time": 575.0,
-                "source": "1",
-                "uuid": "c5fc30ff-df07-46c6-921f-455f55d5f737"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 120.0,
-                "dt_years": 0.3287671233,
-                "nu_GHz": 5.5,
-                "luminosity": 6.924306356e+37,
-                "time": 120.0,
-                "source": "eef0282f-f992-463c-9621-72daeb8cbbb4",
-                "computed": true,
-                "magnitude": 23.16300042602788
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 209.0,
-                "dt_years": 0.5726027397,
-                "nu_GHz": 5.5,
-                "luminosity": 6.426980485e+37,
-                "time": 209.0,
-                "source": "d200a139-00d3-4b1f-be33-5493dfb94107",
-                "computed": true,
-                "magnitude": 23.243923658886185
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 305.0,
-                "dt_years": 0.8356164384,
-                "nu_GHz": 5.5,
-                "luminosity": 3.621552495e+37,
-                "time": 305.0,
-                "source": "2c5b76ef-b788-4249-8d8a-121c271ed766",
-                "computed": true,
-                "magnitude": 23.866704149882406
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 373.0,
-                "dt_years": 1.0219178082,
-                "nu_GHz": 5.6,
-                "luminosity": 2.025472638e+37,
-                "time": 373.0,
-                "source": "e62cecf1-9127-449e-971d-0e79dbb08a59",
-                "computed": true,
-                "magnitude": 24.517188504113847
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 430.0,
-                "dt_years": 1.1780821918,
-                "nu_GHz": 5.0,
-                "luminosity": 1.680938258e+37,
-                "time": 430.0,
-                "source": "f97c28d3-3fe0-43a2-b8c3-483b0ebc34c6",
-                "computed": true,
-                "magnitude": 24.596579994412565
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 575.0,
-                "dt_years": 1.5753424658,
-                "nu_GHz": 5.5,
-                "luminosity": 2.282598228e+37,
-                "time": 575.0,
-                "source": "c5fc30ff-df07-46c6-921f-455f55d5f737",
-                "computed": true,
-                "magnitude": 24.36786742255027
+                "value": "AT2020vwl",
+                "reference": "TNS"
             }
         ]
-    }
+    },
+    "coordinate": {
+        "equitorial": [
+            {
+                "ra": "15 30 37.800",
+                "dec": "+26 58 56.90",
+                "epoch": "J2000",
+                "system": "ICRS",
+                "ra_units": "hourangle",
+                "dec_units": "deg",
+                "reference": [
+                    "2023MNRAS.522.5084G"
+                ],
+                "computed": false,
+                "default": true,
+                "uuid": "5984b6a2-f719-43d5-b485-874d38824a2c"
+            }
+        ],
+        "galactic": [
+            {
+                "l": 42.0554035803441,
+                "b": 54.70994962206334,
+                "l_units": "deg",
+                "b_units": "deg",
+                "reference": "5984b6a2-f719-43d5-b485-874d38824a2c",
+                "computed": true
+            }
+        ]
+    },
+    "distance": {
+        "redshift": [
+            {
+                "value": "0.0325",
+                "reference": [
+                    "2023MNRAS.522.5084G"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2023MNRAS.522.5084G"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2023MNRAS.522.5084G",
+            "human_readable_name": "Goodwin et al. (2023)"
+        }
+    ],
+    "epoch": {
+        "date_discovery": [
+            {
+                "value": 59132.73,
+                "date_format": "MJD",
+                "reference": [
+                    "2023MNRAS.522.5084G"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "photometry": {
+        "phot_0": {
+            "reference": "2023MNRAS.522.5084G",
+            "data": [
+                {
+                    "fluxdensity": 0.543,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.5GHz",
+                    "date": 59252.73
+                },
+                {
+                    "fluxdensity": 0.504,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.5GHz",
+                    "date": 59341.73
+                },
+                {
+                    "fluxdensity": 0.284,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.5GHz",
+                    "date": 59437.73
+                },
+                {
+                    "fluxdensity": 0.156,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.6GHz",
+                    "date": 59505.73
+                },
+                {
+                    "fluxdensity": 0.145,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "date": 59562.73
+                },
+                {
+                    "fluxdensity": 0.179,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.5GHz",
+                    "date": 59707.73
+                }
+            ]
+        }
+    },
+    "filter_alias": [
+        {
+            "filter_key": "5.5GHz",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.6GHz",
+            "freq_eff": 5.6,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.0GHz",
+            "freq_eff": 5.0,
+            "freq_units": "GHz"
+        }
+    ]
 }]

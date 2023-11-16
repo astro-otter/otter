@@ -28,16 +28,24 @@ def skymap(fig, tdes):
             'Z': []
             }
 
-    for t in tdes.values():
-        if t.ra is not None and t.dec is not None:
-            info['RA [deg]'].append(t.ra[0]['value'])
-            info['Dec [deg]'].append(t.dec[0]['value'])
-            info['TDE Name'].append(t.name.name)
-            if hasattr(t, 'z'):
-                info['Z'].append(float(t.z[0]['value']))
-            else:
-                info['Z'].append(0)
+    for t in tdes:
+        coords = t['coordinate']['equitorial']
+        defaultcoord = None
+        for c in coords:
+            if 'default' in c and c['default']:
+                defaultcoord = c
+                break
+        if defaultcoord is None:
+            defaultcoord = coords[0] # just get the first as a catch all
             
+        info['RA [deg]'].append(defaultcoord['ra'])
+        info['Dec [deg]'].append(defaultcoord['dec'])
+        info['TDE Name'].append(t['name']['default_name'])
+        if 'redshift' in t['distance']:
+            info['Z'].append(float(t['distance']['redshift'][0]['value']))
+        else:
+            info['Z'].append(0)
+
     info['RA [deg]'] = coord.Angle(info['RA [deg]'], unit=u.hourangle)
     info['Dec [deg]'] = coord.Angle(info['Dec [deg]'], unit=u.deg)
     
@@ -80,7 +88,7 @@ def redshifts(fig, tdes):
     Generates a plot of the redshifts
     '''
 
-    z = np.array([t.z[0]['value'] for t in tdes.values() if hasattr(t, 'z')]).astype(float)
+    z = np.array([t['distance']['redshift'][0]['value'] for t in tdes if 'redshift' in t['distance']]).astype(float)
     
     fig.add_trace(go.Histogram(x=z,
                                marker={"color": "grey"},
@@ -88,7 +96,7 @@ def redshifts(fig, tdes):
                   row=1, col=1)
     return fig    
 
-def plotAll(tdes):
+def plotCatalogSummary(tdes):
     '''
     makes a subplot with all of them and returns the html
     '''
@@ -109,3 +117,10 @@ def plotAll(tdes):
     return to_html(fig, full_html=False,
                        default_width='100%',
                        default_height='500px')
+
+
+def plotPhot(tde):
+    return ''
+
+def plotSpec(tde):
+    return ''

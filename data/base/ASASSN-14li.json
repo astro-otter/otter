@@ -1,169 +1,160 @@
 [{
-    "name": "ASASSN-14li",
-    "ra": [
-        {
-            "value": "12 48 15.2253"
-        }
-    ],
-    "dec": [
-        {
-            "value": "+17 46 26.475"
-        }
-    ],
-    "z": [
-        {
-            "value": "0.0206"
-        }
-    ],
-    "nu_GHz": [
-        {
-            "value": "5.0"
-        }
-    ],
-    "aliases": [
-        {
-            "value": "ASASSN-14li"
-        }
-    ],
-    "upperlimit": [
-        {
-            "value": "False"
-        }
-    ],
-    "sources": [
-        {
-            "name": "Alexander et al. (2016)",
-            "bibcode": "2016ApJ...819L..25A",
-            "alias": "1"
-        },
-        {
-            "name": "van Velzen et al. (2016)",
-            "bibcode": "2016Sci...351...62V",
-            "alias": "2"
-        },
-        {
-            "name": "Romero-Canizales et al. (2016)",
-            "bibcode": "2016ApJ...832L..10R",
-            "alias": "3"
-        },
-        {
-            "name": "Bright et al. (2018)",
-            "bibcode": "2018MNRAS.475.4011B",
-            "alias": "4"
-        }
-    ],
-    "photometry": {
-        "radio": [
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "ASASSN-14li",
+        "alias": [
             {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 141.871,
-                "dt_years": 0.3886876712,
-                "F_mJy": 1.91,
-                "luminosity": 8.895796627e+37,
-                "time": 141.871,
-                "source": "unknown",
-                "uuid": "edb09fe8-aa41-45dd-bbe5-ff502dcc3583"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 207.83,
-                "dt_years": 0.5693972603,
-                "F_mJy": 1.7417,
-                "luminosity": 8.111941877e+37,
-                "time": 207.83,
-                "source": "unknown",
-                "uuid": "9b264df6-fd27-4eec-af01-ee32adcb43e1"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 246.75,
-                "dt_years": 0.6760273973,
-                "F_mJy": 1.562,
-                "luminosity": 7.274991796e+37,
-                "time": 246.75,
-                "source": "unknown",
-                "uuid": "3ef0f9b8-f1f4-45f3-b6e9-cfcfe6917904"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 303.5145833,
-                "dt_years": 0.8315468036,
-                "F_mJy": 1.2565,
-                "luminosity": 5.852130084e+37,
-                "time": 303.5145833,
-                "source": "unknown",
-                "uuid": "8a932c71-d337-4459-a6c1-5d4d209b1971"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 379.7,
-                "dt_years": 1.0402739726,
-                "F_mJy": 0.873150048,
-                "luminosity": 4.066683378e+37,
-                "time": 379.7,
-                "source": "unknown",
-                "uuid": "447baf81-c129-4e89-ab75-347423677563"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 141.871,
-                "dt_years": 0.3886876712,
-                "luminosity": 8.895796627e+37,
-                "time": 141.871,
-                "source": "edb09fe8-aa41-45dd-bbe5-ff502dcc3583",
-                "computed": true,
-                "magnitude": 21.797416581880682
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 207.83,
-                "dt_years": 0.5693972603,
-                "luminosity": 8.111941877e+37,
-                "time": 207.83,
-                "source": "9b264df6-fd27-4eec-af01-ee32adcb43e1",
-                "computed": true,
-                "magnitude": 21.897566620399992
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 246.75,
-                "dt_years": 0.6760273973,
-                "luminosity": 7.274991796e+37,
-                "time": 246.75,
-                "source": "3ef0f9b8-f1f4-45f3-b6e9-cfcfe6917904",
-                "computed": true,
-                "magnitude": 22.015797426146797
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 303.5145833,
-                "dt_years": 0.8315468036,
-                "luminosity": 5.852130084e+37,
-                "time": 303.5145833,
-                "source": "8a932c71-d337-4459-a6c1-5d4d209b1971",
-                "computed": true,
-                "magnitude": 22.252093767678513
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 379.7,
-                "dt_years": 1.0402739726,
-                "luminosity": 4.066683378e+37,
-                "time": 379.7,
-                "source": "447baf81-c129-4e89-ab75-347423677563",
-                "computed": true,
-                "magnitude": 22.647277794462017
+                "value": "ASASSN-14li",
+                "reference": "ASASSN"
             }
         ]
-    }
+    },
+    "coordinate": {
+        "equitorial": [
+            {
+                "ra": "12 48 15.2253",
+                "dec": "+17 46 26.475",
+                "epoch": "J2000",
+                "system": "ICRS",
+                "ra_units": "hourangle",
+                "dec_units": "deg",
+                "reference": [
+                    "2016ApJ...819L..25A",
+                    "2016Sci...351...62V",
+                    "2016ApJ...832L..10R",
+                    "2018MNRAS.475.4011B"
+                ],
+                "computed": false,
+                "default": true,
+                "uuid": "db5e5256-bfae-46a8-9c15-47efd1f02831"
+            }
+        ],
+        "galactic": [
+            {
+                "l": 298.27734758483064,
+                "b": 80.61697877592154,
+                "l_units": "deg",
+                "b_units": "deg",
+                "reference": "db5e5256-bfae-46a8-9c15-47efd1f02831",
+                "computed": true
+            }
+        ]
+    },
+    "distance": {
+        "redshift": [
+            {
+                "value": "0.0206",
+                "reference": [
+                    "2016ApJ...819L..25A",
+                    "2016Sci...351...62V",
+                    "2016ApJ...832L..10R",
+                    "2018MNRAS.475.4011B"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2016ApJ...819L..25A",
+                "2016Sci...351...62V",
+                "2016ApJ...832L..10R",
+                "2018MNRAS.475.4011B"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2016ApJ...819L..25A",
+            "human_readable_name": "Alexander et al. (2016)"
+        },
+        {
+            "name": "2016Sci...351...62V",
+            "human_readable_name": "van Velzen et al. (2016)"
+        },
+        {
+            "name": "2016ApJ...832L..10R",
+            "human_readable_name": "Romero-Canizales et al. (2016)"
+        },
+        {
+            "name": "2018MNRAS.475.4011B",
+            "human_readable_name": "Bright et al. (2018)"
+        }
+    ],
+    "epoch": {
+        "date_discovery": [
+            {
+                "value": 56983,
+                "date_format": "MJD",
+                "reference": [
+                    "2016ApJ...819L..25A",
+                    "2016Sci...351...62V",
+                    "2016ApJ...832L..10R",
+                    "2018MNRAS.475.4011B"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "photometry": {
+        "phot_0": {
+            "reference": [
+                "2016ApJ...819L..25A",
+                "2016Sci...351...62V",
+                "2016ApJ...832L..10R",
+                "2018MNRAS.475.4011B"
+            ],
+            "data": [
+                {
+                    "fluxdensity": 1.91,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "date": 57124.871
+                },
+                {
+                    "fluxdensity": 1.7417,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "date": 57190.83
+                },
+                {
+                    "fluxdensity": 1.562,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "date": 57229.75
+                },
+                {
+                    "fluxdensity": 1.2565,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "date": 57286.5145833
+                },
+                {
+                    "fluxdensity": 0.873150048,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "date": 57362.7
+                }
+            ]
+        }
+    },
+    "filter_alias": [
+        {
+            "filter_key": "5.0GHz",
+            "freq_eff": 5.0,
+            "freq_units": "GHz"
+        }
+    ]
 }]

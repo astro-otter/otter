@@ -1,91 +1,110 @@
 [{
-    "name": "Sw J1112-82",
-    "ra": [
-        {
-            "value": "11 11 47.6",
-            "source": "1"
-        }
-    ],
-    "dec": [
-        {
-            "value": "-82 38 44.44",
-            "source": "1"
-        }
-    ],
-    "t_disc": [
-        {
-            "value": "55729.5"
-        }
-    ],
-    "z": [
-        {
-            "value": "0.89"
-        }
-    ],
-    "nu_GHz": [
-        {
-            "value": "5.5"
-        }
-    ],
-    "aliases": [
-        {
-            "value": "Sw J1112-82"
-        }
-    ],
-    "upperlimit": [
-        {
-            "value": "False"
-        }
-    ],
-    "sources": [
-        {
-            "name": "Brown et al. (2017)",
-            "bibcode": "2017MNRAS.472.4469B",
-            "alias": "1"
-        }
-    ],
-    "photometry": {
-        "radio": [
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "Sw J1112-82",
+        "alias": [
             {
-                "t_MJD": 57052.0,
-                "dt_days": 1322.5,
-                "dt_years": 3.6232876712,
-                "F_mJy": 0.076,
-                "luminosity": 7.267806037e+39,
-                "time": 1322.5,
-                "source": "1",
-                "uuid": "d776e97a-cf41-4ee5-934e-94283ea92879"
-            },
-            {
-                "t_MJD": 57521.5,
-                "dt_days": 1792.0,
-                "dt_years": 4.9095890411,
-                "F_mJy": 0.07,
-                "luminosity": 6.694031876e+39,
-                "time": 1792.0,
-                "source": "1",
-                "uuid": "8390a2f0-c6e6-431a-bdf0-79dae3f6a6be"
-            },
-            {
-                "t_MJD": 57052.0,
-                "dt_days": 1322.5,
-                "dt_years": 3.6232876712,
-                "luminosity": 7.267806037e+39,
-                "time": 1322.5,
-                "source": "d776e97a-cf41-4ee5-934e-94283ea92879",
-                "computed": true,
-                "magnitude": 25.297966019298023
-            },
-            {
-                "t_MJD": 57521.5,
-                "dt_days": 1792.0,
-                "dt_years": 4.9095890411,
-                "luminosity": 6.694031876e+39,
-                "time": 1792.0,
-                "source": "8390a2f0-c6e6-431a-bdf0-79dae3f6a6be",
-                "computed": true,
-                "magnitude": 25.387254899964358
+                "value": "Sw J1112-82",
+                "reference": "Swift"
             }
         ]
-    }
+    },
+    "coordinate": {
+        "equitorial": [
+            {
+                "ra": "11 11 47.6",
+                "dec": "-82 38 44.44",
+                "epoch": "J2000",
+                "system": "ICRS",
+                "ra_units": "hourangle",
+                "dec_units": "deg",
+                "reference": [
+                    "2017MNRAS.472.4469B"
+                ],
+                "computed": false,
+                "default": true,
+                "uuid": "90f9f735-5650-4dcf-9905-72c4cf06d628"
+            }
+        ],
+        "galactic": [
+            {
+                "l": 299.6337165869647,
+                "b": -20.420594756871665,
+                "l_units": "deg",
+                "b_units": "deg",
+                "reference": "90f9f735-5650-4dcf-9905-72c4cf06d628",
+                "computed": true
+            }
+        ]
+    },
+    "distance": {
+        "redshift": [
+            {
+                "value": "0.89",
+                "reference": [
+                    "2017MNRAS.472.4469B"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2017MNRAS.472.4469B"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2017MNRAS.472.4469B",
+            "human_readable_name": "Brown et al. (2017)"
+        }
+    ],
+    "epoch": {
+        "date_discovery": [
+            {
+                "value": "55729.5",
+                "date_format": "MJD",
+                "reference": [
+                    "2017MNRAS.472.4469B"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "photometry": {
+        "phot_0": {
+            "reference": "2017MNRAS.472.4469B",
+            "data": [
+                {
+                    "fluxdensity": 0.076,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.5GHz",
+                    "date": 57052.0
+                },
+                {
+                    "fluxdensity": 0.07,
+                    "fluxdensity_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.5GHz",
+                    "date": 57521.5
+                }
+            ]
+        }
+    },
+    "filter_alias": [
+        {
+            "filter_key": "5.5GHz",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        }
+    ]
 }]

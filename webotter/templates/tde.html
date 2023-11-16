@@ -53,54 +53,54 @@
 
       <!-- Header -->
       <header class="w3-container w3-center" style="padding: 64px 16px">
-	<h1 class="w3-margin w3-jumbo">{{ tde.name.name }}</h1>
-	<p class="w3-xlarge">OTTER Catalog Data for {{ tde.name.name }}</p>
+	<h1 class="w3-margin w3-jumbo">{{ tde['name']['default_name'] }}</h1>
+	<p class="w3-xlarge">OTTER Catalog Data for {{ tde['name']['default_name'] }}</p>
       </header>
       
       <div class="w3-container w3-center">
-	{% if tde.photometry is defined and tde.spectra is defined %}
+	{% if tde['photometry'] is defined and tde['spectra'] is defined %}
 	  <div class="w3-container w3-third w3-center">
 	    <center>
 	      <h3>Photometry</h3>
-	      {{ tde.plotPhotometry()|safe }}
+	      {{ plotPhotometry(tde)|safe }}
 	    </center>
 	  </div>
 	  <div class="w3-container w3-third w3-center">
 	    <center>
 	      <h3>Spectra</h3>
-	      {{ tde.plotSpectra()|safe }}
+	      {{ plotSpectra(tde)|safe }}
 	    </center>
 	  </div>
 	  <div class="w3-container w3-third w3-center">
             <h3>Information</h3>
-	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__(html=True)|safe }}</table>
+	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__()|safe }}</table>
           </div>
-	{% elif tde.photometry is defined and tde.spectra is not defined %}
+	{% elif tde['photometry'] is defined and tde['spectra'] is not defined %}
 	  <div class="w3-container w3-half w3-center">
 	    <center>
 	      <h3>Photometry</h3>
-	      {{ tde.plotPhotometry()|safe }}
+	      {{ plotPhotometry(tde)|safe }}
 	    </center>
 	  </div>
 	  <div class="w3-container w3-half w3-center">
             <h3>Information</h3>
-	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__(html=True)|safe }}</table>
+	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__()|safe }}</table>
           </div>
-	{% elif tde.photometry is not defined and tde.spectra is defined %}
+	{% elif tde['photometry'] is not defined and tde['spectra'] is defined %}
 	  <div class="w3-container w3-half w3-center">
 	    <center>
 	      <h3>Spectra</h3>
-	      {{ tde.plotSpectra()|safe }}
+	      {{ plotSpectra(tde)|safe }}
 	    </center>
 	  </div>
 	  <div class="w3-container w3-half w3-center">
             <h3>Information</h3>
-	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__(html=True)|safe }}</table>
+	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__()|safe }}</table>
           </div>
 	{% else %}
 	  <div class="w3-container w3-center">
             <h3>Information</h3>
-	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__(html=True)|safe }}</table>
+	    <table><tr><th>Property</th><th>Value</th></tr>{{ tde.__str__()|safe }}</table>
           </div>
 	{% endif %}
 	</table>

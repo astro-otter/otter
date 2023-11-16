@@ -50,6 +50,29 @@
 	  margin: 8px 0;
 	  box-sizing: border-box;
       }
+
+      input[type=submit] {
+	  font-size: 24px;
+	  width: 30%;
+	  float: center;
+	  background-color: darkgrey;
+	  border: none;
+	  opacity: 1;
+      }
+
+      input[type=submit]:hover {
+	  opacity: 0.6
+      }
+
+      input[type=checkbox] {
+	  margin:6%;
+      }
+      
+      label {
+	  font-size: 18px;
+      }
+
+      
     </style>
 
     <!-- Navbar -->
@@ -70,41 +93,49 @@
     <!-- Header -->
     <header class="w3-container w3-center" style="padding: 64px 16px">
       <h1 class="w3-margin w3-jumbo">OTTER</h1>
-      <p class="w3-xlarge">The Open Tidal disrupTion Event Repository</p>
+      <p class="w3-xlarge">The Open mulTiwavelength Transient Event Repository</p>
     </header>
     
     <!-- Search Function for the Catalog -->
     <div class="w3-center w3-container" style="padding: 32px 16px; background-color: #bebebebe;">
       <h2>Search TDE's</h2>
       <form method="POST">
-	<div class="w3-half" style="margin-bottom:3%">
-	  <label for="name">TDE Name (string)</label><br>
-	  <input name="tdename" type="text"><br>
-	  
-	  <label for="RA">RA (string formatted like the table below)</label><br>
-	  <input name="ra" type="text"><br>
-	  
-	  <label for="Dec">Dec (string formatted like the table below)</label><br>
-	  <input name="dec" type="text"><br>
+	<div class='w3-container'>
+	  <div class="w3-half" style="margin-bottom:3%">
+	    <label for="name">TDE Name (string)</label><br>
+	    <input name="tdename" type="text"><br>
+	    
+	    <label for="RA">RA (hours)</label><br>
+	    <input name="ra" type="text"><br>
+	    
+	    <label for="Dec">Dec (deg)</label><br>
+	    <input name="dec" type="text"><br>
+	    
+	    <label for="SearchRadius">Search Radius (arcsec)</label><br>
+	    <input name="searchRadius" type="text"><br>
+	    
+	  </div>
+	  <div class="w3-half w3-cell-top" style="margin-bottom:3%">
+	    <label for="Z">Minimum Redshift (float)</label><br>
+	    <input name="minZ" type="text"><br>
+	    
+	    <label for="Z">Maximum Redshift (float)</label><br>
+	    <input name="maxZ" type="text"><br>
+	    
+	    
+	    <label for="Spectra">Spectra Available</label>
+	    <!-- <input name="spectraType" type="text"><br> -->
+	    <input type='checkbox' name='spectra'><br>
+	    
 
-	  <label for="SearchRadius">Search Radius (arcsec)</label><br>
-	  <input name="searchRadius" type="text"><br>
-	  
+	    <label for="Photometry">Photometry Available</label>
+	    <!-- <input name="photoType" type="text"><br> -->
+	    <input type='checkbox' name='photometry'><br>
+	  </div>
+	</div><br>
+	<div class='w3-container'>
+	  <input type='submit' value='Submit'>
 	</div>
-	<div class="w3-half" style="margin-bottom:3%">
-	  <label for="Z">Minimum Redshift (float)</label><br>
-	  <input name="minZ" type="text"><br>
-
-	  <label for="Z">Maximum Redshift (float)</label><br>
-	  <input name="maxZ" type="text"><br>
-
-	  <label for="SpectraType">Type of Spectra Available (optical, radio, x-ray, uv, infared are valid inputs)</label><br>
-	  <input name="spectraType" type="text"><br>
-
-	  <label for="PhotometryType">Type of Photometry Available (optical, radio, x-ray, uv, infared are valid inputs)</label><br>
-	  <input name="photoType" type="text"><br>
-	</div>
-	<input type='submit' value='Submit' style='width: 20%; height:50%'>
       </form>
     </div>
 
@@ -113,7 +144,7 @@
     <div class="w3-container w3-center" style="margin-top:3%; width=80%; text-align:'center'">
       <div class="w3-center">
 	<h2>Catalog Summary</h2>
-	<h3>Number of TDEs: {{ tdes.values()|length }}</h3>
+	<h3>Number of TDEs: {{ tdes|length }}</h3>
       </div>
       {{ otherHTML|safe }}
     </div>
@@ -132,20 +163,22 @@
 	    <th>RA [hrs]</th>
 	    <th>Dec [deg]</th>
 	    <th>Z</th>
-	      <th>Source List</th>
+	    <th>Discovery Date</th>
+	    <th>Classification</th>
 	  </tr>
 	  
-	  {% for name, tde in tdes.items() %}
+	  {% for tde in tdes %}
           <tr>
-	    <td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=name)  }}">{{ name }}</td>
-	    <td>{{ tde.ra[0].valueString }}</td>
-	    <td>{{ tde.dec[0].valueString }}</td>
-	    {% if tde.z is defined %}
-	    <td>{{ tde.z[0]['value'] }}</td>
+	    <td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=tde['name']['default_name'])  }}">{{ tde['name']['default_name'] }}</td>
+	    <td>{{ tde['coordinate']['equitorial'][0]['ra'] }}</td>
+	    <td>{{ tde['coordinate']['equitorial'][0]['dec'] }}</td>
+	    {% if tde['distance']['redshift'] is defined %}
+	    <td>{{ tde['distance']['redshift'][0]['value'] }}</td>
 	    {% else %}
 	    <td></td>
 	    {% endif %}
-	    <td>{{ tde.fancySources|safe }}</td>
+	    <td>{{ tde['epoch']['date_discovery'][0]['value'] }}</td>
+	    <td>{{ tde['classification'][0]['object_class'] }}<td>
 	  </tr>
 	  {% endfor %}
 	  </table>
