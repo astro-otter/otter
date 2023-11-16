@@ -28,16 +28,16 @@
                 ],
                 "computed": false,
                 "default": true,
-                "uuid": "1d1a40fe-f4ad-4bd8-84cb-413b47f91d2b"
+                "uuid": "a1f07807-e85e-4436-8cdb-56e4358e8f04"
             }
         ],
         "galactic": [
             {
-                "l": 53.61702902648377,
-                "b": -25.118939290176584,
+                "l": 53.61702902648376,
+                "b": -25.11893929017656,
                 "l_units": "deg",
                 "b_units": "deg",
-                "reference": "1d1a40fe-f4ad-4bd8-84cb-413b47f91d2b",
+                "reference": "a1f07807-e85e-4436-8cdb-56e4358e8f04",
                 "computed": true
             }
         ]
@@ -102,19 +102,25 @@
                 "2015ApJ...805...68P",
                 "2017MNRAS.472.4469B"
             ],
-            "data": [
+            "flux": [
                 {
-                    "fluxdensity": 0.88,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.88,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "4.5GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 55741.0
                 },
                 {
-                    "fluxdensity": 0.225,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.225,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.5GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57522.0
                 }
             ]

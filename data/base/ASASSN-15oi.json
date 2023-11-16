@@ -26,16 +26,16 @@
                 ],
                 "computed": false,
                 "default": true,
-                "uuid": "d2876ad5-d388-4a6d-8e6d-708eec63262f"
+                "uuid": "8829807c-e485-4f73-bbc4-3e72f190515a"
             }
         ],
         "galactic": [
             {
-                "l": 13.01154485751856,
-                "b": -35.41877256185317,
+                "l": 13.011544857518546,
+                "b": -35.41877256185316,
                 "l_units": "deg",
                 "b_units": "deg",
-                "reference": "d2876ad5-d388-4a6d-8e6d-708eec63262f",
+                "reference": "8829807c-e485-4f73-bbc4-3e72f190515a",
                 "computed": true
             }
         ]
@@ -82,82 +82,115 @@
     "photometry": {
         "phot_0": {
             "reference": "2021NatAs...5..491H",
-            "data": [
+            "flux": [
                 {
-                    "fluxdensity": 0.033,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.033,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "6.1GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": true,
                     "date": 57256.2
                 },
                 {
-                    "fluxdensity": 0.036,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.036,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "6.1GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": true,
                     "date": 57271.2
                 },
                 {
-                    "fluxdensity": 0.06,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.06,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "6.1GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": true,
                     "date": 57338.2
                 },
                 {
-                    "fluxdensity": 1.114,
-                    "fluxdensity_units": "mJy",
+                    "raw": 1.114,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "4.8GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57430.2
                 },
                 {
-                    "fluxdensity": 0.899,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.899,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "4.8GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57438.2
                 },
                 {
-                    "fluxdensity": 0.881,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.881,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.5GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57445.2
                 },
                 {
-                    "fluxdensity": 0.824,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.824,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.5GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57481.2
                 },
                 {
-                    "fluxdensity": 0.854,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.854,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57531.2
                 },
                 {
-                    "fluxdensity": 0.617,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.617,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57617.2
                 },
                 {
-                    "fluxdensity": 0.262,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.262,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57824.2
                 },
                 {
-                    "fluxdensity": 8.0,
-                    "fluxdensity_units": "mJy",
+                    "raw": 8.0,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "3.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 58665.2
                 }
             ]

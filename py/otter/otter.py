@@ -43,34 +43,21 @@ class Otter(Database):
         # initiate the tdes database
         super().__init__(c, db)
 
-    def getMeta(self,
-                names:list[str]=None,
-                coords:SkyCoord=None,
-                radius:float=0.05,
-                minZ:float=0,
-                maxZ:float=None,
-                refs:list[str]=None,
-                raw:bool=False
-                ) -> Table:
+    def getMeta(self, **kwargs) -> Table:
         '''
         Get the metadata of the objects matching the arguments
 
         Args:
-            names [list[str]]: A list of names to get the metadata for
-            coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
-            radius [float]: The radius in arcseconds for a cone search, default is 0.05"
-            minZ [float]: The minimum redshift to search for
-            maxZ [float]: The maximum redshift to search for
-            refs [list[str]]: A list of ads bibcodes to match to. Will only return 
-                              metadata for transients that have this as a reference.
-            raw [bool]: If true, return the raw json format. Otherwise return an
-                        astropy Table.
-
+            **kwargs : Arguments to pass to Otter.query()
         Return:
            The metadata for the transients that match the arguments. Will be an astropy
            Table by default, if raw=True will be a dictionary.
         '''
-
+        metakeys = ['name', 'coordinate', 'epoch', 'distance', 'classification']
+        
+        return [t[metakeys] for t in self.query(**kwargs)]     
+        
+        
     def coneSearch(self,
                    coords:SkyCoord,
                    radius:float=0.05,
@@ -90,6 +77,11 @@ class Otter(Database):
             Table if raw is False, otherwise a dict.
         '''
 
+        transients = self.query(coords=coords,
+                                radius=radius,
+                                raw=False)
+        
+        
     def query(self,
               names:list[str]=None,
               coords:SkyCoord=None,
@@ -99,9 +91,10 @@ class Otter(Database):
               refs:list[str]=None,
               hasPhot:bool=False,
               hasSpec:bool=False,
+              raw:bool=False
               ) -> dict:
         '''
-        Wraps on the super.AQLQuery and ONLY RETURNS RAW JSON FORMAT
+        Wraps on the super.AQLQuery
 
         This is how it differs from the `getMeta` method. Users should prefer to use
         `getMeta`, `getPhot`, and `getSpec` independently because it is a better 
@@ -179,6 +172,7 @@ class Otter(Database):
             # get the catalog RAs and Decs to compare against
             queryCoords = coords
             goodTDEs = []
+
             for tde in result:
                 for coordinfo in tde['coordinate']['equitorial']:
                     coord = SkyCoord(coordinfo['ra'], coordinfo['dec'],
@@ -186,11 +180,18 @@ class Otter(Database):
                     if queryCoords.separation(coord) < radius*u.arcsec:
                         goodTDEs.append(tde)
                         break # we've confirmed this tde is in the cone!
-            return [Transient(t) for t in goodTDEs]
+
+            if not raw:
+                return [Transient(t) for t in goodTDEs]
+            else:
+                return goodTDEs
 
         else:
-            return [Transient(res) for res in result.result]
-
+            if not raw:
+                return [Transient(res) for res in result.result]
+            else:
+                return result.result
+            
     def _close(self) -> None:
         '''
         Close the database connection. We just need this for flask!

@@ -120,7 +120,7 @@ def plotCatalogSummary(tdes):
 
 
 def plotPhot(tde):
-    return ''
+    return tde.plotPhotometry()
 
 def plotSpec(tde):
     return ''

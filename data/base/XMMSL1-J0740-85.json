@@ -27,16 +27,16 @@
                 ],
                 "computed": false,
                 "default": true,
-                "uuid": "fd7f449e-0359-4c9e-8150-6ae8de2c9cc1"
+                "uuid": "a80b0dd9-ead5-4fcc-9cda-261b1cc3c728"
             }
         ],
         "galactic": [
             {
-                "l": 127.73752626582558,
+                "l": 127.73752626582555,
                 "b": 27.96183708953435,
                 "l_units": "deg",
                 "b_units": "deg",
-                "reference": "fd7f449e-0359-4c9e-8150-6ae8de2c9cc1",
+                "reference": "a80b0dd9-ead5-4fcc-9cda-261b1cc3c728",
                 "computed": true
             }
         ]
@@ -90,26 +90,35 @@
     "photometry": {
         "phot_0": {
             "reference": "2017ApJ...837..153A",
-            "data": [
+            "flux": [
                 {
-                    "fluxdensity": 1.19,
-                    "fluxdensity_units": "mJy",
+                    "raw": 1.19,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "1.53GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57357.0
                 },
                 {
-                    "fluxdensity": 0.89,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.89,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "1.7GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57517.0
                 },
                 {
-                    "fluxdensity": 0.65,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.65,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "1.6GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 57623.0
                 }
             ]

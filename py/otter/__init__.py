@@ -8,3 +8,4 @@ __package__ = "otter"
 # import important stuff
 #from .tde import TDE
 from .otter import Otter
+from .transient import Transient

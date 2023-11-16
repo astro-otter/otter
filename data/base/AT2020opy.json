@@ -26,16 +26,16 @@
                 ],
                 "computed": false,
                 "default": true,
-                "uuid": "a82788f3-89e3-4117-8457-a57a4a8a88bd"
+                "uuid": "512c0fb3-c03d-4054-b121-2d2244accb60"
             }
         ],
         "galactic": [
             {
-                "l": 38.411569358993255,
-                "b": 48.23253616380999,
+                "l": 38.41156935899329,
+                "b": 48.23253616380998,
                 "l_units": "deg",
                 "b_units": "deg",
-                "reference": "a82788f3-89e3-4117-8457-a57a4a8a88bd",
+                "reference": "512c0fb3-c03d-4054-b121-2d2244accb60",
                 "computed": true
             }
         ]
@@ -82,26 +82,35 @@
     "photometry": {
         "phot_0": {
             "reference": "2023MNRAS.518..847G",
-            "data": [
+            "flux": [
                 {
-                    "fluxdensity": 0.047,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.047,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.04GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 59077.23
                 },
                 {
-                    "fluxdensity": 0.091,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.091,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.5GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 59200.23
                 },
                 {
-                    "fluxdensity": 0.256,
-                    "fluxdensity_units": "mJy",
+                    "raw": 0.256,
+                    "raw_units": "mJy",
                     "date_format": "MJD",
                     "filter_key": "5.5GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
                     "date": 59368.23
                 }
             ]
