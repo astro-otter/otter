@@ -9,6 +9,8 @@ from astropy import units as u
 from pyArango.database import Database
 from pyArango.connection import Connection
 
+from .transient import Transient
+
 class Otter(Database):
     '''
     This is the primary class for users to access the otter backend database
@@ -169,8 +171,6 @@ class Otter(Database):
             {queryFilters}
             RETURN tde
         '''
-
-        print(query)
         
         result = self.AQLQuery(query, rawResults=True)
         
@@ -186,13 +186,13 @@ class Otter(Database):
                     if queryCoords.separation(coord) < radius*u.arcsec:
                         goodTDEs.append(tde)
                         break # we've confirmed this tde is in the cone!
-            return goodTDEs
+            return [Transient(t) for t in goodTDEs]
 
         else:
-            return result.result
+            return [Transient(res) for res in result.result]
 
     def _close(self) -> None:
         '''
-        Close the database connection.
+        Close the database connection. We just need this for flask!
         '''
         del self
