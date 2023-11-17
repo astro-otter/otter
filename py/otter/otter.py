@@ -197,3 +197,12 @@ class Otter(Database):
         Close the database connection. We just need this for flask!
         '''
         del self
+
+    def upload(self, zipfile:str) -> None:
+        '''
+        Upload a zipfile of information about transients. See the README for info on 
+        formatting this zipfile.
+
+        Args:
+            zipfile [str]: path to the zipfile you want to upload
+        '''

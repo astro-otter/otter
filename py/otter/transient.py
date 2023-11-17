@@ -5,6 +5,7 @@ basically just inherits the dict properties with some overwriting
 import warnings
 from collections.abc import MutableMapping
 
+import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.io import to_html
@@ -36,10 +37,10 @@ class Transient(MutableMapping):
             self.default_name = 'Missing Default Name'
             
     def __getitem__(self, keys):
-        if isinstance(keys, list):
+        if isinstance(keys, (list, tuple)):
             return Transient({key:self.data[key] for key in keys})
-        elif isinstance(keys, tuple):
-            s = "']['".join(keys)
+        elif isinstance(keys, str) and '/' in keys: # this is for a path
+            s = "']['".join(keys.split('/'))
             s = "['" + s
             s += "']"
             return eval(f"self{s}") 
@@ -152,10 +153,25 @@ class Transient(MutableMapping):
         # clean the photometry to prepare it for plotting
         cleanPhot = self.cleanPhotometry()
 
-        print(cleanPhot)
         # add symbol for upperlimit or not
         m = lambda row: 'triangle-down' if row.upperlimit else 'circle'
         cleanPhot['symbols'] = cleanPhot.apply(m, axis=1)
+
+        # assign a numerical value to each unique filter
+        filters = cleanPhot.filter_key.unique()
+        filtercolors = ['#FF0000',  # Red
+                        '#FF7F00',  # Orange
+                        '#FFFF00',  # Yellow
+                        '#00FF00',  # Green
+                        '#0000FF',  # Blue
+                        '#4B0082',  # Indigo
+                        '#9400D3',  # Violet
+                        '#FF1493',  # Deep Pink
+                        '#00CED1',  # Dark Turquoise
+                        '#FFD700']  # Gold
+        colormap = dict(zip(filters, filtercolors))
+        cm = lambda row: colormap[row.filter_key]
+        cleanPhot['color'] = cleanPhot.apply(cm, axis=1)
         
         # now plot using plotly
         fig = go.Figure()
@@ -166,10 +182,11 @@ class Transient(MutableMapping):
             fig.add_trace(go.Scatter(x=cleanPhot.date,
                                      y=cleanPhot.raw,
                                      marker_symbol=cleanPhot.symbols,
+                                     marker_color=cleanPhot.color,
                                      mode='markers',
                                      customdata=cleanPhot.reference, 
                                      hovertemplate=
-                                     'Sources: %customdata'+
+                                     'Sources: %{customdata}'+
                                      '<extra></extra>',
                                      visible=visible,
                                      **kwargs
@@ -214,8 +231,8 @@ class Transient(MutableMapping):
         # turn the photometry key into a pandas dataframe
         dictlist = []
         for phot in self['photometry']:
-            ref = self['photometry', phot, 'reference']
-            for ddict in self['photometry', phot, 'flux']:
+            ref = self[f'photometry/{phot}/reference']
+            for ddict in self[f'photometry/{phot}/flux']:
                 ddict['reference'] = ref
                 ddict['phot_num'] = phot
                 dictlist.append(ddict)
@@ -235,4 +252,3 @@ class Transient(MutableMapping):
         # make sure all the datetimes are in the same format here too!!
         
         return df
-        
