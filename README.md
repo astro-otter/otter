@@ -82,6 +82,7 @@ Optional Columns:
 * `pipeline`: Name and version of the pipeline used to reduce this data.
 
 ### The spectra FITS files
+Spectra are not supported at this time.
 
 ## Developer Instructions
 1. Clone this repo:
