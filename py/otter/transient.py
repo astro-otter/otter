@@ -10,6 +10,10 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.io import to_html
 
+import astropy.units as u
+
+from .unit_types import *
+
 class Transient(MutableMapping):
 
     def __init__(self, d={}, name=None):
@@ -139,9 +143,15 @@ class Transient(MutableMapping):
 
         return self[keys]        
 
-    def plotPhotometry(self, **kwargs):
+    def plotPhotometry(self, flux_unit='mag(AB)', date_unit='MJD', **kwargs):
         '''
         Plot the photometry associated with this transient (if any)
+        
+        Args:
+            flux_unit [str]: Valid astropy unit string for the flux (y-axis) units.
+                             Default: 'ABmag'
+            date_unit [str]: Valid astropy unit string for the date (x-axis) units.
+                             Default: 'MJD'
         '''
         if 'photometry' not in self:
             raise AttributeError('This transient does not have any photometry associated with it')
@@ -151,7 +161,7 @@ class Transient(MutableMapping):
             warnings.warn('Warning! References will be given as bibcodes, not in human readable format!')
 
         # clean the photometry to prepare it for plotting
-        cleanPhot = self.cleanPhotometry()
+        cleanPhot = self.cleanPhotometry(flux_unit=flux_unit, date_unit=date_unit)
 
         # add symbol for upperlimit or not
         m = lambda row: 'triangle-down' if row.upperlimit else 'circle'
@@ -180,13 +190,16 @@ class Transient(MutableMapping):
         ii = 0
         for obstype, phot in cleanPhot.groupby('obs_type'):
             fig.add_trace(go.Scatter(x=cleanPhot.date,
-                                     y=cleanPhot.raw,
+                                     y=cleanPhot.converted_flux,
                                      marker_symbol=cleanPhot.symbols,
                                      marker_color=cleanPhot.color,
                                      mode='markers',
-                                     customdata=cleanPhot.reference, 
+                                     customdata=np.stack((cleanPhot.reference,
+                                                          cleanPhot.filter_key
+                                                          ), axis=-1), 
                                      hovertemplate=
-                                     'Sources: %{customdata}'+
+                                     '<b>Sources</b>: %{customdata[0]}<br>'+
+                                     '<b>Filter</b>: %{customdata[1]}'+
                                      '<extra></extra>',
                                      visible=visible,
                                      **kwargs
@@ -206,7 +219,18 @@ class Transient(MutableMapping):
 
             ii += 1
 
+
+        if 'mag' in flux_unit:
+            fig.update_yaxes(autorange="reversed")
+            ylabel = 'Magnitude'
+        else:
+            ylabel = f'Flux [{flux_unit}]'
+
+        xlabel = f'Time [{date_unit}]'
+            
         fig.update_layout(
+            xaxis_title=xlabel,
+            yaxis_title=ylabel,
             updatemenus=[go.layout.Updatemenu(
                 x = 1.25,
                 y = 1,
@@ -217,11 +241,14 @@ class Transient(MutableMapping):
             ]
         )
 
+        fig.update_yaxes(exponentformat='none')
+        fig.update_xaxes(exponentformat='none')
+
         return to_html(fig, full_html=False, default_width='500px',
                        default_height='500px')
         
             
-    def cleanPhotometry(self):
+    def cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD'):
         '''
         Ensure the photometry associated with this transient is all in the same units/system/etc
 
@@ -247,8 +274,47 @@ class Transient(MutableMapping):
         
         # convert the ads bibcodes to a string of human readable sources here
         
-        # figure out the units
+        # figure out the units of the photometry
+        outdata = []
+        for obstype, data in df.groupby('obs_type'):
 
+            # get the photometry in the right type
+            unit = data.raw_units.unique()
+            if len(unit) > 1:
+                raise ValueError('Can not apply multiple units for different obs_types')
+            astropy_units = u.Unit(unit[0])
+            phot = get_type(np.asarray(data.raw) * astropy_units)
+
+            # convert this to a flux
+            if 'freq_eff' in data:
+                system = 'freq_eff'
+                system_units = 'freq_units'
+            elif 'wave_eff' in data:
+                system = 'wave_eff'
+                system_units = 'wave_units'
+
+            uniteff = data[system_units].unique()
+            if len(uniteff) > 1:
+                raise ValueError('Applying multiple units to the effective frequencies is currently not supported!')
+            astropy_uniteff = u.Unit(uniteff[0])
+
+            print(np.asarray(data[system])*astropy_uniteff)
+            conversion = {system:np.asarray(data[system])*astropy_uniteff,
+                          'out_units':flux_unit}
+
+            if Flux.isflux(1*u.Unit(flux_unit)):
+                flux = phot.toflux(**conversion)
+            elif FluxDensity.isfluxdensity(1*u.Unit(flux_unit)):
+                flux = phot.tofluxdensity(**conversion)
+            else:
+                raise ValueError('The y-axis units must be either flux or fluxdensity!')
+
+            # add a new column called converted_flux 
+            data['converted_flux'] = flux.value
+            outdata.append(data)
+
+        outdata = pd.concat(outdata)
+                    
         # make sure all the datetimes are in the same format here too!!
         
-        return df
+        return outdata

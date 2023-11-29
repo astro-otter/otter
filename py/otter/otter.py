@@ -207,4 +207,32 @@ class Otter(Database):
             zipfile [str]: path to the zipfile you want to upload
         '''
 
+    def _merge(self, json:dict) -> None:
+        '''
+        Merge the input json file with the existing data in otter
+
+        Args:
+            json [dict]: a dictionary in the correct json format with the correct keys
+        '''
+
+    def _add(self, json:dict) -> None:
+        '''
+        Add a new transient to otter because the input doesn't match any existing transients
+
+        Args:
+            json [dict]: a dictionary in the correct json format with the correct keys
+        '''
+
+    def _verify_json(self, json:dict) -> None:
+        '''
+        Verifies that the input json is in the correct format for an upload
         
+        Args:
+            json [dict]: a dictionary in the correct json format with the correct keys
+
+        Returns:
+            None if in the correct format, if not in the right format throws an exception
+        '''
+
+
+    

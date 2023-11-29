@@ -71,7 +71,10 @@ def skymap(fig, tdes):
     fig.add_trace(go.Scattergeo(lon=info['RA [deg]'],
                                 lat=info['Dec [deg]'],
                                 hovertext=info['TDE Name'],
-                                hovertemplate="TDE Name: %{hovertext}\nRA: %{lon}\nDec: %{lat}}",
+                                hovertemplate="<b>Name</b>: %{hovertext}<br>" +
+                                              "<b>RA</b>: %{lon}<br>" +
+                                              "<b>Dec</b>: %{lat}" +
+                                              "<extra></extra>",
                                 showlegend=False,
                                 marker=dict(color=np.log10(info['Z']),
                                             colorbar=dict(thickness=20,
