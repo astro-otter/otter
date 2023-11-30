@@ -1,5 +1,5 @@
 # OTTER
-### **O**pen **T**idal disrup**T**ion **E**vent **R**epository
+### **O**pen mul**T**iwavelength **T**ransient **E**vent **R**epository
 
 ## Repo Organization
 | Directory | Contents |
@@ -49,9 +49,6 @@ Required Columns:
 energy, or count.
 * `raw_units`: The units (or system in the case of a magnitude) of `raw`
 * `filter`: The name of the telescope filter
-* `filter_eff`: The effective wavelength or frequency of the filter. We will
-use the `filter_eff_units` key to determine this.
-* `filter_eff_units`: The units of `filter_eff`.
 
 Required/Optional Columns (Only required in some cases):
 * `telescope_area`: Collecting area of the telescope. Required if the
@@ -72,7 +69,6 @@ Optional Columns:
 * `date_err`: The error on the date given.
 * `upperlimit`: Boolean. True if this is an upperlimit.
 * `sigma`: Significance of the upperlimit.
-* `telescope`: The name of the telescope or observatory.
 * `instrument`: The instrument used to collect this data.
 * `phot_type`: is the photometry PSF, Aperature, or synthetic.
 * `exptime`: The exposure time
@@ -80,6 +76,10 @@ Optional Columns:
 * `observer`: Name of the observer for this point.
 * `reducer`: Name of the person who reduced this data point.
 * `pipeline`: Name and version of the pipeline used to reduce this data.
+* `filter_eff`: The effective wavelength or frequency of the filter. We will
+use the `filter_eff_units` key to determine this.
+* `filter_eff_units`: The units of `filter_eff`.
+* `telescope`: The name of the telescope or observatory.
 
 ### The spectra FITS files
 Spectra are not supported at this time.

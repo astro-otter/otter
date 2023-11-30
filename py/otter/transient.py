@@ -3,6 +3,7 @@ Class for a transient,
 basically just inherits the dict properties with some overwriting
 '''
 import warnings
+from copy import deepcopy
 from collections.abc import MutableMapping
 
 import numpy as np
@@ -11,6 +12,7 @@ import plotly.graph_objects as go
 from plotly.io import to_html
 
 import astropy.units as u
+from astropy.time import Time
 
 from .unit_types import *
 
@@ -39,6 +41,8 @@ class Transient(MutableMapping):
             self.default_name = name
         else:
             self.default_name = 'Missing Default Name'
+
+        # Make it so all coordinates are astropy skycoords
             
     def __getitem__(self, keys):
         if isinstance(keys, (list, tuple)):
@@ -84,7 +88,7 @@ class Transient(MutableMapping):
             </tr>
             '''
 
-            if 'date_discovery' in self['epoch']:
+            if 'epoch' in self and 'date_discovery' in self['epoch']:
                 # add the discovery date
                 html += f'''
                 <tr>
@@ -93,7 +97,7 @@ class Transient(MutableMapping):
                 </tr>
                 '''
 
-            if 'redshift' in self['distance']:
+            if 'distance' in self and 'redshift' in self['distance']:
                 # add the redshift
                 html += f'''
                 <tr>
@@ -143,7 +147,7 @@ class Transient(MutableMapping):
 
         return self[keys]        
 
-    def plotPhotometry(self, flux_unit='mag(AB)', date_unit='MJD', **kwargs):
+    def plotPhotometry(self, flux_unit='mag(AB)', date_unit='datetime', **kwargs):
         '''
         Plot the photometry associated with this transient (if any)
         
@@ -169,16 +173,15 @@ class Transient(MutableMapping):
 
         # assign a numerical value to each unique filter
         filters = cleanPhot.filter_key.unique()
+        
         filtercolors = ['#FF0000',  # Red
                         '#FF7F00',  # Orange
                         '#FFFF00',  # Yellow
                         '#00FF00',  # Green
                         '#0000FF',  # Blue
                         '#4B0082',  # Indigo
-                        '#9400D3',  # Violet
-                        '#FF1493',  # Deep Pink
-                        '#00CED1',  # Dark Turquoise
-                        '#FFD700']  # Gold
+                        '#9400D3'  # Violet
+                        ]*len(filters)
         colormap = dict(zip(filters, filtercolors))
         cm = lambda row: colormap[row.filter_key]
         cleanPhot['color'] = cleanPhot.apply(cm, axis=1)
@@ -189,12 +192,12 @@ class Transient(MutableMapping):
         buttons = []
         ii = 0
         for obstype, phot in cleanPhot.groupby('obs_type'):
-            fig.add_trace(go.Scatter(x=cleanPhot.date,
+            fig.add_trace(go.Scatter(x=cleanPhot.converted_date,
                                      y=cleanPhot.converted_flux,
                                      marker_symbol=cleanPhot.symbols,
                                      marker_color=cleanPhot.color,
                                      mode='markers',
-                                     customdata=np.stack((cleanPhot.reference,
+                                     customdata=np.stack((cleanPhot.human_readable_refs,
                                                           cleanPhot.filter_key
                                                           ), axis=-1), 
                                      hovertemplate=
@@ -258,9 +261,11 @@ class Transient(MutableMapping):
         # turn the photometry key into a pandas dataframe
         dictlist = []
         for phot in self['photometry']:
-            ref = self[f'photometry/{phot}/reference']
+            meta = deepcopy(self[f'photometry/{phot}'])
+            del meta['flux']
             for ddict in self[f'photometry/{phot}/flux']:
-                ddict['reference'] = ref
+                for key in meta:
+                    ddict[key] = meta[key]
                 ddict['phot_num'] = phot
                 dictlist.append(ddict)
 
@@ -270,9 +275,17 @@ class Transient(MutableMapping):
         filters = pd.DataFrame(self['filter_alias'])
         df = df.merge(filters, on='filter_key')
 
-        # SKIP THE NEXT STUFF FOR NOW
-        
         # convert the ads bibcodes to a string of human readable sources here
+        def mappedrefs(row):
+            if isinstance(row.reference, list):
+                return '<br>'.join([self.srcmap[bibcode] for bibcode in row.reference])
+            else:
+                return self.srcmap[row.reference] 
+        try:
+            df['human_readable_refs'] = df.apply(mappedrefs, axis=1)
+        except Exception as exc:
+            warnings.warn(f'Unable to apply the source mapping because {exc}')
+            df['human_readable_refs'] = df.reference
         
         # figure out the units of the photometry
         outdata = []
@@ -297,8 +310,6 @@ class Transient(MutableMapping):
             if len(uniteff) > 1:
                 raise ValueError('Applying multiple units to the effective frequencies is currently not supported!')
             astropy_uniteff = u.Unit(uniteff[0])
-
-            print(np.asarray(data[system])*astropy_uniteff)
             conversion = {system:np.asarray(data[system])*astropy_uniteff,
                           'out_units':flux_unit}
 
@@ -314,7 +325,9 @@ class Transient(MutableMapping):
             outdata.append(data)
 
         outdata = pd.concat(outdata)
-                    
+        
         # make sure all the datetimes are in the same format here too!!
+        times = [Time(d,format=f).to_value(date_unit.lower()) for d, f in zip(outdata.date, outdata.date_format.str.lower())]
+        outdata['converted_date'] = times
         
         return outdata

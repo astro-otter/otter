@@ -197,10 +197,15 @@ def get_type(quantity):
     '''
 
     if FluxDensity.isfluxdensity(quantity):
-        return FluxDensity(quantity)
+        # we have to be a little careful cause some of these are mags
+        if str(quantity.unit) == 'mag(AB)':
+            print('fouund magab')
+            return FluxDensity(quantity.to(u.erg/u.cm**2/u.s/u.Hz))
+        elif str(quantity.unit) == 'mag(ST)':
+            return FluxDensity(quantity.to(u.erg/u.cm**2/u.s/u.nm))
+        else:
+            return FluxDensity(quantity)
     elif Flux.isflux(quantity):
         return Flux(quantity)
-    elif Magnitude.ismagnitude(quantity):
-        return Magnitude(quantity)
     else:
         raise ValueError('This quantity does not have valild units!')

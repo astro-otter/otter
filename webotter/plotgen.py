@@ -41,7 +41,7 @@ def skymap(fig, tdes):
         info['RA [deg]'].append(defaultcoord['ra'])
         info['Dec [deg]'].append(defaultcoord['dec'])
         info['TDE Name'].append(t['name']['default_name'])
-        if 'redshift' in t['distance']:
+        if 'distance' in t and 'redshift' in t['distance']:
             info['Z'].append(float(t['distance']['redshift'][0]['value']))
         else:
             info['Z'].append(0)
@@ -91,7 +91,12 @@ def redshifts(fig, tdes):
     Generates a plot of the redshifts
     '''
 
-    z = np.array([t['distance']['redshift'][0]['value'] for t in tdes if 'redshift' in t['distance']]).astype(float)
+    z = []
+    for t in tdes:
+        if 'distance' in t and 'redshift' in t['distance']:
+            z.append(t['distance']['redshift'][0]['value'])
+    
+    z = np.array(z).astype(float)
     
     fig.add_trace(go.Histogram(x=z,
                                marker={"color": "grey"},

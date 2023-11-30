@@ -1,2 +1,2 @@
 name,ra,dec,ra_units,dec_units,reference,phot_path
-2022xkq,76.348792,-11.88225,'deg','deg',2023arXiv230910054P,22xkq_behindFig2.dat
+2022xkq,76.348792,-11.88225,deg,deg,2023arXiv230910054P,22xkq_behindFig2.csv

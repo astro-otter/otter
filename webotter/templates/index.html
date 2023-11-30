@@ -172,13 +172,21 @@
 	    <td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=tde['name']['default_name'])  }}">{{ tde['name']['default_name'] }}</td>
 	    <td>{{ tde['coordinate']['equitorial'][0]['ra'] }}</td>
 	    <td>{{ tde['coordinate']['equitorial'][0]['dec'] }}</td>
-	    {% if tde['distance']['redshift'] is defined %}
-	    <td>{{ tde['distance']['redshift'][0]['value'] }}</td>
+	    {% if tde['distance/redshift'] is defined %}
+	    <td>{{ tde['distance/redshift'][0]['value'] }}</td>
 	    {% else %}
 	    <td></td>
 	    {% endif %}
-	    <td>{{ tde['epoch']['date_discovery'][0]['value'] }}</td>
+	    {% if tde['epoch/date_discovery'] is defined %}
+	    <td>{{ tde['epoch/date_discovery'][0]['value'] }}</td>
+	    {% else %}
+	    <td></td>
+	    {% endif %}
+	    {% if tde['classification'] is defined %}
 	    <td>{{ tde['classification'][0]['object_class'] }}<td>
+	    {% else %}
+	    <td></td>
+	    {% endif %}
 	  </tr>
 	  {% endfor %}
 	  </table>

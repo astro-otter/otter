@@ -1,15 +1,24 @@
 '''
 This is the primary class for user interaction with the catalog
 '''
+import os
+import json
+import uuid
+from zipfile import ZipFile
+import pandas as pd
 
 from astropy.coordinates import SkyCoord
 from astropy.table import Table
 from astropy import units as u
 
+import ads
+
 from pyArango.database import Database
 from pyArango.connection import Connection
 
 from .transient import Transient
+from .constants import *
+from .helpers import * 
 
 class Otter(Database):
     '''
@@ -60,7 +69,7 @@ class Otter(Database):
         
     def coneSearch(self,
                    coords:SkyCoord,
-                   radius:float=0.05,
+                   radius:float=5,
                    raw:bool=False
                    ) -> Table:
         '''
@@ -79,9 +88,66 @@ class Otter(Database):
 
         transients = self.query(coords=coords,
                                 radius=radius,
-                                raw=False)
+                                raw=raw)
+        return transients
+
+    def getPhot(self, flux_unit='mag(AB)', date_unit='MJD',
+                return_type='astropy', **kwargs
+                ) -> Table:
+        '''
+        Get the photometry of the objects matching the arguments. This will do the
+        unit conversion for you!
+
+        Args:
+            flux_units [astropy.unit.Unit]: Either a valid string to convert 
+                                            or an astropy.unit.Unit
+            date_units [astropy.unit.Unit]: Either a valid string to convert to a date 
+                                            or an astropy.unit.Unit
+            return_type [str]: Either 'astropy' or 'pandas'. If astropy, returns an
+                               astropy Table. If pandas, returns a pandas DataFrame.
+                               Default is 'astropy'.
+            
+            **kwargs : Arguments to pass to Otter.query(). Can be:
+                       names [list[str]]: A list of names to get the metadata for
+                       coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
+                       radius [float]: The radius in arcseconds for a cone search, default is 0.05"
+                       minZ [float]: The minimum redshift to search for
+                       maxZ [float]: The maximum redshift to search for
+                       refs [list[str]]: A list of ads bibcodes to match to. Will only return 
+                              metadata for transients that have this as a reference.
+                       hasSpec [bool]: if True, only return transients that have spectra.
         
+        Return:
+           The photometry for the requested transients that match the arguments. 
+           Will be an astropy Table sorted by transient default name.
+        '''
+        queryres = self.query(hasPhot=True, **kwargs)
+
+        dicts = []
+        for transient in queryres:
+
+            # clean the photometry
+            default_name = transient['name/default_name']
+            phot = transient.cleanPhotometry(flux_unit=flux_unit, date_unit=date_unit)
+            phot['name'] = [default_name]*len(phot)
+            
+            dicts.append(phot)
+            
+        fullphot = pd.concat(dicts)
+
+        # remove some possibly confusing keys
+        del fullphot['raw']
+        del fullphot['raw_units']
+        del fullphot['date_format']
         
+        if return_type == 'astropy':
+            return Table.from_pandas(fullphot)
+        elif return_type == 'pandas':
+            return fullphot
+        else:
+            raise ValueError('return_type can only be pandas or astropy')
+
+    
     def query(self,
               names:list[str]=None,
               coords:SkyCoord=None,
@@ -94,11 +160,13 @@ class Otter(Database):
               raw:bool=False
               ) -> dict:
         '''
-        Wraps on the super.AQLQuery
+        Wraps on the super.AQLQuery and queries the OTTER database more intuitively.
 
+        WARNING! This does not do any conversions for you! 
         This is how it differs from the `getMeta` method. Users should prefer to use
         `getMeta`, `getPhot`, and `getSpec` independently because it is a better 
-        workflow and can return the data in an astropy table.
+        workflow and can return the data in an astropy table with everything in the
+        same units.
 
         Args:
             names [list[str]]: A list of names to get the metadata for
@@ -112,7 +180,7 @@ class Otter(Database):
             hasSpec [bool]: if True, only return transients that have spectra.
 
         Return:
-           Get all of the raw json data for objects that match the criteria. 
+           Get all of the raw (unconverted!) json data for objects that match the criteria. 
         '''
 
         # write some AQL filters based on the inputs
@@ -207,32 +275,257 @@ class Otter(Database):
             zipfile [str]: path to the zipfile you want to upload
         '''
 
-    def _merge(self, json:dict) -> None:
+        # define some useful paths
+        datadir = os.path.dirname(zipfile)
+        datapath = os.path.join(datadir, os.path.basename(zipfile).replace('.zip', ''))
+        metapath = os.path.join(datapath, 'meta.csv')
+        
+        # read in the zipfile and extract all of the files into datapath
+        with ZipFile(zipfile) as z:
+            z.extractall(datadir)
+
+        # now read in the meta file
+        if not os.path.exists(metapath):
+            raise ValueError('meta.csv not found, can not upload this data!')
+        df = pd.read_csv(metapath)
+
+        for idx, row in df.iterrows():
+            coord = SkyCoord(row.ra, row.dec, unit=(row.ra_units, row.dec_units))
+            res = self.coneSearch(coords=coord)
+
+            if len(res) == 0:
+                # This is a new object to upload
+                print('Adding this as a new object...')
+                self._add_new(row, datapath)
+            else:
+                # We must merge this with existing data
+                print('Found this object in the database already, merging the data...')
+                if len(res) == 1:
+                    mergewith = res[0]
+                else:
+                    # for now throw an error
+                    # this is a limitation we can come back to fix if it is causing
+                    # problems though!
+                    raise Exception('Current Limitation Found: Some objects in Otter are too close!')
+                self._merge(row, mergewith, datapath)
+        
+    def _merge(self, dfrow:pd.Series, mergewith:Transient, datapath:str) -> None:
         '''
         Merge the input json file with the existing data in otter
 
         Args:
-            json [dict]: a dictionary in the correct json format with the correct keys
+            dfrow [pd.Series]: a pandas Series to add to the existing document
+            mergewith [Transient]: a Transient object to merge with
         '''
-
-    def _add(self, json:dict) -> None:
+        
+    def _add_new(self, dfrow:pd.Series, datapath:str) -> None:
         '''
         Add a new transient to otter because the input doesn't match any existing transients
 
         Args:
             json [dict]: a dictionary in the correct json format with the correct keys
         '''
-
-    def _verify_json(self, json:dict) -> None:
-        '''
-        Verifies that the input json is in the correct format for an upload
+        dfrow.dropna(inplace=True)
+        uu = uuid.uuid4()
         
-        Args:
-            json [dict]: a dictionary in the correct json format with the correct keys
+        schema = {
+            'schema_version': {'value': '0'},
+            'name': {'default_name': dfrow['name'],
+                     'alias': [{'value': dfrow['name'], 'reference': dfrow['reference']}]
+                     },
+        }
 
-        Returns:
-            None if in the correct format, if not in the right format throws an exception
-        '''
+        # add coordinates
+        # these were required so we don't have to check anything
+        galactic = SkyCoord(dfrow.ra, dfrow.dec, unit=(dfrow.ra_units, dfrow.dec_units),
+                            frame='icrs').galactic
+        
+        schema['coordinate'] = {'equitorial': [{
+                                    'ra': dfrow.ra,
+                                    'dec': dfrow.dec,
+                                    'ra_units': dfrow.ra_units,
+                                    'dec_units': dfrow.dec_units,
+                                    'computed': False,
+                                    'uuid': str(uu),
+                                    'default': True,
+                                    'reference': dfrow.reference
+                                }],
+                                'galactic': [{
+                                    'l': float(galactic.l.value),
+                                    'b': float(galactic.b.value),
+                                    'l_units': 'deg',
+                                    'b_units': 'deg',
+                                    'reference': str(uu),
+                                    'computed': True
+                                }]
+                                } 
 
+        # now add distance measurements if they have any
+        dist_keys = ['redshift', 'luminosity_distance', 'dispersion_measure']
+        dist_dict = {}
+        for key in dist_keys:
+            if key in dfrow:
+                dist_dict[key] = [{'value':dfrow[key],
+                                   'reference': dfrow.reference,
+                                   'computed': False,
+                                   }]
 
-    
+        if len(dist_dict) > 0:
+            schema['distance'] = dist_dict
+
+        # do the same thing with the classification
+        if 'class' in dfrow:
+            schema['classification'] = [{'object_class': dfrow['class'],
+                                         'confidence': 1.0, # THIS IS DANGEROUS! FIX LATER
+                                         'reference': dfrow.reference,
+                                         'defualt': True
+                                         }]
+
+        # do the same with epoch info
+        epoch_keys = ['date_discovery', 'date_peak', 'date_explosion']
+        epoch_dict = {}
+        for key in epoch_keys:
+            if key in dfrow:
+                epoch_dict[key] = [{'value':dfrow[key],
+                                    'date_format': dfrow['date_format'],
+                                    'reference': dfrow.reference,
+                                    'computed': False
+                                    }]
+        if len(epoch_dict) > 0:
+            schema['epoch'] = epoch_dict
+
+        # create the reference_alias
+        
+        adsquery = list(ads.SearchQuery(bibcode=dfrow.reference))[0]
+        authors = adsquery.author
+        year = adsquery.year
+
+        if len(authors) == 0:
+            raise ValueError('This ADS bibcode does not exist!')
+        elif len(authors) == 1:
+            author = authors[0]
+        elif len(authors) == 2:
+            author = authors[0] + ' & ' + authors [1]
+        else: # longer than 2
+            author = authors[0] + ' et al.'
+
+        # generate the human readable name
+        hrn = author + ' (' + year + ')'
+        schema['reference_alias'] = [{'name': dfrow.reference,
+                                      'human_readable_name':hrn
+                                      }]
+        
+        # check if there is a photometry file path
+        if 'phot_path' in dfrow:
+            allphot = {}
+            filteralias = []
+            phot = pd.read_csv(os.path.join(datapath, dfrow.phot_path))
+            possible_grouping_keys = ['telescope']
+            actual_grouping_keys = [k for k in possible_grouping_keys if k in phot]
+
+            # remove any annoying columns from phot
+            for key in phot:
+                if 'Unnamed' in key:
+                    del phot[key]
+            
+            # generate the filter_key
+            if 'telescope' in phot and 'filter' in phot:
+                phot['filter_key'] = [f"{t.replace(' ', '')}.{f.replace(' ', '')}" for t, f in zip(phot['telescope'], phot['filter'])]
+            else:
+                warnings.warn('Even though filter is required, telescope is not! The filter key' +
+                              'will just be set to the filter name and may result in duplicates!')
+                phot['filter_key'] = phot['filter']
+
+            # start grouping the data into different sets
+            if len(actual_grouping_keys) > 0:
+                grouping = phot.groupby(actual_grouping_keys)
+            else:
+                grouping = zip([[]], [phot])
+
+            idx = 0
+            for key, group in grouping:
+                
+                name = f'phot_{idx}'
+
+                if not isinstance(key, (list, tuple)):
+                    key = [key]
+
+                # write the relevant info to a dict    
+                phot_dict = dict(zip(actual_grouping_keys, key))
+                                    
+                phot_dict['reference'] = dfrow.reference
+                phot_dict['flux'] = []
+                for _, row in group.iterrows():
+                    point = row.dropna(inplace=False).to_dict()                    
+
+                    # get the type of observation that it is
+                    point['obs_type'] = filter_to_obstype(point['filter'])
+                    
+                    # add this filter_key to the filteralias dict if needed
+                    filteralias_keys = {d['filter_key'] for d in filteralias}
+                    if point['filter_key'] not in filteralias_keys:
+
+                        indict = {
+                            'filter_key': point['filter_key']
+                            }
+                        
+                        # add an effective filter to filter_alias if needed
+                        if point['obs_type'] == 'radio':
+                            if 'filter_eff' not in point:
+                                eff = FILTER_MAP_FREQ[point['filter']]
+                                eff_units = 'THz'
+                            else:
+                                eff = point['filter_eff']
+                                eff_units = point['filter_eff_units']
+
+                        else:
+                            if 'filter_eff' not in point:
+                                # we can use wavelengths here
+                                eff = FILTER_MAP_WAVE[point['filter']]
+                                eff_units = 'nm'
+                            else:
+                                eff = point['filter_eff']
+                                eff_units = point['filter_eff_units']
+
+                        if 'hz' in eff_units.lower():
+                            indict['freq_eff'] = eff
+                            indict['freq_units'] = eff_units
+                        else:
+                            indict['wave_eff'] = eff
+                            indict['wave_units'] = eff_units
+                            
+                        filteralias.append(indict)
+
+                    phot_dict['flux'].append(point)
+
+                allphot[name] = phot_dict
+                
+                idx += 1
+            
+            schema['photometry'] = allphot                                    
+            schema['filter_alias'] = filteralias
+
+        # check if there is a spectra file path
+        if 'spec_path' in dfrow:
+            pass # ADD THIS CODE ONCE WE HANDLE SPECTRA
+        
+        # now do two things to save this data
+        # 1) create a new file in "base" with this
+        outfilepath = os.path.join(os.path.dirname(datapath),
+                                   'base',
+                                   schema['name']['default_name']+'.json'
+                                   )
+
+        # format as a json
+        out = json.dumps(schema, indent=4)
+        out = '[' + out
+        out += ']'
+
+        with open(outfilepath, 'w') as f:
+            f.write(out)
+
+        # 2) upload to the database
+        c = self[self.collectionName]
+        doc = c.createDocument(schema)
+        doc.save()
+            
