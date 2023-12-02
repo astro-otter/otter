@@ -1,6 +1,7 @@
 '''
 Some constants and mappings to be used across the software
 '''
+import os
 
 # gives the effective wavelength for each filter given
 # these are all in nanometers!
@@ -229,3 +230,8 @@ FILTER_MAP_FREQ = {'FUV': 1975.086895569116,
  'F2100W': 14.581938602646188,
  'F2550W': 11.919267708332558
 }
+
+
+# define a working base directory constant
+BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DATADIR = os.path.join(BASEDIR, 'data', 'base')

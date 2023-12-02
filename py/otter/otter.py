@@ -3,6 +3,7 @@ This is the primary class for user interaction with the catalog
 '''
 import os
 import json
+import glob
 import uuid
 from zipfile import ZipFile
 import pandas as pd
@@ -266,16 +267,18 @@ class Otter(Database):
         '''
         del self
 
-    def upload(self, zipfile:str) -> None:
+
+    def upload_zip(self, zipfile:str) -> None:
         '''
         Upload a zipfile of information about transients. See the README for info on 
         formatting this zipfile.
+
+        Wraps on self.upload which uploads a json-style file
 
         Args:
             zipfile [str]: path to the zipfile you want to upload
         '''
 
-        # define some useful paths
         datadir = os.path.dirname(zipfile)
         datapath = os.path.join(datadir, os.path.basename(zipfile).replace('.zip', ''))
         metapath = os.path.join(datapath, 'meta.csv')
@@ -284,41 +287,97 @@ class Otter(Database):
         with ZipFile(zipfile) as z:
             z.extractall(datadir)
 
+        # read in the metadata
         # now read in the meta file
         if not os.path.exists(metapath):
             raise ValueError('meta.csv not found, can not upload this data!')
         df = pd.read_csv(metapath)
+            
+        # convert the rows to a json file
+        schema = [self._row_to_json(row, datapath) for _, row in df.iterrows()]
 
-        for idx, row in df.iterrows():
-            coord = SkyCoord(row.ra, row.dec, unit=(row.ra_units, row.dec_units))
+        # now upload this json file
+        self.upload(schema, outpath=datapath)
+        
+    def upload(self, schema:list[dict], outpath:str=os.getcwd()) -> None:
+        '''
+        Upload all the data in the given list of schemas.
+
+        Args:
+            schema [list[dict]]: A list of json dictionaries
+            outpath [str]: The path to the directory where to write the json files.
+                           Default is current working directory.
+        '''
+
+        if not isinstance(schema, list):
+            schema = [schema]
+        
+        for json in schema:
+
+            # convert the json to a Transient
+            if not isinstance(json, Transient):
+                json = Transient(json)
+            
+            coord = json.getSkyCoord()
             res = self.coneSearch(coords=coord)
 
             if len(res) == 0:
                 # This is a new object to upload
-                print('Adding this as a new object...')
-                self._add_new(row, datapath)
+                print('Adding this as a new object...')    
+                self._upload_document(dict(json))
+                
             else:
                 # We must merge this with existing data
                 print('Found this object in the database already, merging the data...')
                 if len(res) == 1:
-                    mergewith = res[0]
+                    # we can just add these to merge them!
+                    combined = res[0] + json
+                    self._upload_document(combined)
                 else:
                     # for now throw an error
                     # this is a limitation we can come back to fix if it is causing
                     # problems though!
                     raise Exception('Current Limitation Found: Some objects in Otter are too close!')
-                self._merge(row, mergewith, datapath)
-        
-    def _merge(self, dfrow:pd.Series, mergewith:Transient, datapath:str) -> None:
+    def _upload_document(self, schema, test_mode=False):
         '''
-        Merge the input json file with the existing data in otter
+        Upload a json file in the correct format to the OTTER database
+        '''
+        # check if this documents key is in the database already
+        # and if so remove it!
+        jsonpath = os.path.join(DATADIR, '*.json')
+        aliases = {item['value'] for item in schema['name']['alias']}
+        filenames = {os.path.basename(fname).split('.')[0] for fname in glob.glob(jsonpath)}
+        todel = list(aliases & filenames)
+        if len(todel) > 0 and not test_mode:
+            os.remove(os.path.join(DATADIR, todel[0]+'.json'))
+        else:
+            # for testing
+            print('Deleting the following file: ', todel)
+        
+        # now do two things to save this data
+        # 1) create a new file in "base" with this
+        outfilepath = os.path.join(DATADIR,schema['name']['default_name']+'.json')
 
-        Args:
-            dfrow [pd.Series]: a pandas Series to add to the existing document
-            mergewith [Transient]: a Transient object to merge with
-        '''
+        # format as a json
+        if isinstance(schema, Transient):
+            schema = dict(schema)
+
+        out = json.dumps(schema, indent=4)
+        out = '[' + out
+        out += ']'
+
+        if not test_mode:
+            with open(outfilepath, 'w') as f:
+                f.write(out)
+
+            # 2) upload to the database
+            c = self[self.collectionName]
+            newdoc = c.createDocument(schema)
+            newdoc.save()
+        else:
+            print(out)
         
-    def _add_new(self, dfrow:pd.Series, datapath:str) -> None:
+    def _row_to_json(self, dfrow:pd.Series, datapath:str) -> None:
         '''
         Add a new transient to otter because the input doesn't match any existing transients
 
@@ -380,7 +439,8 @@ class Otter(Database):
                                          'reference': dfrow.reference,
                                          'defualt': True
                                          }]
-
+            
+            
         # do the same with epoch info
         epoch_keys = ['date_discovery', 'date_peak', 'date_explosion']
         epoch_dict = {}
@@ -394,8 +454,7 @@ class Otter(Database):
         if len(epoch_dict) > 0:
             schema['epoch'] = epoch_dict
 
-        # create the reference_alias
-        
+        # create the reference_alias        
         adsquery = list(ads.SearchQuery(bibcode=dfrow.reference))[0]
         authors = adsquery.author
         year = adsquery.year
@@ -509,23 +568,4 @@ class Otter(Database):
         if 'spec_path' in dfrow:
             pass # ADD THIS CODE ONCE WE HANDLE SPECTRA
         
-        # now do two things to save this data
-        # 1) create a new file in "base" with this
-        outfilepath = os.path.join(os.path.dirname(datapath),
-                                   'base',
-                                   schema['name']['default_name']+'.json'
-                                   )
-
-        # format as a json
-        out = json.dumps(schema, indent=4)
-        out = '[' + out
-        out += ']'
-
-        with open(outfilepath, 'w') as f:
-            f.write(out)
-
-        # 2) upload to the database
-        c = self[self.collectionName]
-        doc = c.createDocument(schema)
-        doc.save()
-            
+        return schema

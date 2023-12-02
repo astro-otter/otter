@@ -1,16 +1,4 @@
 [{
-    "schema_version": {
-        "value": "0"
-    },
-    "name": {
-        "default_name": "2022xkq",
-        "alias": [
-            {
-                "value": "2022xkq",
-                "reference": "2023arXiv230910054P"
-            }
-        ]
-    },
     "coordinate": {
         "equitorial": [
             {
@@ -19,9 +7,12 @@
                 "ra_units": "deg",
                 "dec_units": "deg",
                 "computed": false,
-                "uuid": "1f9b77a0-6372-4d98-adb9-6c08844f53e5",
+                "uuid": "9ecb60f4-7167-4662-8c4c-87f788b5ef10",
                 "default": true,
-                "reference": "2023arXiv230910054P"
+                "reference": [
+                    "2023arXiv230910054P",
+                    "noah"
+                ]
             }
         ],
         "galactic": [
@@ -30,21 +21,20 @@
                 "b": -28.85761791359529,
                 "l_units": "deg",
                 "b_units": "deg",
-                "reference": "1f9b77a0-6372-4d98-adb9-6c08844f53e5",
+                "reference": [
+                    "9ecb60f4-7167-4662-8c4c-87f788b5ef10",
+                    "bec18f8b-7ec1-4cb2-bc81-9edf4f318a85"
+                ],
                 "computed": true
             }
         ]
     },
-    "reference_alias": [
-        {
-            "name": "2023arXiv230910054P",
-            "human_readable_name": "Pearson, Jeniveve et al. (2023)"
-        }
-    ],
     "photometry": {
         "phot_0": {
             "telescope": "ATLAS",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "o",
@@ -61,7 +51,10 @@
         },
         "phot_1": {
             "telescope": "CAHA",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P",
+                "Noah"
+            ],
             "flux": [
                 {
                     "filter": "H",
@@ -91,7 +84,9 @@
         },
         "phot_2": {
             "telescope": "DLT40",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "DLT40",
@@ -12801,7 +12796,9 @@
         },
         "phot_3": {
             "telescope": "Las Cumbres",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "U",
@@ -16179,7 +16176,9 @@
         },
         "phot_4": {
             "telescope": "NOT",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "H",
@@ -16317,7 +16316,9 @@
         },
         "phot_5": {
             "telescope": "NTT",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "J",
@@ -16443,7 +16444,9 @@
         },
         "phot_6": {
             "telescope": "SLT",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "g",
@@ -16615,7 +16618,9 @@
         },
         "phot_7": {
             "telescope": "Swift",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "UVW1",
@@ -18191,7 +18196,9 @@
         },
         "phot_8": {
             "telescope": "Swope",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "r",
@@ -19301,7 +19308,9 @@
         },
         "phot_9": {
             "telescope": "TJO",
-            "reference": "2023arXiv230910054P",
+            "reference": [
+                "2023arXiv230910054P"
+            ],
             "flux": [
                 {
                     "filter": "B",
@@ -20480,8 +20489,58 @@
                     "obs_type": "uvoir"
                 }
             ]
+        },
+        "phot_10": {
+            "telescope": "Noahs Telescope",
+            "reference": "Noah",
+            "flux": [
+                {
+                    "filter": "z",
+                    "telescope": "Noahs Telescope",
+                    "upperlimit": true,
+                    "date": 59864.4914116667,
+                    "date_format": "MJD",
+                    "raw": 20.01,
+                    "raw_units": "mag(AB)",
+                    "filter_key": "NoahsTelescope.z",
+                    "obs_type": "uvoir"
+                }
+            ]
         }
     },
+    "name": {
+        "default_name": "2022xkq",
+        "alias": [
+            {
+                "value": "foo",
+                "reference": [
+                    [
+                        "x"
+                    ]
+                ]
+            },
+            {
+                "value": "2022xkq",
+                "reference": [
+                    [
+                        "2023arXiv230910054P",
+                        "x"
+                    ],
+                    "2023arXiv230910054P"
+                ]
+            }
+        ]
+    },
+    "reference_alias": [
+        {
+            "name": "2023arXiv230910054P",
+            "human_readable_name": "Pearson, Jeniveve et al. (2023)"
+        },
+        {
+            "name": "x",
+            "human_readable_name": "test, name (year)"
+        }
+    ],
     "filter_alias": [
         {
             "filter_key": "ATLAS.o",
@@ -20662,6 +20721,80 @@
             "filter_key": "TJO.V",
             "wave_eff": 553.7155963302753,
             "wave_units": "nm"
+        },
+        {
+            "filter_key": "foo"
         }
-    ]
+    ],
+    "schema_version": {
+        "value": 100
+    },
+    "for_test": {
+        "test": "bar"
+    },
+    "_id": "tdes/3389672",
+    "distance": {
+        "redshift": [
+            {
+                "value": "0.0207",
+                "reference": [
+                    "Noah"
+                ],
+                "computed": false
+            },
+            {
+                "value": "0.02",
+                "reference": [
+                    "Noah"
+                ],
+                "computed": false
+            }
+        ],
+        "dispersion_measure": [
+            {
+                "value": "0.0206",
+                "reference": [
+                    "Noah"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "SN",
+            "confidence": 1,
+            "reference": "Noah"
+        }
+    ],
+    "epoch": {
+        "date_peak": [
+            {
+                "value": 56983,
+                "date_format": "MJD",
+                "reference": [
+                    "2016ApJ...819L..25A",
+                    "2016Sci...351...62V",
+                    "2016ApJ...832L..10R",
+                    "2018MNRAS.475.4011B"
+                ],
+                "computed": false
+            }
+        ],
+        "date_discovery": [
+            {
+                "value": 56984,
+                "date_format": "MJD",
+                "reference": [
+                    "2016ApJ...819L..25A",
+                    "2016Sci...351...62V",
+                    "2016ApJ...832L..10R",
+                    "2018MNRAS.475.4011B"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "_key": "3389672",
+    "_rev": "_hAdG4f6---"
 }]

@@ -169,9 +169,9 @@
 	  
 	  {% for tde in tdes %}
           <tr>
-	    <td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=tde['name']['default_name'])  }}">{{ tde['name']['default_name'] }}</td>
-	    <td>{{ tde['coordinate']['equitorial'][0]['ra'] }}</td>
-	    <td>{{ tde['coordinate']['equitorial'][0]['dec'] }}</td>
+	    <td class="name"><a href="{{ url_for('catalog.genTDEpages', tdename=tde['name']['default_name'])  }}">{{ tde['name/default_name'] }}</td>
+	    <td>{{ tde.getSkyCoord().ra.to_string(unit='hourangle') }}</td>
+	    <td>{{ tde.getSkyCoord().dec.to_string(unit='deg') }}</td>
 	    {% if tde['distance/redshift'] is defined %}
 	    <td>{{ tde['distance/redshift'][0]['value'] }}</td>
 	    {% else %}
