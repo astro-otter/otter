@@ -1,242 +1,196 @@
 [{
-    "name": "AT2018hyz",
-    "ra": [
-        {
-            "value": "10 06 50.875"
-        }
-    ],
-    "dec": [
-        {
-            "value": "+01 41 33.96"
-        }
-    ],
-    "z": [
-        {
-            "value": "0.0457"
-        }
-    ],
-    "aliases": [
-        {
-            "value": "AT2018hyz"
-        }
-    ],
-    "sources": [
-        {
-            "name": "Cendes et al. (2022)",
-            "bibcode": "2022ApJ...938...28C",
-            "alias": "1"
-        }
-    ],
-    "photometry": {
-        "radio": [
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "AT2018hyz",
+        "alias": [
             {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 32.0,
-                "dt_years": 0.0876712329,
-                "nu_GHz": 15.5,
-                "F_mJy": 0.085,
-                "luminosity": 6.039904298e+37,
-                "time": 32.0,
-                "upperlimit": true,
-                "source": "1",
-                "uuid": "489e761c-e08c-488e-8921-3e7c0488856d"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 697.0,
-                "dt_years": 1.9095890411,
-                "nu_GHz": 0.9,
-                "F_mJy": 0.9,
-                "luminosity": 3.713337747e+37,
-                "time": 697.0,
-                "upperlimit": true,
-                "source": "1",
-                "uuid": "58dab1be-69b0-4907-9688-61ee6898ca64"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 705.0,
-                "dt_years": 1.9315068493,
-                "nu_GHz": 3.0,
-                "F_mJy": 0.45,
-                "luminosity": 6.188896245e+37,
-                "time": 705.0,
-                "upperlimit": true,
-                "source": "1",
-                "uuid": "2b2f5991-b7a7-4542-a99c-b8fd8ef4d31c"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 972.0,
-                "dt_years": 2.6630136986,
-                "nu_GHz": 5.0,
-                "F_mJy": 1.388,
-                "luminosity": 3.181551107e+38,
-                "time": 972.0,
-                "upperlimit": false,
-                "source": "1",
-                "uuid": "dec74013-9ec1-4c08-b337-c59c8fdd9e25"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 1126.0,
-                "dt_years": 3.0849315068,
-                "nu_GHz": 5.0,
-                "F_mJy": 2.939,
-                "luminosity": 6.736728172e+38,
-                "time": 1126.0,
-                "upperlimit": false,
-                "source": "1",
-                "uuid": "bad87b8c-6291-4126-b44d-9ab0eb16887c"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 1199.0,
-                "dt_years": 3.2849315068,
-                "nu_GHz": 5.0,
-                "F_mJy": 4.381,
-                "luminosity": 1.00420572e+39,
-                "time": 1199.0,
-                "upperlimit": false,
-                "source": "1",
-                "uuid": "e192a9f8-7235-4ef2-af66-b3aaf99423c1"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 1251.0,
-                "dt_years": 3.4273972603,
-                "nu_GHz": 5.0,
-                "F_mJy": 4.807,
-                "luminosity": 1.10185275e+39,
-                "time": 1251.0,
-                "upperlimit": false,
-                "source": "1",
-                "uuid": "866f6c62-b5dd-41bb-9b7e-8a7835868253"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 1296.0,
-                "dt_years": 3.5506849315,
-                "nu_GHz": 5.5,
-                "F_mJy": 7.837,
-                "luminosity": 1.976022884e+39,
-                "time": 1296.0,
-                "upperlimit": false,
-                "source": "1",
-                "uuid": "27f0832c-65cc-4cde-9990-bccf220cf760"
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 32.0,
-                "dt_years": 0.0876712329,
-                "nu_GHz": 15.5,
-                "luminosity": 6.039904298e+37,
-                "time": 32.0,
-                "upperlimit": true,
-                "source": "489e761c-e08c-488e-8921-3e7c0488856d",
-                "computed": true,
-                "magnitude": 25.176452685714267
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 697.0,
-                "dt_years": 1.9095890411,
-                "nu_GHz": 0.9,
-                "luminosity": 3.713337747e+37,
-                "time": 697.0,
-                "upperlimit": true,
-                "source": "58dab1be-69b0-4907-9688-61ee6898ca64",
-                "computed": true,
-                "magnitude": 22.614393726401687
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 705.0,
-                "dt_years": 1.9315068493,
-                "nu_GHz": 3.0,
-                "luminosity": 6.188896245e+37,
-                "time": 705.0,
-                "upperlimit": true,
-                "source": "2b2f5991-b7a7-4542-a99c-b8fd8ef4d31c",
-                "computed": true,
-                "magnitude": 23.36696871556164
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 972.0,
-                "dt_years": 2.6630136986,
-                "nu_GHz": 5.0,
-                "luminosity": 3.181551107e+38,
-                "time": 972.0,
-                "upperlimit": false,
-                "source": "dec74013-9ec1-4c08-b337-c59c8fdd9e25",
-                "computed": true,
-                "magnitude": 22.14402633470291
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 1126.0,
-                "dt_years": 3.0849315068,
-                "nu_GHz": 5.0,
-                "luminosity": 6.736728172e+38,
-                "time": 1126.0,
-                "upperlimit": false,
-                "source": "bad87b8c-6291-4126-b44d-9ab0eb16887c",
-                "computed": true,
-                "magnitude": 21.32950103481847
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 1199.0,
-                "dt_years": 3.2849315068,
-                "nu_GHz": 5.0,
-                "luminosity": 1.00420572e+39,
-                "time": 1199.0,
-                "upperlimit": false,
-                "source": "e192a9f8-7235-4ef2-af66-b3aaf99423c1",
-                "computed": true,
-                "magnitude": 20.89606686705456
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 1251.0,
-                "dt_years": 3.4273972603,
-                "nu_GHz": 5.0,
-                "luminosity": 1.10185275e+39,
-                "time": 1251.0,
-                "upperlimit": false,
-                "source": "866f6c62-b5dd-41bb-9b7e-8a7835868253",
-                "computed": true,
-                "magnitude": 20.795314694678382
-            },
-            {
-                "t_MJD": null,
-                "t_disc": null,
-                "dt_days": 1296.0,
-                "dt_years": 3.5506849315,
-                "nu_GHz": 5.5,
-                "luminosity": 1.976022884e+39,
-                "time": 1296.0,
-                "upperlimit": false,
-                "source": "27f0832c-65cc-4cde-9990-bccf220cf760",
-                "computed": true,
-                "magnitude": 20.264625383080194
+                "value": "AT2018hyz",
+                "reference": "TNS"
             }
         ]
-    }
+    },
+    "coordinate": {
+        "equitorial": [
+            {
+                "ra": "10 06 50.875",
+                "dec": "+01 41 33.96",
+                "epoch": "J2000",
+                "system": "ICRS",
+                "ra_units": "hourangle",
+                "dec_units": "deg",
+                "reference": [
+                    "2022ApJ...938...28C"
+                ],
+                "computed": false,
+                "default": true,
+                "uuid": "da16222e-dee0-42de-806d-4ebd4736ea96"
+            }
+        ],
+        "galactic": [
+            {
+                "l": 238.65938137916748,
+                "b": 43.106334907568474,
+                "l_units": "deg",
+                "b_units": "deg",
+                "reference": "da16222e-dee0-42de-806d-4ebd4736ea96",
+                "computed": true
+            }
+        ]
+    },
+    "distance": {
+        "redshift": [
+            {
+                "value": "0.0457",
+                "reference": [
+                    "2022ApJ...938...28C"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2022ApJ...938...28C"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2022ApJ...938...28C",
+            "human_readable_name": "Cendes et al. (2022)"
+        }
+    ],
+    "epoch": {
+        "date_discovery": [
+            {
+                "value": 58428.64,
+                "date_format": "MJD",
+                "reference": [
+                    "2022ApJ...938...28C"
+                ],
+                "computed": false
+            }
+        ]
+    },
+    "photometry": {
+        "phot_0": {
+            "reference": "2022ApJ...938...28C",
+            "flux": [
+                {
+                    "raw": 0.085,
+                    "raw_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "15.5GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": true,
+                    "date": 58460.64
+                },
+                {
+                    "raw": 0.9,
+                    "raw_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "0.9GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": true,
+                    "date": 59125.64
+                },
+                {
+                    "raw": 0.45,
+                    "raw_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "3.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": true,
+                    "date": 59133.64
+                },
+                {
+                    "raw": 1.388,
+                    "raw_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
+                    "date": 59400.64
+                },
+                {
+                    "raw": 2.939,
+                    "raw_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
+                    "date": 59554.64
+                },
+                {
+                    "raw": 4.381,
+                    "raw_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
+                    "date": 59627.64
+                },
+                {
+                    "raw": 4.807,
+                    "raw_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.0GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
+                    "date": 59679.64
+                },
+                {
+                    "raw": 7.837,
+                    "raw_units": "mJy",
+                    "date_format": "MJD",
+                    "filter_key": "5.5GHz",
+                    "computed": false,
+                    "obs_type": "radio",
+                    "upperlimit": false,
+                    "date": 59724.64
+                }
+            ]
+        }
+    },
+    "filter_alias": [
+        {
+            "filter_key": "15.5GHz",
+            "freq_eff": 15.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.9GHz",
+            "freq_eff": 0.9,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.0GHz",
+            "freq_eff": 3.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.0GHz",
+            "freq_eff": 5.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.5GHz",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        }
+    ]
 }]

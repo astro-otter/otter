@@ -6,5 +6,6 @@ from ._version import __version__
 __package__ = "otter"
 
 # import important stuff
-from .tde import TDE
-from .tdecatalog import TDECatalog
+#from .tde import TDE
+from .otter import Otter
+from .transient import Transient
