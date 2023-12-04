@@ -48,7 +48,7 @@ class Transient(MutableMapping):
             
     def __getitem__(self, keys):
         if isinstance(keys, (list, tuple)):
-            return Transient({key:self.data[key] for key in keys})
+            return Transient({key:self[key] for key in keys})
         elif isinstance(keys, str) and '/' in keys: # this is for a path
             s = "']['".join(keys.split('/'))
             s = "['" + s
@@ -251,7 +251,7 @@ class Transient(MutableMapping):
         key1 = f'coordinate/{coord_type}'
         if key1 not in self:
             raise KeyError(f'This transient does not have {key1} associated with it!')
-        if len(self[key1])-1 > idx:
+        if len(self[key1])-1 < idx:
             raise KeyError(f'This transient does not have a coordinate with index {idx}')
         diff = list(req_keys-self[key1][idx].keys())
         if len(diff) > 0:
@@ -664,10 +664,10 @@ class Transient(MutableMapping):
                 if int(item['confidence']) > int(out[key][i]['confidence']):
                     out[key][i]['confidence'] = item['confidence'] # we are now more confident
 
-                if not isinstance(out[key][i]['reference']):
+                if not isinstance(out[key][i]['reference'], list):
                     out[key][i]['reference'] = [out[key][i]['reference']]
 
-                if not isinstance(item['reference']):
+                if not isinstance(item['reference'], list):
                     item['reference'] = [item['reference']]
 
                 newdata = list(np.unique(out[key][i]['reference']+item['reference']))
