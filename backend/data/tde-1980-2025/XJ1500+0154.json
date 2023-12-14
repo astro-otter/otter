@@ -1,0 +1,136 @@
+[
+{
+		"schema":"https://github.com/astrocatalogs/tidaldisruptions/blob/f405406/SCHEMA.md",
+		"name":"XJ1500+0154",
+		"sources":[
+			{
+				"name":"2017NatAs...1E..33L",
+				"bibcode":"2017NatAs...1E..33L",
+				"reference":"Lin et al. (2017)",
+				"alias":"1"
+			},
+			{
+				"name":"2016A&A...594A..13P",
+				"bibcode":"2016A&A...594A..13P",
+				"reference":"Planck Collaboration et al. (2016)",
+				"alias":"2"
+			},
+			{
+				"name":"2011ApJ...737..103S",
+				"bibcode":"2011ApJ...737..103S",
+				"reference":"Schlafly & Finkbeiner (2011)",
+				"alias":"3"
+			},
+			{
+				"name":"The Open TDE Catalog",
+				"bibcode":"2017ApJ...835...64G",
+				"reference":"Guillochon et al. (2017)",
+				"secondary":true,
+				"url":"https://tde.space",
+				"alias":"4"
+			}
+		],
+		"alias":[
+			{
+				"value":"XJ1500+0154",
+				"source":"1"
+			},
+			{
+				"value":"3XMM J150052.0+015452",
+				"source":"1"
+			}
+		],
+		"claimedtype":[
+			{
+				"value":"MS + SMBH",
+				"source":"1"
+			}
+		],
+		"comovingdist":[
+			{
+				"value":"620",
+				"derived":true,
+				"u_value":"Mpc",
+				"source":"1,2,4"
+			}
+		],
+		"dec":[
+			{
+				"value":"+01:54:52",
+				"u_value":"degrees",
+				"source":"1"
+			}
+		],
+		"ebv":[
+			{
+				"value":"0.0463",
+				"derived":true,
+				"e_value":"0.0008",
+				"source":"3,4"
+			}
+		],
+		"host":[
+			{
+				"value":"SDSS J150052.07+015453.8",
+				"source":"1"
+			}
+		],
+		"hostdec":[
+			{
+				"value":"+01:54:53.8",
+				"u_value":"degrees",
+				"source":"1"
+			}
+		],
+		"hostoffsetang":[
+			{
+				"value":"2.084",
+				"derived":true,
+				"u_value":"arcseconds",
+				"source":"1,4"
+			}
+		],
+		"hostoffsetdist":[
+			{
+				"value":"5.471",
+				"source":"1,2,4"
+			}
+		],
+		"hostra":[
+			{
+				"value":"15:00:52.07",
+				"u_value":"hours",
+				"source":"1"
+			}
+		],
+		"lumdist":[
+			{
+				"value":"709",
+				"derived":true,
+				"u_value":"Mpc",
+				"source":"1,2,4"
+			}
+		],
+		"ra":[
+			{
+				"value":"15:00:52.0",
+				"u_value":"hours",
+				"source":"1"
+			}
+		],
+		"redshift":[
+			{
+				"value":"0.145",
+				"source":"1"
+			}
+		],
+		"velocity":[
+			{
+				"value":"40300",
+				"derived":true,
+				"u_value":"km/s",
+				"source":"4"
+			}
+		]
+}
+]

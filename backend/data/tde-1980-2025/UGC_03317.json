@@ -1,0 +1,138 @@
+[
+{
+		"schema":"https://github.com/astrocatalogs/tidaldisruptions/blob/f405406/SCHEMA.md",
+		"name":"UGC 03317",
+		"sources":[
+			{
+				"name":"2017ApJ...838..149A",
+				"bibcode":"2017ApJ...838..149A",
+				"reference":"Auchettl, Guillochon, & Ramirez-Ruiz (2017)",
+				"alias":"1"
+			},
+			{
+				"name":"2016A&A...594A..13P",
+				"bibcode":"2016A&A...594A..13P",
+				"reference":"Planck Collaboration et al. (2016)",
+				"alias":"2"
+			},
+			{
+				"name":"2015arXiv150506612H",
+				"bibcode":"2015arXiv150506612H",
+				"reference":"Hryniewicz & Walter (2015)",
+				"alias":"3"
+			},
+			{
+				"name":"2011ApJ...737..103S",
+				"bibcode":"2011ApJ...737..103S",
+				"reference":"Schlafly & Finkbeiner (2011)",
+				"alias":"4"
+			},
+			{
+				"name":"The Open TDE Catalog",
+				"bibcode":"2017ApJ...835...64G",
+				"reference":"Guillochon et al. (2017)",
+				"secondary":true,
+				"url":"https://tde.space",
+				"alias":"5"
+			}
+		],
+		"alias":[
+			{
+				"value":"UGC 03317",
+				"source":"1"
+			}
+		],
+		"citations":[
+			{
+				"value":"<a href='http://adsabs.harvard.edu/abs/2015arXiv150506612H'>Hryniewicz and Walter 2015</a>*&Dagger;",
+				"source":"3"
+			}
+		],
+		"comovingdist":[
+			{
+				"value":"18.29",
+				"derived":true,
+				"u_value":"Mpc",
+				"source":"1,2,3,5"
+			}
+		],
+		"dec":[
+			{
+				"value":"+73:43:26.40",
+				"u_value":"degrees",
+				"source":"1"
+			}
+		],
+		"ebv":[
+			{
+				"value":"0.1308",
+				"derived":true,
+				"e_value":"0.0046",
+				"source":"4,5"
+			}
+		],
+		"host":[
+			{
+				"value":"UGC 3317",
+				"source":"1,3"
+			}
+		],
+		"hostdec":[
+			{
+				"value":"+73:43:26.30",
+				"u_value":"degrees",
+				"source":"1"
+			}
+		],
+		"hostoffsetang":[
+			{
+				"value":"2.102",
+				"derived":true,
+				"u_value":"arcseconds",
+				"source":"1,5"
+			}
+		],
+		"hostoffsetdist":[
+			{
+				"value":"0.1856",
+				"source":"1,2,3,5"
+			}
+		],
+		"hostra":[
+			{
+				"value":"05:33:37.54",
+				"u_value":"hours",
+				"source":"1"
+			}
+		],
+		"lumdist":[
+			{
+				"value":"18.36",
+				"derived":true,
+				"u_value":"Mpc",
+				"source":"1,2,3,5"
+			}
+		],
+		"ra":[
+			{
+				"value":"05:33:37.68",
+				"u_value":"hours",
+				"source":"1"
+			}
+		],
+		"redshift":[
+			{
+				"value":"0.004136",
+				"source":"1,3"
+			}
+		],
+		"velocity":[
+			{
+				"value":"1237",
+				"derived":true,
+				"u_value":"km/s",
+				"source":"5"
+			}
+		]
+}
+]

@@ -1,0 +1,93 @@
+[
+{
+		"schema":"https://github.com/astrocatalogs/tidaldisruptions/blob/f405406/SCHEMA.md",
+		"name":"AT2021msu",
+		"sources":[
+			{
+				"name":"2016A&A...594A..13P",
+				"bibcode":"2016A&A...594A..13P",
+				"reference":"Planck Collaboration et al. (2016)",
+				"alias":"1"
+			},
+			{
+				"name":"ASAS-SN Supernovae",
+				"url":"http://www.astronomy.ohio-state.edu/~assassin/transients.html",
+				"alias":"2"
+			},
+			{
+				"name":"The Open TDE Catalog",
+				"bibcode":"2017ApJ...835...64G",
+				"reference":"Guillochon et al. (2017)",
+				"secondary":true,
+				"url":"https://tde.space",
+				"alias":"3"
+			}
+		],
+		"alias":[
+			{
+				"value":"AT2021msu",
+				"source":"2"
+			},
+			{
+				"value":"AT2021msu (= ATLAS21pis)",
+				"source":"2"
+			}
+		],
+		"claimedtype":[
+			{
+				"value":"TDE",
+				"source":"2"
+			}
+		],
+		"comovingdist":[
+			{
+				"value":"200",
+				"derived":true,
+				"u_value":"Mpc",
+				"source":"1,2,3"
+			}
+		],
+		"dec":[
+			{
+				"value":"9:13:39.7",
+				"u_value":"floatdegrees",
+				"source":"2"
+			}
+		],
+		"discoverdate":[
+			{
+				"value":"2021/06/1.03",
+				"source":"2"
+			}
+		],
+		"lumdist":[
+			{
+				"value":"200",
+				"derived":true,
+				"u_value":"Mpc",
+				"source":"1,2,3"
+			}
+		],
+		"ra":[
+			{
+				"value":"14:54:32.91",
+				"u_value":"floatdegrees",
+				"source":"2"
+			}
+		],
+		"redshift":[
+			{
+				"value":"0.05",
+				"source":"2"
+			}
+		],
+		"velocity":[
+			{
+				"value":"10000",
+				"derived":true,
+				"u_value":"km/s",
+				"source":"3"
+			}
+		]
+}
+]
