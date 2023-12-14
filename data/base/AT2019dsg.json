@@ -27,16 +27,16 @@
                 ],
                 "computed": false,
                 "default": true,
-                "uuid": "42ab92ee-dbe3-4454-9a08-248201ac7db3"
+                "uuid": "cf2dd30e-8ddf-48af-94b1-a2070ab441de"
             }
         ],
         "galactic": [
             {
-                "l": 61.402888985198956,
-                "b": -19.734536925050936,
+                "l": 61.40288898519897,
+                "b": -19.734536925051,
                 "l_units": "deg",
                 "b_units": "deg",
-                "reference": "42ab92ee-dbe3-4454-9a08-248201ac7db3",
+                "reference": "cf2dd30e-8ddf-48af-94b1-a2070ab441de",
                 "computed": true
             }
         ]
@@ -49,7 +49,8 @@
                     "2021NatAs...5..510S",
                     "2021ApJ...919..127C"
                 ],
-                "computed": false
+                "computed": false,
+                "default": true
             }
         ]
     },
@@ -87,63 +88,67 @@
             }
         ]
     },
-    "photometry": {
-        "phot_0": {
+    "photometry": [
+        {
             "reference": "2021ApJ...919..127C",
-            "flux": [
-                {
-                    "raw": 0.09,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 58637.46
-                },
-                {
-                    "raw": 0.26,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 58664.46
-                },
-                {
-                    "raw": 0.56,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 58743.46
-                },
-                {
-                    "raw": 0.79,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 58882.46
-                },
-                {
-                    "raw": 0.13,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "6.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 59143.46
-                }
+            "raw": [
+                0.09,
+                0.26,
+                0.56,
+                0.79,
+                0.13
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                58637.46,
+                58664.46,
+                58743.46,
+                58882.46,
+                59143.46
+            ],
+            "date_format": [
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD"
+            ],
+            "filter_key": [
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "6.0GHz"
+            ],
+            "computed": [
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false
             ]
         }
-    },
+    ],
     "filter_alias": [
         {
             "filter_key": "5.0GHz",

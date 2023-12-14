@@ -284,18 +284,8 @@ class Transient(MutableMapping):
         '''
 
         # turn the photometry key into a pandas dataframe
-        dictlist = []
-        for phot in self['photometry']:
-            meta = deepcopy(self[f'photometry/{phot}'])
-            del meta['flux']
-            for ddict in self[f'photometry/{phot}/flux']:
-                for key in meta:
-                    ddict[key] = meta[key]
-                ddict['phot_num'] = phot
-                dictlist.append(ddict)
-
-        df = pd.DataFrame(dictlist)
-
+        df = pd.concat([pd.DataFrame(dd) for dd in self['photometry']], axis=1)
+        
         # combine with the filter_alias
         filters = pd.DataFrame(self['filter_alias'])
         df = df.merge(filters, on='filter_key')
@@ -612,39 +602,34 @@ class Transient(MutableMapping):
         key = 'photometry'
 
         out[key] = deepcopy(t1[key])
+        refs = np.array([d['reference'] for d in out[key]])
 
-        idx = int(list(out[key].keys())[-1][-1])+1
-        telescopes = np.array([phot['telescope'] for phot in out[key].values() if 'telescope' in phot])
-        refs = np.concatenate([phot['reference'] for phot in out[key].values() if 'reference' in phot], axis=None)
-        for phot in t2[key].values():
+        merge_dups = lambda val: np.sum(val) if np.any(val.isna()) else val.iloc[0]
+        
+        for val in t2[key]:
 
-            if len(telescopes) > 0 and 'telescope' in phot and phot['telescope'] in telescopes:
-                i = np.where(phot['telescope'] == telescopes)[0][0]
-                toappend = out[key][f'phot_{i}']
-            elif len(refs) > 0 and 'reference' in phot and phot['reference'] in refs:
-                i = np.where(phot['reference'] == refs)[0][0]
-                toappend = out[key][f'phot_{i}']
+            # first check if t2's reference is in out
+            if val['reference'] not in refs:
+                # it's not here so we can just append the new photometry!
+                out[key].append(val)
             else:
-                # nothing with this telescope has been added
-                out[key][f'phot_{idx}'] = phot
-                idx += 1
-                continue
-
-            # if the code has gotten here we need to append to an existing list of photometry
-            for point in phot['flux']:
-                if point not in toappend['flux']:
-                    toappend['flux'].append(point)
-                else:
-                    if not isinstance(toappend['reference'], list):
-                        toappend['reference'] = [toappend['reference']]
-
-                    if not isinstance(phot['reference'], list):
-                        phot['reference'] = [phot['reference']]
-
-                    if phot['reference'] not in toappend['reference']:    
-                        newdata = list(np.unique(toappend['reference']+phot['reference']))
-                        toappend['reference'] = newdata
-
+                # we need to merge it with other photometry
+                i1 = np.where(val['reference'] == refs)[0][0]
+                df1 = pd.DataFrame(out[key][i1])
+                df2 = pd.DataFrame(val)
+                
+                # only substitute in values that are nan in df1 or new
+                mergeon = list(df1.keys() & df2.keys()) # the combined keys of the two
+                df = df1.merge(df2, on=mergeon, how='outer')
+                
+                # convert to a dictionary
+                newdict = df.reset_index().to_dict(orient='list')
+                del newdict['index']
+                
+                newdict['reference'] = newdict['reference'][0]
+                
+                out[key][i1] = newdict # replace the dictionary at i1 with the new dict
+                
     def _merge_spectra(t1, t2, out):
         '''
         Combine spectra sources

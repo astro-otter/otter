@@ -268,7 +268,7 @@ class Otter(Database):
         del self
 
 
-    def upload_zip(self, zipfile:str) -> None:
+    def upload_zip(self, zipfile:str, testing:bool=False) -> None:
         '''
         Upload a zipfile of information about transients. See the README for info on 
         formatting this zipfile.
@@ -294,12 +294,12 @@ class Otter(Database):
         df = pd.read_csv(metapath)
             
         # convert the rows to a json file
-        schema = [self._row_to_json(row, datapath) for _, row in df.iterrows()]
-
-        # now upload this json file
-        self.upload(schema, outpath=datapath)
+        schema = [self._row_to_json(row, datapath, testing=testing) for _, row in df.iterrows()]
         
-    def upload(self, schema:list[dict], outpath:str=os.getcwd()) -> None:
+        # now upload this json file
+        self.upload(schema, outpath=datapath, test_mode=testing)
+            
+    def upload(self, schema:list[dict], outpath:str=os.getcwd(), **kwargs) -> None:
         '''
         Upload all the data in the given list of schemas.
 
@@ -317,14 +317,14 @@ class Otter(Database):
             # convert the json to a Transient
             if not isinstance(json, Transient):
                 json = Transient(json)
-            
+                
             coord = json.getSkyCoord()
             res = self.coneSearch(coords=coord)
 
             if len(res) == 0:
                 # This is a new object to upload
                 print('Adding this as a new object...')    
-                self._upload_document(dict(json))
+                self._upload_document(dict(json), **kwargs)
                 
             else:
                 # We must merge this with existing data
@@ -332,12 +332,13 @@ class Otter(Database):
                 if len(res) == 1:
                     # we can just add these to merge them!
                     combined = res[0] + json
-                    self._upload_document(combined)
+                    self._upload_document(combined, **kwargs)
                 else:
                     # for now throw an error
                     # this is a limitation we can come back to fix if it is causing
                     # problems though!
                     raise Exception('Current Limitation Found: Some objects in Otter are too close!')
+
     def _upload_document(self, schema, test_mode=False):
         '''
         Upload a json file in the correct format to the OTTER database
@@ -357,7 +358,7 @@ class Otter(Database):
         # now do two things to save this data
         # 1) create a new file in "base" with this
         outfilepath = os.path.join(DATADIR,schema['name']['default_name']+'.json')
-
+        
         # format as a json
         if isinstance(schema, Transient):
             schema = dict(schema)
@@ -377,7 +378,7 @@ class Otter(Database):
         else:
             print(out)
         
-    def _row_to_json(self, dfrow:pd.Series, datapath:str) -> None:
+    def _row_to_json(self, dfrow:pd.Series, datapath:str, testing=False) -> None:
         '''
         Add a new transient to otter because the input doesn't match any existing transients
 
@@ -455,115 +456,93 @@ class Otter(Database):
             schema['epoch'] = epoch_dict
 
         # create the reference_alias        
-        adsquery = list(ads.SearchQuery(bibcode=dfrow.reference))[0]
-        authors = adsquery.author
-        year = adsquery.year
+        if not testing: # we don't want to use up all our queries
+            adsquery = list(ads.SearchQuery(bibcode=dfrow.reference))[0]
+            authors = adsquery.author
+            year = adsquery.year
 
-        if len(authors) == 0:
-            raise ValueError('This ADS bibcode does not exist!')
-        elif len(authors) == 1:
-            author = authors[0]
-        elif len(authors) == 2:
-            author = authors[0] + ' & ' + authors [1]
-        else: # longer than 2
-            author = authors[0] + ' et al.'
+            if len(authors) == 0:
+                raise ValueError('This ADS bibcode does not exist!')
+            elif len(authors) == 1:
+                author = authors[0]
+            elif len(authors) == 2:
+                author = authors[0] + ' & ' + authors [1]
+            else: # longer than 2
+                author = authors[0] + ' et al.'
 
-        # generate the human readable name
-        hrn = author + ' (' + year + ')'
-        schema['reference_alias'] = [{'name': dfrow.reference,
-                                      'human_readable_name':hrn
-                                      }]
+            # generate the human readable name
+            hrn = author + ' (' + year + ')'
+            schema['reference_alias'] = [{'name': dfrow.reference,
+                                          'human_readable_name':hrn
+                                          }]
         
         # check if there is a photometry file path
         if 'phot_path' in dfrow:
-            allphot = {}
-            filteralias = []
             phot = pd.read_csv(os.path.join(datapath, dfrow.phot_path))
-            possible_grouping_keys = ['telescope']
-            actual_grouping_keys = [k for k in possible_grouping_keys if k in phot]
 
             # remove any annoying columns from phot
             for key in phot:
                 if 'Unnamed' in key:
                     del phot[key]
+
+            # replace all NaNs with null
+            phot.fillna('null', inplace=True)
+
+            # rename the filter key to filter_key
+            phot['filter_key'] = phot['filter']
+            del phot['filter']
             
-            # generate the filter_key
-            if 'telescope' in phot and 'filter' in phot:
-                phot['filter_key'] = [f"{t.replace(' ', '')}.{f.replace(' ', '')}" for t, f in zip(phot['telescope'], phot['filter'])]
-            else:
-                warnings.warn('Even though filter is required, telescope is not! The filter key' +
-                              'will just be set to the filter name and may result in duplicates!')
-                phot['filter_key'] = phot['filter']
-
-            # start grouping the data into different sets
-            if len(actual_grouping_keys) > 0:
-                grouping = phot.groupby(actual_grouping_keys)
-            else:
-                grouping = zip([[]], [phot])
-
-            idx = 0
-            for key, group in grouping:
-                
-                name = f'phot_{idx}'
-
-                if not isinstance(key, (list, tuple)):
-                    key = [key]
-
-                # write the relevant info to a dict    
-                phot_dict = dict(zip(actual_grouping_keys, key))
-                                    
-                phot_dict['reference'] = dfrow.reference
-                phot_dict['flux'] = []
-                for _, row in group.iterrows():
-                    point = row.dropna(inplace=False).to_dict()                    
-
-                    # get the type of observation that it is
-                    point['obs_type'] = filter_to_obstype(point['filter'])
-                    
-                    # add this filter_key to the filteralias dict if needed
-                    filteralias_keys = {d['filter_key'] for d in filteralias}
-                    if point['filter_key'] not in filteralias_keys:
-
-                        indict = {
-                            'filter_key': point['filter_key']
-                            }
-                        
-                        # add an effective filter to filter_alias if needed
-                        if point['obs_type'] == 'radio':
-                            if 'filter_eff' not in point:
-                                eff = FILTER_MAP_FREQ[point['filter']]
-                                eff_units = 'THz'
-                            else:
-                                eff = point['filter_eff']
-                                eff_units = point['filter_eff_units']
-
-                        else:
-                            if 'filter_eff' not in point:
-                                # we can use wavelengths here
-                                eff = FILTER_MAP_WAVE[point['filter']]
-                                eff_units = 'nm'
-                            else:
-                                eff = point['filter_eff']
-                                eff_units = point['filter_eff_units']
-
-                        if 'hz' in eff_units.lower():
-                            indict['freq_eff'] = eff
-                            indict['freq_units'] = eff_units
-                        else:
-                            indict['wave_eff'] = eff
-                            indict['wave_units'] = eff_units
-                            
-                        filteralias.append(indict)
-
-                    phot_dict['flux'].append(point)
-
-                allphot[name] = phot_dict
-                
-                idx += 1
+            # get the observation types
+            phot['obs_type'] = phot['filter_key'].apply(filter_to_obstype)
             
-            schema['photometry'] = allphot                                    
+            # convert to a dictionary
+            phot_dict = phot.to_dict(orient='list')
+            phot_dict['reference'] = dfrow.reference
+            
+            # put this in the schema
+            schema['photometry'] = [phot_dict]
+
+            # create a filter alias
+            filteralias = []
+            filteralias_keys = []
+            for idx in range(len(phot_dict['filter_key'])):
+                if phot_dict['filter_key'][idx] in filteralias_keys: continue
+
+                filtername = phot_dict['filter_key'][idx]
+                filteralias_keys.append(filtername) # to make sure we don't duplicate
+                
+                indict = {
+                    'filter_key': filtername
+                }
+                
+                if phot_dict['obs_type'][idx] == 'radio':
+                    if 'filter_eff' not in phot_dict.keys():
+                        eff = FILTER_MAP_FREQ[filtername]
+                        eff_units = 'THz'
+                    else:
+                        eff = phot_dict['filter_eff'][idx]
+                        eff_units = phot_dict['filter_eff_units'][idx]
+
+                else:
+                    if 'filter_eff' not in phot_dict.keys():
+                        eff = FILTER_MAP_WAVE[filtername]
+                        eff_units = 'nm'
+                    else:
+                        eff = phot_dict['filter_eff'][idx]
+                        eff_units = phot_dict['filter_eff_units'][idx]
+
+                if 'hz' in eff_units.lower():
+                    indict['freq_eff'] = eff
+                    indict['freq_units'] = eff_units
+                else:
+                    indict['wave_eff'] = eff
+                    indict['wave_units'] = eff_units    
+
+                filteralias.append(indict)
+
+            # add these filteraliases to the schema
             schema['filter_alias'] = filteralias
-
+                    
         # check if there is a spectra file path
         if 'spec_path' in dfrow:
             pass # ADD THIS CODE ONCE WE HANDLE SPECTRA

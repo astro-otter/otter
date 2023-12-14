@@ -26,16 +26,16 @@
                 ],
                 "computed": false,
                 "default": true,
-                "uuid": "da16222e-dee0-42de-806d-4ebd4736ea96"
+                "uuid": "d226d6ba-b1c7-4e8f-9be2-089708a18961"
             }
         ],
         "galactic": [
             {
-                "l": 238.65938137916748,
-                "b": 43.106334907568474,
+                "l": 238.65938137916754,
+                "b": 43.106334907568495,
                 "l_units": "deg",
                 "b_units": "deg",
-                "reference": "da16222e-dee0-42de-806d-4ebd4736ea96",
+                "reference": "d226d6ba-b1c7-4e8f-9be2-089708a18961",
                 "computed": true
             }
         ]
@@ -47,7 +47,8 @@
                 "reference": [
                     "2022ApJ...938...28C"
                 ],
-                "computed": false
+                "computed": false,
+                "default": true
             }
         ]
     },
@@ -79,93 +80,91 @@
             }
         ]
     },
-    "photometry": {
-        "phot_0": {
+    "photometry": [
+        {
             "reference": "2022ApJ...938...28C",
-            "flux": [
-                {
-                    "raw": 0.085,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "15.5GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": true,
-                    "date": 58460.64
-                },
-                {
-                    "raw": 0.9,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "0.9GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": true,
-                    "date": 59125.64
-                },
-                {
-                    "raw": 0.45,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "3.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": true,
-                    "date": 59133.64
-                },
-                {
-                    "raw": 1.388,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 59400.64
-                },
-                {
-                    "raw": 2.939,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 59554.64
-                },
-                {
-                    "raw": 4.381,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 59627.64
-                },
-                {
-                    "raw": 4.807,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.0GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 59679.64
-                },
-                {
-                    "raw": 7.837,
-                    "raw_units": "mJy",
-                    "date_format": "MJD",
-                    "filter_key": "5.5GHz",
-                    "computed": false,
-                    "obs_type": "radio",
-                    "upperlimit": false,
-                    "date": 59724.64
-                }
+            "raw": [
+                0.085,
+                0.9,
+                0.45,
+                1.388,
+                2.939,
+                4.381,
+                4.807,
+                7.837
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                58460.64,
+                59125.64,
+                59133.64,
+                59400.64,
+                59554.64,
+                59627.64,
+                59679.64,
+                59724.64
+            ],
+            "date_format": [
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD"
+            ],
+            "filter_key": [
+                "15.5GHz",
+                "0.9GHz",
+                "3.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "5.5GHz"
+            ],
+            "computed": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                true,
+                true,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false
             ]
         }
-    },
+    ],
     "filter_alias": [
         {
             "filter_key": "15.5GHz",
