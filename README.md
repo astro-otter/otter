@@ -13,6 +13,7 @@ python -m pip install .
 This will be changed into the more convenient `python -m pip install astro-otter` at a later date!
 
 ## Tutorial
+### Connecting to the OTTER
 ```python
 # import the API
 from otter import Otter, Transient
@@ -21,14 +22,13 @@ from otter import Otter, Transient
 
 ```python
 # connect to the database
-
+# this username and password is just for now and will be updated later!
 db = Otter(username='user@otter', password='insecure')
 ```
 
 ### A typical workflow
 
 First use `Otter.getMeta` to query
-
 
 ```python
 # can query by ANY name associated with an object
@@ -43,9 +43,8 @@ db.getMeta(names=['ASASSN-15oi', 'AT2020opy'])
 
 
 
-
+We can also do a cone search
 ```python
-# can do a cone search
 from astropy.coordinates import SkyCoord
 import astropy.units as u
 coord = SkyCoord(239, 23, unit=('deg', 'deg'))
@@ -60,7 +59,7 @@ db.getMeta(coords=coord, radius=rad)
 
 
 
-
+Or search within a redshift range (or just a maximum or minimum)
 ```python
 # can search a redshift range
 db.getMeta(minZ=0.5, maxZ=0.9)
@@ -73,7 +72,7 @@ db.getMeta(minZ=0.5, maxZ=0.9)
 
 
 
-
+We can even get all objects that have spectra associated with them
 ```python
 # just get objects that have spectra associated with them
 db.getMeta(hasSpec=True)
@@ -84,10 +83,13 @@ db.getMeta(hasSpec=True)
 
     []
 
-
+This should be empty because at the time of developing this tutorial there were no spectra in
+OTTER. Similarly, we can get all objects that have photometry associated with them with 
+`db.getMeta(hasPhot=True)`.
 
 These outputs may appear like dictionaries but they're actually customized!
 
+Besides the typical dictionary methods the following methods are also implemented for Transient objects.
 
 ```python
 help(Transient)
@@ -140,8 +142,6 @@ help(Transient)
      |  
      |  cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD')
      |      Ensure the photometry associated with this transient is all in the same units/system/etc
-     |      
-     |      THIS IS HELL
      |  
      |  getMeta(self, keys=None)
      |      Get the metadata (no photometry or spectra)
@@ -164,91 +164,10 @@ help(Transient)
      |          flux_unit [str]: Valid astropy unit string for the flux (y-axis) units.
      |                           Default: 'ABmag'
      |          date_unit [str]: Valid astropy unit string for the date (x-axis) units.
-     |                           Default: 'MJD'
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |  
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes defined here:
-     |  
-     |  __abstractmethods__ = frozenset()
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from collections.abc.MutableMapping:
-     |  
-     |  clear(self)
-     |      D.clear() -> None.  Remove all items from D.
-     |  
-     |  pop(self, key, default=<object object at 0x7f98c46b0150>)
-     |      D.pop(k[,d]) -> v, remove specified key and return the corresponding value.
-     |      If key is not found, d is returned if given, otherwise KeyError is raised.
-     |  
-     |  popitem(self)
-     |      D.popitem() -> (k, v), remove and return some (key, value) pair
-     |      as a 2-tuple; but raise KeyError if D is empty.
-     |  
-     |  setdefault(self, key, default=None)
-     |      D.setdefault(k[,d]) -> D.get(k,d), also set D[k]=d if k not in D
-     |  
-     |  update(self, other=(), /, **kwds)
-     |      D.update([E, ]**F) -> None.  Update D from mapping/iterable E and F.
-     |      If E present and has a .keys() method, does:     for k in E: D[k] = E[k]
-     |      If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
-     |      In either case, this is followed by: for k, v in F.items(): D[k] = v
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from collections.abc.Mapping:
-     |  
-     |  __contains__(self, key)
-     |  
-     |  __eq__(self, other)
-     |      Return self==value.
-     |  
-     |  get(self, key, default=None)
-     |      D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
-     |  
-     |  items(self)
-     |      D.items() -> a set-like object providing a view on D's items
-     |  
-     |  values(self)
-     |      D.values() -> an object providing a view on D's values
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from collections.abc.Mapping:
-     |  
-     |  __hash__ = None
-     |  
-     |  __reversed__ = None
-     |  
-     |  ----------------------------------------------------------------------
-     |  Class methods inherited from collections.abc.Collection:
-     |  
-     |  __subclasshook__(C) from abc.ABCMeta
-     |      Abstract classes can override this to customize issubclass().
-     |      
-     |      This is invoked early on by abc.ABCMeta.__subclasscheck__().
-     |      It should return True, False or NotImplemented.  If it returns
-     |      NotImplemented, the normal algorithm is used.  Otherwise, it
-     |      overrides the normal algorithm (and the outcome is cached).
-     |  
-     |  ----------------------------------------------------------------------
-     |  Class methods inherited from collections.abc.Iterable:
-     |  
-     |  __class_getitem__ = GenericAlias(...) from abc.ABCMeta
-     |      Represent a PEP 585 generic type
-     |      
-     |      E.g. for t = list[int], t.__origin__ is list and t.__args__ is (int,).
-    
+     |                           Default: 'MJD'  
 
 
-
+Some other advantages of the Transient objects are
 ```python
 t = db.getMeta(minZ=0.5, maxZ=0.9)[0]
 print(type(t))
@@ -267,7 +186,7 @@ print(t['coordinate/equitorial'])
     [{'ra': '11 11 47.6', 'dec': '-82 38 44.44', 'epoch': 'J2000', 'system': 'ICRS', 'ra_units': 'hourangle', 'dec_units': 'deg', 'reference': ['2017MNRAS.472.4469B'], 'computed': False, 'default': True, 'uuid': '3bb02aa4-eb60-4f09-acdf-d1431a6addc4'}]
 
 
-
+You can even get multiple fields at once like with astropy Tables or pandas DataFrames
 ```python
 # You can also get multiple fields at once
 t[['name/default_name', 'coordinate/equitorial', 'distance']]
@@ -280,10 +199,8 @@ t[['name/default_name', 'coordinate/equitorial', 'distance']]
 
 
 
-
+You can also add two Transient objects to merge them
 ```python
-# you can also add two Transient objects to merge them
-
 t1, t2 = db.query(names=['ASASSN-15oi', 'AT2020opy'])
 
 try:
@@ -303,148 +220,12 @@ except ValueError as ve:
     These two transients are not within 5 arcseconds! They probably do not belong together! If they do You can set strict_merge=False to override the check
 
 
-
+This error message is expected! If you want to override it then you can do
 ```python
-# If you want to override this you have to do
 t2['photometry'][0]['reference'] = '2021NatAs...5..491H'
 
 t3 = t1.__add__(t2, strict_merge=False)
-
-t3['photometry']
 ```
-
-    /home/nfranz/otter/py/otter/transient.py:211: UserWarning:
-    
-    _rev was not expected! Only keeping the old information!
-    
-    /home/nfranz/otter/py/otter/transient.py:211: UserWarning:
-    
-    _key was not expected! Only keeping the old information!
-    
-    /home/nfranz/otter/py/otter/transient.py:211: UserWarning:
-    
-    _id was not expected! Only keeping the old information!
-    
-
-
-
-
-
-    [{'reference': '2021NatAs...5..491H',
-      'raw': [0.033,
-       0.036,
-       0.06,
-       1.114,
-       0.899,
-       0.881,
-       0.824,
-       0.854,
-       0.617,
-       0.262,
-       8.0,
-       0.047,
-       0.091,
-       0.256],
-      'raw_units': ['mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy',
-       'mJy'],
-      'date': [57256.2,
-       57271.2,
-       57338.2,
-       57430.2,
-       57438.2,
-       57445.2,
-       57481.2,
-       57531.2,
-       57617.2,
-       57824.2,
-       58665.2,
-       59077.23,
-       59200.23,
-       59368.23],
-      'date_format': ['MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD',
-       'MJD'],
-      'filter_key': ['6.1GHz',
-       '6.1GHz',
-       '6.1GHz',
-       '4.8GHz',
-       '4.8GHz',
-       '5.5GHz',
-       '5.5GHz',
-       '5.0GHz',
-       '5.0GHz',
-       '5.0GHz',
-       '3.0GHz',
-       '5.04GHz',
-       '5.5GHz',
-       '5.5GHz'],
-      'computed': [False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False],
-      'obs_type': ['radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio',
-       'radio'],
-      'upperlimit': [True,
-       True,
-       True,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False,
-       False]}]
-
-
 
 Obviously, this result doesn't makes sense! This has the data from two completely different transients in it. So, be careful using `strict_merge=False`!
 
@@ -455,16 +236,6 @@ This does the conversion for you!!!
 ```python
 db.getPhot?
 ```
-
-
-    [0;31mSignature:[0m
-    [0mdb[0m[0;34m.[0m[0mgetPhot[0m[0;34m([0m[0;34m[0m
-    [0;34m[0m    [0mflux_unit[0m[0;34m=[0m[0;34m'mag(AB)'[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mdate_unit[0m[0;34m=[0m[0;34m'MJD'[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mreturn_type[0m[0;34m=[0m[0;34m'astropy'[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0;34m**[0m[0mkwargs[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m[0;34m)[0m [0;34m->[0m [0mastropy[0m[0;34m.[0m[0mtable[0m[0;34m.[0m[0mtable[0m[0;34m.[0m[0mTable[0m[0;34m[0m[0;34m[0m[0m
-    [0;31mDocstring:[0m
     Get the photometry of the objects matching the arguments. This will do the
     unit conversion for you!
     
@@ -490,13 +261,10 @@ db.getPhot?
     Return:
        The photometry for the requested transients that match the arguments. 
        Will be an astropy Table sorted by transient default name.
-    [0;31mFile:[0m      ~/otter/py/otter/otter.py
-    [0;31mType:[0m      method
 
 
-
+This means you can easily grab photometry in consistent units to plot!
 ```python
-# can easily grab photometry in consistent units to plot!
 import matplotlib.pyplot as plt
 flux_unit = u.ABmag #u.erg/u.s/u.cm**2/u.Hz #'erg/s/cm^2/Hz'
 tab = db.getPhot(flux_unit=flux_unit, date_unit='datetime', names=['ASASSN-15oi', 'ASASSN-14li'], return_type='pandas')
@@ -508,19 +276,6 @@ tab
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -804,27 +559,11 @@ ax.legend();
 
 ### General Queries (shouldn't be used unless you know what you're doing!)
 
-
+The structure of a more generalized query to OTTER is
 ```python
 # General queries
 Otter.query?
 ```
-
-
-    [0;31mSignature:[0m
-    [0mOtter[0m[0;34m.[0m[0mquery[0m[0;34m([0m[0;34m[0m
-    [0;34m[0m    [0mself[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mnames[0m[0;34m:[0m [0mlist[0m[0;34m[[0m[0mstr[0m[0;34m][0m [0;34m=[0m [0;32mNone[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mcoords[0m[0;34m:[0m [0mastropy[0m[0;34m.[0m[0mcoordinates[0m[0;34m.[0m[0msky_coordinate[0m[0;34m.[0m[0mSkyCoord[0m [0;34m=[0m [0;32mNone[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mradius[0m[0;34m:[0m [0mfloat[0m [0;34m=[0m [0;36m0.05[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mminZ[0m[0;34m:[0m [0mfloat[0m [0;34m=[0m [0;36m0[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mmaxZ[0m[0;34m:[0m [0mfloat[0m [0;34m=[0m [0;32mNone[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mrefs[0m[0;34m:[0m [0mlist[0m[0;34m[[0m[0mstr[0m[0;34m][0m [0;34m=[0m [0;32mNone[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mhasPhot[0m[0;34m:[0m [0mbool[0m [0;34m=[0m [0;32mFalse[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mhasSpec[0m[0;34m:[0m [0mbool[0m [0;34m=[0m [0;32mFalse[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m    [0mraw[0m[0;34m:[0m [0mbool[0m [0;34m=[0m [0;32mFalse[0m[0;34m,[0m[0;34m[0m
-    [0;34m[0m[0;34m)[0m [0;34m->[0m [0mdict[0m[0;34m[0m[0;34m[0m[0m
-    [0;31mDocstring:[0m
     Wraps on the super.AQLQuery and queries the OTTER database more intuitively.
     
     WARNING! This does not do any conversions for you! 
@@ -846,11 +585,9 @@ Otter.query?
     
     Return:
        Get all of the raw (unconverted!) json data for objects that match the criteria. 
-    [0;31mFile:[0m      ~/otter/py/otter/otter.py
-    [0;31mType:[0m      function
 
 
-
+An example of this is
 ```python
 res = db.query(names=['ASASSN-15oi', 'AT2020opy'])
 print(len(res))
@@ -873,10 +610,8 @@ res[0].keys()
 
 
 
-
+However, Notice how this is simply the raw results!!! This means you need to be very careful with the results you get from these queries because no conversion is done!
 ```python
-# Notice how this is simply the raw results!!!
-
 res[0]
 ```
 
@@ -889,10 +624,8 @@ res[0]
 
 ### Some helpful methods
 
-
+To get the Astropy SkyCoord object for a specific transient you can use
 ```python
-# get the SkyCoord object for a transient
-
 skycoord = t1.getSkyCoord()
 skycoord
 ```
@@ -905,9 +638,8 @@ skycoord
 
 
 
-
+Or, to get the html code for plotting the photometry for a transient
 ```python
-# get the html code for plotting the photometry for an object
 html = res[0].plotPhotometry()
 html[:100] # only show the first part of it
 ```
@@ -920,7 +652,8 @@ html[:100] # only show the first part of it
 
 
 ### Uploading/Editing Data
-
+If you have admin access to OTTER you can also upload new data! An example of this is that we first
+need to create a new Transient object.
 
 ```python
 from otter import Otter, Transient
@@ -1037,31 +770,10 @@ t2['photometry'] = {'phot_0': {'telescope': 'Noahs Telescope',
                                }
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    IndexError                                Traceback (most recent call last)
-
-    Cell In[21], line 13
-         11 # generate some test cases
-         12 db = Otter()
-    ---> 13 t1 = db.query(names='2022xkq')[0] # 
-         14 t2 = deepcopy(t1)
-         15 print(t1.keys())
-
-
-    IndexError: list index out of range
-
-
-
+Now we need to connect to OTTER with admin access and upload the new transient object.
 ```python
 db = Otter(username='admin@otter', password='insecure')
 #db.upload(t2)
-```
-
-
-```python
-
 ```
 
 
