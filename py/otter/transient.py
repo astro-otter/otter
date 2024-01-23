@@ -266,33 +266,39 @@ class Transient(MutableMapping):
         Get the default discovery date
         '''
         key = 'date_reference'
-        attempt = 0
-        max_attempts = 5
-        while attempt < max_attempts:
-            # iterate until we find the default discovery date
-            date = self._get_default(key)
-            if date['measurement_type'] == 'discovery':
-                return Time(date['value'], format='mjd')
-            else:
-                del self[key][self[key].index(date)]
+        date = self._get_default(key, filt='df["measurement_type"] == "discovery"')
+        return Time(date['value'], format='mjd')
 
-            attempt += 1
-        
-    def _get_default(self, key):
+    def getRedshift(self):
+        '''
+        Get the default redshift
+        '''
+        return self._get_default('distance/redshift')
+    
+    def _get_default(self, key, filt=''):
         '''
         Get the default of key
+
+        Args:
+            key [str]: key in self to look for the default of
+            filt [str]: a valid pandas dataframe filter to index a pandas dataframe called df.
         '''
         if key not in self:
             raise KeyError(f'This transient does not have {key1} associated with it!')
 
-        # first try to get the default
-        for item in self[key]:
-            if 'default' in item and item['default']:
-                return item
-        else: # if that doesn't work just take the first one
-            print(self[key])
+        try:
+            # first try to get the default
+            df = pd.DataFrame(self[key])
+            print(df)
+            df = df[eval(filt)] # apply the filters
+            return dict(df[df['default'] is True])
+        except:
+            # if that doesn't work just take the first one
+            warnings.warn(
+                f'Could not find a default value associated with {key}! Taking the first one in the database!'
+            )
             return self[key][0]
-    
+            
     def _reformat_coordinate(self, item):
         '''
         Reformat the coordinate information in item
