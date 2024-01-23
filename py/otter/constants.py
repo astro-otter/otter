@@ -2,6 +2,7 @@
 Some constants and mappings to be used across the software
 '''
 import os
+from .transient import Transient
 
 # gives the effective wavelength for each filter given
 # these are all in nanometers!
@@ -235,3 +236,207 @@ FILTER_MAP_FREQ = {'FUV': 1975.086895569116,
 # define a working base directory constant
 BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATADIR = os.path.join(BASEDIR, 'data', 'base')
+
+# Overarching schema that stops once we get down to a string or list
+schema = Transient(
+    {
+        "schema_version": {"value": "0", "comment": "Copied from tde.space"},
+        "name": {
+            "default_name":None,
+            "alias":[]
+        },
+        "coordinate": [],
+        "distance": {
+            "redshift": [],
+            "luminosity_distance": [],
+            "comoving_distance": [],
+            "dispersion_measure": []
+        },
+        "classification": [],
+        "reference_alias": [],
+        "date_reference": [],
+        "photometry": [],
+        "spectra": []
+    }
+)
+
+# sub schemas that get filled into lists
+name_alias_schema = {
+    "value": None,
+    "reference": None
+}
+coordinate_schema = {
+    "ra": None,
+    "dec": None,
+    'l': None,
+    'b': None,
+    'lon': None,
+    'lat': None,
+    'ra_units': None,
+    'dec_units': None,
+    'l_units': None,
+    'b_units': None,
+    'lon_units': None,
+    'lat_units': None,
+    'ra_error': None,
+    'dec_error': None,
+    'l_error': None,
+    'b_error': None,
+    'lon_error': None,
+    'lat_error': None,
+    "epoch": None,
+    "frame": None,
+    "coord_type": None,
+    "computed": None,
+    "reference": None,
+    "default": None
+}
+distance_redshift_schema = {
+    "value": None,
+    "error": None,
+    "reference": None,
+    "computed": None,
+    "uuid": None,
+    "default": None
+}
+distance_luminosity_distance_schema = {
+     "value": None,
+    "unit": None,
+    "error": None,
+    "cosmology": None,
+    "reference": None,
+    "computed": None,
+    "uuid": None,
+    "default": None
+}
+distance_comoving_distance_schema = {
+    "value": None,
+    "error": None,
+    "reference": None,
+    "computed": None,
+    "uuid": None,
+    "default": None
+}
+distance_dispersion_measure_schema = {
+    "value": None,
+    "error": None,
+    "reference": None,
+    "computed": None,
+    "uuid": None,
+    "default": None
+}
+classification_schema = {
+    "object_class": None,
+    "confidence": None,
+    "class_type": None,
+    "reference": None,
+    "default": None
+}
+reference_alias_schema = {
+    "name": None,
+    "human_readable_name": None
+}
+date_reference_schema = {
+    "value": None,
+    "date_format": None,
+    "measurement_type": None,
+    "reference": None,
+    "computed": None
+}
+photometry_schema = {
+    "raw": None,
+    "raw_err": None,
+    "raw_units": None,
+    "value": None,
+    "value_err": None,
+    "value_units": None,
+    "epoch_zeropoint": None,
+    "epoch_redshift": None,
+    "filter": None,
+    "filter_key": None,
+    "obs_type": None,
+    "telescope_area": None,
+    "date": None,
+    "date_format": None,
+    "date_err": None,
+    "ignore": None,
+    "upperlimit": None,
+    "sigma": None,
+    "sky": None,
+    "telescope": None,
+    "instrument": None,
+    "phot_type": None,
+    "exptime" : None,
+    "aperature": None,
+    "observer": None,
+    "reducer": None,
+    "pipeline": None,
+    "corr_k": None,
+    "corr_av": None,
+    "corr_host": None,
+    "corr_hostav": None,
+    "val_k": None,
+    "val_s": None,
+    "val_av": None,
+    "val_host": None,
+    "val_hostav": None
+}
+
+spectra_schema = {
+    'wavelength': None,
+    'wavelength_units': None,
+    'flux': None,
+    'fluxerr': None,
+    'raw': None,
+    'raw_err': None,
+    'sky': None,
+    'lamp': None,
+    'flux_units': None,
+    'telescope': None,
+    'instrument': None,
+    'date': None,
+    'date_format': None,
+    'date_err': None,
+    'exptime': None,
+    'slit': None,
+    'airmass': None,
+    'disperser': None,
+    'resolution': None,
+    'resolution_units': None,
+    'min_wave': None,
+    'max_wave': None,
+    'filter': None,
+    'filter_key': None,
+    'standard_name': None,
+    'ignore': None,
+    'spec_type': None,
+    'aperture': None,
+    'observer': None,
+    'reducer': None,
+    'pipeline': None,
+    'corr_k': None,
+    'corr_av': None,
+    'corr_host': None,
+    'corr_hostav': None,
+    'corr_flux': None,
+    'corr_phot': None,
+    'val_k': None,
+    'val_av': None,
+    'val_host': None,
+    'val_hostav': None
+}
+
+# package the subschemas by the key used for that location in the Transient object
+subschema = {
+    "name/alias": name_alias_schema,
+    "coordinate": coordinate_schema,
+    "distance/redshift": distance_redshift_schema,
+    "distance/luminosity_distance": distance_luminosity_distance_schema,
+    "distance/comoving_distance": distance_comoving_distance_schema,
+    "distance/dispersion_measure": distance_dispersion_measure_schema,
+    "classification": classification_schema,
+    "reference_alias": reference_alias_schema,
+    "date_reference": date_reference_schema,
+    "photometry": photometry_schema,
+    "spectra": spectra_schema
+}
