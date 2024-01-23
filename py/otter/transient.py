@@ -84,30 +84,35 @@ class Transient(MutableMapping):
             return str(self.data)
         else:
             html = ''
+
+            coord = self.getSkyCoord()
             
             # add the ra and dec
             # These are required so no need to check if they are there
             html += f'''
             <tr>
             <td style="text-align:left">RA [hrs]:</td>
-            <td style="text-align:left">{self['coordinate']['equitorial'][0]['ra']}
+            <td style="text-align:left">{coord.ra}
             </tr>
             <tr>
             <td style="text-align:left">DEC [deg]:</td>
-            <td style="text-align:left">{self['coordinate']['equitorial'][0]['dec']}
+            <td style="text-align:left">{coord.dec}
             </tr>
             '''
 
-            if 'epoch' in self and 'date_discovery' in self['epoch']:
-                # add the discovery date
-                html += f'''
-                <tr>
-                <td style="text-align:left">Discovery Date [MJD]:</td>
-                <td style="text-align:left">{self['epoch']['date_discovery'][0]['value']}
-                </tr>
-                '''
+            if 'date_reference' in self:
+                discovery = self.getDiscoveryDate().to_value('datetime')
+                if discovery is not None:
+                    # add the discovery date
+                    html += f'''
+                    <tr>
+                    <td style="text-align:left">Discovery Date [MJD]:</td>
+                    <td style="text-align:left">{discovery}
+                    </tr>
+                    '''
 
-            if 'distance' in self and 'redshift' in self['distance']:
+            if 'distance' in self:
+                
                 # add the redshift
                 html += f'''
                 <tr>
@@ -241,41 +246,76 @@ class Transient(MutableMapping):
 
         return self[keys]        
 
-    def getSkyCoord(self, coord_type='equitorial', idx=0):
+    def getSkyCoord(self, coord_format='icrs'):
         '''
         Convert the coordinates to an astropy SkyCoord
         '''
 
         # first run some checks that the data we need is there
-        req_keys = {'ra', 'dec', 'ra_units', 'dec_units'}
-        key1 = f'coordinate/{coord_type}'
-        if key1 not in self:
-            raise KeyError(f'This transient does not have {key1} associated with it!')
-        if len(self[key1])-1 < idx:
-            raise KeyError(f'This transient does not have a coordinate with index {idx}')
-        diff = list(req_keys-self[key1][idx].keys())
-        if len(diff) > 0:
-            raise KeyError(f'The following keys are missing, cant convert! {diff}')
-
-        # now we can generate the SkyCoord
-        if coord_type == 'equitorial':
-            coordin = {'ra': self[key1][idx]['ra'],
-                       'dec': self[key1][idx]['dec'],
-                       'unit': (self[key1][idx]['ra_units'],
-                              self[key1][idx]['dec_units'])
-                        }
-        elif coord_type == 'galactic':
-            coordin = {'l': self[key1][idx]['l'],
-                       'b': self[key1][idx]['b'],
-                       'unit': (self[key1][idx]['l_units'],
-                                self[key1][idx]['b_units'])
-                       }
-        else:
-            raise ValueError('coord_type must be either equitorial or galactic')
-            
-        coord = SkyCoord(**coordin)
-        return coord
+        key1 = f'coordinate'
         
+        # now we can generate the SkyCoord
+        coord_dict = self._get_default(key1)
+        coordin = self._reformat_coordinate(coord_dict)
+        coord = SkyCoord(**coordin).transform_to(coord_format)
+
+        return coord
+
+    def getDiscoveryDate(self):
+        '''
+        Get the default discovery date
+        '''
+        key = 'date_reference'
+        attempt = 0
+        max_attempts = 5
+        while attempt < max_attempts:
+            # iterate until we find the default discovery date
+            date = self._get_default(key)
+            if date['measurement_type'] == 'discovery':
+                return Time(date['value'], format='mjd')
+            else:
+                del self[key][self[key].index(date)]
+
+            attempt += 1
+        
+    def _get_default(self, key):
+        '''
+        Get the default of key
+        '''
+        if key not in self:
+            raise KeyError(f'This transient does not have {key1} associated with it!')
+
+        # first try to get the default
+        for item in self[key]:
+            if 'default' in item and item['default']:
+                return item
+        else: # if that doesn't work just take the first one
+            print(self[key])
+            return self[key][0]
+    
+    def _reformat_coordinate(self, item):
+        '''
+        Reformat the coordinate information in item
+        '''
+        coordin = None
+        if 'ra' in item and 'dec' in item:
+            # this is an equitorial coordinate
+            coordin = {'ra': item['ra'],
+                       'dec': item['dec'],
+                       'unit': (item['ra_units'],
+                                item['dec_units'])
+                       }
+        elif 'l' in item and 'b' in item:
+            coordin = {'l': item['l'],
+                       'b': item['b'],
+                       'unit': (item['l_units'],
+                                item['b_units']),
+                       'frame': 'galactic'
+                       }
+            
+        return coordin
+
+    
     def cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD'):
         '''
         Ensure the photometry associated with this transient is all in the same units/system/etc
@@ -727,4 +767,4 @@ class Transient(MutableMapping):
                 out[key][subkey] = t1[key][subkey]
 
             elif subkey in t2[key]:
-                out[key][subkey] = t2[key][subkey]
+                out[key][subkey] = t2[key][subkey]    

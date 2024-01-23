@@ -243,9 +243,18 @@ class Otter(Database):
             goodTDEs = []
 
             for tde in result:
-                for coordinfo in tde['coordinate']['equitorial']:
-                    coord = SkyCoord(coordinfo['ra'], coordinfo['dec'],
-                                     unit=(coordinfo['ra_units'], coordinfo['dec_units']))
+                for coordinfo in tde['coordinate']:
+                    if 'ra' in coordinfo and 'dec' in coordinfo:
+                        coord = SkyCoord(coordinfo['ra'], coordinfo['dec'],
+                                         unit=(coordinfo['ra_units'], coordinfo['dec_units']))
+                    elif 'l' in coordinfo and 'b' in coordinfo:
+                        # this is galactic
+                        coord = SkyCoord(coordinfo['l'], coordinfo['b'],
+                                         unit=(coordinfo['l_units'], coordinfo['b_units']),
+                                         frame='galactic'
+                                         )
+                    else:
+                        raise ValueError('Either needs to have ra and dec or l and b as keys!')
                     if queryCoords.separation(coord) < radius*u.arcsec:
                         goodTDEs.append(tde)
                         break # we've confirmed this tde is in the cone!
@@ -400,26 +409,27 @@ class Otter(Database):
         galactic = SkyCoord(dfrow.ra, dfrow.dec, unit=(dfrow.ra_units, dfrow.dec_units),
                             frame='icrs').galactic
         
-        schema['coordinate'] = {'equitorial': [{
-                                    'ra': dfrow.ra,
-                                    'dec': dfrow.dec,
-                                    'ra_units': dfrow.ra_units,
-                                    'dec_units': dfrow.dec_units,
-                                    'computed': False,
-                                    'uuid': str(uu),
-                                    'default': True,
-                                    'reference': dfrow.reference
-                                }],
-                                'galactic': [{
-                                    'l': float(galactic.l.value),
-                                    'b': float(galactic.b.value),
-                                    'l_units': 'deg',
-                                    'b_units': 'deg',
-                                    'reference': str(uu),
-                                    'computed': True
-                                }]
-                                } 
-
+        schema['coordinate'] = [{
+            'ra': dfrow.ra,
+            'dec': dfrow.dec,
+            'ra_units': dfrow.ra_units,
+            'dec_units': dfrow.dec_units,
+            'computed': False,
+            'uuid': str(uu),
+            'default': True,
+            'reference': dfrow.reference,
+            'coord_type': 'equitorial'
+        },
+        {
+            'l': float(galactic.l.value),
+            'b': float(galactic.b.value),
+            'l_units': 'deg',
+            'b_units': 'deg',
+            'reference': str(uu),
+            'computed': True,
+            'coord_type': 'galactic'
+        }]
+        
         # now add distance measurements if they have any
         dist_keys = ['redshift', 'luminosity_distance', 'dispersion_measure']
         dist_dict = {}
@@ -444,16 +454,20 @@ class Otter(Database):
             
         # do the same with epoch info
         epoch_keys = ['date_discovery', 'date_peak', 'date_explosion']
-        epoch_dict = {}
+        epoch_dict = []
         for key in epoch_keys:
             if key in dfrow:
-                epoch_dict[key] = [{'value':dfrow[key],
-                                    'date_format': dfrow['date_format'],
-                                    'reference': dfrow.reference,
-                                    'computed': False
-                                    }]
+                epoch_dict.append(
+                    {
+                        'value':dfrow[key],
+                        'date_format': dfrow['date_format'],
+                        'reference': dfrow.reference,
+                        'computed': False,
+                        'measurement_type': key
+                    }
+                )
         if len(epoch_dict) > 0:
-            schema['epoch'] = epoch_dict
+            schema['date_reference'] = epoch_dict
 
         # create the reference_alias        
         if not testing: # we don't want to use up all our queries
@@ -475,6 +489,8 @@ class Otter(Database):
             schema['reference_alias'] = [{'name': dfrow.reference,
                                           'human_readable_name':hrn
                                           }]
+        else:
+            print(f'We would be querying for bibcode={dfrow.reference}')
         
         # check if there is a photometry file path
         if 'phot_path' in dfrow:
