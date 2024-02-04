@@ -22,3 +22,12 @@ def filter_to_obstype(band_name):
     else:
         return 'xray'
     
+
+def clean_schema(schema):
+    '''
+    Clean out Nones and empty lists from the given subschema
+    '''
+    for key, val in list(schema.items()):
+        if val is None or (isinstance(val, (list, dict)) and len(val) == 0):
+            del schema[key]
+    return schema
