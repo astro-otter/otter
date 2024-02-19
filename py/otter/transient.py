@@ -233,8 +233,12 @@ class Transient(MutableMapping):
         '''
         if keys is None:
             keys = list(self.keys())
-            _=keys.pop('photometry')
-            _=keys.pop('spectra')
+
+            # note: using the remove method is safe here because dict keys are unique
+            if 'photometry' in keys:
+                keys.remove('photometry')
+            if 'spectra' in keys:
+                keys.remove('spectra')
         else:
             # run some checks
             if 'photometry' in keys:
@@ -244,6 +248,12 @@ class Transient(MutableMapping):
                 warnings.warn('Not returning the spectra!')
                 _=keys.pop('spectra')
 
+            curr_keys = self.keys()
+            for key in keys:
+                if key not in curr_keys:
+                    keys.remove(key)
+                    warnings.warn(f'Not returning {key} because it is not in this transient!')
+                    
         return self[keys]        
 
     def getSkyCoord(self, coord_format='icrs'):
@@ -251,11 +261,9 @@ class Transient(MutableMapping):
         Convert the coordinates to an astropy SkyCoord
         '''
 
-        # first run some checks that the data we need is there
-        key1 = f'coordinate'
-        
         # now we can generate the SkyCoord
-        coord_dict = self._get_default(key1)
+        f = "df['coordinate_type'] == 'equitorial'"
+        coord_dict = self.get_default("coordinate", filt=f)
         coordin = self._reformat_coordinate(coord_dict)
         coord = SkyCoord(**coordin).transform_to(coord_format)
 
@@ -266,16 +274,17 @@ class Transient(MutableMapping):
         Get the default discovery date
         '''
         key = 'date_reference'
-        date = self._get_default(key, filt='df["measurement_type"] == "discovery"')
+        date = self.get_default(key, filt='df["date_type"] == "discovery"')
         return Time(date['value'], format='mjd')
 
     def getRedshift(self):
         '''
         Get the default redshift
         '''
-        return self._get_default('distance/redshift')
+        f = "df['distance_type']=='redshift'"
+        return self.get_default('distance', filt=f)['value']
     
-    def _get_default(self, key, filt=''):
+    def get_default(self, key, filt=''):
         '''
         Get the default of key
 
@@ -284,20 +293,19 @@ class Transient(MutableMapping):
             filt [str]: a valid pandas dataframe filter to index a pandas dataframe called df.
         '''
         if key not in self:
-            raise KeyError(f'This transient does not have {key1} associated with it!')
+            raise KeyError(f'This transient does not have {key} associated with it!')
 
-        try:
+        df = pd.DataFrame(self[key])
+        df = df[eval(filt)] # apply the filters
+        if 'default' in df:
             # first try to get the default
-            df = pd.DataFrame(self[key])
-            print(df)
-            df = df[eval(filt)] # apply the filters
-            return dict(df[df['default'] is True])
-        except:
-            # if that doesn't work just take the first one
-            warnings.warn(
-                f'Could not find a default value associated with {key}! Taking the first one in the database!'
-            )
-            return self[key][0]
+            df_filtered = df[df.default == True]
+            if len(df_filtered) == 0:
+                df_filtered = df
+        else:
+            df_filtered = df
+        
+        return df_filtered.iloc[0]
             
     def _reformat_coordinate(self, item):
         '''
