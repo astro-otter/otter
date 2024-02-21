@@ -7,6 +7,8 @@ import glob
 from warnings import warn
 import uuid
 from zipfile import ZipFile
+from collections.abc import Iterable
+
 import pandas as pd
 import numpy as np
 
@@ -216,8 +218,16 @@ class Otter(object):
             if not isinstance(coords, SkyCoord):
                 raise ValueError('Input coordinate must be an astropy SkyCoord!')
             summary_coords = SkyCoord(summary.ra.tolist(), summary.dec.tolist(), unit=(u.hourangle, u.deg))
-            summary_idx, _, _, _ = search_around_sky(summary_coords, coords, seplimit=radius*u.arcsec)
 
+            try:
+                summary_idx, _, _, _ = search_around_sky(summary_coords,
+                                                         coords,
+                                                         seplimit=radius*u.arcsec)
+            except ValueError:
+                summary_idx, _, _, _ = search_around_sky(summary_coords,
+                                                         SkyCoord([coords]),
+                                                         seplimit=radius*u.arcsec)
+                
             summary = summary.iloc[summary_idx]
         
         # redshift
@@ -302,14 +312,12 @@ class Otter(object):
         # now upload this json file
         self.save(schema, outpath=datapath, test_mode=testing)
             
-    def save(self, schema:list[dict], outpath:str=os.getcwd(), **kwargs) -> None:
+    def save(self, schema:list[dict], **kwargs) -> None:
         '''
         Upload all the data in the given list of schemas.
 
         Args:
             schema [list[dict]]: A list of json dictionaries
-            outpath [str]: The path to the directory where to write the json files.
-                           Default is current working directory.
         '''
 
         if not isinstance(schema, list):
@@ -317,6 +325,8 @@ class Otter(object):
         
         for json in schema:
 
+            print(json['name/default_name'])
+            
             # convert the json to a Transient
             if not isinstance(json, Transient):
                 json = Transient(json)
@@ -352,32 +362,39 @@ class Otter(object):
         # check if this documents key is in the database already
         # and if so remove it!
         jsonpath = os.path.join(self.DATADIR, '*.json')
-        aliases = {item['value'] for item in schema['name']['alias']}
+        aliases = {item['value'].replace(' ', '-') for item in schema['name']['alias']}
         filenames = {os.path.basename(fname).split('.')[0] for fname in glob.glob(jsonpath)}
         todel = list(aliases & filenames)
 
         # now save this data
         # create a new file in self.DATADIR with this
-        outfilepath = os.path.join(self.DATADIR, todel[0]+'.json')
-        
-        if len(todel) > 0 and not test_mode:
-            os.remove(outfilepath)
+        if len(todel) > 0:
+            outfilepath = os.path.join(self.DATADIR, todel[0]+'.json')
+            if test_mode:
+                print('Renaming the following file for backups: ', outfilepath)
+            else:
+                os.rename(outfilepath, outfilepath+'.backup')
         else:
-            # for testing
-            print('Deleting the following file: ', todel)
+            if test_mode:
+                print("Don't need to mess with the files at all!")
+            fname = schema['name']['default_name']+'.json'
+            fname = fname.replace(' ', '-') # replace spaces in the filename
+            outfilepath = os.path.join(self.DATADIR, fname)
+            
         
         # format as a json
         if isinstance(schema, Transient):
             schema = dict(schema)
 
         out = json.dumps(schema, indent=4)
-        out = '[' + out
-        out += ']'
+        #out = '[' + out
+        #out += ']'
 
         if not test_mode:
             with open(outfilepath, 'w') as f:
                 f.write(out)
         else:
+            print(f'Would write to {outfilepath}')
             print(out)
 
     def generate_summary_table(self, save=False):
@@ -421,7 +438,7 @@ class Otter(object):
         alljsons = pd.DataFrame(rows)
         if save:
             alljsons.to_csv(os.path.join(self.DATADIR, 'summary.csv'))
-        
+
         return alljsons
         
     def _row_to_json(self, dfrow:pd.Series, datapath:str, testing=False) -> None:

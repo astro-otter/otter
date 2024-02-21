@@ -199,7 +199,7 @@ def get_type(quantity):
     '''
     Finds the type of the input quantity and returns the quantity as that class
     '''
-
+    
     if FluxDensity.isfluxdensity(quantity):
         # we have to be a little careful cause some of these are mags
         if str(quantity.unit) == 'mag(AB)':

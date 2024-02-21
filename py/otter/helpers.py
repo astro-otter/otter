@@ -12,7 +12,7 @@ def filter_to_obstype(band_name):
     try:
         wave_eff = FILTER_MAP_WAVE[band_name]*u.nm
     except KeyError as exc:
-        raise Exception('No Effective Wavelength Known for this band, please add it to constants'
+        raise Exception(f'No Effective Wavelength Known for {band_name}, please add it to constants'
                         ) from exc
 
     if wave_eff > 1*u.mm:

@@ -101,6 +101,7 @@ FILTER_MAP_WAVE = {'FUV': 153.8620701901866,
  'F115W': 1157.001589027877,
  'F150W': 1503.9880463410511,
  'F200W': 1993.3922957570885,
+ 'F225W': 2372.81,
  'F277W': 2769.332372846113,
  'F300M': 2990.7606605760484,
  'F335M': 3363.887076210947,
@@ -246,17 +247,13 @@ schema = Transient(
             "alias":[]
         },
         "coordinate": [],
-        "distance": {
-            "redshift": [],
-            "luminosity_distance": [],
-            "comoving_distance": [],
-            "dispersion_measure": []
-        },
+        "distance": [],
         "classification": [],
         "reference_alias": [],
         "date_reference": [],
         "photometry": [],
-        "spectra": []
+        "spectra": [],
+        "filter_alias": []
     }
 )
 
@@ -291,40 +288,19 @@ coordinate_schema = {
     "reference": None,
     "default": None
 }
-distance_redshift_schema = {
+
+distance_schema = {
     "value": None,
-    "error": None,
-    "reference": None,
-    "computed": None,
-    "uuid": None,
-    "default": None
-}
-distance_luminosity_distance_schema = {
-     "value": None,
     "unit": None,
     "error": None,
     "cosmology": None,
     "reference": None,
     "computed": None,
     "uuid": None,
-    "default": None
+    "default": None,
+    "distance_type": None
 }
-distance_comoving_distance_schema = {
-    "value": None,
-    "error": None,
-    "reference": None,
-    "computed": None,
-    "uuid": None,
-    "default": None
-}
-distance_dispersion_measure_schema = {
-    "value": None,
-    "error": None,
-    "reference": None,
-    "computed": None,
-    "uuid": None,
-    "default": None
-}
+
 classification_schema = {
     "object_class": None,
     "confidence": None,
@@ -332,17 +308,20 @@ classification_schema = {
     "reference": None,
     "default": None
 }
+
 reference_alias_schema = {
     "name": None,
     "human_readable_name": None
 }
+
 date_reference_schema = {
     "value": None,
     "date_format": None,
-    "measurement_type": None,
+    "date_type": None,
     "reference": None,
     "computed": None
 }
+
 photometry_schema = {
     "raw": None,
     "raw_err": None,
@@ -426,17 +405,30 @@ spectra_schema = {
     'val_hostav': None
 }
 
+filter_alias_schema = {
+    'filter_key': None,
+    'wave_eff': None,
+    'wave_min': None,
+    'wave_max': None,
+    'freq_eff': None,
+    'freq_min': None,
+    'freq_max': None,
+    'zp': None,
+    'wave_units': None,
+    'freq_units': None,
+    'zp_units': None,
+    'zp_system': None
+}
+
 # package the subschemas by the key used for that location in the Transient object
 subschema = {
     "name/alias": name_alias_schema,
     "coordinate": coordinate_schema,
-    "distance/redshift": distance_redshift_schema,
-    "distance/luminosity_distance": distance_luminosity_distance_schema,
-    "distance/comoving_distance": distance_comoving_distance_schema,
-    "distance/dispersion_measure": distance_dispersion_measure_schema,
+    "distance": distance_schema,
     "classification": classification_schema,
     "reference_alias": reference_alias_schema,
     "date_reference": date_reference_schema,
     "photometry": photometry_schema,
-    "spectra": spectra_schema
+    "spectra": spectra_schema,
+    "filter_alias": filter_alias_schema
 }

@@ -28,7 +28,7 @@ class Transient(MutableMapping):
             d [dict]: A transient dictionary
         '''
         self.data = d
-
+        
         if 'reference_alias' in self:
             self.srcmap = {ref['name']:ref['human_readable_name'] for ref in self['reference_alias']}
         else:
@@ -47,13 +47,20 @@ class Transient(MutableMapping):
         # Make it so all coordinates are astropy skycoords
             
     def __getitem__(self, keys):
+        '''
+        Override getitem to recursively access Transient elements
+        '''
+        
         if isinstance(keys, (list, tuple)):
             return Transient({key:self[key] for key in keys})
         elif isinstance(keys, str) and '/' in keys: # this is for a path
             s = "']['".join(keys.split('/'))
             s = "['" + s
             s += "']"
-            return eval(f"self{s}") 
+            return eval(f"self{s}")
+        elif isinstance(keys, int) or keys.isdigit() or (keys[0] == '-' and keys[1:].isdigit()):
+            # this is for indexing a sublist
+            return self[int(keys)]
         else:
             return self.data[keys]
             
@@ -192,8 +199,8 @@ class Transient(MutableMapping):
                 self._merge_names(other, out)               
             elif key == 'coordinate':
                 self._merge_coords(other, out)
-            elif key == 'epoch':
-                self._merge_epoch(other, out)
+            elif key == 'date_reference':
+                self._merge_date(other, out)
             elif key == 'distance':
                 self._merge_distance(other, out)
             elif key == 'filter_alias':
@@ -275,14 +282,23 @@ class Transient(MutableMapping):
         '''
         key = 'date_reference'
         date = self.get_default(key, filt='df["date_type"] == "discovery"')
-        return Time(date['value'], format='mjd')
+        if 'date_format' in date:
+            f = date['date_format']
+        else:
+            f = 'mjd'
+
+        return Time(date['value'], format=f)
 
     def getRedshift(self):
         '''
         Get the default redshift
         '''
         f = "df['distance_type']=='redshift'"
-        return self.get_default('distance', filt=f)['value']
+        default = self.get_default('distance', filt=f)
+        if default is None:
+            return default
+        else:
+            return default['value']
     
     def get_default(self, key, filt=''):
         '''
@@ -297,6 +313,7 @@ class Transient(MutableMapping):
 
         df = pd.DataFrame(self[key])
         df = df[eval(filt)] # apply the filters
+        
         if 'default' in df:
             # first try to get the default
             df_filtered = df[df.default == True]
@@ -304,7 +321,9 @@ class Transient(MutableMapping):
                 df_filtered = df
         else:
             df_filtered = df
-        
+
+        if len(df_filtered) == 0:
+            return None
         return df_filtered.iloc[0]
             
     def _reformat_coordinate(self, item):
@@ -330,20 +349,42 @@ class Transient(MutableMapping):
         return coordin
 
     
-    def cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD'):
+    def cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD', by='value'):
         '''
         Ensure the photometry associated with this transient is all in the same units/system/etc
-
-        THIS IS HELL
         '''
 
-        # turn the photometry key into a pandas dataframe
-        df = pd.concat([pd.DataFrame(dd) for dd in self['photometry']], axis=1)
+        # check inputs
+        if by not in {'value', 'raw'}:
+            raise ValueError('Please choose either value or raw!')
         
-        # combine with the filter_alias
-        filters = pd.DataFrame(self['filter_alias'])
-        df = df.merge(filters, on='filter_key')
+        # turn the photometry key into a pandas dataframe
+        dfs = []
+        for item in self['photometry']:
+            max_len = 0
+            for val in item.values():
+                if isinstance(val, list):
+                    max_len = max(max_len, len(val))
+                    
+            for key, val in item.items():
+                if not isinstance(val, list) or isinstance(val, list) and len(val) < max_len:
+                    item[key] = [val]*max_len
+                    
+            df = pd.DataFrame(item)
+            dfs.append(df)
+            
+        c = pd.concat(dfs)
 
+        filters = pd.DataFrame(self['filter_alias'])
+        df = c.merge(filters, on='filter_key')
+
+        # make sure 'by' is in df
+        if by not in df:
+            if by == 'value':
+                by = 'raw'
+            else:
+                by = 'value'
+        
         # convert the ads bibcodes to a string of human readable sources here
         def mappedrefs(row):
             if isinstance(row.reference, list):
@@ -361,11 +402,27 @@ class Transient(MutableMapping):
         for obstype, data in df.groupby('obs_type'):
 
             # get the photometry in the right type
-            unit = data.raw_units.unique()
+            unit = data[by+'_units'].unique()
             if len(unit) > 1:
                 raise ValueError('Can not apply multiple units for different obs_types')
-            astropy_units = u.Unit(unit[0])
-            phot = get_type(np.asarray(data.raw) * astropy_units)
+
+            unit = unit[0]
+            try:
+                astropy_units = u.Unit(unit)
+            except ValueError:
+                # this means there is something likely slightly off in the input unit
+                # string. Let's try to fix it!
+                # here are some common mistakes
+                unit = unit.replace('ergs', 'erg')
+
+                astropy_units = u.Unit(unit)
+            except ValueError:
+                raise ValueError('Could not coerce your string into astropy unit format!')
+
+            indata = data[by].astype(float)
+            q = u.Quantity(indata, astropy_units)
+            #import pdb; pdb.set_trace()
+            phot = get_type(q)
 
             # convert this to a flux
             if 'freq_eff' in data:
@@ -398,7 +455,7 @@ class Transient(MutableMapping):
         # make sure all the datetimes are in the same format here too!!
         times = [Time(d,format=f).to_value(date_unit.lower()) for d, f in zip(outdata.date, outdata.date_format.str.lower())]
         outdata['converted_date'] = times
-        
+
         return outdata
 
 
@@ -550,7 +607,7 @@ class Transient(MutableMapping):
             else:
                 warnings.warn('Names have the same score! Just using the existing default_name')
                 out[key]['default_name'] = t1[key]['default_name']
-
+                
         # now deal with aliases
         # create a reference mapping for each
         t1map = {}
@@ -583,48 +640,13 @@ class Transient(MutableMapping):
     def _merge_coords(t1, t2, out):
         '''
         Merge the coordinates subdictionaries for t1 and t2 and put it in out
+
+        Use pandas to drop any duplicates
         '''
         key = 'coordinate'
-        out[key] = {}
 
-        # first deal with equitorial and then galactic
-        subkeys = ['equitorial', 'galactic']
-        cnames = [('ra', 'dec', 'icrs'), ('l', 'b', 'galactic')]
-        for subkey, c in zip(subkeys, cnames):
-
-            c1, c2, frame = c
-            c1_units, c2_units = f'{c1}_units', f'{c2}_units'
-
-            if subkey in t1[key] and subkey in t2[key]:
-                out[key][subkey] = t1[key][subkey]
-                curr_coords = np.array([SkyCoord(val[c1], val[c2], unit=(val[c1_units], val[c2_units]), frame=frame) for val in t1[key][subkey]])
-                for coord in t2[key][subkey]:
-                    coorddict = {c1:coord[c1],
-                                 c2:coord[c2],
-                                 'unit':(coord[c1_units], coord[c2_units]),
-                                 'frame': frame
-                                }
-                    skycoord = SkyCoord(**coorddict)
-                    if skycoord not in curr_coords:
-                        out[key][subkey].append(coord)
-                    else:
-                        idx = np.where(skycoord == curr_coords)[0][0] # we only need the first value
-                        ref = out[key][subkey][idx]['reference']
-                        if not isinstance(ref, list):
-                            out[key][subkey][idx]['reference'] = [ref]
-
-                        if not isinstance(coord['reference'], list):
-                            coord['reference'] = [coord['reference']]
-
-                        newdata = list(np.unique(out[key][subkey][idx]['reference']+coord['reference']))
-                        out[key][subkey][idx]['reference'] = newdata
-
-            elif subkey in t1[key]:
-                out[key][subkey] = t1[key][subkey]
-
-            elif subkey in t2[key]:
-                out[key][subkey] = t2[key][subkey]
-
+        Transient._merge_arbitrary(key, t1, t2, out)
+        
     def _merge_filter_alias(t1, t2, out):
         '''
         Combine the filter alias lists across the transient objects
@@ -723,62 +745,67 @@ class Transient(MutableMapping):
             else:
                 item['default'] = False
 
-    def _merge_epoch(t1, t2, out):
+    def _merge_date(t1, t2, out):
         '''
         Combine epoch data across two transients and write it to "out"
         '''
-        key = 'epoch'
-        subkeys = ['date_explosion', 'date_peak', 'date_discovery']
+        key = 'date_reference'
 
-        out[key] = {}
-
-        for subkey in subkeys:
-            if subkey in t1[key] and subkey in t2[key]:
-                out[key][subkey] = t1[key][subkey]
-                values = np.array([val['value'] for val in out[key][subkey]])
-                for item in t2[key][subkey]:
-                    if item['value'] in values:
-                        i = np.where(item['value'] == values)[0][0]
-                        if not isinstance(out[key][subkey][i]['reference'], list):
-                            out[key][subkey][i]['reference'] = [out[key][subkey][i]['reference']]
-                        if not isinstance(item['reference'], list):
-                            item['reference'] = [item['reference']]
-
-                        out[key][subkey][i]['reference'] = list(np.unique(out[key][subkey][i]['reference']+item['reference']))
-                    else:
-                        out[key][subkey].append(item)
-
-            elif subkey in t1[key]:
-                out[key][subkey] = t1[key][subkey]
-
-            elif subkey in t2[key]:
-                out[key][subkey] = t2[key][subkey]
-
+        Transient._merge_arbitrary(key, t1, t2, out)
+        
     def _merge_distance(t1, t2, out):
         '''
         Combine distance information for these two transients
         '''
         key = 'distance'
-        subkeys = ['redshift', 'luminosity_distance', 'dispersion_measure']
-        out[key] = {}
-        for subkey in subkeys:
-            if subkey in t1[key] and subkey in t2[key]:
-                out[key][subkey] = t1[key][subkey]
-                values = np.array([val['value'] for val in out[key][subkey]])
-                for item in t2[key][subkey]:
-                    if item['value'] in values:
-                        i = np.where(item['value'] == values)[0][0]
-                        if not isinstance(out[key][subkey][i]['reference'], list):
-                            out[key][subkey][i]['reference'] = [out[key][subkey][i]['reference']]
-                        if not isinstance(item['reference'], list):
-                            item['reference'] = [item['reference']]
 
-                        out[key][subkey][i]['reference'] = list(np.unique(out[key][subkey][i]['reference']+item['reference']))
-                    else:
-                        out[key][subkey].append(item)
+        Transient._merge_arbitrary(key, t1, t2, out)
 
-            elif subkey in t1[key]:
-                out[key][subkey] = t1[key][subkey]
+    @staticmethod
+    def _merge_arbitrary(key, t1, t2, out):
+        '''
+        Merge two arbitrary datasets inside the json file using pandas
+        
+        The datasets in t1 and t2 in "key" must be able to be forced into 
+        a NxM pandas dataframe!
+        '''
 
-            elif subkey in t2[key]:
-                out[key][subkey] = t2[key][subkey]    
+        df1 = pd.DataFrame(t1[key])
+        df2 = pd.DataFrame(t2[key])
+
+        merged_with_dups = pd.concat([df1, df2]).reset_index(drop=True)
+
+        # have to get the indexes to drop using a string rep of the df
+        # this is cause we have lists in some cells
+        to_drop = merged_with_dups.astype(str).drop_duplicates().index
+
+        merged = merged_with_dups.iloc[to_drop].reset_index(drop=True)
+        
+        outdict = merged.to_dict(orient='records')
+
+        outdict_cleaned = Transient._remove_nans(outdict) # clear out the nans from pandas conversion
+
+        out[key] = outdict_cleaned
+
+    @staticmethod
+    def _remove_nans(d):
+        '''
+        Remove nans from a record dictionary
+
+        THIS IS SLOW: O(n^2)!!! WILL NEED TO BE SPED UP LATER
+        '''
+
+        outd = []
+        for item in d:
+            outsubd = {}
+            for key, val in item.items():
+                if not isinstance(val, float):
+                    # this definitely is not NaN
+                    outsubd[key] = val
+                
+                else:
+                    if not np.isnan(val):
+                        outsubd[key] = val
+            outd.append(outsubd)
+
+        return outd
