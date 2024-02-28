@@ -16,7 +16,7 @@ import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord
 
-from .unit_types import *
+from ..unit_types import *
 
 class Transient(MutableMapping):
 

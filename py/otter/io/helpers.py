@@ -2,7 +2,7 @@
 Some global helper functions for various processing tasks
 '''
 import astropy.units as u
-from .constants import FILTER_MAP_WAVE
+from ..constants import FILTER_MAP_WAVE
 
 def filter_to_obstype(band_name):
     '''

@@ -4,24 +4,25 @@ This is the primary class for user interaction with the catalog
 import os
 import json
 import glob
+from warnings import warn
 import uuid
 from zipfile import ZipFile
-import pandas as pd
+from collections.abc import Iterable
 
-from astropy.coordinates import SkyCoord
+import pandas as pd
+import numpy as np
+
+from astropy.coordinates import SkyCoord, search_around_sky
 from astropy.table import Table
 from astropy import units as u
 
 import ads
 
-from pyArango.database import Database
-from pyArango.connection import Connection
-
 from .transient import Transient
-from .constants import *
+from ..constants import *
 from .helpers import * 
 
-class Otter(Database):
+class Otter(object):
     '''
     This is the primary class for users to access the otter backend database
 
@@ -37,22 +38,28 @@ class Otter(Database):
     '''
     
     def __init__(self,
-                 username:str='user@otter',
-                 password:str='insecure',
-                 db:str='otter',
-                 collection:str='tdes',
+                 datadir:str=None,
                  debug:bool=False
                  ) -> None:
-
+        
         # save inputs
-        self.dbName = db
-        self.collectionName = collection
-        
-        c = Connection(username=username, password=password)
-        
-        # initiate the tdes database
-        super().__init__(c, db)
+        if datadir is None:
+            self.CWD = os.path.dirname(os.path.abspath('__FILE__'))
+            self.DATADIR = os.path.join(self.CWD, '.otter')
+        else:
+            self.CWD = os.path.dirname(datadir)
+            self.DATADIR = datadir
 
+        self.debug = debug
+
+        # make sure the data directory exists
+        if not os.path.exists(self.DATADIR):
+            try:
+                os.makedirs(self.DATADIR)
+            except FileExistsError:
+                warn('Directory was created between the if statement and trying to create the directory!')
+                pass
+        
     def getMeta(self, **kwargs) -> Table:
         '''
         Get the metadata of the objects matching the arguments
@@ -63,7 +70,7 @@ class Otter(Database):
            The metadata for the transients that match the arguments. Will be an astropy
            Table by default, if raw=True will be a dictionary.
         '''
-        metakeys = ['name', 'coordinate', 'epoch', 'distance', 'classification']
+        metakeys = ['name', 'coordinate', 'date_reference', 'distance', 'classification']
         
         return [t[metakeys] for t in self.query(**kwargs)]     
         
@@ -152,7 +159,7 @@ class Otter(Database):
     def query(self,
               names:list[str]=None,
               coords:SkyCoord=None,
-              radius:float=0.05,
+              radius:float=5,
               minZ:float=0,
               maxZ:float=None,
               refs:list[str]=None,
@@ -161,7 +168,7 @@ class Otter(Database):
               raw:bool=False
               ) -> dict:
         '''
-        Wraps on the super.AQLQuery and queries the OTTER database more intuitively.
+        Searches the summary.csv table and reads relevant JSON files
 
         WARNING! This does not do any conversions for you! 
         This is how it differs from the `getMeta` method. Users should prefer to use
@@ -183,100 +190,97 @@ class Otter(Database):
         Return:
            Get all of the raw (unconverted!) json data for objects that match the criteria. 
         '''
+        if all(arg is None for arg in [names, coords, maxZ, refs]) and not hasPhot and not hasSpec:
+            # there's nothing to query!
+            # read in the metdata from all json files
+            # this could be dangerous later on!!
+            allfiles = glob.glob(os.path.join(self.DATADIR, '*.json'))
+            jsondata = []
 
-        # write some AQL filters based on the inputs
-        queryFilters = ''
+            # read the data from all the json files and convert to Transients
+            for jsonfile in allfiles:
+                with open(jsonfile, 'r') as j:
+                    t = Transient(json.load(j))
+                    jsondata.append(t.getMeta())
 
-        if hasPhot is True:
-            queryFilters += "FILTER 'photometry' IN ATTRIBUTES(tde)\n"
-
-        if hasSpec is True:
-            queryFilters += "FILTER 'spectra' IN ATTRIBUTES(tde)\n"
+            return jsondata
         
-        if minZ > 0:
-            sfilt = f'''
-            FILTER TO_NUMBER(tde.distance.redshift[*].value) >= {minZ} \n
-            '''
-            queryFilters += sfilt
+        # check if the summary table exists, if it doen't create it
+        summary_table = os.path.join(self.DATADIR, 'summary.csv')
+        if not os.path.exists(summary_table):
+            self.generate_summary_table(save=True)
+
+        # then read and query the summary table
+        summary = pd.read_csv(summary_table)
+
+        # coordinate search first
+        if coords is not None:
+            if not isinstance(coords, SkyCoord):
+                raise ValueError('Input coordinate must be an astropy SkyCoord!')
+            summary_coords = SkyCoord(summary.ra.tolist(), summary.dec.tolist(), unit=(u.hourangle, u.deg))
+
+            try:
+                summary_idx, _, _, _ = search_around_sky(summary_coords,
+                                                         coords,
+                                                         seplimit=radius*u.arcsec)
+            except ValueError:
+                summary_idx, _, _, _ = search_around_sky(summary_coords,
+                                                         SkyCoord([coords]),
+                                                         seplimit=radius*u.arcsec)
+                
+            summary = summary.iloc[summary_idx]
+        
+        # redshift
+        summary = summary[summary.z.astype(float) >= minZ]
         if maxZ is not None:
-            sfilt = f'''
-            FILTER TO_NUMBER(tde.distance.redshift[*].value) <= {maxZ} \n
-            '''
-            queryFilters += sfilt 
+            summary = summary[summary.z.astype(float) <= maxZ]
             
+        # check photometry and spectra
+        if hasPhot:
+            summary = summary[summary.hasPhot == True]
+            
+        if hasSpec:
+            summary = summary[summary.hasSpec == True]
+
+        # check names
         if names is not None:
             if isinstance(names, str):
-                queryFilters += f"FILTER tde.name LIKE '%{names}%'\n"
-            elif isinstance(names, list):
-                namefilt = f'''
-            FOR name IN {names} 
-                FILTER name IN tde.name.alias[*].value\n
-                '''
-                queryFilters += namefilt
+                n = {names}
             else:
-                raise Exception('Names must be either a string or list')
+                n = set(names)
 
+            checknames = []
+            for alias_row in summary.alias:
+                rs = set(eval(alias_row))
+                intersection = list(n & rs)
+                checknames.append(len(intersection) > 0)
+                
+            summary = summary[checknames]
+            
+        # check references
         if refs is not None:
-            if isinstance(refs, str): # this is just a single bibcode
-                queryFilters += f"FILTER {refs} IN tde.reference_alias[*].name"
-            elif isinstance(refs, list):
-                queryFilters += f'''
-                FOR ref IN {refs}
-                    FILTER ref IN tde.reference_alias[*].name
-                '''
+            checkrefs = []
+
+            if isinstance(refs, str):
+                n = {refs}
             else:
-                raise Exception('reference list must be either a string or a list')
+                n = set(refs)
+                
+            for ref_row in summary.refs:
+                rs = set(eval(ref_row))
+                intersection = list(n & rs)
+                checkrefs.append(len(intersection) > 0)
             
-        # define the query
-        query = f'''
-        FOR tde IN tdes
-            {queryFilters}
-            RETURN tde
-        '''
-        
-        result = self.AQLQuery(query, rawResults=True)
-        
-        # now that we have the query results do the RA and Dec queries if they exist
-        if coords is not None:
-            # get the catalog RAs and Decs to compare against
-            queryCoords = coords
-            goodTDEs = []
+            summary = summary[checkrefs]
 
-            for tde in result:
-                for coordinfo in tde['coordinate']:
-                    if 'ra' in coordinfo and 'dec' in coordinfo:
-                        coord = SkyCoord(coordinfo['ra'], coordinfo['dec'],
-                                         unit=(coordinfo['ra_units'], coordinfo['dec_units']))
-                    elif 'l' in coordinfo and 'b' in coordinfo:
-                        # this is galactic
-                        coord = SkyCoord(coordinfo['l'], coordinfo['b'],
-                                         unit=(coordinfo['l_units'], coordinfo['b_units']),
-                                         frame='galactic'
-                                         )
-                    else:
-                        raise ValueError('Either needs to have ra and dec or l and b as keys!')
-                    if queryCoords.separation(coord) < radius*u.arcsec:
-                        goodTDEs.append(tde)
-                        break # we've confirmed this tde is in the cone!
+        # read in files from summary
+        jsons = []
+        for path in summary.json_path:
+            with open(path, 'r') as f:
+                jsons.append(Transient(json.load(f)))
 
-            if not raw:
-                return [Transient(t) for t in goodTDEs]
-            else:
-                return goodTDEs
-
-        else:
-            if not raw:
-                return [Transient(res) for res in result.result]
-            else:
-                return result.result
-            
-    def _close(self) -> None:
-        '''
-        Close the database connection. We just need this for flask!
-        '''
-        del self
-
-
+        return jsons
+    
     def upload_zip(self, zipfile:str, testing:bool=False) -> None:
         '''
         Upload a zipfile of information about transients. See the README for info on 
@@ -306,16 +310,14 @@ class Otter(Database):
         schema = [self._row_to_json(row, datapath, testing=testing) for _, row in df.iterrows()]
         
         # now upload this json file
-        self.upload(schema, outpath=datapath, test_mode=testing)
+        self.save(schema, outpath=datapath, test_mode=testing)
             
-    def upload(self, schema:list[dict], outpath:str=os.getcwd(), **kwargs) -> None:
+    def save(self, schema:list[dict], **kwargs) -> None:
         '''
         Upload all the data in the given list of schemas.
 
         Args:
             schema [list[dict]]: A list of json dictionaries
-            outpath [str]: The path to the directory where to write the json files.
-                           Default is current working directory.
         '''
 
         if not isinstance(schema, list):
@@ -323,6 +325,8 @@ class Otter(Database):
         
         for json in schema:
 
+            print(json['name/default_name'])
+            
             # convert the json to a Transient
             if not isinstance(json, Transient):
                 json = Transient(json)
@@ -333,7 +337,7 @@ class Otter(Database):
             if len(res) == 0:
                 # This is a new object to upload
                 print('Adding this as a new object...')    
-                self._upload_document(dict(json), **kwargs)
+                self._save_document(dict(json), **kwargs)
                 
             else:
                 # We must merge this with existing data
@@ -341,51 +345,101 @@ class Otter(Database):
                 if len(res) == 1:
                     # we can just add these to merge them!
                     combined = res[0] + json
-                    self._upload_document(combined, **kwargs)
+                    self._save_document(combined, **kwargs)
                 else:
                     # for now throw an error
                     # this is a limitation we can come back to fix if it is causing
                     # problems though!
                     raise Exception('Current Limitation Found: Some objects in Otter are too close!')
 
-    def _upload_document(self, schema, test_mode=False):
+        # update the summary table appropriately
+        self.generate_summary_table(save=True)
+                
+    def _save_document(self, schema, test_mode=False):
         '''
-        Upload a json file in the correct format to the OTTER database
+        Save a json file in the correct format to the OTTER data directory
         '''
         # check if this documents key is in the database already
         # and if so remove it!
-        jsonpath = os.path.join(DATADIR, '*.json')
-        aliases = {item['value'] for item in schema['name']['alias']}
+        jsonpath = os.path.join(self.DATADIR, '*.json')
+        aliases = {item['value'].replace(' ', '-') for item in schema['name']['alias']}
         filenames = {os.path.basename(fname).split('.')[0] for fname in glob.glob(jsonpath)}
         todel = list(aliases & filenames)
-        if len(todel) > 0 and not test_mode:
-            os.remove(os.path.join(DATADIR, todel[0]+'.json'))
+
+        # now save this data
+        # create a new file in self.DATADIR with this
+        if len(todel) > 0:
+            outfilepath = os.path.join(self.DATADIR, todel[0]+'.json')
+            if test_mode:
+                print('Renaming the following file for backups: ', outfilepath)
+            else:
+                os.rename(outfilepath, outfilepath+'.backup')
         else:
-            # for testing
-            print('Deleting the following file: ', todel)
-        
-        # now do two things to save this data
-        # 1) create a new file in "base" with this
-        outfilepath = os.path.join(DATADIR,schema['name']['default_name']+'.json')
+            if test_mode:
+                print("Don't need to mess with the files at all!")
+            fname = schema['name']['default_name']+'.json'
+            fname = fname.replace(' ', '-') # replace spaces in the filename
+            outfilepath = os.path.join(self.DATADIR, fname)
+            
         
         # format as a json
         if isinstance(schema, Transient):
             schema = dict(schema)
 
         out = json.dumps(schema, indent=4)
-        out = '[' + out
-        out += ']'
+        #out = '[' + out
+        #out += ']'
 
         if not test_mode:
             with open(outfilepath, 'w') as f:
                 f.write(out)
-
-            # 2) upload to the database
-            c = self[self.collectionName]
-            newdoc = c.createDocument(schema)
-            newdoc.save()
         else:
+            print(f'Would write to {outfilepath}')
             print(out)
+
+    def generate_summary_table(self, save=False):
+        '''
+        Generate a summary table for the JSON files in self.DATADIR
+
+        args:
+            save [bool]: if True, save the summary file to "summary.csv"
+                         in self.DATADIR. Default is False.
+        '''
+        allfiles = glob.glob(os.path.join(self.DATADIR, '*.json'))
+        jsondata = []
+        
+        # read the data from all the json files and convert to Transients
+        rows = []
+        for jsonfile in allfiles:
+            with open(jsonfile, 'r') as j:
+                t = Transient(json.load(j))
+                skycoord = t.getSkyCoord()
+
+                row = {'name': t.default_name,
+                       'alias': [alias['value'] for alias in t['name']['alias']], 
+                       'ra': skycoord.ra,
+                       'dec': skycoord.dec,
+                       'refs': [ref['name'] for ref in t['reference_alias']]
+                       }
+                
+                if 'date_reference' in t:
+                    row['discovery_date'] = t.getDiscoveryDate()
+
+                if 'distance' in t:
+                    row['z'] = t.getRedshift()
+
+                row['hasPhot'] = 'photometry' in t
+                row['hasSpec'] = 'spectra' in t
+                    
+                row['json_path'] = os.path.abspath(jsonfile)
+
+                rows.append(row)
+                
+        alljsons = pd.DataFrame(rows)
+        if save:
+            alljsons.to_csv(os.path.join(self.DATADIR, 'summary.csv'))
+
+        return alljsons
         
     def _row_to_json(self, dfrow:pd.Series, datapath:str, testing=False) -> None:
         '''

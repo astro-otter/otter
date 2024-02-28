@@ -2,7 +2,7 @@
 Some constants and mappings to be used across the software
 '''
 import os
-from .transient import Transient
+from .io.transient import Transient
 
 # gives the effective wavelength for each filter given
 # these are all in nanometers!
