@@ -34,10 +34,10 @@ dependencies = [
   ]
 
 [project.urls]
-Home = "https://github.com/noahfranz13/tide"
+Home = "https://github.com/astro-otter"
 
 [tool.setuptools.packages.find]
-where = ['py']
+where = ['.']
 
 [tool.setuptools.dynamic]
 version = {attr = 'otter._version.__version__'}

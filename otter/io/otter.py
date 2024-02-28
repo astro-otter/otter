@@ -155,7 +155,22 @@ class Otter(object):
         else:
             raise ValueError('return_type can only be pandas or astropy')
 
-    
+
+    def load_file(self, filename:str) -> dict:
+        '''
+        Loads an otter JSON file
+        
+        Args:
+            filename [str]: The path to the file to load
+        '''
+
+        # read in files from summary
+        with open(filename, 'r') as f:
+            to_ret = Transient(json.load(f))
+
+        return to_ret
+
+        
     def query(self,
               names:list[str]=None,
               coords:SkyCoord=None,
@@ -273,13 +288,9 @@ class Otter(object):
             
             summary = summary[checkrefs]
 
-        # read in files from summary
-        jsons = []
-        for path in summary.json_path:
-            with open(path, 'r') as f:
-                jsons.append(Transient(json.load(f)))
+        outdata = [self.load_file(path) for path in summary.json_path]        
 
-        return jsons
+        return outdata
     
     def upload_zip(self, zipfile:str, testing:bool=False) -> None:
         '''
