@@ -349,7 +349,7 @@ class Transient(MutableMapping):
         return coordin
 
     
-    def cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD', by='value'):
+    def cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD', by='raw'):
         '''
         Ensure the photometry associated with this transient is all in the same units/system/etc
         '''
@@ -399,8 +399,10 @@ class Transient(MutableMapping):
         
         # figure out the units of the photometry
         outdata = []
-        for obstype, data in df.groupby('obs_type'):
+        for groupedby, data in df.groupby(['obs_type', by+'_units']):
 
+            obstype, unit = groupedby
+            
             # get the photometry in the right type
             unit = data[by+'_units'].unique()
             if len(unit) > 1:
@@ -414,14 +416,18 @@ class Transient(MutableMapping):
                 # string. Let's try to fix it!
                 # here are some common mistakes
                 unit = unit.replace('ergs', 'erg')
-
+                unit = unit.replace('AB', 'mag(AB)')
+                
+                warnings.warn('Attempting to coerce vega mag to AB mag, this is potentially dangerous!')
+                unit = unit.lower().replace('vega', 'mag(AB)')
+                
+                
                 astropy_units = u.Unit(unit)
             except ValueError:
                 raise ValueError('Could not coerce your string into astropy unit format!')
 
-            indata = data[by].astype(float)
-            q = u.Quantity(indata, astropy_units)
-            #import pdb; pdb.set_trace()
+            indata = np.array(data[by].astype(float))
+            q = indata*u.Unit(astropy_units)
             phot = get_type(q)
 
             # convert this to a flux
@@ -443,6 +449,8 @@ class Transient(MutableMapping):
                 flux = phot.toflux(**conversion)
             elif FluxDensity.isfluxdensity(1*u.Unit(flux_unit)):
                 flux = phot.tofluxdensity(**conversion)
+            elif CountRate.iscountrate(1*u.Unit(flux_unit)):
+                flux = phot.tocountrate(**conversion)
             else:
                 raise ValueError('The y-axis units must be either flux or fluxdensity!')
 
@@ -679,7 +687,6 @@ class Transient(MutableMapping):
 
         out[key] = deepcopy(t1[key])
         refs = np.array([d['reference'] for d in out[key]])
-
         merge_dups = lambda val: np.sum(val) if np.any(val.isna()) else val.iloc[0]
         
         for val in t2[key]:

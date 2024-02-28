@@ -1,6 +1,7 @@
 '''
 Some convenient unit type classes for conversions
 '''
+import warnings
 import numpy as np
 
 from astropy.units import Quantity, Unit
@@ -76,7 +77,15 @@ class Flux(Quantity):
         Just a wrapper that returns itself. This will make my other code cleaner
         '''
         return self.to(out_units)
-        
+
+    def tocountrate(self, freq_eff:Quantity=None, wave_eff:Quantity=None,
+                    out_units=1/u.s, **kwargs):
+        '''
+        Convert Flux to a count rate
+        '''
+        raise ValueError('Converting a flux to a count rate is currently not '+
+                         'supported!')
+    
 class FluxDensity(Quantity):
 
     def __init__(self, quantity):
@@ -194,12 +203,69 @@ class FluxDensity(Quantity):
             eq = None
 
         return self.to(out_units, equivalencies=eq)
+
+    def tocountrate(self, out_units=1/u.s, freq_eff:Quantity=None,
+                    wave_eff:Quantity=None, **kwargs):
+        '''
+        Convert the flux density to a count rate
+        '''
+        raise ValueError('Converting flux density to a count rate is currently not '+
+                         'supported!')
         
+class CountRate(Quantity):
+    '''
+    Represents the counts of electrons in an x-ray detector
+    '''
+
+    def __init__(self, quantity):
+        '''
+        This is a Count Rate Unit Type and should have units of a 1 / Time 
+        '''
+        super(CountRate, self).__init__()
+
+        self._name = 'frequency' # the name astropy gave to this
+
+    @staticmethod
+    def iscountrate(quantity):
+        '''
+        Checks if the input is actually a count rate
+        '''
+        _name = 'frequency'
+        
+        if not isinstance(quantity, list):
+            quantity = [quantity]
+            
+        return all(_name in q.unit.physical_type for q in quantity)
+        
+    def toflux(self, wave_eff:Quantity=None, freq_eff:Quantity=None,
+               out_units=u.erg/u.s/u.cm**2, **kwargs):
+        '''
+        Converts the count rate to a flux
+        '''
+        warnings.warn('Converting count rate to a flux is currently not supported!')
+        return self
+        
+    def tofluxdensity(self, wave_eff:Quantity=None, freq_eff:Quantity=None,
+                      out_units=u.erg/u.s/u.cm**2/u.Hz, **kwargs):
+        '''
+        Converts the count rate to a flux density
+        '''
+        warnings.warn('Converting count rate to flux density is currently'+
+                         'not supported!')
+        return self 
+        
+    def tocountrate(self, out_units=1/u.s, **kwargs):
+        '''
+        Just a wrapper to return the count rate in out_units
+        '''
+        return self.to(out_units)
+    
+    
 def get_type(quantity):
     '''
     Finds the type of the input quantity and returns the quantity as that class
     '''
-
+    
     if FluxDensity.isfluxdensity(quantity):
         # we have to be a little careful cause some of these are mags
         if str(quantity.unit) == 'mag(AB)':
@@ -211,5 +277,7 @@ def get_type(quantity):
             return FluxDensity(quantity)
     elif Flux.isflux(quantity):
         return Flux(quantity)
+    elif CountRate.iscountrate(quantity):
+        return CountRate(quantity)
     else:
         raise ValueError('This quantity does not have valild units!')
