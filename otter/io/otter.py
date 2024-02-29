@@ -97,7 +97,7 @@ class Otter(object):
         return transients
 
     def getPhot(self, flux_unit='mag(AB)', date_unit='MJD',
-                return_type='astropy', **kwargs
+                return_type='astropy', obs_type=None, **kwargs
                 ) -> Table:
         '''
         Get the photometry of the objects matching the arguments. This will do the
@@ -111,7 +111,9 @@ class Otter(object):
             return_type [str]: Either 'astropy' or 'pandas'. If astropy, returns an
                                astropy Table. If pandas, returns a pandas DataFrame.
                                Default is 'astropy'.
-            
+            obs_type [str]: Either 'radio', 'uvoir', or 'xray'. Will only return that
+                            type of photometry if not None. Default is None and will 
+                            return any type of photometry.            
             **kwargs : Arguments to pass to Otter.query(). Can be:
                        names [list[str]]: A list of names to get the metadata for
                        coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
@@ -128,6 +130,10 @@ class Otter(object):
         '''
         queryres = self.query(hasPhot=True, **kwargs)
 
+        valid_obs_types = {'radio', 'uvoir', 'xray'}
+        if obs_type not in valid_obs_types:
+            raise ValueError('Please provide a valid obs_type')    
+        
         dicts = []
         for transient in queryres:
 
@@ -135,6 +141,10 @@ class Otter(object):
             default_name = transient['name/default_name']
             phot = transient.cleanPhotometry(flux_unit=flux_unit, date_unit=date_unit)
             phot['name'] = [default_name]*len(phot)
+
+            if obs_type is not None:
+                # filter the photometry by the observation type keyword, if given
+                phot = phot[phot.obs_type == obs_type]
             
             dicts.append(phot)
             
@@ -289,7 +299,7 @@ class Otter(object):
 
         return outdata
                 
-    def save(self, schema:list[dict], **kwargs) -> None:
+    def save(self, schema:list[dict], testing=False, **kwargs) -> None:
         '''
         Upload all the data in the given list of schemas.
 
@@ -314,7 +324,7 @@ class Otter(object):
             if len(res) == 0:
                 # This is a new object to upload
                 print('Adding this as a new object...')    
-                self._save_document(dict(json), **kwargs)
+                self._save_document(dict(json), test_mode=testing)
                 
             else:
                 # We must merge this with existing data
@@ -322,7 +332,7 @@ class Otter(object):
                 if len(res) == 1:
                     # we can just add these to merge them!
                     combined = res[0] + json
-                    self._save_document(combined, **kwargs)
+                    self._save_document(combined, test_mode=testing)
                 else:
                     # for now throw an error
                     # this is a limitation we can come back to fix if it is causing
@@ -407,7 +417,7 @@ class Otter(object):
 
                 row['hasPhot'] = 'photometry' in t
                 row['hasSpec'] = 'spectra' in t
-                    
+                
                 row['json_path'] = os.path.abspath(jsonfile)
 
                 rows.append(row)

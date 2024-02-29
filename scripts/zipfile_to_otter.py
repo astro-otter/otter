@@ -2,12 +2,17 @@
 Convert a specifically formatted zipfile directory to merge with otter
 '''
 import os
-from zipfile import Zipfile
+import uuid
+from zipfile import ZipFile
 
 import pandas as pd
 import ads
 
-from otter import Otter
+from astropy.coordinates import SkyCoord
+
+from otter import Otter, Transient
+from otter.io.helpers import filter_to_obstype
+from otter.constants import FILTER_MAP_WAVE
 
 def upload_zip(outdir:str, zipfile:str, testing:bool=False) -> None:
     '''
@@ -73,7 +78,7 @@ def _row_to_json(dfrow:pd.Series, datapath:str, testing=False) -> None:
         'uuid': str(uu),
         'default': True,
         'reference': dfrow.reference,
-        'coord_type': 'equitorial'
+        'coordinate_type': 'equitorial'
     },
     {
         'l': float(galactic.l.value),
@@ -82,18 +87,19 @@ def _row_to_json(dfrow:pd.Series, datapath:str, testing=False) -> None:
         'b_units': 'deg',
         'reference': str(uu),
         'computed': True,
-        'coord_type': 'galactic'
+        'coordinate_type': 'galactic'
     }]
 
     # now add distance measurements if they have any
     dist_keys = ['redshift', 'luminosity_distance', 'dispersion_measure']
-    dist_dict = {}
+    dist_dict = []
     for key in dist_keys:
         if key in dfrow:
-            dist_dict[key] = [{'value':dfrow[key],
+            dist_dict.append({'value':dfrow[key],
                                'reference': dfrow.reference,
                                'computed': False,
-                               }]
+                               'distance_type': key.replace('_distance', '')
+                               })
 
     if len(dist_dict) > 0:
         schema['distance'] = dist_dict
@@ -118,7 +124,7 @@ def _row_to_json(dfrow:pd.Series, datapath:str, testing=False) -> None:
                     'date_format': dfrow['date_format'],
                     'reference': dfrow.reference,
                     'computed': False,
-                    'measurement_type': key
+                    'date_type': key.replace('date_', '')
                 }
             )
     if len(epoch_dict) > 0:
@@ -218,7 +224,7 @@ def _row_to_json(dfrow:pd.Series, datapath:str, testing=False) -> None:
     if 'spec_path' in dfrow:
         pass # ADD THIS CODE ONCE WE HANDLE SPECTRA
 
-    return schema
+    return Transient(schema)
 
 def main():
     import argparse
@@ -226,9 +232,11 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--otterdir', help='The directory where otter data is stored')
     p.add_argument('--zipfile', help='The path to the zipfile')
+    p.add_argument('--testing', dest='testing', action='store_true', help='run in testing mode')
+    p.set_defaults(testing=False)
     args = p.parse_args()
 
-    upload_zip(args.otterdir, args.zipfile)
+    upload_zip(args.otterdir, args.zipfile, testing=args.testing)
 
 if __name__ == '__main__':
     main()
