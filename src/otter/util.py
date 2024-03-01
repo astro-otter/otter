@@ -1,8 +1,46 @@
 '''
-Some constants and mappings to be used across the software
+Some constants, mappings, and functions to be used across the software
 '''
 import os
+import astropy.units as u
 from .io.transient import Transient
+
+'''
+Helper functions first that just don't belong anywhere else
+'''
+
+def filter_to_obstype(band_name):
+    '''
+    Converts a band name to either 'radio', 'uvoir', 'xray'
+    '''
+
+    try:
+        wave_eff = FILTER_MAP_WAVE[band_name]*u.nm
+    except KeyError as exc:
+        raise Exception(f'No Effective Wavelength Known for {band_name}, please add it to constants'
+                        ) from exc
+
+    if wave_eff > 1*u.mm:
+        return 'radio'
+    elif wave_eff <= 1*u.mm and wave_eff >= 10*u.nm:
+        return 'uvoir'
+    else:
+        return 'xray'
+    
+
+def clean_schema(schema):
+    '''
+    Clean out Nones and empty lists from the given subschema
+    '''
+    for key, val in list(schema.items()):
+        if val is None or (isinstance(val, (list, dict)) and len(val) == 0):
+            del schema[key]
+    return schema
+ 
+
+'''
+Then the constants and dictionary mappings used throughout
+'''
 
 # gives the effective wavelength for each filter given
 # these are all in nanometers!
@@ -432,3 +470,4 @@ subschema = {
     "spectra": spectra_schema,
     "filter_alias": filter_alias_schema
 }
+

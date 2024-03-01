@@ -16,8 +16,7 @@ from astropy.table import Table
 from astropy import units as u
 
 from .transient import Transient
-from ..constants import *
-from .helpers import * 
+from ..util import *
 
 class Otter(object):
     '''
@@ -131,7 +130,7 @@ class Otter(object):
         queryres = self.query(hasPhot=True, **kwargs)
 
         valid_obs_types = {'radio', 'uvoir', 'xray'}
-        if obs_type not in valid_obs_types:
+        if obs_type is not None and obs_type not in valid_obs_types:
             raise ValueError('Please provide a valid obs_type')    
         
         dicts = []
