@@ -362,12 +362,12 @@ class Transient(MutableMapping):
         dfs = []
         for item in self['photometry']:
             max_len = 0
-            for val in item.values():
-                if isinstance(val, list):
+            for key, val in item.items():
+                if isinstance(val, list) and key != 'reference':
                     max_len = max(max_len, len(val))
                     
             for key, val in item.items():
-                if not isinstance(val, list) or isinstance(val, list) and len(val) < max_len:
+                if not isinstance(val, list) or (isinstance(val, list) and len(val) != max_len):
                     item[key] = [val]*max_len
                     
             df = pd.DataFrame(item)
@@ -377,7 +377,7 @@ class Transient(MutableMapping):
 
         filters = pd.DataFrame(self['filter_alias'])
         df = c.merge(filters, on='filter_key')
-
+            
         # make sure 'by' is in df
         if by not in df:
             if by == 'value':
