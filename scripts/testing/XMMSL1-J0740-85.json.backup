@@ -1,0 +1,151 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "XMMSL1 J0740-85",
+        "alias": [
+            {
+                "value": "XMMSL1 J0740-85",
+                "reference": "XMM-Newton"
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "07 40 08.19",
+            "dec": "85 39 31.25",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2017A&A...598A..29S",
+                "2017ApJ...837..153A"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "1a37a7ca-a153-4d2f-8c58-2628931b0ef8",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "l": 127.73752626582555,
+            "b": 27.96183708953435,
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": "1a37a7ca-a153-4d2f-8c58-2628931b0ef8",
+            "computed": true,
+            "coordinate_type": "galactic"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0173",
+            "reference": [
+                "2017A&A...598A..29S",
+                "2017ApJ...837..153A"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2017A&A...598A..29S",
+                "2017ApJ...837..153A"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2017A&A...598A..29S",
+            "human_readable_name": "Saxton et al. (2017)"
+        },
+        {
+            "name": "2017ApJ...837..153A",
+            "human_readable_name": "Alexander et al. (2017)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": 56748,
+            "date_format": "mjd",
+            "reference": [
+                "2017A&A...598A..29S",
+                "2017ApJ...837..153A"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "photometry": [
+        {
+            "reference": [
+                "2017ApJ...837..153A"
+            ],
+            "raw": [
+                1.19,
+                0.89,
+                0.65
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                57357.0,
+                57517.0,
+                57623.0
+            ],
+            "date_format": [
+                "mjd",
+                "mjd",
+                "mjd"
+            ],
+            "filter_key": [
+                "1.53GHz",
+                "1.7GHz",
+                "1.6GHz"
+            ],
+            "computed": [
+                false,
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false
+            ]
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "1.53GHz",
+            "freq_eff": 1.53,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.7GHz",
+            "freq_eff": 1.7,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.6GHz",
+            "freq_eff": 1.6,
+            "freq_units": "GHz"
+        }
+    ]
+}

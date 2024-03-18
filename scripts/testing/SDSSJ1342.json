@@ -1,0 +1,181 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "SDSSJ1342",
+        "alias": [
+            {
+                "value": "SDSSJ1342",
+                "reference": [
+                    "2017ApJ...838..149A"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "13:42:44.42",
+            "dec": "+05:30:56.14",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0366",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2012ApJ...749..115W"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "166",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2012ApJ...749..115W",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": "161",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2012ApJ...749..115W",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": "2017ApJ...835...64G",
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2012ApJ...749..115W",
+            "human_readable_name": "Wang et al. (2012)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2009-05-17",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ],
+    "photometry": [
+        {
+            "raw": [
+                "0.0383"
+            ],
+            "raw_units": [
+                "s^-1"
+            ],
+            "value": [
+                "6.36E-14"
+            ],
+            "value_units": [
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray"
+            ],
+            "date": [
+                "48100"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                true
+            ],
+            "telescope": "ROSAT",
+            "reference": [
+                "2017ApJ...838..149A"
+            ]
+        },
+        {
+            "raw": [
+                "0.00237"
+            ],
+            "raw_err": [
+                "0.000483"
+            ],
+            "raw_units": [
+                "s^-1"
+            ],
+            "value": [
+                "3.27E-14"
+            ],
+            "value_units": [
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray"
+            ],
+            "date": [
+                "54968.7"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false
+            ],
+            "telescope": "Swift",
+            "reference": [
+                "2017ApJ...838..149A"
+            ]
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_units": "nm"
+        }
+    ]
+}

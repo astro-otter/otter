@@ -1,0 +1,341 @@
+{
+    "filter_alias": [
+        {
+            "filter_key": "5.5GHz",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_units": "nm"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2017ApJ...835...64G",
+                "2017MNRAS.472.4469B"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.89",
+            "reference": [
+                "2017MNRAS.472.4469B"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "0.89",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2015arXiv150703582B"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "5900",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2015arXiv150703582B",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity",
+            "unit": "Mpc"
+        },
+        {
+            "value": "3100",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2015arXiv150703582B",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        }
+    ],
+    "photometry": [
+        {
+            "reference": [
+                "2017MNRAS.472.4469B"
+            ],
+            "raw": [
+                0.076,
+                0.07
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                57052.0,
+                57521.5
+            ],
+            "date_format": [
+                "mjd",
+                "mjd"
+            ],
+            "filter_key": [
+                "5.5GHz",
+                "5.5GHz"
+            ],
+            "computed": [
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false
+            ]
+        },
+        {
+            "raw": [
+                "0.0335"
+            ],
+            "raw_units": [
+                "s^-1"
+            ],
+            "value": [
+                "3.91E-13"
+            ],
+            "value_units": [
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray"
+            ],
+            "date": [
+                "48100"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                true
+            ],
+            "telescope": "ROSAT",
+            "reference": [
+                "2017ApJ...838..149A"
+            ]
+        },
+        {
+            "raw": [
+                "0.0681"
+            ],
+            "raw_err": [
+                "0.00147"
+            ],
+            "raw_units": [
+                "s^-1"
+            ],
+            "value": [
+                "7.03E-13"
+            ],
+            "value_units": [
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray"
+            ],
+            "date": [
+                "55922.7"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false
+            ],
+            "telescope": "Swift",
+            "reference": [
+                "2017ApJ...838..149A"
+            ]
+        },
+        {
+            "raw": [
+                "1.21",
+                "0.514",
+                "0.308"
+            ],
+            "raw_units": [
+                "s^-1",
+                "s^-1",
+                "s^-1"
+            ],
+            "value": [
+                "6.64E-12",
+                "8.20E-13",
+                "1.69E-12"
+            ],
+            "value_units": [
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray",
+                "xray",
+                "xray"
+            ],
+            "date": [
+                "54946.4",
+                "56140.8",
+                "56356.1"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                true,
+                true,
+                true
+            ],
+            "telescope": "XMM",
+            "reference": [
+                "2017ApJ...838..149A"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2017MNRAS.472.4469B",
+            "human_readable_name": "Brown et al. (2017)"
+        },
+        {
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2015arXiv150703582B",
+            "human_readable_name": "Brown et al. (2015)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        }
+    ],
+    "name": {
+        "default_name": "Sw J1112-82",
+        "alias": [
+            {
+                "value": "Sw J1112-82",
+                "reference": [
+                    "Swift"
+                ]
+            },
+            {
+                "value": "Swift J1112-82",
+                "reference": [
+                    [
+                        "2017ApJ...838..149A",
+                        "2017ApJ...835...64G"
+                    ]
+                ]
+            },
+            {
+                "value": "Swift J1112.2-8238",
+                "reference": [
+                    [
+                        "2017ApJ...838..149A",
+                        "2017ApJ...835...64G"
+                    ]
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "11 11 47.6",
+            "dec": "-82 38 44.44",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2017MNRAS.472.4469B"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "6c386d58-ae69-4315-acb2-2bbfc8a5a9a3",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "reference": "6c386d58-ae69-4315-acb2-2bbfc8a5a9a3",
+            "computed": true,
+            "coordinate_type": "galactic",
+            "l": 299.6337165869646,
+            "b": -20.420594756871676,
+            "l_units": "deg",
+            "b_units": "deg"
+        },
+        {
+            "ra": "11:11:47.32",
+            "dec": "-82:38:44.20",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "date_reference": [
+        {
+            "value": "55729.5",
+            "date_format": "mjd",
+            "reference": [
+                "2017MNRAS.472.4469B"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        },
+        {
+            "value": "2011-12-27",
+            "date_format": "iso",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "date_type": "discovery",
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ]
+}

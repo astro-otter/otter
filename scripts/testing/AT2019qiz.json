@@ -1,0 +1,114 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "AT2019qiz",
+        "alias": [
+            {
+                "value": "AT2019qiz",
+                "reference": [
+                    "2020arXiv200602454N",
+                    "ASAS-SN Supernovae",
+                    "MAST"
+                ]
+            },
+            {
+                "value": "AT2019qiz (= ZTF19abzrhgq)",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "4:46:37.99",
+            "dec": "-10:13:31.5",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.01513",
+            "reference": [
+                "2020arXiv200602454N"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "65.6",
+            "unit": "Mpc",
+            "reference": [
+                "2020arXiv200602454N"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": "66.72",
+            "unit": "Mpc",
+            "reference": [
+                "2020arXiv200602454N",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": [
+                "2017ApJ...835...64G"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2020arXiv200602454N",
+            "human_readable_name": "Nicholl et al. (2020)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "ASAS-SN Supernovae",
+            "human_readable_name": "ASAS-SN Supernovae"
+        },
+        {
+            "name": "MAST",
+            "human_readable_name": "MAST"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2019-09-24 9:50:24.000000000012278",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ]
+}

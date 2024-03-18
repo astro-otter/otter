@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 import json
 from otter import Otter, Transient
-from otter import constants as otter_const
-from otter import helpers as otter_helper
+from otter import util as otter_const
+from otter import util as otter_helper
 from astroquery.simbad import Simbad
 import astropy.units as u
 import astropy.constants as const
@@ -110,7 +110,7 @@ def main():
             j = json.load(f)[0]
 
         # copy over the references
-        schema = deepcopy(otter_const.schema)
+        schema = Transient(deepcopy(otter_const.schema))
         source_map = {}
 
         for src in j['sources']:
@@ -161,7 +161,7 @@ def main():
                 print(f'Skipping {(ra, dec)} because it does not have a reliable reference!')
                 continue
 
-        if ra['u_value'] == 'hours':
+        if ra['u_value'] == 'hours' or ':' in ra['value']:
             ra_u = 'hour'
         elif ra['u_value'] == 'degrees' or ra['u_value'] == 'floatdegrees':
             ra_u = 'deg'
@@ -505,9 +505,9 @@ def main():
 
         allschemas.append(schema)
 
-        json_schema = json.dumps(dict(schema), indent=4) # clean_schema(dict(schema))
-        #print(json_schema)
-        #print()
+        #json_schema = json.dumps(dict(schema), indent=4) # clean_schema(dict(schema))
+        print(schema)
+        print()
 
     # print some useful stats
     print()

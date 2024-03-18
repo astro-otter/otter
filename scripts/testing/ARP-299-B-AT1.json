@@ -1,0 +1,173 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "ARP 299-B AT1",
+        "alias": [
+            {
+                "value": "ARP 299-B AT1",
+                "reference": "TNS"
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "11 28 30.9875",
+            "dec": "+58 33 40.783",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2018Sci...361..482M"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "50727446-8ab3-4e83-9d33-9e22e3288510",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "l": 141.90866797794666,
+            "b": 55.405983440677815,
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": "50727446-8ab3-4e83-9d33-9e22e3288510",
+            "computed": true,
+            "coordinate_type": "galactic"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.010411",
+            "reference": [
+                "2018Sci...361..482M"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2018Sci...361..482M"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2018Sci...361..482M",
+            "human_readable_name": "Mattila et al. (2018)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "53401.0",
+            "date_format": "mjd",
+            "reference": [
+                "2018Sci...361..482M"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "photometry": [
+        {
+            "reference": [
+                "2018Sci...361..482M"
+            ],
+            "raw": [
+                1.15,
+                7.67,
+                1.557,
+                2.416,
+                0.77,
+                1.349,
+                0.878,
+                0.562
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                53568.5,
+                53840.5,
+                56074.5,
+                56358.5,
+                56452.5,
+                56601.5,
+                57176.5,
+                57605.5
+            ],
+            "date_format": [
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd"
+            ],
+            "filter_key": [
+                "8.4GHz",
+                "8.4GHz",
+                "8.4GHz",
+                "8.4GHz",
+                "8.4GHz",
+                "8.4GHz",
+                "8.4GHz",
+                "8.4GHz"
+            ],
+            "computed": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ]
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "8.4GHz",
+            "freq_eff": 8.4,
+            "freq_units": "GHz"
+        }
+    ]
+}

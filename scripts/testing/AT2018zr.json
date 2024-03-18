@@ -1,0 +1,76 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "AT2018zr",
+        "alias": [
+            {
+                "value": "AT2018zr",
+                "reference": [
+                    "ASAS-SN Supernovae",
+                    "MAST"
+                ]
+            },
+            {
+                "value": "AT2018zr (PS18kh)",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "7:56:54.37",
+            "dec": "34:15:44.8",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": [
+                "2017ApJ...835...64G"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "ASAS-SN Supernovae",
+            "human_readable_name": "ASAS-SN Supernovae"
+        },
+        {
+            "name": "MAST",
+            "human_readable_name": "MAST"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2018-03-6 4:19:11.999999999975444",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ]
+}

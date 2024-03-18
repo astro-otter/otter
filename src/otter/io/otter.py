@@ -17,6 +17,7 @@ from astropy import units as u
 
 from .transient import Transient
 from ..util import *
+from ..exceptions import *
 
 import warnings
 warnings.simplefilter('once', RuntimeWarning)
@@ -98,6 +99,7 @@ class Otter(object):
         transients = self.query(coords=coords,
                                 radius=radius,
                                 raw=raw)
+
         return transients
 
     def getPhot(self, flux_unit='mag(AB)', date_unit='MJD',
@@ -133,7 +135,7 @@ class Otter(object):
            Will be an astropy Table sorted by transient default name.
         '''
         queryres = self.query(hasPhot=True, **kwargs)
-        
+
         dicts = []
         for transient in queryres:
 
@@ -144,7 +146,9 @@ class Otter(object):
             phot['name'] = [default_name]*len(phot)
 
             dicts.append(phot)
-            
+
+        if len(dicts) == 0:
+            raise FailedQuery()
         fullphot = pd.concat(dicts)
 
         # remove some possibly confusing keys
@@ -157,7 +161,7 @@ class Otter(object):
         elif return_type == 'pandas':
             return fullphot
         else:
-            raise ValueError('return_type can only be pandas or astropy')
+            raise IOError('return_type can only be pandas or astropy')
 
 
     def load_file(self, filename:str) -> dict:
@@ -236,7 +240,7 @@ class Otter(object):
         if coords is not None:
             if not isinstance(coords, SkyCoord):
                 raise ValueError('Input coordinate must be an astropy SkyCoord!')
-            summary_coords = SkyCoord(summary.ra.tolist(), summary.dec.tolist(), unit=(u.hourangle, u.deg))
+            summary_coords = SkyCoord(summary.ra.tolist(), summary.dec.tolist(), unit=(u.deg, u.deg))
 
             try:
                 summary_idx, _, _, _ = search_around_sky(summary_coords,
@@ -318,6 +322,8 @@ class Otter(object):
             coord = json.getSkyCoord()
             res = self.coneSearch(coords=coord)
 
+            #if json['name/default_name'] == 'ASASSN-14li':
+             #       import pdb; pdb.set_trace()            
             if len(res) == 0:
                 # This is a new object to upload
                 print('Adding this as a new object...')    
@@ -334,7 +340,7 @@ class Otter(object):
                     # for now throw an error
                     # this is a limitation we can come back to fix if it is causing
                     # problems though!
-                    raise Exception('Current Limitation Found: Some objects in Otter are too close!')
+                    raise OtterLimitation('Some objects in Otter are too close!')
 
         # update the summary table appropriately
         self.generate_summary_table(save=True)

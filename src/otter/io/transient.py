@@ -17,6 +17,7 @@ from astropy.time import Time
 from astropy.coordinates import SkyCoord
 
 from ..unit_types import *
+from ..exceptions import *
 
 warnings.simplefilter('once', RuntimeWarning)
 
@@ -160,9 +161,9 @@ class Transient(MutableMapping):
 
         # first check that this object is within a good distance of the other object
         if strict_merge and self.getSkyCoord().separation(other.getSkyCoord()) > 5*u.arcsec: 
-            raise ValueError('These two transients are not within 5 arcseconds!' +
-                             ' They probably do not belong together! If they do' +
-                             ' You can set strict_merge=False to override the check')
+            raise TransientMergeError('These two transients are not within 5 arcseconds!' +
+                                      ' They probably do not belong together! If they do' +
+                                      ' You can set strict_merge=False to override the check')
             
         # create a blank dictionary since we don't want to overwrite this object
         out = {}
@@ -219,7 +220,7 @@ class Transient(MutableMapping):
                 # this is an unexpected key!
                 if strict_merge:
                     # since this is a strict merge we don't want unexpected data!
-                    raise Exception(f'{key} was not expected! Only keeping the old information!')
+                    raise TransientMergeError(f'{key} was not expected! Only keeping the old information!')
                 else:
                     # Throw a warning and only keep the old stuff
                     warnings.warn(f'{key} was not expected! Only keeping the old information!')
@@ -359,7 +360,7 @@ class Transient(MutableMapping):
         
         # check inputs
         if by not in {'value', 'raw'}:
-            raise ValueError('Please choose either value or raw!')
+            raise IOError('Please choose either value or raw!')
         
         # turn the photometry key into a pandas dataframe
         dfs = []
@@ -375,7 +376,7 @@ class Transient(MutableMapping):
                     
             df = pd.DataFrame(item)
             dfs.append(df)
-            
+
         c = pd.concat(dfs)
 
         filters = pd.DataFrame(self['filter_alias'])
@@ -392,7 +393,7 @@ class Transient(MutableMapping):
         if obs_type is not None:
             valid_obs_types = {'radio', 'uvoir', 'xray'}
             if obs_type not in valid_obs_types:
-                raise ValueError('Please provide a valid obs_type')    
+                raise IOError('Please provide a valid obs_type')    
             df = df[df.obs_type == obs_type]
             
         # convert the ads bibcodes to a string of human readable sources here
@@ -426,7 +427,7 @@ class Transient(MutableMapping):
             # get the photometry in the right type
             unit = data[by+'_units'].unique()
             if len(unit) > 1:
-                raise ValueError('Can not apply multiple units for different obs_types')
+                raise OtterLimitation('Can not apply multiple units for different obs_types')
 
             unit = unit[0]
             try:
@@ -459,7 +460,7 @@ class Transient(MutableMapping):
                 
             uniteff = data[system_units].unique()
             if len(uniteff) > 1:
-                raise ValueError('Applying multiple units to the effective frequencies is currently not supported!')
+                raise OtterLimitation('Applying multiple units to the effective frequencies is currently not supported!')
             astropy_uniteff = u.Unit(uniteff[0])
             if tele:
                 conversion = {system:np.asarray(data[system])*astropy_uniteff,
@@ -483,6 +484,8 @@ class Transient(MutableMapping):
             data['converted_flux'] = flux.value
             outdata.append(data)
 
+        if len(outdata) == 0:
+            raise FailedQuery()
         outdata = pd.concat(outdata)
         
         # make sure all the datetimes are in the same format here too!!

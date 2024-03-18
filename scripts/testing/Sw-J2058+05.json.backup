@@ -1,0 +1,148 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "Sw J2058+05",
+        "alias": [
+            {
+                "value": "Sw J2058+05",
+                "reference": "Swift"
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "20 58 19.90",
+            "dec": "+05 13 32.0",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "d20ee07d-136b-42a7-a60f-d255b95a7a7e",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "l": 53.61702902648376,
+            "b": -25.11893929017656,
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": "d20ee07d-136b-42a7-a60f-d255b95a7a7e",
+            "computed": true,
+            "coordinate_type": "galactic"
+        }
+    ],
+    "distance": [
+        {
+            "value": "1.1853",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2012ApJ...753...77C",
+            "human_readable_name": "Cenko et al. (2012)"
+        },
+        {
+            "name": "2015ApJ...805...68P",
+            "human_readable_name": "Pasham et al. (2015)"
+        },
+        {
+            "name": "2017MNRAS.472.4469B",
+            "human_readable_name": "Brown et al. (2017)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "55698.0",
+            "date_format": "mjd",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "photometry": [
+        {
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B"
+            ],
+            "raw": [
+                0.88,
+                0.225
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                55741.0,
+                57522.0
+            ],
+            "date_format": [
+                "mjd",
+                "mjd"
+            ],
+            "filter_key": [
+                "4.5GHz",
+                "5.5GHz"
+            ],
+            "computed": [
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false
+            ]
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "4.5GHz",
+            "freq_eff": 4.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.5GHz",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        }
+    ]
+}

@@ -1,0 +1,181 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "AT2022cmc",
+        "alias": [
+            {
+                "value": "AT2022cmc",
+                "reference": "TNS"
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "13 34 43.207",
+            "dec": "+33 13 00.54",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2022Natur.612..430A"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "c2968632-0fbc-4dca-8a48-25ba34e09dda",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "l": 68.62957133676095,
+            "b": 78.8489417474028,
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": "c2968632-0fbc-4dca-8a48-25ba34e09dda",
+            "computed": true,
+            "coordinate_type": "galactic"
+        }
+    ],
+    "distance": [
+        {
+            "value": "1.19325",
+            "reference": [
+                "2022Natur.612..430A"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2022Natur.612..430A"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2022Natur.612..430A",
+            "human_readable_name": "Igor et al. (2022)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": 59621.45,
+            "date_format": "mjd",
+            "reference": [
+                "2022Natur.612..430A"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "photometry": [
+        {
+            "reference": [
+                "2022Natur.612..430A"
+            ],
+            "raw": [
+                0.033,
+                0.043,
+                0.073,
+                0.108,
+                0.108,
+                0.102,
+                0.137,
+                0.17,
+                0.27
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                59625.52,
+                59626.52,
+                59627.509999999995,
+                59630.25,
+                59632.28,
+                59633.229999999996,
+                59636.579999999994,
+                59642.25,
+                59669.18
+            ],
+            "date_format": [
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd"
+            ],
+            "filter_key": [
+                "8.5GHz",
+                "8.5GHz",
+                "8.5GHz",
+                "8.5GHz",
+                "8.5GHz",
+                "8.5GHz",
+                "8.5GHz",
+                "8.5GHz",
+                "8.5GHz"
+            ],
+            "computed": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ]
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "8.5GHz",
+            "freq_eff": 8.5,
+            "freq_units": "GHz"
+        }
+    ]
+}
