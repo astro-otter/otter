@@ -353,7 +353,9 @@ class Transient(MutableMapping):
 
     
     def cleanPhotometry(self, flux_unit:u.Unit='mag(AB)', date_unit:u.Unit='MJD',
-                        by:str='raw', obs_type:str=None):
+                        freq_unit:u.Unit='GHz', wave_unit:u.Unit='nm',
+                        by:str='raw', obs_type:str=None
+                        ):
         '''
         Ensure the photometry associated with this transient is all in the same units/system/etc
         '''
@@ -487,11 +489,35 @@ class Transient(MutableMapping):
         if len(outdata) == 0:
             raise FailedQuery()
         outdata = pd.concat(outdata)
+
+        # copy over the flux units
+        outdata['converted_flux_unit'] = [flux_unit]*len(outdata)
         
         # make sure all the datetimes are in the same format here too!!
         times = [Time(d,format=f).to_value(date_unit.lower()) for d, f in zip(outdata.date, outdata.date_format.str.lower())]
         outdata['converted_date'] = times
+        outdata['converted_date_unit'] = [date_unit]*len(outdata)
 
+        # same with frequencies and wavelengths
+        freqs = []
+        waves = []
+
+        for _, row in df.iterrows():
+            if 'freq_eff' in row and not np.isnan(row['freq_eff']):
+                val = row['freq_eff']*u.Unit(row['freq_units'])
+            elif 'wave_eff' in df and not np.isnan(row['wave_eff']):
+                val = row['wave_eff']*u.Unit(row['wave_units'])
+            else:
+                raise ValueError('No known frequency or wavelength, please fix!')
+
+            freqs.append(val.to(freq_unit, equivalencies=u.spectral()).value)
+            waves.append(val.to(wave_unit, equivalencies=u.spectral()).value)
+
+        outdata['converted_freq'] = freqs
+        outdata['converted_wave'] = waves
+        outdata['converted_wave_unit'] = [wave_unit]*len(outdata)
+        outdata['converted_freq_unit'] = [freq_unit]*len(outdata)
+            
         return outdata        
 
     def _merge_names(t1, t2, out):

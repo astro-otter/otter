@@ -103,8 +103,8 @@ class Otter(object):
         return transients
 
     def getPhot(self, flux_unit='mag(AB)', date_unit='MJD',
-                return_type='astropy', obs_type=None, **kwargs
-                ) -> Table:
+                return_type='astropy', obs_type=None, keep_raw=False,
+                wave_unit='nm', freq_unit='GHz', **kwargs) -> Table:
         '''
         Get the photometry of the objects matching the arguments. This will do the
         unit conversion for you!
@@ -119,7 +119,10 @@ class Otter(object):
                                Default is 'astropy'.
             obs_type [str]: Either 'radio', 'uvoir', or 'xray'. Will only return that
                             type of photometry if not None. Default is None and will 
-                            return any type of photometry.            
+                            return any type of photometry.
+            keep_raw [bool]: If True, keep the raw flux/date/freq/wave associated with
+                             the dataset. Else, just keep the converted data. Default
+                             is False.
             **kwargs : Arguments to pass to Otter.query(). Can be:
                        names [list[str]]: A list of names to get the metadata for
                        coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
@@ -142,9 +145,10 @@ class Otter(object):
             # clean the photometry
             default_name = transient['name/default_name']
             phot = transient.cleanPhotometry(flux_unit=flux_unit, date_unit=date_unit,
+                                             wave_unit=wave_unit, freq_unit=freq_unit,
                                              obs_type=obs_type)
             phot['name'] = [default_name]*len(phot)
-
+            
             dicts.append(phot)
 
         if len(dicts) == 0:
@@ -152,10 +156,17 @@ class Otter(object):
         fullphot = pd.concat(dicts)
 
         # remove some possibly confusing keys
-        del fullphot['raw']
-        del fullphot['raw_units']
-        del fullphot['date_format']
-        
+        keys_to_keep = ['name', 'converted_flux', 'converted_date', 'converted_wave',
+                        'converted_freq', 'converted_flux_unit', 'converted_date_unit',
+                        'converted_wave_unit', 'converted_freq_unit', 'obs_type',
+                        'upperlimit']
+
+        if not keep_raw:
+            if 'telescope' in fullphot:
+                fullphot = fullphot[keys_to_keep+['telescope']]
+            else:
+                fullphot = fullphot[keys_to_keep]
+                
         if return_type == 'astropy':
             return Table.from_pandas(fullphot)
         elif return_type == 'pandas':
@@ -430,4 +441,3 @@ class Otter(object):
             alljsons.to_csv(os.path.join(self.DATADIR, 'summary.csv'))
 
         return alljsons
-        
