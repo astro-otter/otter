@@ -448,10 +448,19 @@ class Transient(MutableMapping):
             except ValueError:
                 raise ValueError('Could not coerce your string into astropy unit format!')
 
+            # get the flux data and find the type
             indata = np.array(data[by].astype(float))
+            err_key = by+'_err'
+            if err_key in data:
+                indata_err = np.array(data[by+'_err'].astype(float))
+            else:
+                indata_err = np.zeros(len(data))
             q = indata*u.Unit(astropy_units)
+            q_err = indata_err*u.Unit(astropy_units) # assume error and values have the same unit
             phot = get_type(q)
-
+            phot_err = get_type(q_err)
+            percent_err = phot_err/phot # unitless
+            
             # convert this to a flux
             if 'freq_eff' in data and not np.isnan(data['freq_eff'].iloc[0]):
                 system = 'freq_eff'
@@ -475,15 +484,29 @@ class Transient(MutableMapping):
                 
             if Flux.isflux(1*u.Unit(flux_unit)):
                 flux = phot.toflux(**conversion)
+                flux_err = percent_err*flux
             elif FluxDensity.isfluxdensity(1*u.Unit(flux_unit)):
                 flux = phot.tofluxdensity(**conversion)
+                flux_err = percent_err*flux
             elif CountRate.iscountrate(1*u.Unit(flux_unit)):
                 flux = phot.tocountrate(**conversion)
+                flux_err = percent_err*flux
+                # SINCE THIS IS ONLY OOM EST WE ADD SOME MORE ERROR IN QUAD
+                percent_to_add = 0.25
+                updated_err = []
+                for p, e in zip(flux, flux_err):
+                    if np.isnan(e):
+                        updated_err.append(percent_to_add*p.value)
+                    else:
+                        updated_err.append(np.sqrt(e.value**2 + (percent_to_add*p.value)**2))  
+                
+                flux_err = np.array(updated_err)*flux_err.unit 
             else:
                 raise ValueError('The y-axis units must be either flux, fluxdensity, or countrate!')
 
             # add a new column called converted_flux
             data['converted_flux'] = flux.value
+            data['converted_flux_err'] = flux_err.value
             outdata.append(data)
 
         if len(outdata) == 0:

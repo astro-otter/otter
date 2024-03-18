@@ -156,8 +156,9 @@ class Otter(object):
         fullphot = pd.concat(dicts)
 
         # remove some possibly confusing keys
-        keys_to_keep = ['name', 'converted_flux', 'converted_date', 'converted_wave',
-                        'converted_freq', 'converted_flux_unit', 'converted_date_unit',
+        keys_to_keep = ['name', 'converted_flux', 'converted_flux_err',
+                        'converted_date', 'converted_wave', 'converted_freq',
+                        'converted_flux_unit', 'converted_date_unit',
                         'converted_wave_unit', 'converted_freq_unit', 'obs_type',
                         'upperlimit']
 
