@@ -18,6 +18,11 @@ from astropy import units as u
 from .transient import Transient
 from ..util import *
 
+import warnings
+warnings.simplefilter('once', RuntimeWarning)
+warnings.simplefilter('once', UserWarning)
+warnings.simplefilter('once', u.UnitsWarning)
+
 class Otter(object):
     '''
     This is the primary class for users to access the otter backend database
@@ -128,23 +133,16 @@ class Otter(object):
            Will be an astropy Table sorted by transient default name.
         '''
         queryres = self.query(hasPhot=True, **kwargs)
-
-        valid_obs_types = {'radio', 'uvoir', 'xray'}
-        if obs_type is not None and obs_type not in valid_obs_types:
-            raise ValueError('Please provide a valid obs_type')    
         
         dicts = []
         for transient in queryres:
 
             # clean the photometry
             default_name = transient['name/default_name']
-            phot = transient.cleanPhotometry(flux_unit=flux_unit, date_unit=date_unit)
+            phot = transient.cleanPhotometry(flux_unit=flux_unit, date_unit=date_unit,
+                                             obs_type=obs_type)
             phot['name'] = [default_name]*len(phot)
 
-            if obs_type is not None:
-                # filter the photometry by the observation type keyword, if given
-                phot = phot[phot.obs_type == obs_type]
-            
             dicts.append(phot)
             
         fullphot = pd.concat(dicts)

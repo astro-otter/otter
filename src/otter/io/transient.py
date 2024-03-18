@@ -18,6 +18,8 @@ from astropy.coordinates import SkyCoord
 
 from ..unit_types import *
 
+warnings.simplefilter('once', RuntimeWarning)
+
 class Transient(MutableMapping):
 
     def __init__(self, d={}, name=None):
@@ -349,11 +351,12 @@ class Transient(MutableMapping):
         return coordin
 
     
-    def cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD', by='raw'):
+    def cleanPhotometry(self, flux_unit:u.Unit='mag(AB)', date_unit:u.Unit='MJD',
+                        by:str='raw', obs_type:str=None):
         '''
         Ensure the photometry associated with this transient is all in the same units/system/etc
         '''
-
+        
         # check inputs
         if by not in {'value', 'raw'}:
             raise ValueError('Please choose either value or raw!')
@@ -377,14 +380,21 @@ class Transient(MutableMapping):
 
         filters = pd.DataFrame(self['filter_alias'])
         df = c.merge(filters, on='filter_key')
-            
+        
         # make sure 'by' is in df
         if by not in df:
             if by == 'value':
                 by = 'raw'
             else:
                 by = 'value'
-        
+                
+        # drop irrelevant obs_types before continuing 
+        if obs_type is not None:
+            valid_obs_types = {'radio', 'uvoir', 'xray'}
+            if obs_type not in valid_obs_types:
+                raise ValueError('Please provide a valid obs_type')    
+            df = df[df.obs_type == obs_type]
+            
         # convert the ads bibcodes to a string of human readable sources here
         def mappedrefs(row):
             if isinstance(row.reference, list):
@@ -399,10 +409,20 @@ class Transient(MutableMapping):
         
         # figure out the units of the photometry
         outdata = []
-        for groupedby, data in df.groupby(['obs_type', by+'_units']):
+        if 'telescope' in df:
+            tele = True
+            to_grp_by = ['obs_type', by+'_units', 'telescope']
+        else:
+            tele = False
+            to_grp_by = ['obs_type', by+'_units']
 
-            obstype, unit = groupedby
-            
+        for groupedby, data in df.groupby(to_grp_by, dropna=False):
+
+            if tele:
+                obstype, unit, telescope = groupedby
+            else:
+                obstype, unit = groupedby
+                
             # get the photometry in the right type
             unit = data[by+'_units'].unique()
             if len(unit) > 1:
@@ -421,7 +441,6 @@ class Transient(MutableMapping):
                 warnings.warn('Attempting to coerce vega mag to AB mag, this is potentially dangerous!')
                 unit = unit.lower().replace('vega', 'mag(AB)')
                 
-                
                 astropy_units = u.Unit(unit)
             except ValueError:
                 raise ValueError('Could not coerce your string into astropy unit format!')
@@ -431,20 +450,26 @@ class Transient(MutableMapping):
             phot = get_type(q)
 
             # convert this to a flux
-            if 'freq_eff' in data:
+            if 'freq_eff' in data and not np.isnan(data['freq_eff'].iloc[0]):
                 system = 'freq_eff'
                 system_units = 'freq_units'
-            elif 'wave_eff' in data:
+            elif 'wave_eff' in data and not np.isnan(data['wave_eff'].iloc[0]):
                 system = 'wave_eff'
                 system_units = 'wave_units'
-
+                
             uniteff = data[system_units].unique()
             if len(uniteff) > 1:
                 raise ValueError('Applying multiple units to the effective frequencies is currently not supported!')
             astropy_uniteff = u.Unit(uniteff[0])
-            conversion = {system:np.asarray(data[system])*astropy_uniteff,
-                          'out_units':flux_unit}
-
+            if tele:
+                conversion = {system:np.asarray(data[system])*astropy_uniteff,
+                              'out_units':flux_unit,
+                              'telescope':telescope}
+            else:
+                conversion = {system:np.asarray(data[system])*astropy_uniteff,
+                              'out_units':flux_unit,
+                              }
+                
             if Flux.isflux(1*u.Unit(flux_unit)):
                 flux = phot.toflux(**conversion)
             elif FluxDensity.isfluxdensity(1*u.Unit(flux_unit)):
@@ -452,9 +477,9 @@ class Transient(MutableMapping):
             elif CountRate.iscountrate(1*u.Unit(flux_unit)):
                 flux = phot.tocountrate(**conversion)
             else:
-                raise ValueError('The y-axis units must be either flux or fluxdensity!')
+                raise ValueError('The y-axis units must be either flux, fluxdensity, or countrate!')
 
-            # add a new column called converted_flux 
+            # add a new column called converted_flux
             data['converted_flux'] = flux.value
             outdata.append(data)
 

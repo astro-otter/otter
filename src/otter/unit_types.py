@@ -9,6 +9,8 @@ import astropy.units as u
 import astropy.constants as const
 from collections.abc import Iterable
 
+from .util import XRAY_AREAS
+
 class Flux(Quantity):
 
     def __init__(self, quantity):
@@ -32,7 +34,7 @@ class Flux(Quantity):
         return all(_name in q.unit.physical_type for q in quantity)
         
     def tofluxdensity(self, wave_eff:Quantity=None, freq_eff:Quantity=None,
-                      out_units:Unit='mag(AB)'):
+                      out_units:Unit='mag(AB)', **kwargs):
         '''
         Converts to flux density by dividing by the given effective wave/freq
 
@@ -116,7 +118,7 @@ class FluxDensity(Quantity):
         return test1 or test2
         
     def toflux(self, freq_eff:Quantity=None, wave_eff:Quantity=None,
-               out_units:Unit=u.erg/u.cm**2/u.s) -> Flux:
+               out_units:Unit=u.erg/u.cm**2/u.s, **kwargs) -> Flux:
         '''
         Converts to flux by multiplying by the fiven effective wave/freq
 
@@ -149,14 +151,13 @@ class FluxDensity(Quantity):
             if not isinstance(wave_eff, np.ndarray):
                 wave_eff = np.array(wave_eff)
 
-            if 'wav' in self.unit.physical_type:
+            if 'wav' not in self.unit.physical_type:
                 eff = const.c / wave_eff # convert to frequency
             else:
                 eff = wave_eff
-                
             out = (self*eff).to(out_units,
                                 equivalencies=u.spectral_density(1*wave_eff.unit))
-            
+
         else:
             raise ValueError('Either freq_eff or wave_eff must be provided (NOT both!)')
 
@@ -167,7 +168,7 @@ class FluxDensity(Quantity):
         return Flux(out)
         
     def tofluxdensity(self, out_units='mag(AB)', freq_eff:Quantity=None,
-                      wave_eff:Quantity=None):
+                      wave_eff:Quantity=None, **kwargs):
         '''
         Just a wrapper that returns itself. This will make my other code cleaner
         '''
@@ -238,21 +239,96 @@ class CountRate(Quantity):
         return all(_name in q.unit.physical_type for q in quantity)
         
     def toflux(self, wave_eff:Quantity=None, freq_eff:Quantity=None,
-               out_units=u.erg/u.s/u.cm**2, **kwargs):
+               out_units=u.erg/u.s/u.cm**2, telescope:str=None, **kwargs):
         '''
         Converts the count rate to a flux
         '''
-        warnings.warn('Converting count rate to a flux is currently not supported!')
-        return self
+        warnings.warn('Converting count rate to a flux is still under development! '+
+                      'This is just an order of magnitude estimate!'
+                      )
+
+        if telescope is None:
+            raise ValueError('Can not convert count rate to flux without a telescope!')
+        
+        # check that the input unit is a flux
+        if not Flux.isflux(1*Unit(out_units)):
+            raise ValueError('The output units that were given are not a flux!!')
+        
+        # perform the conversion
+        if freq_eff is not None and wave_eff is None:
+            if not isinstance(freq_eff, np.ndarray):
+                freq_eff = np.array(freq_eff)
+
+            out_erg_s = self*(freq_eff.to(u.erg, equivalencies=u.spectral()))
+            out_erg_s_cm2 = out_erg_s/XRAY_AREAS[telescope.lower()]
+            out = out_erg_s_cm2.to(out_units,
+                                   equivalencies=u.spectral_density(1*freq_eff.unit))
+
+        elif freq_eff is None and wave_eff is not None:
+            if not isinstance(wave_eff, np.ndarray):
+                wave_eff = np.array(wave_eff)
+
+            out_erg_s = self*(wave_eff.to(u.erg, equivalencies=u.spectral()))
+            out_erg_s_cm2 = out_erg_s/XRAY_AREAS[telescope.lower()]
+            out = out_erg_s_cm2.to(out_units,
+                                   equivalencies=u.spectral_density(1*wave_eff.unit))
+            
+        else:
+            raise ValueError('Either freq_eff or wave_eff must be provided (NOT both!)')
+
+        # double check this is a flux now
+        if not Flux.isflux(out):
+            raise ValueError('Something went wrong! This is not a flux still!')
+        
+        return Flux(out)
         
     def tofluxdensity(self, wave_eff:Quantity=None, freq_eff:Quantity=None,
-                      out_units=u.erg/u.s/u.cm**2/u.Hz, **kwargs):
+                      out_units=u.erg/u.s/u.cm**2/u.Hz, telescope:str=None, **kwargs):
         '''
         Converts the count rate to a flux density
         '''
-        warnings.warn('Converting count rate to flux density is currently'+
-                         'not supported!')
-        return self 
+
+        warnings.warn('Converting count rate to a flux density is still under development! '+
+                      'This is just an order of magnitude estimate!'
+                      )
+
+        if telescope is None:
+            raise ValueError('Can not convert count rate to flux density without a telescope!')
+        
+        # check that the input unit is a flux
+        if not FluxDensity.isfluxdensity(1*Unit(out_units)):
+            raise ValueError('The output units that were given are not a flux!!')
+        
+        # perform the conversion
+        if freq_eff is not None and wave_eff is None:
+            if not isinstance(freq_eff, np.ndarray):
+                freq_eff = np.array(freq_eff)
+
+            out_erg_s = self*(freq_eff.to(u.erg, equivalencies=u.spectral()))
+            out_erg_s_cm2 = out_erg_s/XRAY_AREAS[telescope.lower()]
+            out_erg_s_cm2_freq = out_erg_s_cm2/freq_eff
+            out = out_erg_s_cm2_freq.to(out_units,
+                                   equivalencies=u.spectral_density(1*freq_eff.unit))
+
+        elif freq_eff is None and wave_eff is not None:
+            if not isinstance(wave_eff, np.ndarray):
+                wave_eff = np.array(wave_eff)
+
+            out_erg_s = self*(wave_eff.to(u.erg, equivalencies=u.spectral()))
+            out_erg_s_cm2 = out_erg_s/XRAY_AREAS[telescope.lower()]
+            out_erg_s_cm2_wav = out_erg_s_cm2/wave_eff
+            out = out_erg_s_cm2_wav.to(out_units,
+                                   equivalencies=u.spectral_density(1*wave_eff.unit))
+            
+        else:
+            raise ValueError('Either freq_eff or wave_eff must be provided (NOT both!)')
+
+        # double check this is a flux now
+        if not FluxDensity.isfluxdensity(out):
+            raise ValueError('Something went wrong! This is not a flux density still!')
+        
+        return FluxDensity(out)
+
         
     def tocountrate(self, out_units=1/u.s, **kwargs):
         '''

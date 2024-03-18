@@ -3,7 +3,6 @@ Some constants, mappings, and functions to be used across the software
 '''
 import os
 import astropy.units as u
-from .io.transient import Transient
 
 '''
 Helper functions first that just don't belong anywhere else
@@ -271,14 +270,23 @@ FILTER_MAP_FREQ = {'FUV': 1975.086895569116,
  'F2550W': 11.919267708332558
 }
 
+# x-ray telescope areas for converting
+# NOTE: these are estimates from the links provided
+# Since this is inherently instrument dependent they are not entirely reliable
+# All are for 1-2 keV
+XRAY_AREAS = {
+    "swift": 135*u.cm**2, # https://swift.gsfc.nasa.gov/about_swift/Sci_Fact_Sheet.pdf 
+    "rosat": 400*u.cm**2, # https://heasarc.gsfc.nasa.gov/docs/rosat/ruh/handbook/node39.html#SECTION00634000000000000000
+    "xmm": 1500*u.cm**2, # https://www.cosmos.esa.int/web/xmm-newton/technical-details-mirrors
+    "chandra": 600*u.cm**2 # https://cxc.harvard.edu/cdo/about_chandra/
+}
 
 # define a working base directory constant
 BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATADIR = os.path.join(BASEDIR, 'data', 'base')
 
 # Overarching schema that stops once we get down to a string or list
-schema = Transient(
-    {
+schema = {
         "schema_version": {"value": "0", "comment": "Copied from tde.space"},
         "name": {
             "default_name":None,
@@ -293,7 +301,7 @@ schema = Transient(
         "spectra": [],
         "filter_alias": []
     }
-)
+
 
 # sub schemas that get filled into lists
 name_alias_schema = {
