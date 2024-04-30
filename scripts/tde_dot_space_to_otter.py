@@ -385,9 +385,9 @@ def main():
                 elif 'flux' in group and 'u_flux' in group: # we will just use the flux for the raw data
                     usedFluxForRaw = True
                     sub['raw'] = list(group.flux)
-                    sub['value_units'] = list(group.u_flux)
+                    sub['raw_units'] = list(group.u_flux)
                     if 'e_flux' in group:
-                        sub['value_err'] = list(group.e_flux)
+                        sub['raw_err'] = list(group.e_flux)
                     if 'band' in group:
                         sub['filter_key'] = list(group.band)
                     elif 'energy' in group:

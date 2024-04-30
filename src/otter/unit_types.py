@@ -4,14 +4,52 @@ Some convenient unit type classes for conversions
 import warnings
 import numpy as np
 
-from astropy.units import Quantity, Unit
+from astropy.units import Quantity, Unit, UnitBase, StructuredUnit, LogUnit
+from astropy.units.format import Base
 import astropy.units as u
 import astropy.constants as const
 from collections.abc import Iterable
 
 from .util import XRAY_AREAS
 
-class Flux(Quantity):
+class _CustomQuantity(Quantity):
+    '''
+    Customizing the astropy Quantity class to allow it to also handle Magnitude units
+
+    This is potentially dangerous so we just have to be careful to not do any complex
+    math after conversion
+    '''
+
+    def _set_unit(self, unit):
+        """Set the unit.
+
+        This is used anywhere the unit is set or modified, i.e., in the
+        initializer, in ``__imul__`` and ``__itruediv__`` for in-place
+        multiplication and division by another unit, as well as in
+        ``__array_finalize__`` for wrapping up views.  For Quantity, it just
+        sets the unit, but subclasses can override it to check that, e.g.,
+        a unit is consistent.
+
+        **Modified from astropy source code**
+        """
+        if not isinstance(unit, UnitBase):
+            if isinstance(self._unit, StructuredUnit) or isinstance(
+                unit, StructuredUnit
+            ):
+                unit = StructuredUnit(unit, self.dtype)
+            else:
+                # Trying to go through a string ensures that, e.g., Magnitudes with
+                # dimensionless physical unit become Quantity with units of mag.
+                unit = Unit(str(unit), parse_strict="silent")
+                if not isinstance(unit, (UnitBase, StructuredUnit, LogUnit)):
+                    raise UnitTypeError(
+                        f"{self.__class__.__name__} instances require normal units, "
+                        f"not {unit.__class__} instances."
+                    )
+
+        self._unit = unit
+
+class Flux(_CustomQuantity):
 
     def __init__(self, quantity):
         '''
@@ -88,7 +126,7 @@ class Flux(Quantity):
         raise ValueError('Converting a flux to a count rate is currently not '+
                          'supported!')
     
-class FluxDensity(Quantity):
+class FluxDensity(_CustomQuantity):
 
     def __init__(self, quantity):
         '''
@@ -213,7 +251,7 @@ class FluxDensity(Quantity):
         raise ValueError('Converting flux density to a count rate is currently not '+
                          'supported!')
         
-class CountRate(Quantity):
+class CountRate(_CustomQuantity):
     '''
     Represents the counts of electrons in an x-ray detector
     '''
@@ -326,9 +364,11 @@ class CountRate(Quantity):
         # double check this is a flux now
         if not FluxDensity.isfluxdensity(out):
             raise ValueError('Something went wrong! This is not a flux density still!')
-        
-        return FluxDensity(out)
 
+        try:
+            return FluxDensity(out)
+        except:
+            import pdb; pdb.set_trace()
         
     def tocountrate(self, out_units=1/u.s, **kwargs):
         '''
@@ -356,4 +396,4 @@ def get_type(quantity):
     elif CountRate.iscountrate(quantity):
         return CountRate(quantity)
     else:
-        raise ValueError('This quantity does not have valild units!')
+        raise ValueError(f'{quantity} does not have valid units!')

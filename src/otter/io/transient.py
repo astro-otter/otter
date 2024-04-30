@@ -410,7 +410,7 @@ class Transient(MutableMapping):
             warnings.warn(f'Unable to apply the source mapping because {exc}')
             df['human_readable_refs'] = df.reference
         
-        # figure out the units of the photometry
+        # Figure out what columns are good to groupby in the photometry
         outdata = []
         if 'telescope' in df:
             tele = True
@@ -419,6 +419,7 @@ class Transient(MutableMapping):
             tele = False
             to_grp_by = ['obs_type', by+'_units']
 
+        # Do the conversion based on what we decided to group by
         for groupedby, data in df.groupby(to_grp_by, dropna=False):
 
             if tele:
@@ -457,9 +458,12 @@ class Transient(MutableMapping):
                 indata_err = np.zeros(len(data))
             q = indata*u.Unit(astropy_units)
             q_err = indata_err*u.Unit(astropy_units) # assume error and values have the same unit
-            phot = get_type(q)
+            try:
+                phot = get_type(q)
+            except ValueError:
+                import pdb; pdb.set_trace()
             phot_err = get_type(q_err)
-            percent_err = phot_err/phot # unitless
+            percent_err = (phot_err/phot).value # unitless
             
             # convert this to a flux
             if 'freq_eff' in data and not np.isnan(data['freq_eff'].iloc[0]):
@@ -484,13 +488,16 @@ class Transient(MutableMapping):
                 
             if Flux.isflux(1*u.Unit(flux_unit)):
                 flux = phot.toflux(**conversion)
-                flux_err = percent_err*flux
+                flux_err = percent_err*flux.value*flux.unit
             elif FluxDensity.isfluxdensity(1*u.Unit(flux_unit)):
                 flux = phot.tofluxdensity(**conversion)
-                flux_err = percent_err*flux
+                try:
+                    flux_err = percent_err*flux.value*flux.unit
+                except:
+                    import pdb; pdb.set_trace()
             elif CountRate.iscountrate(1*u.Unit(flux_unit)):
                 flux = phot.tocountrate(**conversion)
-                flux_err = percent_err*flux
+                flux_err = percent_err*flux.value*flux.unit
                 # SINCE THIS IS ONLY OOM EST WE ADD SOME MORE ERROR IN QUAD
                 percent_to_add = 0.25
                 updated_err = []
