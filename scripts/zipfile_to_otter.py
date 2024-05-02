@@ -12,7 +12,7 @@ from astropy.coordinates import SkyCoord
 
 from otter import Otter, Transient
 from otter.io.helpers import filter_to_obstype
-from otter.constants import FILTER_MAP_WAVE
+from otter.util import FILTER_MAP_WAVE, bibcode_to_hrn
 
 def upload_zip(outdir:str, zipfile:str, testing:bool=False) -> None:
     '''
@@ -132,23 +132,9 @@ def _row_to_json(dfrow:pd.Series, datapath:str, testing=False) -> None:
 
     # create the reference_alias        
     if not testing: # we don't want to use up all our queries
-        adsquery = list(ads.SearchQuery(bibcode=dfrow.reference))[0]
-        authors = adsquery.author
-        year = adsquery.year
-
-        if len(authors) == 0:
-            raise ValueError('This ADS bibcode does not exist!')
-        elif len(authors) == 1:
-            author = authors[0]
-        elif len(authors) == 2:
-            author = authors[0] + ' & ' + authors [1]
-        else: # longer than 2
-            author = authors[0] + ' et al.'
-
-        # generate the human readable name
-        hrn = author + ' (' + year + ')'
-        schema['reference_alias'] = [{'name': dfrow.reference,
-                                      'human_readable_name':hrn
+        bibcode = dfrow.reference        
+        schema['reference_alias'] = [{'name': bibcode,
+                                      'human_readable_name':bibcode_to_hrn(bibcode)
                                       }]
     else:
         print(f'We would be querying for bibcode={dfrow.reference}')

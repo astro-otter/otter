@@ -2,6 +2,7 @@
 Some constants, mappings, and functions to be used across the software
 '''
 import os
+import ads
 import astropy.units as u
 
 '''
@@ -36,7 +37,28 @@ def clean_schema(schema):
             del schema[key]
     return schema
  
+def bibcode_to_hrn(bibcode):
+    '''
+    Converts a bibcode to a human_readable_name (hrn) using ADSQuery
+    '''
 
+    adsquery = list(ads.SearchQuery(bibcode=bibcode))[0]
+    authors = adsquery.author
+    year = adsquery.year
+    
+    if len(authors) == 0:
+        raise ValueError('This ADS bibcode does not exist!')
+    elif len(authors) == 1:
+        author = authors[0]
+    elif len(authors) == 2:
+        author = authors[0] + ' & ' + authors [1]
+    else: # longer than 2
+        author = authors[0] + ' et al.'
+        
+    # generate the human readable name
+    hrn = author + ' (' + year + ')'
+    return hrn
+    
 '''
 Then the constants and dictionary mappings used throughout
 '''
