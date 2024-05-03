@@ -1,0 +1,29 @@
+name: Feature Request
+description: There is something I wish hepfile had
+title: "[Feature]: "
+labels: ["enhancement"]
+assignees: []
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thanks for thinking of this feature! Please make sure you have checked closed issues and fill out the following information:
+
+- type: input
+  attributes:
+    label: "Version of `hepfile`"
+    placeholder: "XX.YY.ZZ"
+  validations:
+    required: true
+    
+- type: textarea
+  id: description
+  attributes:
+    label: "Describe the Feature"
+    description: |
+      "What is missing? Why is it needed? Any tips on implementation? Please provide a minimum working example demonstrating where you want it to fit in."
+
+- type: markdown
+  attributes:
+    value: Thanks again for filling out this feature request! We will respond with our ideas as soon as possible!

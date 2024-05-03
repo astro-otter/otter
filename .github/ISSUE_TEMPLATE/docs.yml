@@ -1,0 +1,36 @@
+name: Documentation Issue
+description: There is an issue or suggestion for the documentation
+title: "[Docs]: "
+labels: ["documentation"]
+assignees: []
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thanks for bringing up this issue or suggestion! Please make sure you have checked closed issues and fill out the following information:
+
+- type: dropdown
+  id: where
+  attributes:
+    label: "Which documentation?"
+    description: |
+      In the [documentation website](https://hepfile.readthedocs.io), the [GitHub README.md](https://github.com/mattbellis/hepfile/blob/main/README.md), or Python docstrings?
+    options:
+      - Documentation website
+      - GitHub README.md
+      - Python docstrings
+      - Other (please explain)?
+  validations:
+    required: true
+
+- type: textarea
+  id: description
+  attributes:
+    label: "Describe the Documentation Issue or Addition"
+    description: |
+      "What seems wrong with the documentation? Is there something you think should be added?"
+
+- type: markdown
+  attributes:
+    value: "Thanks again for filling out this documentation issue report! We will get to it and respond as soon as possible!"

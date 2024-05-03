@@ -1,0 +1,49 @@
+name: Bug Report
+description: Something isn't working as I expect
+title: "[Bug]: "
+labels: ["bug"]
+assignees: []
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thanks for reporting this bug! Please make sure you have checked closed issues and fill out the following information:
+
+- type: input
+  attributes:
+    label: "Version of `hepfile`"
+    placeholder: "XX.YY.ZZ"
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: "Version of `NumPy`"
+    placeholder: "XX.YY.ZZ"
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: "Version of `h5py`"
+    placeholder: "XX.YY.ZZ"
+  validations:
+    required: true
+
+- type: textarea
+  id: other-packages
+  attributes:
+    label: "Other Relevant Package Versions"
+    description: "Please list any other relevant package versions (ex. awkward, pandas, etc.)"
+
+- type: textarea
+  id: description
+  attributes:
+    label: "Describe the Bug"
+    description: |
+      "What happened that wasn't expected? What were you expecting? Please provide a Minimum Working Example"
+
+- type: markdown
+  attributes:
+    value: "Thanks again for filling out this bug report! We will get to it and respond as soon as possible!"

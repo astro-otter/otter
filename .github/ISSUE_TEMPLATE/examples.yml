@@ -1,0 +1,49 @@
+name: Example Notebook Issue
+description: There is an issue in the example notebooks
+title: "[Examples]: "
+labels: ["documentation"]
+assignees: []
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thanks for bringing up this issue with the example notebooks! Please make sure you have checked closed issues and fill out the following information:
+
+- type: input
+  attributes:
+    label: "Version of `hepfile`"
+    placeholder: "XX.YY.ZZ"
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: "Version of `NumPy`"
+    placeholder: "XX.YY.ZZ"
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: "Version of `h5py`"
+    placeholder: "XX.YY.ZZ"
+  validations:
+    required: true
+
+- type: textarea
+  id: other-packages
+  attributes:
+    label: "Other Relevant Package Versions"
+    description: "Please list any other relevant package versions (ex. awkward, pandas, etc.)"
+
+- type: textarea
+  id: description
+  attributes:
+    label: "Describe the Issue with the examples"
+    description: |
+      "Which example is it? What seems wrong with the example? Please provide a minimum working example so that we can recreate it."
+
+- type: markdown
+  attributes:
+    value: "Thanks again for filling out this example notebook issue report! We will get to it and respond as soon as possible!"
