@@ -14,6 +14,10 @@ if [ ! -d $OUTDIR ]; then
     mkdir $OUTDIR
 fi
 
+###########################################################################
+############### FIRST THE UNPROCESSED DATA PEOPLE HAVE SENT ###############
+###########################################################################
+
 # first process the base-data which just has some published radio data in it
 echo "Processing data from $INDIR/base-data..."
 python3 $FILEDIR/base_radio_data_to_otter.py --indir $INDIR/base-data --outdir $OUTDIR
@@ -27,3 +31,12 @@ fi
 # then the data from tde.space
 echo "Processing data from $INDIR/tde-1980-2025"
 python3 $FILEDIR/tde_dot_space_to_otter.py --indir $INDIR/tde-1980-2025 --outdir $OUTDIR
+
+# then fix the output cause tde.space had some transients in two separate files
+python3 $FILEDIR/fix_tde_dot_space_file_bug.py --otterdir $OUTDIR
+
+###########################################################################
+############### NOW QUERY PUBLIC CATALOGS FOR MORE DATA ###################
+###########################################################################
+echo "Pulling data from TNS"
+python3 $FILEDIR/tns_to_otter.py --otterdir $OUTDIR

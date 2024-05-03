@@ -195,7 +195,7 @@ class Otter(object):
               names:list[str]=None,
               coords:SkyCoord=None,
               radius:float=5,
-              minZ:float=0,
+              minZ:float=None,
               maxZ:float=None,
               refs:list[str]=None,
               hasPhot:bool=False,
@@ -225,7 +225,7 @@ class Otter(object):
         Return:
            Get all of the raw (unconverted!) json data for objects that match the criteria. 
         '''
-        if all(arg is None for arg in [names, coords, maxZ, refs]) and not hasPhot and not hasSpec:
+        if all(arg is None for arg in [names, coords, maxZ, minZ, refs]) and not hasPhot and not hasSpec:
             # there's nothing to query!
             # read in the metdata from all json files
             # this could be dangerous later on!!
@@ -266,7 +266,9 @@ class Otter(object):
             summary = summary.iloc[summary_idx]
         
         # redshift
-        summary = summary[summary.z.astype(float) >= minZ]
+        if minZ is not None:
+            summary = summary[summary.z.astype(float) >= minZ]
+
         if maxZ is not None:
             summary = summary[summary.z.astype(float) <= maxZ]
             
@@ -352,6 +354,7 @@ class Otter(object):
                     # for now throw an error
                     # this is a limitation we can come back to fix if it is causing
                     # problems though!
+                    import pdb; pdb.set_trace()
                     raise OtterLimitation('Some objects in Otter are too close!')
 
         # update the summary table appropriately
@@ -397,7 +400,7 @@ class Otter(object):
                 f.write(out)
         else:
             print(f'Would write to {outfilepath}')
-            print(out)
+            #print(out)
 
     def generate_summary_table(self, save=False):
         '''

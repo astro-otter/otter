@@ -160,8 +160,8 @@ class Transient(MutableMapping):
         '''
 
         # first check that this object is within a good distance of the other object
-        if strict_merge and self.getSkyCoord().separation(other.getSkyCoord()) > 5*u.arcsec: 
-            raise TransientMergeError('These two transients are not within 5 arcseconds!' +
+        if strict_merge and self.getSkyCoord().separation(other.getSkyCoord()) > 10*u.arcsec: 
+            raise TransientMergeError('These two transients are not within 10 arcseconds!' +
                                       ' They probably do not belong together! If they do' +
                                       ' You can set strict_merge=False to override the check')
             

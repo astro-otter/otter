@@ -198,7 +198,12 @@ def main():
                         'filter_key': [],
                         'computed': [],
                         'obs_type': [],
-                        'upperlimit': []
+                        'upperlimit': [],
+                        'corr_k': False,
+                        'corr_s': False,
+                        'corr_av': False,
+                        'corr_host': False,
+                        'corr_hostav': False
                         }
             for point in samplephot[phot]: # all these points belong together
                 if 'nu_GHz' in data:

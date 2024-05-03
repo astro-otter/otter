@@ -42,7 +42,11 @@ def bibcode_to_hrn(bibcode):
     Converts a bibcode to a human_readable_name (hrn) using ADSQuery
     '''
 
-    adsquery = list(ads.SearchQuery(bibcode=bibcode))[0]
+    try:
+        adsquery = list(ads.SearchQuery(bibcode=bibcode))[0]
+    except IndexError:
+        raise ValueError(f'Could not find {bibcode} on ADS!')
+    
     authors = adsquery.author
     year = adsquery.year
     

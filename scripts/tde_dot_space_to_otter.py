@@ -78,9 +78,11 @@ def clean_schema(schema):
     '''
     Clean out Nones and empty lists from the given subschema
     '''
+    protected_keys = {'corr_k', 'corr_s', 'corr_av', 'corr_host', 'corr_hostav'}
     for key, val in list(schema.items()):
         if val is None or (isinstance(val, (list, dict)) and len(val) == 0):
-            del schema[key]
+            if key not in protected_keys:
+                del schema[key]
     return schema
 
 def main():
@@ -105,6 +107,12 @@ def main():
     badphot = 0
 
     for file in glob.glob(os.path.join(args.indir, '*.json')):
+
+        # theres this one bugged file from tde.space called AT.json
+        # that has data from multiple transients in it
+        # so we'll just skip that one
+        if os.path.basename(file) == 'AT.json': continue
+
         print(f'Reformating {file}')
         with open(file, 'r') as f:
             j = json.load(f)[0]
@@ -429,6 +437,14 @@ def main():
                     else:
                         sub['obs_type'].append(otter_helper.filter_to_obstype(filt))
 
+                # add info about the corrections applied to the photometry
+                # we don't have any right now so for now we will just put None
+                sub['corr_k'] = None
+                sub['corr_s'] = None
+                sub['corr_av'] = None
+                sub['corr_host'] = None
+                sub['corr_hostav'] = None
+                
                 schema['photometry'].append(clean_schema(sub))
 
             del j['photometry']
