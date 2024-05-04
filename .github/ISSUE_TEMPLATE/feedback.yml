@@ -3,6 +3,7 @@ description: There is something I think you should be thinking about...
 title: "[Feedback]: "
 labels: ["feedback"]
 assignees: []
+projects: ["astro-otter/1"]
 
 body:
 - type: markdown
