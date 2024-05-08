@@ -16,8 +16,6 @@ def main():
 
     otterdir = args.otterdir
 
-    otterdir = '/home/nfranz/astro-otter/otterdb/.otter'
-
     # the following json files have data for the same event...
     file1 = os.path.join(otterdir, 'PS18kh.json')
     file2 = os.path.join(otterdir, 'AT2018zr.json')

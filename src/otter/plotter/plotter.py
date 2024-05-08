@@ -1,13 +1,23 @@
-'''
+"""
 Some utilities to create common plots for transients that use the OtterPlotter
-'''
+"""
 
-from .otter_plotter import OtterPlotter 
+from .otter_plotter import OtterPlotter
 
-def plot_light_curve(date:float, flux:float, date_err:float=None, flux_err:float=None,
-                     fig=None, ax=None, backend:str='matplotlib',
-                     xlabel:str='Date', ylabel:str='Flux', **kwargs):
-    '''
+
+def plot_light_curve(
+    date: float,
+    flux: float,
+    date_err: float = None,
+    flux_err: float = None,
+    fig=None,
+    ax=None,
+    backend: str = "matplotlib",
+    xlabel: str = "Date",
+    ylabel: str = "Flux",
+    **kwargs,
+):
+    """
     Plot the light curve for the input data
 
     Args:
@@ -25,28 +35,34 @@ def plot_light_curve(date:float, flux:float, date_err:float=None, flux_err:float
 
     Returns:
        Either a matplotlib axis or plotly figure
-    '''
-    
+    """
+
     plt = OtterPlotter(backend)
     fig = plt.plot(date, flux, date_err, flux_err, ax=ax, **kwargs)
-    
-    if backend == 'matplotlib':
+
+    if backend == "matplotlib":
         fig.set_ylabel(ylabel)
         fig.set_xlabel(xlabel)
 
-    elif backend == 'plotly':
-        fig.update_layout(
-            xaxis_title=xlabel,
-            yaxis_title=ylabel,
-            **kwargs
-        )
+    elif backend == "plotly":
+        fig.update_layout(xaxis_title=xlabel, yaxis_title=ylabel, **kwargs)
 
     return fig
-    
-def plot_sed(wave_or_freq:float, flux:float, wave_or_freq_err:float=None, flux_err:float=None,
-                     fig=None, ax=None, backend:str='matplotlib',
-                     xlabel:str='Frequency or Wavelength', ylabel:str='Flux', **kwargs):
-    '''
+
+
+def plot_sed(
+    wave_or_freq: float,
+    flux: float,
+    wave_or_freq_err: float = None,
+    flux_err: float = None,
+    fig=None,
+    ax=None,
+    backend: str = "matplotlib",
+    xlabel: str = "Frequency or Wavelength",
+    ylabel: str = "Flux",
+    **kwargs,
+):
+    """
     Plot the SED for the input data
 
     Args:
@@ -64,20 +80,18 @@ def plot_sed(wave_or_freq:float, flux:float, wave_or_freq_err:float=None, flux_e
 
     Returns:
        Either a matplotlib axis or plotly figure
-    '''
+    """
 
     plt = OtterPlotter(backend)
-    fig = plt.plot(wave_or_freq, flux, wave_or_freq_err, flux_err, ax=ax, **kwargs)
-    
-    if backend == 'matplotlib':
+    fig = plt.plot(
+        wave_or_freq, flux, wave_or_freq_err, flux_err, ax=ax, **kwargs
+    )
+
+    if backend == "matplotlib":
         fig.set_ylabel(ylabel)
         fig.set_xlabel(xlabel)
 
-    elif backend == 'plotly':
-        fig.update_layout(
-            xaxis_title=xlabel,
-            yaxis_title=ylabel,
-            **kwargs
-        )
+    elif backend == "plotly":
+        fig.update_layout(xaxis_title=xlabel, yaxis_title=ylabel, **kwargs)
 
     return fig
