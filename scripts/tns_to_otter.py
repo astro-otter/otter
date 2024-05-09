@@ -172,7 +172,11 @@ def tns_phot_to_otter_phot(photlist):
         
         # now handle the flux units
         flux_unit = point['flux_unit']['name']
-        
+        if flux_unit == 'ABMag':
+            flux_unit = 'mag(AB)'
+        if flux_unit == 'VegaMag':
+            flux_unit = 'vega'
+            
         # fliters
         filterused = point['filters']['name']
         if filterused in badfilternames: continue # we don't trust these

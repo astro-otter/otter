@@ -308,15 +308,19 @@ FILTER_MAP_FREQ = {
 # Since this is inherently instrument dependent they are not entirely reliable
 # All are for 1-2 keV
 XRAY_AREAS = {
-    "swift": 135
-    * u.cm**2,  # https://swift.gsfc.nasa.gov/about_swift/Sci_Fact_Sheet.pdf
-    "rosat": 400
-    * u.cm
-    ** 2,  # https://heasarc.gsfc.nasa.gov/docs/rosat/ruh/handbook/node39.html#SECTION00634000000000000000
-    "xmm": 1500
-    * u.cm
-    ** 2,  # https://www.cosmos.esa.int/web/xmm-newton/technical-details-mirrors
-    "chandra": 600 * u.cm**2,  # https://cxc.harvard.edu/cdo/about_chandra/
+    # https://swift.gsfc.nasa.gov/about_swift/Sci_Fact_Sheet.pdf
+    "swift": 135*u.cm**2,
+
+    # https://heasarc.gsfc.nasa.gov/docs/rosat/ruh/handbook/node39.html#SECTION00634000000000000000
+    "rosat": 400 * u.cm ** 2,  
+
+    # https://www.cosmos.esa.int/web/xmm-newton/technical-details-mirrors
+    "xmm": 1500 * u.cm ** 2, 
+    "xmm slew": 1500 * u.cm**2,
+    "xmm pointed": 1500 * u.cm**2,
+
+    # https://cxc.harvard.edu/cdo/about_chandra
+    "chandra": 600 * u.cm**2,
 }
 
 # define a working base directory constant

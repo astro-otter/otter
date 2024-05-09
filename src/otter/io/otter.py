@@ -182,6 +182,7 @@ class Otter(object):
             "converted_freq_unit",
             "obs_type",
             "upperlimit",
+            "reference"
         ]
 
         if not keep_raw:
