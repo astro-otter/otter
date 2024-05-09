@@ -24,7 +24,8 @@ from ..exceptions import *
 from ..util import XRAY_AREAS
 
 warnings.simplefilter("once", RuntimeWarning)
-
+warnings.simplefilter("once", UserWarning)
+np.seterr(divide='ignore')
 
 class Transient(MutableMapping):
     def __init__(self, d={}, name=None):
@@ -41,6 +42,7 @@ class Transient(MutableMapping):
                 ref["name"]: ref["human_readable_name"]
                 for ref in self["reference_alias"]
             }
+            self.srcmap['TNS'] = 'TNS'
         else:
             self.srcmap = {}
 
@@ -443,7 +445,7 @@ class Transient(MutableMapping):
         except Exception as exc:
             warnings.warn(f"Unable to apply the source mapping because {exc}")
             df["human_readable_refs"] = df.reference
-
+            
         # Figure out what columns are good to groupby in the photometry
         outdata = []
         if "telescope" in df:
@@ -467,10 +469,14 @@ class Transient(MutableMapping):
                 raise OtterLimitation(
                     "Can not apply multiple units for different obs_types"
                 )
-
+            
             unit = unit[0]
             try:
-                astropy_units = u.Unit(unit)
+                if "vega" in unit.lower():
+                    astropy_units = VEGAMAG
+                else:
+                    astropy_units = u.Unit(unit)
+
             except ValueError:
                 # this means there is something likely slightly off in the input unit
                 # string. Let's try to fix it!
@@ -478,13 +484,8 @@ class Transient(MutableMapping):
                 unit = unit.replace("ergs", "erg")
                 unit = unit.replace("AB", "mag(AB)")
 
-                warnings.warn(
-                    "Attempting to coerce vega mag to AB mag, this is potentially dangerous!"
-                )
-                if 'vega' in unit.lower():
-                    unit = unit.lower().replace("vega", "mag(AB)")
-
                 astropy_units = u.Unit(unit)
+
             except ValueError:
                 raise ValueError(
                     "Could not coerce your string into astropy unit format!"
@@ -542,49 +543,39 @@ class Transient(MutableMapping):
                     data['wave_max']
                 )))*u.Unit(wave_units.iloc[0])
 
-                # we unfortunately have to loop over the xray points here because
-                # syncphot does not work with a 2D array of min max wavelengths
-                # for converting counts to other flux units
-                flux, flux_err = [], []
-                for wave_min_max, xray_point, xray_point_err in zip(wave_eff, q, q_err):
-                    
-                    f_val = convert_flux(wave_min_max, xray_point, u.Unit(flux_unit),
-                                         vegaspec=SourceSpectrum.from_vega(),
-                                         area=area
-                                         )            
-                    f_err = convert_flux(wave_min_max, xray_point_err,
-                                         u.Unit(flux_unit),
-                                         vegaspec=SourceSpectrum.from_vega(),
-                                         area=area
-                                         )
-
-                    # then we take the average of the minimum and maximum values
-                    # computed by syncphot
-                    flux.append(np.mean(f_val).value)
-                    flux_err.append(np.mean(f_err).value)
-
-                flux = np.array(flux)*u.Unit(flux_unit)
-                flux_err = np.array(flux_err)*u.Unit(flux_unit)
-
             else:
-                # for UVOIR and Radio data
-                # this should be much much easier since syncphot can work with
-                # a single wave_eff and an array of flux values
-                flux = convert_flux(wave_eff, q, u.Unit(flux_unit),
-                                    vegaspec=SourceSpectrum.from_vega()
-                                    )            
-                flux_err = convert_flux(wave_eff, q_err, u.Unit(flux_unit),
-                                        vegaspec=SourceSpectrum.from_vega()
-                                        )
-    
-            try:
-                data["converted_flux"] = flux.value
-                data["converted_flux_err"] = flux_err.value
-                outdata.append(data)
-            except Exception as e:
-                print(e)
-                import pdb; pdb.set_trace()
+                area = None
+                
+            # we unfortunately have to loop over the points here because
+            # syncphot does not work with a 2D array of min max wavelengths
+            # for converting counts to other flux units. It also can't convert
+            # vega mags with a wavelength array because it then interprets that as the
+            # wavelengths corresponding to the SourceSpectrum.from_vega()
+            flux, flux_err = [], []
+            for wave, xray_point, xray_point_err in zip(wave_eff, q, q_err):
 
+                f_val = convert_flux(wave, xray_point, u.Unit(flux_unit),
+                                     vegaspec=SourceSpectrum.from_vega(),
+                                     area=area
+                                     )            
+                f_err = convert_flux(wave, xray_point_err,
+                                     u.Unit(flux_unit),
+                                     vegaspec=SourceSpectrum.from_vega(),
+                                     area=area
+                                     )
+
+                # then we take the average of the minimum and maximum values
+                # computed by syncphot
+                flux.append(np.mean(f_val).value)
+                flux_err.append(np.mean(f_err).value)
+
+            flux = np.array(flux)*u.Unit(flux_unit)
+            flux_err = np.array(flux_err)*u.Unit(flux_unit)
+
+            data["converted_flux"] = flux.value
+            data["converted_flux_err"] = flux_err.value
+            outdata.append(data)
+            
         if len(outdata) == 0:
             raise FailedQuery()
         outdata = pd.concat(outdata)
