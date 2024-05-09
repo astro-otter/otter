@@ -33,7 +33,8 @@ dependencies = [
   "pandas",
   "matplotlib",
   "plotly",
-  "astroquery"
+  "astroquery",
+  "synphot"
   ]
 
 [project.urls]

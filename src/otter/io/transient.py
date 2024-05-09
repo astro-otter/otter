@@ -17,8 +17,11 @@ import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord
 
-from ..unit_types import *
+from synphot.units import VEGAMAG, convert_flux
+from synphot.spectrum import SourceSpectrum
+
 from ..exceptions import *
+from ..util import XRAY_AREAS
 
 warnings.simplefilter("once", RuntimeWarning)
 
@@ -456,6 +459,7 @@ class Transient(MutableMapping):
                 obstype, unit, telescope = groupedby
             else:
                 obstype, unit = groupedby
+                telescope = None
 
             # get the photometry in the right type
             unit = data[by + "_units"].unique()
@@ -477,7 +481,8 @@ class Transient(MutableMapping):
                 warnings.warn(
                     "Attempting to coerce vega mag to AB mag, this is potentially dangerous!"
                 )
-                unit = unit.lower().replace("vega", "mag(AB)")
+                if 'vega' in unit.lower():
+                    unit = unit.lower().replace("vega", "mag(AB)")
 
                 astropy_units = u.Unit(unit)
             except ValueError:
@@ -496,78 +501,89 @@ class Transient(MutableMapping):
             q_err = indata_err * u.Unit(
                 astropy_units
             )  # assume error and values have the same unit
-            try:
-                phot = get_type(q)
-            except ValueError:
-                import pdb
 
-                pdb.set_trace()
-            phot_err = get_type(q_err)
-            percent_err = (phot_err / phot).value  # unitless
-
-            # convert this to a flux
+            # get the effective wavelength
             if "freq_eff" in data and not np.isnan(data["freq_eff"].iloc[0]):
-                system = "freq_eff"
-                system_units = "freq_units"
+                freq_units = data['freq_units']
+                if len(np.unique(freq_units)) > 1:
+                    raise OtterLimitation('Can not convert different units to the same unit!')
+
+                freq_eff = np.array(data['freq_eff'])*u.Unit(freq_units.iloc[0])
+                wave_eff = freq_eff.to(u.AA, equivalencies=u.spectral())
+
             elif "wave_eff" in data and not np.isnan(data["wave_eff"].iloc[0]):
-                system = "wave_eff"
-                system_units = "wave_units"
+                wave_units = data['wave_units']
+                if len(np.unique(wave_units)) > 1:
+                    raise OtterLimitation('Can not convert different units to the same unit!')
 
-            uniteff = data[system_units].unique()
-            if len(uniteff) > 1:
-                raise OtterLimitation(
-                    "Applying multiple units to the effective frequencies is currently not supported!"
-                )
-            astropy_uniteff = u.Unit(uniteff[0])
-            if tele:
-                conversion = {
-                    system: np.asarray(data[system]) * astropy_uniteff,
-                    "out_units": flux_unit,
-                    "telescope": telescope,
-                }
-            else:
-                conversion = {
-                    system: np.asarray(data[system]) * astropy_uniteff,
-                    "out_units": flux_unit,
-                }
-
-            if Flux.isflux(1 * u.Unit(flux_unit)):
-                flux = phot.toflux(**conversion)
-                flux_err = percent_err * flux.value * flux.unit
-            elif FluxDensity.isfluxdensity(1 * u.Unit(flux_unit)):
-                flux = phot.tofluxdensity(**conversion)
                 try:
-                    flux_err = percent_err * flux.value * flux.unit
-                except:
-                    import pdb
+                    wave_eff = np.array(data['wave_eff'])*u.Unit(wave_units.iloc[0])
+                except KeyError:
+                    import pdb; pdb.set_trace()
 
-                    pdb.set_trace()
-            elif CountRate.iscountrate(1 * u.Unit(flux_unit)):
-                flux = phot.tocountrate(**conversion)
-                flux_err = percent_err * flux.value * flux.unit
-                # SINCE THIS IS ONLY OOM EST WE ADD SOME MORE ERROR IN QUAD
-                percent_to_add = 0.25
-                updated_err = []
-                for p, e in zip(flux, flux_err):
-                    if np.isnan(e):
-                        updated_err.append(percent_to_add * p.value)
-                    else:
-                        updated_err.append(
-                            np.sqrt(
-                                e.value**2 + (percent_to_add * p.value) ** 2
-                            )
-                        )
+            # convert using synphot
+            # stuff has to be done slightly differently for xray than for the others
+            if obstype == 'xray':
+                if telescope is not None:
+                    try:
+                        area = XRAY_AREAS[telescope.lower()]
+                    except KeyError:
+                        import pdb; pdb.set_trace()
+                        raise OtterLimitation('Did not find an area corresponding to '+
+                                              'this telescope, please add to util!')
+                else:
+                    raise OtterLimitation('Can not convert x-ray data without a ' +
+                                          'telescope')
 
-                flux_err = np.array(updated_err) * flux_err.unit
+                # we also need to make this wave_min and wave_max
+                # instead of just the effective wavelength like for radio and uvoir
+                wave_eff = np.array(list(zip(
+                    data['wave_min'],
+                    data['wave_max']
+                )))*u.Unit(wave_units.iloc[0])
+
+                # we unfortunately have to loop over the xray points here because
+                # syncphot does not work with a 2D array of min max wavelengths
+                # for converting counts to other flux units
+                flux, flux_err = [], []
+                for wave_min_max, xray_point, xray_point_err in zip(wave_eff, q, q_err):
+                    
+                    f_val = convert_flux(wave_min_max, xray_point, u.Unit(flux_unit),
+                                         vegaspec=SourceSpectrum.from_vega(),
+                                         area=area
+                                         )            
+                    f_err = convert_flux(wave_min_max, xray_point_err,
+                                         u.Unit(flux_unit),
+                                         vegaspec=SourceSpectrum.from_vega(),
+                                         area=area
+                                         )
+
+                    # then we take the average of the minimum and maximum values
+                    # computed by syncphot
+                    flux.append(np.mean(f_val).value)
+                    flux_err.append(np.mean(f_err).value)
+
+                flux = np.array(flux)*u.Unit(flux_unit)
+                flux_err = np.array(flux_err)*u.Unit(flux_unit)
+
             else:
-                raise ValueError(
-                    "The y-axis units must be either flux, fluxdensity, or countrate!"
-                )
-
-            # add a new column called converted_flux
-            data["converted_flux"] = flux.value
-            data["converted_flux_err"] = flux_err.value
-            outdata.append(data)
+                # for UVOIR and Radio data
+                # this should be much much easier since syncphot can work with
+                # a single wave_eff and an array of flux values
+                flux = convert_flux(wave_eff, q, u.Unit(flux_unit),
+                                    vegaspec=SourceSpectrum.from_vega()
+                                    )            
+                flux_err = convert_flux(wave_eff, q_err, u.Unit(flux_unit),
+                                        vegaspec=SourceSpectrum.from_vega()
+                                        )
+    
+            try:
+                data["converted_flux"] = flux.value
+                data["converted_flux_err"] = flux_err.value
+                outdata.append(data)
+            except Exception as e:
+                print(e)
+                import pdb; pdb.set_trace()
 
         if len(outdata) == 0:
             raise FailedQuery()

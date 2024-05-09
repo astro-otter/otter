@@ -55,13 +55,23 @@ bandreps = {
     'W2': ['uvw2', 'UVW2', 'UVw2', 'Uw2', 'w2', 'uw2']
 }
 
-# this isn't correct and can be updated late
-# But, just use central energy to compute a central wavelength
+# we need the minimum, maximum, and effective wavelengths
+def xray_to_wave(xraycode):
+    min_energy, max_energy = [float(val) for val in xraycode.split(' - ')]
+    wave_eff = (const.h*const.c / (max_energy-min_energy)/u.keV).to(u.nm).value
+
+    # these variable names seem backwards but remember that energy and
+    # wavelength are inversely proportional!
+    wave_min = (const.h*const.c / max_energy/u.keV).to(u.nm).value
+    wave_max = (const.h*const.c / min_energy/u.keV).to(u.nm).value
+
+    return (wave_min, wave_eff, wave_max)
+    
 xraycodes = {
-    "0.3 - 10" : (const.h*const.c / (10-0.3)/u.keV).to(u.nm).value,
-    "0.5 - 8": (const.h*const.c / (8-0.5)/u.keV).to(u.nm).value,
-    '0.3 - 2.0': (const.h*const.c / (2-0.3)/u.keV).to(u.nm).value,
-    '0.2 - 2.0': (const.h*const.c / (2-0.2)/u.keV).to(u.nm).value
+    "0.3 - 10" : xray_to_wave("0.3 - 10"),
+    "0.5 - 8": xray_to_wave("0.5 - 8"),
+    '0.3 - 2.0': xray_to_wave("0.3 - 2.0"),
+    '0.2 - 2.0': xray_to_wave("0.2 - 2.0")
 }
 
 # from https://imagine.gsfc.nasa.gov/science/toolbox/spectrum_chart.html
@@ -366,7 +376,7 @@ def main():
                     if 'system' in group:
                         sub['raw_units'] = list(group.system)
                     else:
-                        sub['raw_units'] = 'AB' # hopefully this assumption is okay!
+                        sub['raw_units'] = 'mag(AB)' # hopefully this assumption is okay!
                     if 'band' in group:
                         sub['filter_key'] = list(group.band)
                     else:
@@ -378,7 +388,14 @@ def main():
                     if 'e_countrate' in group:
                         sub['raw_err'] = list(group.e_countrate)
                     if 'u_countrate' in group:
-                        sub['raw_units'] = list(group.u_countrate)
+                        raw_units = []
+                        for unit in group.u_countrate:
+                            if unit == 's^-1':
+                                raw_units.append('ct')
+                            else:
+                                raw_units.append(unit)
+                        
+                        sub['raw_units'] = raw_units
                     else:
                         print(f'Skipping {group} because no units given so unreliable!')
                         badphot += len(group)
@@ -466,7 +483,7 @@ def main():
                 elif key in otter_const.FILTER_MAP_WAVE:
                     sub['wave_eff'] = otter_const.FILTER_MAP_WAVE[key]
                 elif key in xraycodes:
-                    sub['wave_eff'] = xraycodes[key]
+                    sub['wave_min'], sub['wave_eff'], sub['wave_max'] = xraycodes[key]
                 else:
                     raise ValueError('Can not add filter {key} because we dont know wave_eff')
 
