@@ -51,9 +51,7 @@ class OtterPlotter:
         ax.errorbar(x, y, xerr=xerr, yerr=yerr, **kwargs)
         return ax
 
-    def _plot_plotly(
-        self, x, y, xerr=None, yerr=None, go=None, *args, **kwargs
-    ):
+    def _plot_plotly(self, x, y, xerr=None, yerr=None, go=None, *args, **kwargs):
         """
         General plotting method using plotly, is called by _plotly_light_curve and
         _plotly_sed

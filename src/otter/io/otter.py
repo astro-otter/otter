@@ -6,19 +6,15 @@ import os
 import json
 import glob
 from warnings import warn
-import uuid
-from collections.abc import Iterable
 
 import pandas as pd
-import numpy as np
 
 from astropy.coordinates import SkyCoord, search_around_sky
 from astropy.table import Table
 from astropy import units as u
 
 from .transient import Transient
-from ..util import *
-from ..exceptions import *
+from ..exceptions import FailedQuery, OtterLimitation
 
 import warnings
 
@@ -59,11 +55,12 @@ class Otter(object):
                 os.makedirs(self.DATADIR)
             except FileExistsError:
                 warn(
-                    "Directory was created between the if statement and trying to create the directory!"
+                    "Directory was created between the if statement and trying "
+                    + "to create the directory!"
                 )
                 pass
 
-    def getMeta(self, **kwargs) -> Table:
+    def get_meta(self, **kwargs) -> Table:
         """
         Get the metadata of the objects matching the arguments
 
@@ -83,7 +80,7 @@ class Otter(object):
 
         return [t[metakeys] for t in self.query(**kwargs)]
 
-    def coneSearch(
+    def cone_search(
         self, coords: SkyCoord, radius: float = 5, raw: bool = False
     ) -> Table:
         """
@@ -104,7 +101,7 @@ class Otter(object):
 
         return transients
 
-    def getPhot(
+    def get_phot(
         self,
         flux_unit="mag(AB)",
         date_unit="MJD",
@@ -135,13 +132,16 @@ class Otter(object):
                              is False.
             **kwargs : Arguments to pass to Otter.query(). Can be:
                        names [list[str]]: A list of names to get the metadata for
-                       coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
-                       radius [float]: The radius in arcseconds for a cone search, default is 0.05"
+                       coords [SkyCoord]: An astropy SkyCoord object with coordinates
+                                          to match to
+                       radius [float]: The radius in arcseconds for a cone search,
+                                       default is 0.05"
                        minZ [float]: The minimum redshift to search for
                        maxZ [float]: The maximum redshift to search for
-                       refs [list[str]]: A list of ads bibcodes to match to. Will only return
-                              metadata for transients that have this as a reference.
-                       hasSpec [bool]: if True, only return transients that have spectra.
+                       refs [list[str]]: A list of ads bibcodes to match to. Will only
+                                         return metadata for transients that have this
+                                         as a reference.
+                       hasSpec [bool]: if True, only return events that have spectra.
 
         Return:
            The photometry for the requested transients that match the arguments.
@@ -153,7 +153,7 @@ class Otter(object):
         for transient in queryres:
             # clean the photometry
             default_name = transient["name/default_name"]
-            phot = transient.cleanPhotometry(
+            phot = transient.clean_photometry(
                 flux_unit=flux_unit,
                 date_unit=date_unit,
                 wave_unit=wave_unit,
@@ -182,7 +182,7 @@ class Otter(object):
             "converted_freq_unit",
             "obs_type",
             "upperlimit",
-            "reference"
+            "reference",
         ]
 
         if not keep_raw:
@@ -217,19 +217,19 @@ class Otter(object):
         names: list[str] = None,
         coords: SkyCoord = None,
         radius: float = 5,
-        minZ: float = None,
-        maxZ: float = None,
+        minz: float = None,
+        maxz: float = None,
         refs: list[str] = None,
-        hasPhot: bool = False,
-        hasSpec: bool = False,
+        hasphot: bool = False,
+        hasspec: bool = False,
         raw: bool = False,
     ) -> dict:
         """
         Searches the summary.csv table and reads relevant JSON files
 
         WARNING! This does not do any conversions for you!
-        This is how it differs from the `getMeta` method. Users should prefer to use
-        `getMeta`, `getPhot`, and `getSpec` independently because it is a better
+        This is how it differs from the `get_meta` method. Users should prefer to use
+        `get_meta`, `getPhot`, and `getSpec` independently because it is a better
         workflow and can return the data in an astropy table with everything in the
         same units.
 
@@ -245,12 +245,12 @@ class Otter(object):
             hasSpec [bool]: if True, only return transients that have spectra.
 
         Return:
-           Get all of the raw (unconverted!) json data for objects that match the criteria.
+           Get all of the raw (unconverted!) data for objects that match the criteria.
         """
         if (
-            all(arg is None for arg in [names, coords, maxZ, minZ, refs])
-            and not hasPhot
-            and not hasSpec
+            all(arg is None for arg in [names, coords, maxz, minz, refs])
+            and not hasphot
+            and not hasspec
         ):
             # there's nothing to query!
             # read in the metdata from all json files
@@ -262,7 +262,7 @@ class Otter(object):
             for jsonfile in allfiles:
                 with open(jsonfile, "r") as j:
                     t = Transient(json.load(j))
-                    jsondata.append(t.getMeta())
+                    jsondata.append(t.get_meta())
 
             return jsondata
 
@@ -277,9 +277,7 @@ class Otter(object):
         # coordinate search first
         if coords is not None:
             if not isinstance(coords, SkyCoord):
-                raise ValueError(
-                    "Input coordinate must be an astropy SkyCoord!"
-                )
+                raise ValueError("Input coordinate must be an astropy SkyCoord!")
             summary_coords = SkyCoord(
                 summary.ra.tolist(), summary.dec.tolist(), unit=(u.deg, u.deg)
             )
@@ -298,17 +296,17 @@ class Otter(object):
             summary = summary.iloc[summary_idx]
 
         # redshift
-        if minZ is not None:
-            summary = summary[summary.z.astype(float) >= minZ]
+        if minz is not None:
+            summary = summary[summary.z.astype(float) >= minz]
 
-        if maxZ is not None:
-            summary = summary[summary.z.astype(float) <= maxZ]
+        if maxz is not None:
+            summary = summary[summary.z.astype(float) <= maxz]
 
         # check photometry and spectra
-        if hasPhot:
+        if hasphot:
             summary = summary[summary.hasPhot == True]
 
-        if hasSpec:
+        if hasspec:
             summary = summary[summary.hasSpec == True]
 
         # check names
@@ -357,42 +355,33 @@ class Otter(object):
         if not isinstance(schema, list):
             schema = [schema]
 
-        for json in schema:
-            print(json["name/default_name"])
+        for transient in schema:
+            print(transient["name/default_name"])
 
             # convert the json to a Transient
-            if not isinstance(json, Transient):
-                json = Transient(json)
+            if not isinstance(transient, Transient):
+                transient = Transient(transient)
 
-            coord = json.getSkyCoord()
+            coord = transient.get_skycoord()
             res = self.coneSearch(coords=coord)
 
-            # if json['name/default_name'] == 'ASASSN-14li':
-            #       import pdb; pdb.set_trace()
             if len(res) == 0:
                 # This is a new object to upload
                 print("Adding this as a new object...")
-                self._save_document(dict(json), test_mode=testing)
+                self._save_document(dict(transient), test_mode=testing)
 
             else:
                 # We must merge this with existing data
-                print(
-                    "Found this object in the database already, merging the data..."
-                )
+                print("Found this object in the database already, merging the data...")
                 if len(res) == 1:
                     # we can just add these to merge them!
-                    combined = res[0] + json
+                    combined = res[0] + transient
                     self._save_document(combined, test_mode=testing)
                 else:
                     # for now throw an error
                     # this is a limitation we can come back to fix if it is causing
                     # problems though!
-                    import pdb
-
-                    pdb.set_trace()
-                    raise OtterLimitation(
-                        "Some objects in Otter are too close!"
-                    )
+                    raise OtterLimitation("Some objects in Otter are too close!")
 
         # update the summary table appropriately
         self.generate_summary_table(save=True)
@@ -404,12 +393,9 @@ class Otter(object):
         # check if this documents key is in the database already
         # and if so remove it!
         jsonpath = os.path.join(self.DATADIR, "*.json")
-        aliases = {
-            item["value"].replace(" ", "-") for item in schema["name"]["alias"]
-        }
+        aliases = {item["value"].replace(" ", "-") for item in schema["name"]["alias"]}
         filenames = {
-            os.path.basename(fname).split(".")[0]
-            for fname in glob.glob(jsonpath)
+            os.path.basename(fname).split(".")[0] for fname in glob.glob(jsonpath)
         }
         todel = list(aliases & filenames)
 
@@ -452,14 +438,13 @@ class Otter(object):
                          in self.DATADIR. Default is False.
         """
         allfiles = glob.glob(os.path.join(self.DATADIR, "*.json"))
-        jsondata = []
 
         # read the data from all the json files and convert to Transients
         rows = []
         for jsonfile in allfiles:
             with open(jsonfile, "r") as j:
                 t = Transient(json.load(j))
-                skycoord = t.getSkyCoord()
+                skycoord = t.get_skycoord()
 
                 row = {
                     "name": t.default_name,
@@ -470,10 +455,10 @@ class Otter(object):
                 }
 
                 if "date_reference" in t:
-                    row["discovery_date"] = t.getDiscoveryDate()
+                    row["discovery_date"] = t.get_discovery_date()
 
                 if "distance" in t:
-                    row["z"] = t.getRedshift()
+                    row["z"] = t.get_redshift()
 
                 row["hasPhot"] = "photometry" in t
                 row["hasSpec"] = "spectra" in t

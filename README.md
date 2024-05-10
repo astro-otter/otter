@@ -4,13 +4,18 @@
 A Python API for the OTTER.
 
 ## Installation
-To install the OTTER API use 
+To install the OTTER API use
 ```
 git clone https://github.com/astro-otter/otter.git
 cd otter
 python -m pip install .
 ```
 This will be changed into the more convenient `python -m pip install astro-otter` at a later date!
+
+For developers, please also enable the pre-commit hooks using
+```
+pre-commit install
+```
 
 ## Tutorial
 ### Connecting to the OTTER
@@ -84,7 +89,7 @@ db.getMeta(hasSpec=True)
     []
 
 This should be empty because at the time of developing this tutorial there were no spectra in
-OTTER. Similarly, we can get all objects that have photometry associated with them with 
+OTTER. Similarly, we can get all objects that have photometry associated with them with
 `db.getMeta(hasPhot=True)`.
 
 These outputs may appear like dictionaries but they're actually customized!
@@ -96,10 +101,10 @@ help(Transient)
 ```
 
     Help on class Transient in module otter.transient:
-    
+
     class Transient(collections.abc.MutableMapping)
      |  Transient(d={}, name=None)
-     |  
+     |
      |  Method resolution order:
      |      Transient
      |      collections.abc.MutableMapping
@@ -109,62 +114,62 @@ help(Transient)
      |      collections.abc.Iterable
      |      collections.abc.Container
      |      builtins.object
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __add__(self, other, strict_merge=True)
      |      Merge this transient object with another transient object
-     |      
+     |
      |      Args:
      |          other [Transient]: A Transient object to merge with
      |          strict_merge [bool]: If True it won't let you merge objects that
      |                               intuitively shouldn't be merged (ie. different
      |                               transient events).
-     |  
+     |
      |  __delitem__(self, keys)
-     |  
+     |
      |  __getitem__(self, keys)
-     |  
+     |
      |  __init__(self, d={}, name=None)
      |      Overwrite the dictionary init
-     |      
+     |
      |      Args:
      |          d [dict]: A transient dictionary
-     |  
+     |
      |  __iter__(self)
-     |  
+     |
      |  __len__(self)
-     |  
+     |
      |  __repr__(self, html=False)
      |      Return repr(self).
-     |  
+     |
      |  __setitem__(self, key, value)
-     |  
+     |
      |  cleanPhotometry(self, flux_unit='mag(AB)', date_unit='MJD')
      |      Ensure the photometry associated with this transient is all in the same units/system/etc
-     |  
+     |
      |  getMeta(self, keys=None)
      |      Get the metadata (no photometry or spectra)
-     |          
+     |
      |      This essentially just wraps on __getitem__ but with some checks
-     |      
+     |
      |      Args:
      |          keys [list[str]] : list of keys
-     |  
+     |
      |  getSkyCoord(self, coord_type='equitorial', idx=0)
      |      Convert the coordinates to an astropy SkyCoord
-     |  
+     |
      |  keys(self)
      |      D.keys() -> a set-like object providing a view on D's keys
-     |  
+     |
      |  plotPhotometry(self, flux_unit='mag(AB)', date_unit='datetime', **kwargs)
      |      Plot the photometry associated with this transient (if any)
-     |      
+     |
      |      Args:
      |          flux_unit [str]: Valid astropy unit string for the flux (y-axis) units.
      |                           Default: 'ABmag'
      |          date_unit [str]: Valid astropy unit string for the date (x-axis) units.
-     |                           Default: 'MJD'  
+     |                           Default: 'MJD'
 
 
 Some other advantages of the Transient objects are
@@ -173,7 +178,7 @@ t = db.getMeta(minZ=0.5, maxZ=0.9)[0]
 print(type(t))
 print()
 # say you want to get the equitorial coordinates
-# you can do it classically 
+# you can do it classically
 print(t['coordinate']['equitorial'])
 
 # or you can use the hdf5 style
@@ -181,7 +186,7 @@ print(t['coordinate/equitorial'])
 ```
 
     <class 'otter.transient.Transient'>
-    
+
     [{'ra': '11 11 47.6', 'dec': '-82 38 44.44', 'epoch': 'J2000', 'system': 'ICRS', 'ra_units': 'hourangle', 'dec_units': 'deg', 'reference': ['2017MNRAS.472.4469B'], 'computed': False, 'default': True, 'uuid': '3bb02aa4-eb60-4f09-acdf-d1431a6addc4'}]
     [{'ra': '11 11 47.6', 'dec': '-82 38 44.44', 'epoch': 'J2000', 'system': 'ICRS', 'ra_units': 'hourangle', 'dec_units': 'deg', 'reference': ['2017MNRAS.472.4469B'], 'computed': False, 'default': True, 'uuid': '3bb02aa4-eb60-4f09-acdf-d1431a6addc4'}]
 
@@ -215,7 +220,7 @@ except ValueError as ve:
 
     The following error is actually expected!
     We dont want you to be able to combine any old transients!
-    
+
     Error Message:
     These two transients are not within 5 arcseconds! They probably do not belong together! If they do You can set strict_merge=False to override the check
 
@@ -229,7 +234,7 @@ t3 = t1.__add__(t2, strict_merge=False)
 
 Obviously, this result doesn't makes sense! This has the data from two completely different transients in it. So, be careful using `strict_merge=False`!
 
-### Can then get photometry 
+### Can then get photometry
 This does the conversion for you!!!
 
 
@@ -238,28 +243,28 @@ db.getPhot?
 ```
     Get the photometry of the objects matching the arguments. This will do the
     unit conversion for you!
-    
+
     Args:
-        flux_units [astropy.unit.Unit]: Either a valid string to convert 
+        flux_units [astropy.unit.Unit]: Either a valid string to convert
                                         or an astropy.unit.Unit
-        date_units [astropy.unit.Unit]: Either a valid string to convert to a date 
+        date_units [astropy.unit.Unit]: Either a valid string to convert to a date
                                         or an astropy.unit.Unit
         return_type [str]: Either 'astropy' or 'pandas'. If astropy, returns an
                            astropy Table. If pandas, returns a pandas DataFrame.
                            Default is 'astropy'.
-        
+
         **kwargs : Arguments to pass to Otter.query(). Can be:
                    names [list[str]]: A list of names to get the metadata for
                    coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
                    radius [float]: The radius in arcseconds for a cone search, default is 0.05"
                    minZ [float]: The minimum redshift to search for
                    maxZ [float]: The maximum redshift to search for
-                   refs [list[str]]: A list of ads bibcodes to match to. Will only return 
+                   refs [list[str]]: A list of ads bibcodes to match to. Will only return
                           metadata for transients that have this as a reference.
                    hasSpec [bool]: if True, only return transients that have spectra.
-    
+
     Return:
-       The photometry for the requested transients that match the arguments. 
+       The photometry for the requested transients that match the arguments.
        Will be an astropy Table sorted by transient default name.
 
 
@@ -546,7 +551,7 @@ tab
 fig, ax = plt.subplots()
 for key, table in tab.groupby('name'):
     ax.plot(table['converted_date'], table['converted_flux'], label=key, marker='o', linestyle='none')
-    
+
 ax.set_ylabel(f'Flux Density [{flux_unit}]')
 ax.set_xlabel('Date')
 ax.set_xticks(ax.get_xticks(), ax.get_xticklabels(), rotation=45)
@@ -565,26 +570,26 @@ The structure of a more generalized query to OTTER is
 Otter.query?
 ```
     Wraps on the super.AQLQuery and queries the OTTER database more intuitively.
-    
-    WARNING! This does not do any conversions for you! 
+
+    WARNING! This does not do any conversions for you!
     This is how it differs from the `getMeta` method. Users should prefer to use
-    `getMeta`, `getPhot`, and `getSpec` independently because it is a better 
+    `getMeta`, `getPhot`, and `getSpec` independently because it is a better
     workflow and can return the data in an astropy table with everything in the
     same units.
-    
+
     Args:
         names [list[str]]: A list of names to get the metadata for
         coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
         radius [float]: The radius in arcseconds for a cone search, default is 0.05"
         minZ [float]: The minimum redshift to search for
         maxZ [float]: The maximum redshift to search for
-        refs [list[str]]: A list of ads bibcodes to match to. Will only return 
+        refs [list[str]]: A list of ads bibcodes to match to. Will only return
                           metadata for transients that have this as a reference.
         hasPhot [bool]: if True, only returns transients which have photometry.
         hasSpec [bool]: if True, only return transients that have spectra.
-    
+
     Return:
-       Get all of the raw (unconverted!) json data for objects that match the criteria. 
+       Get all of the raw (unconverted!) json data for objects that match the criteria.
 
 
 An example of this is
@@ -668,7 +673,7 @@ import json
 
 # generate some test cases
 db = Otter()
-t1 = db.query(names='2022xkq')[0] # 
+t1 = db.query(names='2022xkq')[0] #
 t2 = deepcopy(t1)
 print(t1.keys())
 
@@ -690,7 +695,7 @@ t2['epoch'] = {'date_peak': [{'value': 56983,
      '2016ApJ...832L..10R',
      '2018MNRAS.475.4011B'],
     'computed': False}],
-               
+
                'date_discovery': [{'value': 56983,
     'date_format': 'MJD',
     'reference': ['2016ApJ...819L..25A',
@@ -698,8 +703,8 @@ t2['epoch'] = {'date_peak': [{'value': 56983,
      '2016ApJ...832L..10R',
      '2018MNRAS.475.4011B'],
     'computed': False}],
-               
-               
+
+
               'date_discovery': [{'value': 56984,
     'date_format': 'MJD',
     'reference': ['2016ApJ...819L..25A',
@@ -726,7 +731,7 @@ t2['distance'] = {
         "computed": False
       }
     ],
-    
+
     "dispersion_measure": [
       {
         "value": "0.0206",
@@ -737,12 +742,12 @@ t2['distance'] = {
       }
     ]
   }
-  
+
 t2['classification'] = [{'object_class':'SN',
                         'confidence': 1,
                          'reference': 'Noah'
                         }]
-    
+
 t2['photometry'] = {'phot_0': {'telescope': 'Noahs Telescope',
                                'reference': 'Noah',
                                'flux': [{'filter': 'z',
@@ -766,7 +771,7 @@ t2['photometry'] = {'phot_0': {'telescope': 'Noahs Telescope',
                                  'raw_units': 'mag(AB)',
                                  'filter_key': 'CAHA.H',
                                  'obs_type': 'uvoir'}]}
-            
+
                                }
 ```
 

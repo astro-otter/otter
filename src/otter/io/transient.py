@@ -10,8 +10,6 @@ from collections.abc import MutableMapping
 
 import numpy as np
 import pandas as pd
-import plotly.graph_objects as go
-from plotly.io import to_html
 
 import astropy.units as u
 from astropy.time import Time
@@ -20,12 +18,13 @@ from astropy.coordinates import SkyCoord
 from synphot.units import VEGAMAG, convert_flux
 from synphot.spectrum import SourceSpectrum
 
-from ..exceptions import *
+from ..exceptions import FailedQuery, IOError, OtterLimitation, TransientMergeError
 from ..util import XRAY_AREAS
 
 warnings.simplefilter("once", RuntimeWarning)
 warnings.simplefilter("once", UserWarning)
-np.seterr(divide='ignore')
+np.seterr(divide="ignore")
+
 
 class Transient(MutableMapping):
     def __init__(self, d={}, name=None):
@@ -42,7 +41,7 @@ class Transient(MutableMapping):
                 ref["name"]: ref["human_readable_name"]
                 for ref in self["reference_alias"]
             }
-            self.srcmap['TNS'] = 'TNS'
+            self.srcmap["TNS"] = "TNS"
         else:
             self.srcmap = {}
 
@@ -98,10 +97,6 @@ class Transient(MutableMapping):
     def __len__(self):
         return len(self.data)
 
-    def __iter__(self):
-        for key, item in self.data.items():
-            yield key, item
-
     def __repr__(self, html=False):
         if not html:
             return str(self.data)
@@ -146,7 +141,8 @@ class Transient(MutableMapping):
             if "reference_alias" in self:
                 srcs = ""
                 for bibcode, src in self.srcmap.items():
-                    srcs += f"<a href='https://ui.adsabs.harvard.edu/abs/{bibcode}' target='_blank'>{src}</a><br>"
+                    srcs += f"<a href='https://ui.adsabs.harvard.edu/abs/{bibcode}'"
+                    srcs += f"target='_blank'>{src}</a><br>"
 
                 html += f"""
                 <tr>
@@ -174,8 +170,7 @@ class Transient(MutableMapping):
         # first check that this object is within a good distance of the other object
         if (
             strict_merge
-            and self.getSkyCoord().separation(other.getSkyCoord())
-            > 10 * u.arcsec
+            and self.getSkyCoord().separation(other.getSkyCoord()) > 10 * u.arcsec
         ):
             raise TransientMergeError(
                 "These two transients are not within 10 arcseconds!"
@@ -255,7 +250,7 @@ class Transient(MutableMapping):
         # now return out as a Transient Object
         return Transient(out)
 
-    def getMeta(self, keys=None):
+    def get_meta(self, keys=None):
         """
         Get the metadata (no photometry or spectra)
 
@@ -291,25 +286,25 @@ class Transient(MutableMapping):
 
         return self[keys]
 
-    def getSkyCoord(self, coord_format="icrs"):
+    def get_skycoord(self, coord_format="icrs"):
         """
         Convert the coordinates to an astropy SkyCoord
         """
 
         # now we can generate the SkyCoord
         f = "df['coordinate_type'] == 'equitorial'"
-        coord_dict = self.get_default("coordinate", filt=f)
+        coord_dict = self._get_default("coordinate", filt=f)
         coordin = self._reformat_coordinate(coord_dict)
         coord = SkyCoord(**coordin).transform_to(coord_format)
 
         return coord
 
-    def getDiscoveryDate(self):
+    def get_discovery_date(self):
         """
         Get the default discovery date
         """
         key = "date_reference"
-        date = self.get_default(key, filt='df["date_type"] == "discovery"')
+        date = self._get_default(key, filt='df["date_type"] == "discovery"')
         if "date_format" in date:
             f = date["date_format"]
         else:
@@ -317,29 +312,28 @@ class Transient(MutableMapping):
 
         return Time(date["value"], format=f)
 
-    def getRedshift(self):
+    def get_redshift(self):
         """
         Get the default redshift
         """
         f = "df['distance_type']=='redshift'"
-        default = self.get_default("distance", filt=f)
+        default = self._get_default("distance", filt=f)
         if default is None:
             return default
         else:
             return default["value"]
 
-    def get_default(self, key, filt=""):
+    def _get_default(self, key, filt=""):
         """
         Get the default of key
 
         Args:
             key [str]: key in self to look for the default of
-            filt [str]: a valid pandas dataframe filter to index a pandas dataframe called df.
+            filt [str]: a valid pandas dataframe filter to index a pandas dataframe
+                        called df.
         """
         if key not in self:
-            raise KeyError(
-                f"This transient does not have {key} associated with it!"
-            )
+            raise KeyError(f"This transient does not have {key} associated with it!")
 
         df = pd.DataFrame(self[key])
         df = df[eval(filt)]  # apply the filters
@@ -378,7 +372,7 @@ class Transient(MutableMapping):
 
         return coordin
 
-    def cleanPhotometry(
+    def clean_photometry(
         self,
         flux_unit: u.Unit = "mag(AB)",
         date_unit: u.Unit = "MJD",
@@ -388,7 +382,8 @@ class Transient(MutableMapping):
         obs_type: str = None,
     ):
         """
-        Ensure the photometry associated with this transient is all in the same units/system/etc
+        Ensure the photometry associated with this transient is all in the same
+        units/system/etc
         """
 
         # check inputs
@@ -434,9 +429,7 @@ class Transient(MutableMapping):
         # convert the ads bibcodes to a string of human readable sources here
         def mappedrefs(row):
             if isinstance(row.reference, list):
-                return "<br>".join(
-                    [self.srcmap[bibcode] for bibcode in row.reference]
-                )
+                return "<br>".join([self.srcmap[bibcode] for bibcode in row.reference])
             else:
                 return self.srcmap[row.reference]
 
@@ -445,7 +438,7 @@ class Transient(MutableMapping):
         except Exception as exc:
             warnings.warn(f"Unable to apply the source mapping because {exc}")
             df["human_readable_refs"] = df.reference
-            
+
         # Figure out what columns are good to groupby in the photometry
         outdata = []
         if "telescope" in df:
@@ -469,7 +462,7 @@ class Transient(MutableMapping):
                 raise OtterLimitation(
                     "Can not apply multiple units for different obs_types"
                 )
-            
+
             unit = unit[0]
             try:
                 if "vega" in unit.lower():
@@ -505,47 +498,49 @@ class Transient(MutableMapping):
 
             # get the effective wavelength
             if "freq_eff" in data and not np.isnan(data["freq_eff"].iloc[0]):
-                freq_units = data['freq_units']
+                freq_units = data["freq_units"]
                 if len(np.unique(freq_units)) > 1:
-                    raise OtterLimitation('Can not convert different units to the same unit!')
+                    raise OtterLimitation(
+                        "Can not convert different units to the same unit!"
+                    )
 
-                freq_eff = np.array(data['freq_eff'])*u.Unit(freq_units.iloc[0])
+                freq_eff = np.array(data["freq_eff"]) * u.Unit(freq_units.iloc[0])
                 wave_eff = freq_eff.to(u.AA, equivalencies=u.spectral())
 
             elif "wave_eff" in data and not np.isnan(data["wave_eff"].iloc[0]):
-                wave_units = data['wave_units']
+                wave_units = data["wave_units"]
                 if len(np.unique(wave_units)) > 1:
-                    raise OtterLimitation('Can not convert different units to the same unit!')
+                    raise OtterLimitation(
+                        "Can not convert different units to the same unit!"
+                    )
 
-                try:
-                    wave_eff = np.array(data['wave_eff'])*u.Unit(wave_units.iloc[0])
-                except KeyError:
-                    import pdb; pdb.set_trace()
+                wave_eff = np.array(data["wave_eff"]) * u.Unit(wave_units.iloc[0])
 
             # convert using synphot
             # stuff has to be done slightly differently for xray than for the others
-            if obstype == 'xray':
+            if obstype == "xray":
                 if telescope is not None:
                     try:
                         area = XRAY_AREAS[telescope.lower()]
                     except KeyError:
-                        import pdb; pdb.set_trace()
-                        raise OtterLimitation('Did not find an area corresponding to '+
-                                              'this telescope, please add to util!')
+                        raise OtterLimitation(
+                            "Did not find an area corresponding to "
+                            + "this telescope, please add to util!"
+                        )
                 else:
-                    raise OtterLimitation('Can not convert x-ray data without a ' +
-                                          'telescope')
+                    raise OtterLimitation(
+                        "Can not convert x-ray data without a " + "telescope"
+                    )
 
                 # we also need to make this wave_min and wave_max
                 # instead of just the effective wavelength like for radio and uvoir
-                wave_eff = np.array(list(zip(
-                    data['wave_min'],
-                    data['wave_max']
-                )))*u.Unit(wave_units.iloc[0])
+                wave_eff = np.array(
+                    list(zip(data["wave_min"], data["wave_max"]))
+                ) * u.Unit(wave_units.iloc[0])
 
             else:
                 area = None
-                
+
             # we unfortunately have to loop over the points here because
             # syncphot does not work with a 2D array of min max wavelengths
             # for converting counts to other flux units. It also can't convert
@@ -553,29 +548,33 @@ class Transient(MutableMapping):
             # wavelengths corresponding to the SourceSpectrum.from_vega()
             flux, flux_err = [], []
             for wave, xray_point, xray_point_err in zip(wave_eff, q, q_err):
-
-                f_val = convert_flux(wave, xray_point, u.Unit(flux_unit),
-                                     vegaspec=SourceSpectrum.from_vega(),
-                                     area=area
-                                     )            
-                f_err = convert_flux(wave, xray_point_err,
-                                     u.Unit(flux_unit),
-                                     vegaspec=SourceSpectrum.from_vega(),
-                                     area=area
-                                     )
+                f_val = convert_flux(
+                    wave,
+                    xray_point,
+                    u.Unit(flux_unit),
+                    vegaspec=SourceSpectrum.from_vega(),
+                    area=area,
+                )
+                f_err = convert_flux(
+                    wave,
+                    xray_point_err,
+                    u.Unit(flux_unit),
+                    vegaspec=SourceSpectrum.from_vega(),
+                    area=area,
+                )
 
                 # then we take the average of the minimum and maximum values
                 # computed by syncphot
                 flux.append(np.mean(f_val).value)
                 flux_err.append(np.mean(f_err).value)
 
-            flux = np.array(flux)*u.Unit(flux_unit)
-            flux_err = np.array(flux_err)*u.Unit(flux_unit)
+            flux = np.array(flux) * u.Unit(flux_unit)
+            flux_err = np.array(flux_err) * u.Unit(flux_unit)
 
             data["converted_flux"] = flux.value
             data["converted_flux_err"] = flux_err.value
             outdata.append(data)
-            
+
         if len(outdata) == 0:
             raise FailedQuery()
         outdata = pd.concat(outdata)
@@ -601,9 +600,7 @@ class Transient(MutableMapping):
             elif "wave_eff" in df and not np.isnan(row["wave_eff"]):
                 val = row["wave_eff"] * u.Unit(row["wave_units"])
             else:
-                raise ValueError(
-                    "No known frequency or wavelength, please fix!"
-                )
+                raise ValueError("No known frequency or wavelength, please fix!")
 
             freqs.append(val.to(freq_unit, equivalencies=u.spectral()).value)
             waves.append(val.to(wave_unit, equivalencies=u.spectral()).value)
@@ -615,7 +612,7 @@ class Transient(MutableMapping):
 
         return outdata
 
-    def _merge_names(t1, t2, out):
+    def _merge_names(t1, t2, out):  # noqa: N805
         """
         Private method to merge the name data in t1 and t2 and put it in out
         """
@@ -634,10 +631,17 @@ class Transient(MutableMapping):
             n2 = t2[key]["default_name"]
 
             # write some discriminating regex expressions
-            exp1 = "^[0-9]"  # starts with a number, this is preferred because it is TNS style
-            exp2 = ".$"  # ends with any character, this is also preferred because it is TNS style
-            exp3 = "^[0-9]{3}"  # checks if first four characters are a number, like a year :), this is pretty strict though
-            exp4 = "^AT"  # checks if it starts with AT like TNS names
+            # exp1: starts with a number, this is preferred because it is TNS style
+            exp1 = "^[0-9]"
+            # exp2: starts with any character, also preferred because it is TNS style
+            exp2 = ".$"
+            # exp3: checks if first four characters are a number, like a year :),
+            # this is pretty strict though
+            exp3 = "^[0-9]{3}"
+            # exp4: # checks if it starts with AT like TNS names
+            exp4 = "^AT"
+
+            # combine all the regex expressions, this makes it easier to add more later
             exps = [exp1, exp2, exp3, exp4]
 
             # score each default_name based on this
@@ -688,14 +692,12 @@ class Transient(MutableMapping):
         int2 = list(t2map.keys() - t1map.keys())  # only in t2
 
         # add ones that are not in both first, these are easy
-        L1 = [{"value": k, "reference": t1map[k]} for k in int1]
-        L2 = [{"value": k, "reference": t2map[k]} for k in int2]
-        Lboth = [
-            {"value": k, "reference": t1map[k] + t2map[k]} for k in inboth
-        ]
-        out[key]["alias"] = L1 + L2 + Lboth
+        line1 = [{"value": k, "reference": t1map[k]} for k in int1]
+        line2 = [{"value": k, "reference": t2map[k]} for k in int2]
+        bothlines = [{"value": k, "reference": t1map[k] + t2map[k]} for k in inboth]
+        out[key]["alias"] = line2 + line1 + bothlines
 
-    def _merge_coords(t1, t2, out):
+    def _merge_coords(t1, t2, out):  # noqa: N805
         """
         Merge the coordinates subdictionaries for t1 and t2 and put it in out
 
@@ -705,7 +707,7 @@ class Transient(MutableMapping):
 
         Transient._merge_arbitrary(key, t1, t2, out)
 
-    def _merge_filter_alias(t1, t2, out):
+    def _merge_filter_alias(t1, t2, out):  # noqa: N805
         """
         Combine the filter alias lists across the transient objects
         """
@@ -718,7 +720,7 @@ class Transient(MutableMapping):
             if filt["filter_key"] not in keys1:
                 out[key].append(filt)
 
-    def _merge_schema_version(t1, t2, out):
+    def _merge_schema_version(t1, t2, out):  # noqa: N805
         """
         Just keep whichever schema version is greater
         """
@@ -728,7 +730,7 @@ class Transient(MutableMapping):
         else:
             out["schema_version"] = deepcopy(t2["schema_version"])
 
-    def _merge_photometry(t1, t2, out):
+    def _merge_photometry(t1, t2, out):  # noqa: N805
         """
         Combine photometry sources
         """
@@ -737,9 +739,7 @@ class Transient(MutableMapping):
 
         out[key] = deepcopy(t1[key])
         refs = np.array([d["reference"] for d in out[key]])
-        merge_dups = (
-            lambda val: np.sum(val) if np.any(val.isna()) else val.iloc[0]
-        )
+        # merge_dups = lambda val: np.sum(val) if np.any(val.isna()) else val.iloc[0]
 
         for val in t2[key]:
             # first check if t2's reference is in out
@@ -753,9 +753,7 @@ class Transient(MutableMapping):
                 df2 = pd.DataFrame(val)
 
                 # only substitute in values that are nan in df1 or new
-                mergeon = list(
-                    df1.keys() & df2.keys()
-                )  # the combined keys of the two
+                mergeon = list(df1.keys() & df2.keys())  # the combined keys of the two
                 df = df1.merge(df2, on=mergeon, how="outer")
 
                 # convert to a dictionary
@@ -764,17 +762,15 @@ class Transient(MutableMapping):
 
                 newdict["reference"] = newdict["reference"][0]
 
-                out[key][i1] = (
-                    newdict  # replace the dictionary at i1 with the new dict
-                )
+                out[key][i1] = newdict  # replace the dictionary at i1 with the new dict
 
-    def _merge_spectra(t1, t2, out):
+    def _merge_spectra(t1, t2, out):  # noqa: N805
         """
         Combine spectra sources
         """
         pass
 
-    def _merge_class(t1, t2, out):
+    def _merge_class(t1, t2, out):  # noqa: N805
         """
         Combine the classification attribute
         """
@@ -795,9 +791,7 @@ class Transient(MutableMapping):
                 if not isinstance(item["reference"], list):
                     item["reference"] = [item["reference"]]
 
-                newdata = list(
-                    np.unique(out[key][i]["reference"] + item["reference"])
-                )
+                newdata = list(np.unique(out[key][i]["reference"] + item["reference"]))
                 out[key][i]["reference"] = newdata
 
             else:
@@ -811,7 +805,7 @@ class Transient(MutableMapping):
             else:
                 item["default"] = False
 
-    def _merge_date(t1, t2, out):
+    def _merge_date(t1, t2, out):  # noqa: N805
         """
         Combine epoch data across two transients and write it to "out"
         """
@@ -819,7 +813,7 @@ class Transient(MutableMapping):
 
         Transient._merge_arbitrary(key, t1, t2, out)
 
-    def _merge_distance(t1, t2, out):
+    def _merge_distance(t1, t2, out):  # noqa: N805
         """
         Combine distance information for these two transients
         """

@@ -27,14 +27,18 @@ classifiers = [
 ]
 
 dependencies = [
+  # necessary dependencies for the src code
   "numpy>=1.20",
   "astropy>=5.2",
-  "ruff",
   "pandas",
   "matplotlib",
   "plotly",
   "astroquery",
-  "synphot"
+  "synphot",
+
+  # useful dev tools
+  "ruff", # linter
+  "pre-commit" # enable pre-commit hooks
   ]
 
 [project.urls]
@@ -71,6 +75,9 @@ select = [
     # warnings
     "W"
 ]
+
+# ignore a few rules that don't matter to us or just throw errors that are wrong
+ignore = ['E712']
 
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"

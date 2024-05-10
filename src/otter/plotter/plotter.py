@@ -27,7 +27,7 @@ def plot_light_curve(
         flux_err [float]: optional error on the flux
         fig [float]: matplotlib fig object, optional. Will be created if not provided.
         ax [float]: matplitlib axis object, optional. Will be created if not provided.
-        backend [str]: backend for plotting. matplotlib (default) and plotly are supported
+        backend [str]: backend for plotting. options: "matplotlib" (default) or "plotly"
         xlabel [str]: x-axis label
         ylabel [str]: y-axis label
         **kwargs: keyword arguments to pass to either plotly.graph_objects.add_scatter
@@ -72,7 +72,7 @@ def plot_sed(
         flux_err [float]: optional error on the flux
         fig [float]: matplotlib fig object, optional. Will be created if not provided.
         ax [float]: matplitlib axis object, optional. Will be created if not provided.
-        backend [str]: backend for plotting. matplotlib (default) and plotly are supported
+        backend [str]: backend for plotting. Options: "matplotlib" (default) or "plotly"
         xlabel [str]: x-axis label
         ylabel [str]: y-axis label
         **kwargs: keyword arguments to pass to either plotly.graph_objects.add_scatter
@@ -83,9 +83,7 @@ def plot_sed(
     """
 
     plt = OtterPlotter(backend)
-    fig = plt.plot(
-        wave_or_freq, flux, wave_or_freq_err, flux_err, ax=ax, **kwargs
-    )
+    fig = plt.plot(wave_or_freq, flux, wave_or_freq_err, flux_err, ax=ax, **kwargs)
 
     if backend == "matplotlib":
         fig.set_ylabel(ylabel)

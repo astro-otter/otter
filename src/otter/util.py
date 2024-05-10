@@ -309,24 +309,19 @@ FILTER_MAP_FREQ = {
 # All are for 1-2 keV
 XRAY_AREAS = {
     # https://swift.gsfc.nasa.gov/about_swift/Sci_Fact_Sheet.pdf
-    "swift": 135*u.cm**2,
-
+    "swift": 135 * u.cm**2,
     # https://heasarc.gsfc.nasa.gov/docs/rosat/ruh/handbook/node39.html#SECTION00634000000000000000
-    "rosat": 400 * u.cm ** 2,  
-
+    "rosat": 400 * u.cm**2,
     # https://www.cosmos.esa.int/web/xmm-newton/technical-details-mirrors
-    "xmm": 1500 * u.cm ** 2, 
+    "xmm": 1500 * u.cm**2,
     "xmm slew": 1500 * u.cm**2,
     "xmm pointed": 1500 * u.cm**2,
-
     # https://cxc.harvard.edu/cdo/about_chandra
     "chandra": 600 * u.cm**2,
 }
 
 # define a working base directory constant
-BASEDIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-)
+BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATADIR = os.path.join(BASEDIR, "data", "base")
 
 # Overarching schema that stops once we get down to a string or list
