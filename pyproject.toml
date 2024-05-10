@@ -35,6 +35,7 @@ dependencies = [
   "plotly",
   "astroquery",
   "synphot",
+  "ads",
 
   # useful dev tools
   "ruff", # linter

@@ -147,7 +147,7 @@ class Otter(object):
            The photometry for the requested transients that match the arguments.
            Will be an astropy Table sorted by transient default name.
         """
-        queryres = self.query(hasPhot=True, **kwargs)
+        queryres = self.query(hasphot=True, **kwargs)
 
         dicts = []
         for transient in queryres:
@@ -237,12 +237,12 @@ class Otter(object):
             names [list[str]]: A list of names to get the metadata for
             coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
             radius [float]: The radius in arcseconds for a cone search, default is 0.05"
-            minZ [float]: The minimum redshift to search for
-            maxZ [float]: The maximum redshift to search for
+            minz [float]: The minimum redshift to search for
+            maxz [float]: The maximum redshift to search for
             refs [list[str]]: A list of ads bibcodes to match to. Will only return
                               metadata for transients that have this as a reference.
-            hasPhot [bool]: if True, only returns transients which have photometry.
-            hasSpec [bool]: if True, only return transients that have spectra.
+            hasphot [bool]: if True, only returns transients which have photometry.
+            hasspec [bool]: if True, only return transients that have spectra.
 
         Return:
            Get all of the raw (unconverted!) data for objects that match the criteria.
