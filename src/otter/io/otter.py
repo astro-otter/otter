@@ -14,7 +14,7 @@ from astropy.table import Table
 from astropy import units as u
 
 from .transient import Transient
-from ..exceptions import FailedQuery, OtterLimitation
+from ..exceptions import FailedQueryError, OtterLimitationError
 
 import warnings
 
@@ -165,7 +165,7 @@ class Otter(object):
             dicts.append(phot)
 
         if len(dicts) == 0:
-            raise FailedQuery()
+            raise FailedQueryError()
         fullphot = pd.concat(dicts)
 
         # remove some possibly confusing keys
@@ -363,7 +363,7 @@ class Otter(object):
                 transient = Transient(transient)
 
             coord = transient.get_skycoord()
-            res = self.coneSearch(coords=coord)
+            res = self.cone_search(coords=coord)
 
             if len(res) == 0:
                 # This is a new object to upload
@@ -381,7 +381,7 @@ class Otter(object):
                     # for now throw an error
                     # this is a limitation we can come back to fix if it is causing
                     # problems though!
-                    raise OtterLimitation("Some objects in Otter are too close!")
+                    raise OtterLimitationError("Some objects in Otter are too close!")
 
         # update the summary table appropriately
         self.generate_summary_table(save=True)

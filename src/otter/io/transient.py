@@ -18,7 +18,12 @@ from astropy.coordinates import SkyCoord
 from synphot.units import VEGAMAG, convert_flux
 from synphot.spectrum import SourceSpectrum
 
-from ..exceptions import FailedQuery, IOError, OtterLimitation, TransientMergeError
+from ..exceptions import (
+    FailedQueryError,
+    IOError,
+    OtterLimitationError,
+    TransientMergeError,
+)
 from ..util import XRAY_AREAS
 
 warnings.simplefilter("once", RuntimeWarning)
@@ -89,7 +94,12 @@ class Transient(MutableMapping):
             self.data[key] = value
 
     def __delitem__(self, keys):
-        del self.data[keys]
+        if "/" in keys:
+            raise OtterLimitationError(
+                "For security, we can not delete with the / syntax!"
+            )
+        else:
+            del self.data[keys]
 
     def __iter__(self):
         return iter(self.data)
@@ -103,7 +113,7 @@ class Transient(MutableMapping):
         else:
             html = ""
 
-            coord = self.getSkyCoord()
+            coord = self.get_skycoord()
 
             # add the ra and dec
             # These are required so no need to check if they are there
@@ -170,7 +180,7 @@ class Transient(MutableMapping):
         # first check that this object is within a good distance of the other object
         if (
             strict_merge
-            and self.getSkyCoord().separation(other.getSkyCoord()) > 10 * u.arcsec
+            and self.get_skycoord().separation(other.get_skycoord()) > 10 * u.arcsec
         ):
             raise TransientMergeError(
                 "These two transients are not within 10 arcseconds!"
@@ -459,7 +469,7 @@ class Transient(MutableMapping):
             # get the photometry in the right type
             unit = data[by + "_units"].unique()
             if len(unit) > 1:
-                raise OtterLimitation(
+                raise OtterLimitationError(
                     "Can not apply multiple units for different obs_types"
                 )
 
@@ -500,7 +510,7 @@ class Transient(MutableMapping):
             if "freq_eff" in data and not np.isnan(data["freq_eff"].iloc[0]):
                 freq_units = data["freq_units"]
                 if len(np.unique(freq_units)) > 1:
-                    raise OtterLimitation(
+                    raise OtterLimitationError(
                         "Can not convert different units to the same unit!"
                     )
 
@@ -510,7 +520,7 @@ class Transient(MutableMapping):
             elif "wave_eff" in data and not np.isnan(data["wave_eff"].iloc[0]):
                 wave_units = data["wave_units"]
                 if len(np.unique(wave_units)) > 1:
-                    raise OtterLimitation(
+                    raise OtterLimitationError(
                         "Can not convert different units to the same unit!"
                     )
 
@@ -523,12 +533,12 @@ class Transient(MutableMapping):
                     try:
                         area = XRAY_AREAS[telescope.lower()]
                     except KeyError:
-                        raise OtterLimitation(
+                        raise OtterLimitationError(
                             "Did not find an area corresponding to "
                             + "this telescope, please add to util!"
                         )
                 else:
-                    raise OtterLimitation(
+                    raise OtterLimitationError(
                         "Can not convert x-ray data without a " + "telescope"
                     )
 
@@ -576,7 +586,7 @@ class Transient(MutableMapping):
             outdata.append(data)
 
         if len(outdata) == 0:
-            raise FailedQuery()
+            raise FailedQueryError()
         outdata = pd.concat(outdata)
 
         # copy over the flux units
@@ -672,17 +682,17 @@ class Transient(MutableMapping):
         for val in t1[key]["alias"]:
             ref = val["reference"]
             if isinstance(ref, str):
-                t1map[val["value"]] = [ref]
+                t1map[val["value"]] = [ref] if isinstance(ref, str) else list(ref)
             else:
-                t1map[val["value"]] = [ref]
+                t1map[val["value"]] = [ref] if isinstance(ref, str) else list(ref)
 
         t2map = {}
         for val in t2[key]["alias"]:
             ref = val["reference"]
             if isinstance(ref, str):
-                t2map[val["value"]] = [ref]
+                t2map[val["value"]] = [ref] if isinstance(ref, str) else list(ref)
             else:
-                t2map[val["value"]] = [ref]
+                t2map[val["value"]] = [ref] if isinstance(ref, str) else list(ref)
 
         # figure out which ones we need to be careful with references in
         inboth = list(
@@ -753,9 +763,9 @@ class Transient(MutableMapping):
                 df2 = pd.DataFrame(val)
 
                 # only substitute in values that are nan in df1 or new
-                mergeon = list(df1.keys() & df2.keys())  # the combined keys of the two
+                # the combined keys of the two
+                mergeon = list(set(df1.keys()) & set(df2.keys()))
                 df = df1.merge(df2, on=mergeon, how="outer")
-
                 # convert to a dictionary
                 newdict = df.reset_index().to_dict(orient="list")
                 del newdict["index"]

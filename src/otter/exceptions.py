@@ -3,16 +3,18 @@ Custom exceptions for otter
 """
 
 
-class FailedQuery(ValueError):
+class FailedQueryError(ValueError):
     def __str__(self):
-        return "You're query/search did not return any results! Try again with different parameters!"
+        txt = "You're query/search did not return any results! "
+        txt += "Try again with different parameters!"
+        return txt
 
 
 class IOError(ValueError):
     pass
 
 
-class OtterLimitation(Exception):
+class OtterLimitationError(Exception):
     def __init__(self, msg):
         self.msg = "Current Limitation Found: " + msg
 
@@ -20,5 +22,5 @@ class OtterLimitation(Exception):
         return self.msg
 
 
-def TransientMergeError(Exception):
+class TransientMergeError(Exception):
     pass
