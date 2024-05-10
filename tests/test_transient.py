@@ -6,7 +6,7 @@ are more complex and require additional tests.
 
 import pytest
 from otter import Transient
-from otter.exceptions import OtterLimitation
+from otter.exceptions import OtterLimitationError
 
 
 def test_transient_constructor():
@@ -98,7 +98,7 @@ def test_delitem():
     # test with the classical syntax
     t = Transient({"test1": {"mytest": "nothing to see here"}})
 
-    with pytest.raises(OtterLimitation):
+    with pytest.raises(OtterLimitationError):
         del t["test1/mytest"]
 
 
