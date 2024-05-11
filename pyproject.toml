@@ -3,7 +3,7 @@ requires = ['setuptools>=42']
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "otter"
+name = "astro-otter"
 authors = [{name = "Noah Franz", email = "nfranz@arizona.edu"}]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -23,7 +23,7 @@ classifiers = [
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
-  "Development Status :: 1 - Planning"
+  "Development Status :: 2 - Initial Release Stage"
 ]
 
 dependencies = [
