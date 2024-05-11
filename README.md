@@ -13,9 +13,9 @@ A Python API for the OTTER.
 [github-discussions-link]:  https://github.com/mattbellis/hepfile/discussions
 [gitter-badge]:             https://badges.gitter.im/https://github.com/mattbellis/hepfile/community.svg
 [gitter-link]:              https://gitter.im/https://github.com/mattbellis/hepfile/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
-[pypi-link]:                https://pypi.org/project/hepfile/
-[pypi-platforms]:           https://img.shields.io/pypi/pyversions/hepfile
-[pypi-version]:             https://badge.fury.io/py/hepfile.svg
+[pypi-link]:                https://pypi.org/project/astro-otter/
+[pypi-platforms]:           https://img.shields.io/pypi/pyversions/astro-otter
+[pypi-version]:             https://badge.fury.io/py/astro-otter.svg
 [rtd-badge]:                https://readthedocs.org/projects/otter/badge/?version=latest
 [rtd-link]:                 https://otter.readthedocs.io/en/latest/?badge=latest
 [sk-badge]:                 https://scikit-hep.org/assets/images/Scikit--HEP-Project-blue.svg
@@ -25,6 +25,7 @@ A Python API for the OTTER.
 [codecov-link]:             https://codecov.io/gh/astro-otter/otter
 
 [![Actions Status][actions-badge]][actions-link]
+[![PyPI version][pypi-version]][pypi-link]
 [![Linting: Ruff][ruff-badge]][ruff-link]
 [![codecov][codecov-badge]][codecov-link]
 
