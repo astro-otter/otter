@@ -3,8 +3,8 @@
 
 A Python API for the OTTER.
 
-[actions-badge]:            https://github.com/mattbellis/hepfile/workflows/CI/badge.svg
-[actions-link]:             https://github.com/mattbellis/hepfile/actions
+[actions-badge]:            https://github.com/astro-otter/otter/workflows/CI/badge.svg
+[actions-link]:             https://github.com/astro-otter/otter/actions
 [black-badge]:              https://img.shields.io/badge/code%20style-black-000000.svg
 [black-link]:               https://github.com/psf/black
 [conda-badge]:              https://img.shields.io/conda/vn/conda-forge/hepfile
@@ -16,8 +16,8 @@ A Python API for the OTTER.
 [pypi-link]:                https://pypi.org/project/hepfile/
 [pypi-platforms]:           https://img.shields.io/pypi/pyversions/hepfile
 [pypi-version]:             https://badge.fury.io/py/hepfile.svg
-[rtd-badge]:                https://readthedocs.org/projects/hepfile/badge/?version=latest
-[rtd-link]:                 https://hepfile.readthedocs.io/en/latest/?badge=latest
+[rtd-badge]:                https://readthedocs.org/projects/otter/badge/?version=latest
+[rtd-link]:                 https://otter.readthedocs.io/en/latest/?badge=latest
 [sk-badge]:                 https://scikit-hep.org/assets/images/Scikit--HEP-Project-blue.svg
 [ruff-badge]:               https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json
 [ruff-link]:                https://github.com/astral-sh/ruff
