@@ -5,8 +5,9 @@ are more complex and require additional tests.
 """
 
 import pytest
+import numpy as np
 from otter import Transient
-from otter.exceptions import OtterLimitationError
+from otter.exceptions import OtterLimitationError, IOError
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
 
@@ -248,6 +249,42 @@ def test_clean_photometry():
     """
     Make sure we can correctly clean the photometry
     """
+
+    msg = "Something is broken with the photometry cleaning!"
+    t = Transient(generate_test_json())
+
+    # first with just the default options
+    phot = t.clean_photometry()
+    uq_obs_types = phot["obs_type"].unique()
+
+    assert all(ot in uq_obs_types for ot in ["radio", "uvoir", "xray"]), msg
+    assert len(phot["converted_flux_unit"].unique()) == 1, msg
+    assert phot["converted_flux_unit"][0] == "mag(AB)", msg
+
+    uvoir = phot[phot.obs_type == "uvoir"]
+    assert np.isclose(phot["converted_flux"].iloc[0], 17.905, atol=1e-2), msg
+    assert 17.59 in list(uvoir["converted_flux"]), msg
+
+    # then with different "by"
+    with pytest.raises(IOError):
+        t.clean_photometry(by="foo")
+
+    phot_val = t.clean_photometry(by="value").reset_index()
+
+    assert len(phot_val.obs_type.unique()) == 1, msg
+    assert phot_val.obs_type.iloc[0] == "xray", msg
+    assert len(phot_val["converted_flux_unit"].unique()) == 1, msg
+    assert phot_val["converted_flux_unit"][0] == "mag(AB)", msg
+
+    # then with different returned units
+    # and only get the radio data
+    phot_non_default = t.clean_photometry(
+        flux_unit="uJy", freq_unit="MHz", obs_type="radio"
+    ).reset_index()
+
+    assert len(phot_non_default.obs_type.unique()) == 1, msg
+    assert phot_non_default.obs_type.iloc[0] == "radio", msg
+    assert np.isclose(phot_non_default.converted_flux.iloc[0], 0.25e3), msg
 
 
 # a test json file

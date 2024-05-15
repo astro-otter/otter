@@ -429,6 +429,9 @@ class Transient(MutableMapping):
             else:
                 by = "value"
 
+        # skip rows where 'by' is nan
+        df = df[df[by].notna()]
+
         # drop irrelevant obs_types before continuing
         if obs_type is not None:
             valid_obs_types = {"radio", "uvoir", "xray"}
