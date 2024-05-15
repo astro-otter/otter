@@ -109,7 +109,7 @@ class Transient(MutableMapping):
 
     def __repr__(self, html=False):
         if not html:
-            return str(self.data)
+            return f"Transient(\n\tName: {self.default_name},\n\tKeys: {self.keys()}\n)"
         else:
             html = ""
 

@@ -7,6 +7,8 @@ are more complex and require additional tests.
 import pytest
 from otter import Transient
 from otter.exceptions import OtterLimitationError
+from astropy.coordinates import SkyCoord
+from astropy.time import Time
 
 
 def test_transient_constructor():
@@ -102,6 +104,28 @@ def test_delitem():
         del t["test1/mytest"]
 
 
+def test_len():
+    msg = "Something is wrong with the __len__ method!"
+
+    t = Transient({"test1": {"mytest": "nothing to see here", "other": 1}})
+
+    assert len(t) == 1, msg
+    assert len(t["test1"]) == 2, msg
+
+
+def test_repr():
+    """
+    Test the string representation of a Transient object
+    """
+    msg = "Something with the string representation is unexpected!"
+    t = Transient(generate_test_json())
+
+    str_repr = str(t)
+    corr_str_repr = f"Transient(\n\tName: Sw J1644+57,\n\tKeys: {t.keys()}\n)"
+
+    assert str_repr == corr_str_repr, msg
+
+
 def test_iter():
     """
     Test that my __iter__ overwrite works
@@ -118,6 +142,112 @@ def test_iter():
     to_iterate = Transient(generate_test_json())["name/alias"]
     for found, true in zip(to_iterate, true_vals):
         assert found == true, "iterating is not working!"
+
+
+def test_keys():
+    """
+    Test the keys method
+    """
+    msg = "Something is wrong with the keys() method!"
+    true_keys = [
+        "schema_version",
+        "distance",
+        "filter_alias",
+        "reference_alias",
+        "date_reference",
+        "name",
+        "photometry",
+        "coordinate",
+        "classification",
+    ]
+
+    t = Transient(generate_test_json())
+
+    assert list(t.keys()) == true_keys, msg
+
+
+def test_get_meta():
+    """
+    Test the get meta method of Transient
+    """
+
+    msg = "get_meta method is broken!"
+
+    t = Transient(generate_test_json())
+    meta = t.get_meta()
+    meta2 = t.get_meta(keys=["name", "classification"])
+
+    # check the keys are correct
+    true_meta_keys = [
+        "schema_version",
+        "distance",
+        "filter_alias",
+        "reference_alias",
+        "date_reference",
+        "name",
+        "coordinate",
+        "classification",
+    ]
+    assert list(meta.keys()) == true_meta_keys, msg
+    assert list(meta2.keys()) == ["name", "classification"], msg
+
+    # check that most of the values are correct
+    # name first
+    assert meta["name/default_name"] == "Sw J1644+57", msg
+    assert meta["name/default_name"] == t.default_name, msg
+    assert meta2["name/default_name"] == "Sw J1644+57", msg
+
+    # now classification
+    assert meta["classification"][0]["object_class"] == "TDE", msg
+    assert meta2["classification"][0]["object_class"] == "TDE", msg
+
+    # now distance
+    assert meta["distance"][0]["value"] == "0.354", msg
+    with pytest.raises(KeyError):
+        meta2["distance"]  # make sure this key isn't in this metadata
+
+
+def test_get_skycoord():
+    """
+    Test the get skycoord method
+    """
+
+    t = Transient(generate_test_json())
+
+    skycoord = t.get_skycoord()
+
+    assert isinstance(skycoord, SkyCoord), "get_skycoord did not return a SkyCoord!"
+    assert str(skycoord.ra) == "251d12m28.9695s", "RA does not match!"
+    assert str(skycoord.dec) == "57d34m59.6893s", "Dec does not match!"
+
+
+def test_get_discovery_date():
+    """
+    test the get_discovery_date method
+    """
+
+    t = Transient(generate_test_json())
+    discdate = t.get_discovery_date()
+
+    assert isinstance(discdate, Time), "get_discovery_date did not return a Time!"
+    assert str(discdate) == "2011-03-29 00:00:00.000", "The time string is incorrect!"
+
+
+def test_get_redshift():
+    """
+    Test the get redshift method
+    """
+
+    t = Transient(generate_test_json())
+    z = t.get_redshift()
+
+    assert float(z) == 0.354, "get_redshift did not return the correct value!"
+
+
+def test_clean_photometry():
+    """
+    Make sure we can correctly clean the photometry
+    """
 
 
 # a test json file
