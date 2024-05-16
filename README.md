@@ -24,6 +24,7 @@ A Python API for the OTTER.
 [codecov-badge]:            https://codecov.io/gh/astro-otter/otter/graph/badge.svg?token=BtCerOdTc0
 [codecov-link]:             https://codecov.io/gh/astro-otter/otter
 
+[![Documentation Status](https://readthedocs.org/projects/astro-otter/badge/?version=latest)](https://astro-otter.readthedocs.io/en/latest/?badge=latest)
 [![Actions Status][actions-badge]][actions-link]
 [![PyPI version][pypi-version]][pypi-link]
 [![Linting: Ruff][ruff-badge]][ruff-link]
