@@ -21,15 +21,15 @@ def plot_light_curve(
     Plot the light curve for the input data
 
     Args:
-        date [float]: MJD dates
-        flux [float]: Flux
-        date_err [float]: optional error on the MJD dates
-        flux_err [float]: optional error on the flux
-        fig [float]: matplotlib fig object, optional. Will be created if not provided.
-        ax [float]: matplitlib axis object, optional. Will be created if not provided.
-        backend [str]: backend for plotting. options: "matplotlib" (default) or "plotly"
-        xlabel [str]: x-axis label
-        ylabel [str]: y-axis label
+        date (float): MJD dates
+        flux (float): Flux
+        date_err (float): optional error on the MJD dates
+        flux_err (float): optional error on the flux
+        fig (float): matplotlib fig object, optional. Will be created if not provided.
+        ax (float): matplitlib axis object, optional. Will be created if not provided.
+        backend (str): backend for plotting. options: "matplotlib" (default) or "plotly"
+        xlabel (str): x-axis label
+        ylabel (str): y-axis label
         **kwargs: keyword arguments to pass to either plotly.graph_objects.add_scatter
                   or matplotlib.pyplot.errorbar
 
@@ -66,15 +66,15 @@ def plot_sed(
     Plot the SED for the input data
 
     Args:
-        wave_or_freq [float]: wave or frequency array
-        flux [float]: Flux
-        wave_or_freq_err [float]: optional error on the MJD dates
-        flux_err [float]: optional error on the flux
-        fig [float]: matplotlib fig object, optional. Will be created if not provided.
-        ax [float]: matplitlib axis object, optional. Will be created if not provided.
-        backend [str]: backend for plotting. Options: "matplotlib" (default) or "plotly"
-        xlabel [str]: x-axis label
-        ylabel [str]: y-axis label
+        wave_or_freq (float): wave or frequency array
+        flux (float): Flux
+        wave_or_freq_err (float): optional error on the MJD dates
+        flux_err (float): optional error on the flux
+        fig (float): matplotlib fig object, optional. Will be created if not provided.
+        ax (float): matplitlib axis object, optional. Will be created if not provided.
+        backend (str): backend for plotting. Options: "matplotlib" (default) or "plotly"
+        xlabel (str): x-axis label
+        ylabel (str): y-axis label
         **kwargs: keyword arguments to pass to either plotly.graph_objects.add_scatter
                   or matplotlib.pyplot.errorbar
 

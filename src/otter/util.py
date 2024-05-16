@@ -187,6 +187,10 @@ FILTER_MAP_WAVE = {
     "F2100W": 20842.526633138932,
     "F2550W": 25408.228367890282,
 }
+"""
+Mapping for the effective wavelength in nanometers for all filters used in the dataset.
+"""
+
 
 # gives the effective frequency for all filters
 # These are all in THz
@@ -302,6 +306,10 @@ FILTER_MAP_FREQ = {
     "F2100W": 14.581938602646188,
     "F2550W": 11.919267708332558,
 }
+"""
+Mapping for the effective frequencies in THz for all the filters used in OTTER
+"""
+
 
 # x-ray telescope areas for converting
 # NOTE: these are estimates from the links provided
@@ -319,10 +327,27 @@ XRAY_AREAS = {
     # https://cxc.harvard.edu/cdo/about_chandra
     "chandra": 600 * u.cm**2,
 }
+"""
+X-Ray telescope areas that are used for converting from counts to other units.
+
+NOTE: These are estimates from the following links
+* https://swift.gsfc.nasa.gov/about_swift/Sci_Fact_Sheet.pdf
+* https://heasarc.gsfc.nasa.gov/docs/rosat/ruh/handbook/node39.html#SECTION00634000000000000000
+* https://www.cosmos.esa.int/web/xmm-newton/technical-details-mirrors
+* https://cxc.harvard.edu/cdo/about_chandra
+"""
+
 
 # define a working base directory constant
 BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+"""
+Base directory for the OTTER API software package
+"""
+
 DATADIR = os.path.join(BASEDIR, "data", "base")
+"""
+Deprecated database directory that IS NOT always constant anymore
+"""
 
 # Overarching schema that stops once we get down to a string or list
 schema = {
@@ -337,10 +362,16 @@ schema = {
     "spectra": [],
     "filter_alias": [],
 }
-
+"""
+Schema dictionary to be filled with values from the subschemas
+"""
 
 # sub schemas that get filled into lists
 name_alias_schema = {"value": None, "reference": None}
+"""
+Subschema for the name and alias dictionary
+"""
+
 coordinate_schema = {
     "ra": None,
     "dec": None,
@@ -367,6 +398,10 @@ coordinate_schema = {
     "reference": None,
     "default": None,
 }
+"""
+Subschema to describe the possible attributes for the coordinate dictionary
+"""
+
 
 distance_schema = {
     "value": None,
@@ -379,6 +414,10 @@ distance_schema = {
     "default": None,
     "distance_type": None,
 }
+"""
+Subschema to describe the possible attributes for the distance dictionary
+"""
+
 
 classification_schema = {
     "object_class": None,
@@ -387,8 +426,14 @@ classification_schema = {
     "reference": None,
     "default": None,
 }
+"""
+Subschema to describe the attributes for the classification dictionary
+"""
 
 reference_alias_schema = {"name": None, "human_readable_name": None}
+"""
+Subschema to describe the attributes for the reference alias dictionary
+"""
 
 date_reference_schema = {
     "value": None,
@@ -397,6 +442,9 @@ date_reference_schema = {
     "reference": None,
     "computed": None,
 }
+"""
+Subschema to describe the date_reference dictionary attributes
+"""
 
 photometry_schema = {
     "raw": None,
@@ -436,6 +484,10 @@ photometry_schema = {
     "val_host": None,
     "val_hostav": None,
 }
+"""
+Subschema to describe all of the possible attributes that can be used in the photometry
+dictionary
+"""
 
 spectra_schema = {
     "wavelength": None,
@@ -495,6 +547,9 @@ filter_alias_schema = {
     "zp_units": None,
     "zp_system": None,
 }
+"""
+Subschema to describe the attributes in the filter_alias dictionary
+"""
 
 # package the subschemas by the key used for that location in the Transient object
 subschema = {
@@ -508,3 +563,6 @@ subschema = {
     "spectra": spectra_schema,
     "filter_alias": filter_alias_schema,
 }
+"""
+A useful variable to describe all of the subschemas that are available and can be used
+"""

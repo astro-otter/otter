@@ -39,8 +39,17 @@ dependencies = [
 
   # useful dev tools
   "ruff", # linter
-  "pre-commit" # enable pre-commit hooks
-  ]
+  "pre-commit", # enable pre-commit hooks
+
+  # tools for building the readthedocs page
+  "Sphinx>=3.0.0",
+  "myst_parser>=0.13",
+  "nbsphinx>=0.9.1",
+  "sphinx-book-theme>=0.0.33",
+  "sphinx_copybutton",
+  "autodoc",
+  "ipykernel"
+]
 
 [project.urls]
 Home = "https://github.com/astro-otter"

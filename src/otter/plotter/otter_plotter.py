@@ -10,15 +10,16 @@ import importlib
 
 
 class OtterPlotter:
-    def __init__(self, backend):
-        """
-        Handles the backend for the "plotter" module
+    """
+    Handles the backend for the "plotter" module
 
-        Args:
-            backend [string]: a string of the module name to import and use
-                              as the backend. Currently supported are "matplotlib",
-                              "matplotlib.pyplot", "plotly", and "plotly.graph_objects"
-        """
+    Args:
+        backend (string): a string of the module name to import and use
+                          as the backend. Currently supported are "matplotlib",
+                          "matplotlib.pyplot", "plotly", and "plotly.graph_objects"
+    """
+
+    def __init__(self, backend):
         if backend == "matplotlib.pyplot":
             self.backend = backend
         elif backend == "pyplot.graph_objects":

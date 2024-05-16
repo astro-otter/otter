@@ -28,14 +28,11 @@ class Otter(object):
     This is the primary class for users to access the otter backend database
 
     Args:
-        username [str]: Your connection username to the database, default is the user
-                        login which only has read permission.
-        password [str]: Your password corresponding to your username.
-        db [str]: The database name to connect to. This is default to 'otter' which is
-                  the only database so far.
-        collection [str]: The collection to read data from. Right now the only
-                          collection is 'tdes'.
-        debug [bool]: debug mode, set to true to limit reading from database.
+        datadir (str): Path to the data directory with the otter data. If not provided
+                       will default to a ".otter" directory in the CWD where you call
+                       this class from.
+        debug (bool): If we should just debug and not do anything serious.
+
     """
 
     def __init__(self, datadir: str = None, debug: bool = False) -> None:
@@ -87,9 +84,9 @@ class Otter(object):
         Performs a cone search of the catalog over the given coords and radius.
 
         Args:
-            coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
-            radius [float]: The radius of the cone in arcseconds, default is 0.05"
-            raw [bool]: If False (the default) return an astropy table of the metadata
+            coords (SkyCoord): An astropy SkyCoord object with coordinates to match to
+            radius (float): The radius of the cone in arcseconds, default is 0.05"
+            raw (bool): If False (the default) return an astropy table of the metadata
                         for matching objects. Otherwise, return the raw json dicts
 
         Return:
@@ -117,35 +114,40 @@ class Otter(object):
         unit conversion for you!
 
         Args:
-            flux_units [astropy.unit.Unit]: Either a valid string to convert
+            flux_units (astropy.unit.Unit): Either a valid string to convert
                                             or an astropy.unit.Unit
-            date_units [astropy.unit.Unit]: Either a valid string to convert to a date
+            date_units (astropy.unit.Unit): Either a valid string to convert to a date
                                             or an astropy.unit.Unit
-            return_type [str]: Either 'astropy' or 'pandas'. If astropy, returns an
+            return_type (str): Either 'astropy' or 'pandas'. If astropy, returns an
                                astropy Table. If pandas, returns a pandas DataFrame.
                                Default is 'astropy'.
-            obs_type [str]: Either 'radio', 'uvoir', or 'xray'. Will only return that
+            obs_type (str): Either 'radio', 'uvoir', or 'xray'. Will only return that
                             type of photometry if not None. Default is None and will
                             return any type of photometry.
-            keep_raw [bool]: If True, keep the raw flux/date/freq/wave associated with
+            keep_raw (bool): If True, keep the raw flux/date/freq/wave associated with
                              the dataset. Else, just keep the converted data. Default
                              is False.
-            **kwargs : Arguments to pass to Otter.query(). Can be:
-                       names [list[str]]: A list of names to get the metadata for
-                       coords [SkyCoord]: An astropy SkyCoord object with coordinates
+            **kwargs : Arguments to pass to Otter.query(). Can be::
+
+                       names (list[str]): A list of names to get the metadata for
+                       coords (SkyCoord): An astropy SkyCoord object with coordinates
                                           to match to
-                       radius [float]: The radius in arcseconds for a cone search,
+                       radius (float): The radius in arcseconds for a cone search,
                                        default is 0.05"
-                       minZ [float]: The minimum redshift to search for
-                       maxZ [float]: The maximum redshift to search for
-                       refs [list[str]]: A list of ads bibcodes to match to. Will only
+                       minZ (float): The minimum redshift to search for
+                       maxZ (float): The maximum redshift to search for
+                       refs (list[str]): A list of ads bibcodes to match to. Will only
                                          return metadata for transients that have this
                                          as a reference.
-                       hasSpec [bool]: if True, only return events that have spectra.
+                       hasSpec (bool): if True, only return events that have spectra.
 
         Return:
-           The photometry for the requested transients that match the arguments.
-           Will be an astropy Table sorted by transient default name.
+            The photometry for the requested transients that match the arguments.
+            Will be an astropy Table sorted by transient default name.
+
+        Raises:
+            FailedQueryError: When the query returns no results
+            IOError: if one of your inputs is incorrect
         """
         queryres = self.query(hasphot=True, **kwargs)
 
@@ -203,7 +205,7 @@ class Otter(object):
         Loads an otter JSON file
 
         Args:
-            filename [str]: The path to the file to load
+            filename (str): The path to the OTTER JSON file to load
         """
 
         # read in files from summary
@@ -234,15 +236,15 @@ class Otter(object):
         same units.
 
         Args:
-            names [list[str]]: A list of names to get the metadata for
-            coords [SkyCoord]: An astropy SkyCoord object with coordinates to match to
-            radius [float]: The radius in arcseconds for a cone search, default is 0.05"
-            minz [float]: The minimum redshift to search for
-            maxz [float]: The maximum redshift to search for
-            refs [list[str]]: A list of ads bibcodes to match to. Will only return
+            names (list[str]): A list of names to get the metadata for
+            coords (SkyCoord): An astropy SkyCoord object with coordinates to match to
+            radius (float): The radius in arcseconds for a cone search, default is 0.05"
+            minz (float): The minimum redshift to search for
+            maxz (float): The maximum redshift to search for
+            refs (list[str]): A list of ads bibcodes to match to. Will only return
                               metadata for transients that have this as a reference.
-            hasphot [bool]: if True, only returns transients which have photometry.
-            hasspec [bool]: if True, only return transients that have spectra.
+            hasphot (bool): if True, only returns transients which have photometry.
+            hasspec (bool): if True, only return transients that have spectra.
 
         Return:
            Get all of the raw (unconverted!) data for objects that match the criteria.
@@ -344,12 +346,17 @@ class Otter(object):
 
         return outdata
 
-    def save(self, schema: list[dict], testing=False, **kwargs) -> None:
+    def save(self, schema: list[dict], testing=False) -> None:
         """
         Upload all the data in the given list of schemas.
 
         Args:
-            schema [list[dict]]: A list of json dictionaries
+            schema (list[dict]): A list of json dictionaries
+            testing (bool): Should we just enter test mode? Default is False
+
+        Raises:
+            OtterLimitationError: If some objects in OTTER are within 5" we can't figure
+                                  out which ones to merge with which ones.
         """
 
         if not isinstance(schema, list):
@@ -429,13 +436,16 @@ class Otter(object):
             print(f"Would write to {outfilepath}")
             # print(out)
 
-    def generate_summary_table(self, save=False):
+    def generate_summary_table(self, save=False) -> pd.DataFrame:
         """
         Generate a summary table for the JSON files in self.DATADIR
 
         args:
-            save [bool]: if True, save the summary file to "summary.csv"
-                         in self.DATADIR. Default is False.
+            save (bool): if True, save the summary file to "summary.csv"
+                         in self.DATADIR. Default is False and is just returned.
+
+        returns:
+            pandas.DataFrame of the summary meta information of the transients
         """
         allfiles = glob.glob(os.path.join(self.DATADIR, "*.json"))
 

@@ -7,6 +7,7 @@ import warnings
 from copy import deepcopy
 import re
 from collections.abc import MutableMapping
+from typing import Self
 
 import numpy as np
 import pandas as pd
@@ -37,7 +38,9 @@ class Transient(MutableMapping):
         Overwrite the dictionary init
 
         Args:
-            d [dict]: A transient dictionary
+            d (dict): A transient dictionary
+            name (str): The default name of the transient, default is None and it will
+                        be inferred from the input dictionary.
         """
         self.data = d
 
@@ -85,6 +88,10 @@ class Transient(MutableMapping):
             return self.data[keys]
 
     def __setitem__(self, key, value):
+        """
+        Override set item to work with the '/' syntax
+        """
+
         if isinstance(key, str) and "/" in key:  # this is for a path
             s = "']['".join(key.split("/"))
             s = "['" + s
@@ -260,14 +267,17 @@ class Transient(MutableMapping):
         # now return out as a Transient Object
         return Transient(out)
 
-    def get_meta(self, keys=None):
+    def get_meta(self, keys=None) -> Self:
         """
         Get the metadata (no photometry or spectra)
 
         This essentially just wraps on __getitem__ but with some checks
 
         Args:
-            keys [list[str]] : list of keys
+            keys (list[str]) : list of keys to get the metadata for from the transient
+
+        Returns:
+            A Transient object of just the meta data
         """
         if keys is None:
             keys = list(self.keys())
@@ -296,9 +306,16 @@ class Transient(MutableMapping):
 
         return self[keys]
 
-    def get_skycoord(self, coord_format="icrs"):
+    def get_skycoord(self, coord_format="icrs") -> SkyCoord:
         """
         Convert the coordinates to an astropy SkyCoord
+
+        Args:
+            coord_format (str): Astropy coordinate format to convert the SkyCoord to
+                                defaults to icrs.
+
+        Returns:
+            Astropy.coordinates.SkyCoord of the default coordinate for the transient
         """
 
         # now we can generate the SkyCoord
@@ -309,9 +326,12 @@ class Transient(MutableMapping):
 
         return coord
 
-    def get_discovery_date(self):
+    def get_discovery_date(self) -> Time:
         """
-        Get the default discovery date
+        Get the default discovery date for this Transient
+
+        Returns:
+            astropy.time.Time of the default discovery date
         """
         key = "date_reference"
         date = self._get_default(key, filt='df["date_type"] == "discovery"')
@@ -322,9 +342,12 @@ class Transient(MutableMapping):
 
         return Time(date["value"], format=f)
 
-    def get_redshift(self):
+    def get_redshift(self) -> float:
         """
-        Get the default redshift
+        Get the default redshift of this Transient
+
+        Returns:
+            Float value of the default redshift
         """
         f = "df['distance_type']=='redshift'"
         default = self._get_default("distance", filt=f)
@@ -390,10 +413,32 @@ class Transient(MutableMapping):
         wave_unit: u.Unit = "nm",
         by: str = "raw",
         obs_type: str = None,
-    ):
+    ) -> pd.DataFrame:
         """
         Ensure the photometry associated with this transient is all in the same
         units/system/etc
+
+        Args:
+            flux_unit (astropy.unit.Unit): The astropy unit or string representation of
+                                           an astropy unit to convert and return the
+                                           flux as.
+            date_unit (str): Valid astropy date format string.
+            freq_unit (astropy.unit.Unit): The astropy unit or string representation of
+                                           an astropy unit to convert and return the
+                                           frequency as.
+            wave_unit (astropy.unit.Unit): The astropy unit or string representation of
+                                           an astropy unit to convert and return the
+                                           wavelength as.
+            by (str): Either 'raw' or 'value'. 'raw' is the default and is highly
+                      recommended! If 'value' is used it may skip some photometry.
+                      See the schema definition to understand this keyword completely
+                      before using it.
+            obs_type (str): "radio", "xray", or "uvoir". If provided, it only returns
+                            data taken within that range of wavelengths/frequencies.
+                            Default is None which will return all of the data.
+
+        Returns:
+            A pandas DataFrame of the cleaned up photometry in the requested units
         """
 
         # check inputs
