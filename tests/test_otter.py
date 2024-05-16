@@ -14,6 +14,9 @@ import pytest
 # get the testing path
 otterpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), ".otter-testing")
 
+db = Otter(otterpath)
+db.generate_summary_table(save=True)
+
 
 def test_otter_constructor():
     """
@@ -21,8 +24,6 @@ def test_otter_constructor():
     """
 
     db = Otter(otterpath)
-
-    print(otterpath)
 
     assert db.DATADIR == otterpath
     assert db.CWD == os.path.dirname(os.path.realpath(__file__))

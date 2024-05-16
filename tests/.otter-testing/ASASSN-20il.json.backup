@@ -9,29 +9,7 @@
             "human_readable_name": "Noah"
         }
     ],
-    "name": {
-        "default_name": "ASASSN-20il",
-        "alias": [
-            {
-                "value": "new_test_tde",
-                "reference": [
-                    "me!"
-                ]
-            },
-            {
-                "value": "AT 2020pom",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            },
-            {
-                "value": "ASASSN-20il",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            }
-        ]
-    },
+    "key2": "bar",
     "coordinate": [
         {
             "ra": "5:03:11.3",
@@ -54,6 +32,31 @@
             "coordinate_type": "equitorial"
         }
     ],
+    "name": {
+        "default_name": "ASASSN-20il",
+        "alias": [
+            {
+                "value": "AT 2020pom",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "ASASSN-20il",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "new_test_tde",
+                "reference": [
+                    "me!",
+                    "me!"
+                ]
+            }
+        ]
+    },
+    "key1": "foo",
     "date_reference": [
         {
             "value": "2020-07-8 4:19:11.999999999975444",
@@ -79,7 +82,5 @@
     "schema_version": {
         "value": "0",
         "comment": "Copied from tde.space"
-    },
-    "key1": "foo",
-    "key2": "bar"
+    }
 }
