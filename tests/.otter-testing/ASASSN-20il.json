@@ -1,41 +1,4 @@
 {
-    "name": {
-        "default_name": "ASASSN-20il",
-        "alias": [
-            {
-                "value": "ASASSN-20il",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            },
-            {
-                "value": "AT 2020pom",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            },
-            {
-                "value": "new_test_tde",
-                "reference": [
-                    "me!",
-                    "me!",
-                    "me!"
-                ]
-            }
-        ]
-    },
-    "reference_alias": [
-        {
-            "name": "ASAS-SN Supernovae",
-            "human_readable_name": "ASAS-SN Supernovae"
-        },
-        {
-            "name": "me!",
-            "human_readable_name": "Noah"
-        }
-    ],
-    "key1": "foo",
-    "key2": "bar",
     "coordinate": [
         {
             "ra": "5:03:11.3",
@@ -58,6 +21,44 @@
             "coordinate_type": "equitorial"
         }
     ],
+    "name": {
+        "default_name": "ASASSN-20il",
+        "alias": [
+            {
+                "value": "AT 2020pom",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "ASASSN-20il",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "new_test_tde",
+                "reference": [
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!"
+                ]
+            }
+        ]
+    },
+    "reference_alias": [
+        {
+            "name": "ASAS-SN Supernovae",
+            "human_readable_name": "ASAS-SN Supernovae"
+        },
+        {
+            "name": "me!",
+            "human_readable_name": "Noah"
+        }
+    ],
+    "key1": "foo",
+    "key2": "bar",
     "classification": [
         {
             "object_class": "TDE",

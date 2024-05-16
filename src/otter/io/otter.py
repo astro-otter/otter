@@ -422,8 +422,6 @@ class Otter(object):
             outfilepath = os.path.join(self.DATADIR, todel[0] + ".json")
             if test_mode:
                 print("Renaming the following file for backups: ", outfilepath)
-            else:
-                os.rename(outfilepath, outfilepath + ".backup")
         else:
             if test_mode:
                 print("Don't need to mess with the files at all!")

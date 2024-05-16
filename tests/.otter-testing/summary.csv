@@ -1,5 +1,5 @@
 ,name,alias,ra,dec,refs,discovery_date,hasPhot,hasSpec,json_path,z
-0,ASASSN-20il,"['ASASSN-20il', 'AT 2020pom', 'new_test_tde']",75d47m49.5s,-22d48m52.1s,"['ASAS-SN Supernovae', 'me!']",2020-07-08 04:19:12.000,False,False,/home/noahf/astro-otter/otter/tests/.otter-testing/ASASSN-20il.json,
+0,ASASSN-20il,"['AT 2020pom', 'ASASSN-20il', 'new_test_tde']",75d47m49.5s,-22d48m52.1s,"['ASAS-SN Supernovae', 'me!']",2020-07-08 04:19:12.000,False,False,/home/noahf/astro-otter/otter/tests/.otter-testing/ASASSN-20il.json,
 1,NGC 247,['NGC 247'],11d47m09.6s,-20d45m36s,"['2017ApJ...838..149A', '2016A&A...594A..13P', '2015ApJ...807..185F', '2011ApJ...737..103S', '2017ApJ...835...64G']",,False,False,/home/noahf/astro-otter/otter/tests/.otter-testing/NGC-247.json,0.000531
 2,SDSSJ1350,['SDSSJ1350'],207d30m22.65s,29d16m09.71s,"['2017ApJ...838..149A', '2016A&A...594A..13P', '2012ApJ...749..115W', '2017ApJ...835...64G']",,True,False,/home/noahf/astro-otter/otter/tests/.otter-testing/SDSSJ1350.json,0.0777
 3,SDSSJ1201,['SDSSJ1201'],180d24m00.45s,30d03m05.52s,"['2017ApJ...838..149A', '2016A&A...594A..13P', '2012A&A...541A.106S', '2017ApJ...835...64G']",2010-06-10 00:00:00.000,True,False,/home/noahf/astro-otter/otter/tests/.otter-testing/SDSSJ1201.json,0.146
