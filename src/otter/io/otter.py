@@ -156,16 +156,25 @@ class Otter(object):
         for transient in queryres:
             # clean the photometry
             default_name = transient["name/default_name"]
-            phot = transient.clean_photometry(
-                flux_unit=flux_unit,
-                date_unit=date_unit,
-                wave_unit=wave_unit,
-                freq_unit=freq_unit,
-                obs_type=obs_type,
-            )
-            phot["name"] = [default_name] * len(phot)
 
-            dicts.append(phot)
+            try:
+                phot = transient.clean_photometry(
+                    flux_unit=flux_unit,
+                    date_unit=date_unit,
+                    wave_unit=wave_unit,
+                    freq_unit=freq_unit,
+                    obs_type=obs_type,
+                )
+
+                phot["name"] = [default_name] * len(phot)
+
+                dicts.append(phot)
+
+            except FailedQueryError:
+                # This is fine, it just means that there is no data associated
+                # with this one transient. We'll check and make sure there is data
+                # associated with at least one of the transients later!
+                pass
 
         if len(dicts) == 0:
             raise FailedQueryError()
