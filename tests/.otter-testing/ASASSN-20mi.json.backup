@@ -1,0 +1,63 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "ASASSN-20mi",
+        "alias": [
+            {
+                "value": "ASASSN-20mi",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "AT 2020ual",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "21:15:40.31",
+            "dec": "-49:04:36",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "ASAS-SN Supernovae"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "ASAS-SN Supernovae",
+            "human_readable_name": "ASAS-SN Supernovae"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2020-09-23 0:14:24.00000000013506",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ]
+}

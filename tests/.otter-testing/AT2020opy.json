@@ -1,0 +1,343 @@
+{
+    "filter_alias": [
+        {
+            "filter_key": "5.04GHz",
+            "freq_eff": 5.04,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.5GHz",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "i",
+            "wave_eff": 749.9704174464691,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "g",
+            "wave_eff": 471.8872246248687,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "r",
+            "wave_eff": 618.5194476741524,
+            "wave_units": "nm"
+        }
+    ],
+    "name": {
+        "default_name": "2020opy",
+        "alias": [
+            {
+                "value": "2020opy",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "PS20fxm",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF20abjwvae",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2020opy",
+                "reference": [
+                    "TNS"
+                ]
+            }
+        ]
+    },
+    "reference_alias": [
+        {
+            "name": "2023MNRAS.518..847G",
+            "human_readable_name": "Goodwin et al. (2023)"
+        },
+        {
+            "name": "2020TNSTR2111....1M",
+            "human_readable_name": "Marques-Chaves, R. et al. (2020)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": 59038.23,
+            "date_format": "mjd",
+            "reference": [
+                "2023MNRAS.518..847G"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        },
+        {
+            "value": 59038.23241898148,
+            "date_format": "mjd",
+            "reference": "2020TNSTR2111....1M",
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "photometry": [
+        {
+            "reference": [
+                "2023MNRAS.518..847G"
+            ],
+            "raw": [
+                0.047,
+                0.091,
+                0.256
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                59077.23,
+                59200.23,
+                59368.23
+            ],
+            "date_format": [
+                "mjd",
+                "mjd",
+                "mjd"
+            ],
+            "filter_key": [
+                "5.04GHz",
+                "5.5GHz",
+                "5.5GHz"
+            ],
+            "computed": [
+                false,
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false
+            ],
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": false,
+            "corr_hostav": false
+        },
+        {
+            "raw": [
+                20.91
+            ],
+            "raw_err": [
+                0.27
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "59007.30200000014",
+            "date_format": "mjd",
+            "filter_key": "i",
+            "reference": "TNS",
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "PS1",
+            "instrument": "GPC1"
+        },
+        {
+            "raw": [
+                19.64
+            ],
+            "raw_err": [
+                0.11
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "59044.19553240016",
+            "date_format": "mjd",
+            "filter_key": "g",
+            "reference": "TNS",
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                20.463
+            ],
+            "raw_err": [
+                0.215
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "59038.23241900001",
+            "date_format": "mjd",
+            "filter_key": "g",
+            "reference": "TNS",
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                19.63
+            ],
+            "raw_err": [
+                0.14
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "59047.214861100074",
+            "date_format": "mjd",
+            "filter_key": "r",
+            "reference": "TNS",
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                20.622
+            ],
+            "raw_err": [
+                0
+            ],
+            "upperlimit": true,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "59041.255312500056",
+            "date_format": "mjd",
+            "filter_key": "r",
+            "reference": "TNS",
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                20.654
+            ],
+            "raw_err": [
+                0
+            ],
+            "upperlimit": true,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "59038.21366900019",
+            "date_format": "mjd",
+            "filter_key": "r",
+            "reference": "TNS",
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "15 56 25.728",
+            "dec": "+23 22 21.15",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2023MNRAS.518..847G"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "b9a35dde-40f3-4e84-a1ec-0ea2177d0e72",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "reference": "b9a35dde-40f3-4e84-a1ec-0ea2177d0e72",
+            "computed": true,
+            "coordinate_type": "galactic",
+            "l": 38.41156935899329,
+            "b": 48.23253616380998,
+            "l_units": "deg",
+            "b_units": "deg"
+        },
+        {
+            "ra": 239.107200193,
+            "dec": 23.3725405112,
+            "epoch": "J2000",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "reference": "2020TNSTR2111....1M",
+            "coordinate_type": "equitorial",
+            "frame": "ICRS"
+        }
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "distance": [
+        {
+            "value": "0.159",
+            "reference": [
+                "2023MNRAS.518..847G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2023MNRAS.518..847G"
+            ],
+            "default": true
+        }
+    ]
+}

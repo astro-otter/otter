@@ -1,0 +1,172 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "name": {
+        "default_name": "AT2020vwl",
+        "alias": [
+            {
+                "value": "AT2020vwl",
+                "reference": "TNS"
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "15 30 37.800",
+            "dec": "+26 58 56.90",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2023MNRAS.522.5084G"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "6489245d-e0cd-4e92-aa65-abadaafb03ae",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "l": 42.055403580344134,
+            "b": 54.70994962206333,
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": "6489245d-e0cd-4e92-aa65-abadaafb03ae",
+            "computed": true,
+            "coordinate_type": "galactic"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0325",
+            "reference": [
+                "2023MNRAS.522.5084G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2023MNRAS.522.5084G"
+            ],
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2023MNRAS.522.5084G",
+            "human_readable_name": "Goodwin et al. (2023)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": 59132.73,
+            "date_format": "mjd",
+            "reference": [
+                "2023MNRAS.522.5084G"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "photometry": [
+        {
+            "reference": [
+                "2023MNRAS.522.5084G"
+            ],
+            "raw": [
+                0.543,
+                0.504,
+                0.284,
+                0.156,
+                0.145,
+                0.179
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                59252.73,
+                59341.73,
+                59437.73,
+                59505.73,
+                59562.73,
+                59707.73
+            ],
+            "date_format": [
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd"
+            ],
+            "filter_key": [
+                "5.5GHz",
+                "5.5GHz",
+                "5.5GHz",
+                "5.6GHz",
+                "5.0GHz",
+                "5.5GHz"
+            ],
+            "computed": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": false,
+            "corr_hostav": false
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "5.5GHz",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.6GHz",
+            "freq_eff": 5.6,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.0GHz",
+            "freq_eff": 5.0,
+            "freq_units": "GHz"
+        }
+    ]
+}

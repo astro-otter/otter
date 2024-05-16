@@ -1,0 +1,338 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "PS1-10jh",
+        "alias": [
+            {
+                "value": "PS1-10jh",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2012Natur.485..217G",
+                    "2000A&AS..143....9W"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "16:09:28.29",
+            "dec": "+53:40:23.52",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.1696",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2015ApJ...815L...5G",
+                "2012Natur.485..217G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "842.4",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2015ApJ...815L...5G",
+                "2012Natur.485..217G",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": "720.3",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2015ApJ...815L...5G",
+                "2012Natur.485..217G",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": [
+                "2015ApJ...815L...5G",
+                "2012Natur.485..217G"
+            ]
+        },
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": [
+                "2015ApJ...815L...5G",
+                "2012Natur.485..217G"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2015ApJ...815L...5G",
+            "human_readable_name": "Gezari et al. (2015)"
+        },
+        {
+            "name": "2012Natur.485..217G",
+            "human_readable_name": "Gezari et al. (2012)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2000A&AS..143....9W",
+            "human_readable_name": "Wenger et al. (2000)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2010-05-16",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2015ApJ...815L...5G",
+                "2012Natur.485..217G",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ],
+    "photometry": [
+        {
+            "raw": [
+                0.000643159
+            ],
+            "raw_units": [
+                "ct"
+            ],
+            "value": [
+                3.82e-15
+            ],
+            "value_units": [
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray"
+            ],
+            "date": [
+                "55704"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                true
+            ],
+            "telescope": "Chandra",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "corr_s": null
+        },
+        {
+            "raw": [
+                0.0313036
+            ],
+            "raw_units": [
+                "ct"
+            ],
+            "value": [
+                5.67e-14
+            ],
+            "value_units": [
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray"
+            ],
+            "date": [
+                "48083.6"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                true
+            ],
+            "telescope": "ROSAT",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "corr_s": null
+        },
+        {
+            "raw": [
+                0.855,
+                1.39,
+                0.685,
+                2.58,
+                1.15,
+                0.258,
+                0.671
+            ],
+            "raw_units": [
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct"
+            ],
+            "value": [
+                3.03e-12,
+                4.93e-12,
+                2.43e-12,
+                9.16e-12,
+                4.08e-12,
+                9.16e-13,
+                2.38e-12
+            ],
+            "value_units": [
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray",
+                "xray",
+                "xray",
+                "xray",
+                "xray",
+                "xray",
+                "xray"
+            ],
+            "date": [
+                "52618.1",
+                "52922.5",
+                "53557.9",
+                "55757.4",
+                "55789.8",
+                "55919.1",
+                "56833.1"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "telescope": "XMM",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "corr_s": null
+        },
+        {
+            "raw": [
+                23.7
+            ],
+            "raw_err": [
+                0.12
+            ],
+            "raw_units": "mag(AB)",
+            "filter_key": [
+                "F225W"
+            ],
+            "obs_type": [
+                "uvoir"
+            ],
+            "date": [
+                "56821"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false
+            ],
+            "telescope": "HST",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2015ApJ...815L...5G"
+            ],
+            "corr_s": null
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "F225W",
+            "wave_eff": 2372.81,
+            "wave_units": "nm"
+        }
+    ]
+}

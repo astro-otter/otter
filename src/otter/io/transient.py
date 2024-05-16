@@ -72,7 +72,7 @@ class Transient(MutableMapping):
         """
 
         if isinstance(keys, (list, tuple)):
-            return Transient({key: self[key] for key in keys})
+            return Transient({key: (self[key] if key in self else []) for key in keys})
         elif isinstance(keys, str) and "/" in keys:  # this is for a path
             s = "']['".join(keys.split("/"))
             s = "['" + s

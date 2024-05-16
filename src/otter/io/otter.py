@@ -373,11 +373,11 @@ class Otter(object):
             schema = [schema]
 
         for transient in schema:
-            print(transient["name/default_name"])
-
             # convert the json to a Transient
             if not isinstance(transient, Transient):
                 transient = Transient(transient)
+
+            print(transient["name/default_name"])
 
             coord = transient.get_skycoord()
             res = self.cone_search(coords=coord)

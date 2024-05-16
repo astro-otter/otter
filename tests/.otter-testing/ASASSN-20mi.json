@@ -1,0 +1,153 @@
+{
+    "reference_alias": [
+        {
+            "name": "ASAS-SN Supernovae",
+            "human_readable_name": "ASAS-SN Supernovae"
+        },
+        {
+            "name": "2020TNSTR3418....1H",
+            "human_readable_name": "Hodgkin, S. T. et al. (2020)"
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "21:15:40.31",
+            "dec": "-49:04:36",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "coordinate_type": "equitorial"
+        },
+        {
+            "ra": 318.91775,
+            "dec": -49.076439,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "reference": "2020TNSTR3418....1H",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2020-09-23 0:14:24.00000000013506",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
+        },
+        {
+            "value": 59158.815,
+            "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": "2020TNSTR3418....1H",
+            "computed": false
+        }
+    ],
+    "name": {
+        "default_name": "2020zeb",
+        "alias": [
+            {
+                "value": "Gaia20fct",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2020zeb",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ASASSN-20mi",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "AT 2020ual",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            }
+        ]
+    },
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "ASAS-SN Supernovae"
+            ]
+        }
+    ],
+    "photometry": [
+        {
+            "raw": [
+                18.32
+            ],
+            "raw_err": [
+                0.2
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "59158.814999999944",
+            "date_format": "mjd",
+            "filter_key": "G",
+            "reference": "TNS",
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "Gaia",
+            "instrument": "Gaia-photometric"
+        },
+        {
+            "raw": [
+                21.5
+            ],
+            "raw_err": [
+                0
+            ],
+            "upperlimit": true,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "59005.595000000205",
+            "date_format": "mjd",
+            "filter_key": "G",
+            "reference": "TNS",
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "Gaia",
+            "instrument": "Gaia-photometric"
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "G",
+            "wave_eff": 673.5412573108297,
+            "wave_units": "nm"
+        }
+    ]
+}

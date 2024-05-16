@@ -1,0 +1,263 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "J130819",
+        "alias": [
+            {
+                "value": "J130819",
+                "reference": [
+                    "2018arXiv180205105W"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "13:08:19.12",
+            "dec": "+43:45:25.6",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2018arXiv180205105W"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0365",
+            "reference": [
+                "2018arXiv180205105W"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "166",
+            "unit": "Mpc",
+            "reference": [
+                "2018arXiv180205105W",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": "160",
+            "unit": "Mpc",
+            "reference": [
+                "2018arXiv180205105W",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": "2017ApJ...835...64G",
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2018arXiv180205105W",
+            "human_readable_name": "Wang et al. (2018)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2009-04-14",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2018arXiv180205105W",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ],
+    "photometry": [
+        {
+            "raw": [
+                17.282
+            ],
+            "raw_err": [
+                0.01
+            ],
+            "raw_units": "mag(AB)",
+            "filter_key": [
+                "V"
+            ],
+            "obs_type": [
+                "uvoir"
+            ],
+            "date": [
+                "54935.6"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false
+            ],
+            "telescope": "CRTS",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2018arXiv180205105W"
+            ],
+            "corr_s": null
+        },
+        {
+            "raw": [
+                14.102,
+                13.282,
+                14.477,
+                13.914,
+                14.593,
+                14.355,
+                14.59,
+                14.503,
+                14.578,
+                14.345,
+                14.565,
+                14.45,
+                14.603,
+                14.351
+            ],
+            "raw_err": [
+                0.02,
+                0.029,
+                0.038,
+                0.053,
+                0.043,
+                0.081,
+                0.046,
+                0.094,
+                0.037,
+                0.08,
+                0.032,
+                0.081,
+                0.03,
+                0.105
+            ],
+            "raw_units": "mag(AB)",
+            "filter_key": [
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2"
+            ],
+            "obs_type": [
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir"
+            ],
+            "date": [
+                "55356.1",
+                "55356.1",
+                "55545.5",
+                "55545.5",
+                "56643.9",
+                "56643.9",
+                "56820.9",
+                "56820.9",
+                "57009.8",
+                "57009.8",
+                "57179.7",
+                "57179.7",
+                "57372.2",
+                "57372.2"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "telescope": "WISE",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2018arXiv180205105W"
+            ],
+            "corr_s": null
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "V",
+            "wave_eff": 551.0,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "W1",
+            "wave_eff": 224.6,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "W2",
+            "wave_eff": 192.8,
+            "wave_units": "nm"
+        }
+    ]
+}

@@ -1,0 +1,96 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "XJ1231+1106",
+        "alias": [
+            {
+                "value": "XJ1231+1106",
+                "reference": [
+                    "2017arXiv170206956L"
+                ]
+            },
+            {
+                "value": "2XMM J123103.2+110648",
+                "reference": [
+                    "2017arXiv170206956L"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "12:31:03.2",
+            "dec": "+11:06:48",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2017arXiv170206956L"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.118",
+            "reference": [
+                "2017arXiv170206956L"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "568",
+            "unit": "Mpc",
+            "reference": [
+                "2017arXiv170206956L",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": "508",
+            "unit": "Mpc",
+            "reference": [
+                "2017arXiv170206956L",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": "2017ApJ...835...64G",
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2017arXiv170206956L",
+            "human_readable_name": "Lin et al. (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        }
+    ]
+}

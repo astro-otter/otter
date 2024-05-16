@@ -1,0 +1,488 @@
+{
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2012PASP..124..668Y",
+                "2015Natur.526..542M",
+                "2016ApJ...819L..25A",
+                "2016ApJ...832L..10R",
+                "2016Sci...351...62V",
+                "2018MNRAS.475.4011B",
+                "ASAS-SN Supernovae"
+            ],
+            "default": true
+        }
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "ASASSN-14li",
+        "alias": [
+            {
+                "value": "ASASSN-14li",
+                "reference": [
+                    "ASASSN",
+                    "2017ApJ...838..149A",
+                    "2015Natur.526..542M",
+                    "2014ATel.6777....1J",
+                    "ASAS-SN Supernovae",
+                    "MAST",
+                    "2012PASP..124..668Y"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "12 48 15.2253",
+            "dec": "+17 46 26.475",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2016ApJ...819L..25A",
+                "2016Sci...351...62V",
+                "2016ApJ...832L..10R",
+                "2018MNRAS.475.4011B"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "f098e2d8-ea4f-4578-99a7-8ab17642b443",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "reference": "f098e2d8-ea4f-4578-99a7-8ab17642b443",
+            "computed": true,
+            "coordinate_type": "galactic",
+            "l": 298.27734758483064,
+            "b": 80.61697877592157,
+            "l_units": "deg",
+            "b_units": "deg"
+        },
+        {
+            "ra": "12:48:15.2",
+            "dec": "17:46:26.6",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2014ATel.6777....1J",
+                "ASAS-SN Supernovae"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "5.0GHz",
+            "freq_eff": 5.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0206",
+            "reference": [
+                "2016ApJ...819L..25A",
+                "2016Sci...351...62V",
+                "2016ApJ...832L..10R",
+                "2018MNRAS.475.4011B"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "0.0206",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2015arXiv150701598H",
+                "2014ATel.6777....1J",
+                "ASAS-SN Supernovae",
+                "2012PASP..124..668Y"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "92.6",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2015arXiv150701598H",
+                "2014ATel.6777....1J",
+                "ASAS-SN Supernovae",
+                "2017ApJ...835...64G",
+                "2012PASP..124..668Y"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity",
+            "unit": "Mpc"
+        },
+        {
+            "value": "90.7",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2015arXiv150701598H",
+                "2014ATel.6777....1J",
+                "ASAS-SN Supernovae",
+                "2017ApJ...835...64G",
+                "2012PASP..124..668Y"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": 56983,
+            "date_format": "mjd",
+            "reference": [
+                "2016ApJ...819L..25A",
+                "2016Sci...351...62V",
+                "2016ApJ...832L..10R",
+                "2018MNRAS.475.4011B"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        },
+        {
+            "value": "2014-11-22 15:7:11.999999999914053",
+            "date_format": "iso",
+            "reference": [
+                "2014ATel.6777....1J",
+                "ASAS-SN Supernovae"
+            ],
+            "computed": false,
+            "date_type": "discovery",
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ],
+    "photometry": [
+        {
+            "reference": [
+                "2016ApJ...819L..25A",
+                "2016Sci...351...62V",
+                "2016ApJ...832L..10R",
+                "2018MNRAS.475.4011B"
+            ],
+            "raw": [
+                1.91,
+                1.7417,
+                1.562,
+                1.2565,
+                0.873150048
+            ],
+            "raw_units": [
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy",
+                "mJy"
+            ],
+            "date": [
+                57124.871,
+                57190.83,
+                57229.75,
+                57286.5145833,
+                57362.7
+            ],
+            "date_format": [
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd",
+                "mjd"
+            ],
+            "filter_key": [
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz"
+            ],
+            "computed": [
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "obs_type": [
+                "radio",
+                "radio",
+                "radio",
+                "radio",
+                "radio"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": false,
+            "corr_hostav": false
+        },
+        {
+            "raw": [
+                0.0527
+            ],
+            "raw_units": [
+                "ct"
+            ],
+            "value": [
+                7.11e-14
+            ],
+            "value_units": [
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray"
+            ],
+            "date": [
+                "48100"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                true
+            ],
+            "telescope": "ROSAT",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "corr_s": null
+        },
+        {
+            "raw": [
+                0.36,
+                0.364,
+                0.217,
+                0.135,
+                0.0791,
+                0.0717,
+                0.0424
+            ],
+            "raw_err": [
+                0.00589,
+                0.00241,
+                0.00229,
+                0.00315,
+                0.00187,
+                0.00267,
+                0.00189
+            ],
+            "raw_units": [
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct"
+            ],
+            "value": [
+                1.17e-11,
+                1.02e-11,
+                5.26e-12,
+                3.35e-12,
+                2.62e-12,
+                1.95e-12,
+                8.45e-13
+            ],
+            "value_units": [
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s",
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0",
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray",
+                "xray",
+                "xray",
+                "xray",
+                "xray",
+                "xray",
+                "xray"
+            ],
+            "date": [
+                "56994.7",
+                "57046.7",
+                "57145.8",
+                "57228.1",
+                "57364.5",
+                "57425.5",
+                "57538.5"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "telescope": "Swift",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "corr_s": null
+        },
+        {
+            "raw": [
+                0.664,
+                0.75736
+            ],
+            "raw_units": [
+                "ct",
+                "ct"
+            ],
+            "value": [
+                2.53e-12,
+                5.43e-11
+            ],
+            "value_units": [
+                "ergs/cm^2/s",
+                "ergs/cm^2/s"
+            ],
+            "filter_key": [
+                "0.3 - 2.0",
+                "0.3 - 2.0"
+            ],
+            "obs_type": [
+                "xray",
+                "xray"
+            ],
+            "date": [
+                "54818.8",
+                "56999.5"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                true,
+                true
+            ],
+            "telescope": "XMM",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "corr_s": null
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2016ApJ...819L..25A",
+            "human_readable_name": "Alexander et al. (2016)"
+        },
+        {
+            "name": "2016Sci...351...62V",
+            "human_readable_name": "van Velzen et al. (2016)"
+        },
+        {
+            "name": "2016ApJ...832L..10R",
+            "human_readable_name": "Romero-Canizales et al. (2016)"
+        },
+        {
+            "name": "2018MNRAS.475.4011B",
+            "human_readable_name": "Bright et al. (2018)"
+        },
+        {
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+        },
+        {
+            "name": "2016MNRAS.455.2918H",
+            "human_readable_name": "Holoien et al. (2016)"
+        },
+        {
+            "name": "2016arXiv160103331C",
+            "human_readable_name": "Cenko et al. (2016)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2015Natur.526..542M",
+            "human_readable_name": "Miller et al. (2015)"
+        },
+        {
+            "name": "2015arXiv150701598H",
+            "human_readable_name": "Holoien et al. (2015)"
+        },
+        {
+            "name": "2014ATel.6777....1J",
+            "human_readable_name": "Jose et al. (2014)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "ASAS-SN Supernovae",
+            "human_readable_name": "ASAS-SN Supernovae"
+        },
+        {
+            "name": "MAST",
+            "human_readable_name": "MAST"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2012PASP..124..668Y",
+            "human_readable_name": "Yaron & Gal-Yam (2012)"
+        }
+    ]
+}

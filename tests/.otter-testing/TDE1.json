@@ -1,0 +1,434 @@
+{
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
+    "name": {
+        "default_name": "TDE1",
+        "alias": [
+            {
+                "value": "TDE1",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2011ApJ...741...73V",
+                    "2000A&AS..143....9W"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "23:42:01.406",
+            "dec": "+01:06:29.30",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2011ApJ...741...73V",
+                "2000A&AS..143....9W"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.136",
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "662",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": "582",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": "2017ApJ...835...64G",
+            "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011ApJ...741...73V",
+            "human_readable_name": "van Velzen et al. (2011)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2000A&AS..143....9W",
+            "human_readable_name": "Wenger et al. (2000)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2006-08-27",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2011ApJ...741...73V",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
+        }
+    ],
+    "photometry": [
+        {
+            "raw": [
+                23.3,
+                23.0
+            ],
+            "raw_err": [
+                0.3,
+                0.2
+            ],
+            "raw_units": "mag(AB)",
+            "filter_key": [
+                "FUV",
+                "NUV"
+            ],
+            "obs_type": [
+                "uvoir",
+                "uvoir"
+            ],
+            "date": [
+                "54754.892",
+                "54754.892"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false,
+                false
+            ],
+            "telescope": "GALEX",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2011ApJ...741...73V"
+            ],
+            "corr_s": null
+        },
+        {
+            "raw": [
+                21.9897,
+                21.9897,
+                21.9897,
+                21.9897,
+                21.9897,
+                21.9897,
+                20.639,
+                20.9637,
+                20.3115,
+                20.4829,
+                21.2966,
+                20.1068,
+                20.7926,
+                21.7924,
+                21.2271,
+                20.9788,
+                20.5862,
+                20.8359,
+                21.2954,
+                20.645,
+                21.1784,
+                21.0524,
+                20.8877,
+                21.1117,
+                20.7671,
+                21.4787,
+                21.6232,
+                20.9684,
+                21.2517,
+                21.7246,
+                21.3341,
+                21.4622,
+                20.8832,
+                21.3784,
+                21.887,
+                21.2767,
+                21.855,
+                20.889,
+                21.4899,
+                21.0299,
+                21.151,
+                21.2179,
+                21.6267,
+                22.0,
+                22.0,
+                22.0
+            ],
+            "raw_units": "mag(AB)",
+            "filter_key": [
+                "g",
+                "r",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "r",
+                "u",
+                "g",
+                "u",
+                "g",
+                "u",
+                "g",
+                "u",
+                "g",
+                "g",
+                "r",
+                "u"
+            ],
+            "obs_type": [
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir"
+            ],
+            "date": [
+                "53693.216",
+                "53693.216",
+                "53693.216",
+                "53704.199",
+                "53704.199",
+                "53704.199",
+                "53974.292",
+                "53974.292",
+                "53974.292",
+                "53989.295",
+                "53989.295",
+                "53989.295",
+                "53997.391",
+                "53997.391",
+                "53997.391",
+                "54000.271",
+                "54000.271",
+                "54007.321",
+                "54007.321",
+                "54007.321",
+                "54009.245",
+                "54009.245",
+                "54011.309",
+                "54011.309",
+                "54011.309",
+                "54019.259",
+                "54019.259",
+                "54019.259",
+                "54025.308",
+                "54025.308",
+                "54029.239",
+                "54029.239",
+                "54029.239",
+                "54031.225",
+                "54031.225",
+                "54031.225",
+                "54036.230",
+                "54036.230",
+                "54039.228",
+                "54039.228",
+                "54048.223",
+                "54048.223",
+                "54054.246",
+                "54348",
+                "54348",
+                "54348"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "telescope": "SDSS",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2011ApJ...741...73V"
+            ],
+            "corr_s": null
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "FUV",
+            "wave_eff": 153.8620701901866,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "NUV",
+            "wave_eff": 231.56631043707714,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "g",
+            "wave_eff": 475.0,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "r",
+            "wave_eff": 622.0,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "u",
+            "wave_eff": 354.0,
+            "wave_units": "nm"
+        }
+    ]
+}
