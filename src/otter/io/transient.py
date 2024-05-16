@@ -8,7 +8,7 @@ import warnings
 from copy import deepcopy
 import re
 from collections.abc import MutableMapping
-from typing import Self
+from typing_extensions import Self
 
 import numpy as np
 import pandas as pd
