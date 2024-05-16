@@ -2,6 +2,7 @@
 Some constants, mappings, and functions to be used across the software
 """
 
+from __future__ import annotations
 import os
 import ads
 import astropy.units as u

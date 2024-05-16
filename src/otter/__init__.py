@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # get the version
 from ._version import __version__
 

@@ -2,6 +2,7 @@
 This is the primary class for user interaction with the catalog
 """
 
+from __future__ import annotations
 import os
 import json
 import glob

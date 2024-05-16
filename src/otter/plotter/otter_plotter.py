@@ -6,6 +6,7 @@ Currently supported backends are:
 - plotly
 """
 
+from __future__ import annotations
 import importlib
 
 

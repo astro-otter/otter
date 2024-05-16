@@ -2,6 +2,7 @@
 Some utilities to create common plots for transients that use the OtterPlotter
 """
 
+from __future__ import annotations
 from .otter_plotter import OtterPlotter
 
 

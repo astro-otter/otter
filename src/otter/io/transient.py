@@ -3,6 +3,7 @@ Class for a transient,
 basically just inherits the dict properties with some overwriting
 """
 
+from __future__ import annotations
 import warnings
 from copy import deepcopy
 import re

@@ -2,6 +2,8 @@
 Custom exceptions for otter
 """
 
+from __future__ import annotations
+
 
 class FailedQueryError(ValueError):
     """
