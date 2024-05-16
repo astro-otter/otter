@@ -1,7 +1,11 @@
 Examples
 ========
 
-Some example notebooks will be linked here with how to use the OTTER API
-for some common use cases.
+A tutorial of the basic usage of the OTTER API is shown here. More detailed
+examples will be added with time!
 
-Please check back soon!
+.. toctree::
+   :maxdepth: 3
+   :caption: Contents:
+
+   nbs/basic_usage
