@@ -27,13 +27,28 @@ if [[ $(ls $OUTDIR | wc -l) == "1" ]]; then
     echo "Something went wrong, no data found in $OUTDIR!"
     exit 1
 fi
-    
+
 # then the data from tde.space
 echo "Processing data from $INDIR/tde-1980-2025"
 python3 $FILEDIR/tde_dot_space_to_otter.py --indir $INDIR/tde-1980-2025 --outdir $OUTDIR
 
 # then fix the output cause tde.space had some transients in two separate files
 python3 $FILEDIR/fix_tde_dot_space_file_bug.py --otterdir $OUTDIR
+
+# then pull data from the "Curated Optical TDE Catalog"
+# https://github.com/sjoertvv/manyTDE
+wget -P $INDIR https://github.com/sjoertvv/manyTDE/archive/refs/heads/main.zip
+unzip $INDIR/main.zip -d $INDIR
+rm $INDIR/main.zip
+mv $INDIR/manyTDE-main/data/sources $INDIR/curated_optical_tde_catalog
+rm -rf $INDIR/manyTDE-main
+
+# and then clean the data from the "Curated Optical TDE Catalog"
+python3 $FILEDIR/curated_optical_tde_catalog_to_otter.py --indir $INDIR/curated_optical_tde_catalog --otterdir $OUTDIR
+
+# and then rm the curated_optical_tde_catalog directory since it is already stored
+# at the above github
+rm -rf $INDIR/curated_optical_tde_catalog
 
 ###########################################################################
 ############### NOW QUERY PUBLIC CATALOGS FOR MORE DATA ###################

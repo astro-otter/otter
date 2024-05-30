@@ -197,6 +197,9 @@ class Otter(object):
             "reference",
         ]
 
+        if "upperlimit" not in fullphot:
+            fullphot["upperlimit"] = [False] * len(fullphot)
+
         if not keep_raw:
             if "telescope" in fullphot:
                 fullphot = fullphot[keys_to_keep + ["telescope"]]
@@ -473,10 +476,14 @@ class Otter(object):
                 }
 
                 if "date_reference" in t:
-                    row["discovery_date"] = t.get_discovery_date()
+                    date_types = {d["date_type"] for d in t["date_reference"]}
+                    if "discovery" in date_types:
+                        row["discovery_date"] = t.get_discovery_date()
 
                 if "distance" in t:
-                    row["z"] = t.get_redshift()
+                    dist_types = {d["distance_type"] for d in t["distance"]}
+                    if "redshift" in dist_types:
+                        row["z"] = t.get_redshift()
 
                 row["hasPhot"] = "photometry" in t
                 row["hasSpec"] = "spectra" in t

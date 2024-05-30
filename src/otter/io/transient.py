@@ -797,8 +797,15 @@ class Transient(MutableMapping):
         key = "photometry"
 
         out[key] = deepcopy(t1[key])
-        refs = np.array([d["reference"] for d in out[key]])
+        refs = []  # np.array([d["reference"] for d in out[key]])
         # merge_dups = lambda val: np.sum(val) if np.any(val.isna()) else val.iloc[0]
+        for val in out[key]:
+            if isinstance(val, list):
+                refs += val
+            elif isinstance(val, np.ndarray):
+                refs += list(val)
+            else:
+                refs.append(val)
 
         for val in t2[key]:
             # first check if t2's reference is in out

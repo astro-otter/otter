@@ -21,15 +21,10 @@
             "coordinate_type": "equitorial"
         }
     ],
+    "key2": "bar",
     "name": {
         "default_name": "ASASSN-20il",
         "alias": [
-            {
-                "value": "AT 2020pom",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            },
             {
                 "value": "ASASSN-20il",
                 "reference": [
@@ -37,8 +32,16 @@
                 ]
             },
             {
+                "value": "AT 2020pom",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
                 "value": "new_test_tde",
                 "reference": [
+                    "me!",
+                    "me!",
                     "me!",
                     "me!",
                     "me!",
@@ -58,16 +61,10 @@
         }
     ],
     "key1": "foo",
-    "key2": "bar",
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1.0,
-            "reference": [
-                "ASAS-SN Supernovae"
-            ]
-        }
-    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    },
     "date_reference": [
         {
             "value": "2020-07-8 4:19:11.999999999975444",
@@ -81,8 +78,13 @@
             "default": true
         }
     ],
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    }
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "ASAS-SN Supernovae"
+            ]
+        }
+    ]
 }

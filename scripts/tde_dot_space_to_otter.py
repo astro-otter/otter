@@ -625,7 +625,7 @@ def main():
     p = args.outdir
     otter = Otter(p)
 
-    otter.save(allschemas, test_mode=False)
+    otter.save(allschemas, testing=False)
 
 
 if __name__ == "__main__":
