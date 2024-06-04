@@ -107,6 +107,45 @@ def main():
             )
         ]
 
+        # now the velocity dispersion
+        if "vel_disp_km/s" in indata['host']:
+
+            ref = indata['host']['vel_disp_source']
+
+            # build in some temporary checks until the catalog is fixed
+            if ref == 'Wevers 2020MNRAS.497L...1W':
+                ref = ref.replace('Wevers ', '')
+
+            if ref == '2018A%26A...610A..14K':
+                ref = '2018A&A...610A..14K'
+
+            if ref == 'SDSS':
+                # this is just for now until I figure out what this means in more detail
+                # this reference is to the SDSS DR18 paper which briefly describes updates
+                # to their velocity dispersion calculations
+                ref = '2023ApJS..267...44A'
+
+            hrn = util.bibcode_to_hrn(ref)
+
+            curr_bibcodes = {x['name'] for x in otterjson['reference_alias']}
+            if ref not in curr_bibcodes:
+                otterjson['reference_alias'].append(
+                    dict(
+                        name = ref,
+                        human_readable_name = hrn
+                    )
+                )
+
+            otterjson['distance'].append(
+                dict(
+                    value = indata['host']['vel_disp_km/s'],
+                    error = indata['host']['e_vel_disp_km/s'],
+                    reference = ref,
+                    unit = 'km/s',
+                    distance_type = 'dispersion_measure'
+                )
+            )
+
         # now peak date
         otterjson["date_reference"] = [
             dict(
@@ -132,13 +171,13 @@ def main():
                 date_format="mjd",
                 filter_key=list(filter),
                 obs_type="uvoir",
-                reference=catalog_bibcode,  # indata['paper_ref'],
+                reference=[catalog_bibcode, indata['paper_ref']],
                 corr_k=False,
                 corr_s=False,
                 corr_av=False,
                 corr_host=False,
                 corr_hostav=False,
-                val_hostac=indata["extinction"]["e_bv"],
+                val_hostav=indata["extinction"]["e_bv"],
             )
         ]
 
