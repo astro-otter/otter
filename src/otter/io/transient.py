@@ -357,7 +357,23 @@ class Transient(MutableMapping):
         else:
             return default["value"]
 
-    def _get_default(self, key, filt=""):
+    def get_classification(self) -> tuple(str, float, list):
+        """
+        Get the default classification of this Transient.
+        This normally corresponds to the highest confidence classification that we have
+        stored for the transient.
+
+        Returns:
+            The default object class as a string, the confidence level in that class,
+            and a list of the bibcodes corresponding to that classification. Or, None
+            if there is no classification.
+        """
+        default = self._get_default("classification")
+        if default is None:
+            return default
+        return default.object_class, default.confidence, default.reference
+
+    def _get_default(self, key, filt=None):
         """
         Get the default of key
 
@@ -370,7 +386,8 @@ class Transient(MutableMapping):
             raise KeyError(f"This transient does not have {key} associated with it!")
 
         df = pd.DataFrame(self[key])
-        df = df[eval(filt)]  # apply the filters
+        if filt is not None:
+            df = df[eval(filt)]  # apply the filters
 
         if "default" in df:
             # first try to get the default
