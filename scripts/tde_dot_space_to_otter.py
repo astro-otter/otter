@@ -182,6 +182,8 @@ def main():
         if "ra" in j and "dec" in j:
             key1, key2 = "ra", "dec"
         elif "hostra" in j and "hostdec" in j:
+            # see the Table 1 note for why this is okay to do in this paper
+            # https://iopscience.iop.org/article/10.3847/1538-4357/aa633b
             key1, key2 = "hostra", "hostdec"
         else:
             print(f"Skipping {file} because no ra and dec associated with it!")
