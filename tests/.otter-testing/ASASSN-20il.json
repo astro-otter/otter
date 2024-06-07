@@ -1,44 +1,5 @@
 {
-    "name": {
-        "default_name": "ASASSN-20il",
-        "alias": [
-            {
-                "value": "AT 2020pom",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            },
-            {
-                "value": "ASASSN-20il",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            },
-            {
-                "value": "new_test_tde",
-                "reference": [
-                    "me!",
-                    "me!",
-                    "me!",
-                    "me!",
-                    "me!",
-                    "me!",
-                    "me!"
-                ]
-            }
-        ]
-    },
-    "reference_alias": [
-        {
-            "name": "ASAS-SN Supernovae",
-            "human_readable_name": "ASAS-SN Supernovae"
-        },
-        {
-            "name": "me!",
-            "human_readable_name": "Noah"
-        }
-    ],
-    "key2": "bar",
+    "key1": "foo",
     "coordinate": [
         {
             "ra": "5:03:11.3",
@@ -61,7 +22,47 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "key1": "foo",
+    "key2": "bar",
+    "name": {
+        "default_name": "ASASSN-20il",
+        "alias": [
+            {
+                "value": "ASASSN-20il",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "AT 2020pom",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "new_test_tde",
+                "reference": [
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!"
+                ]
+            }
+        ]
+    },
+    "reference_alias": [
+        {
+            "name": "ASAS-SN Supernovae",
+            "human_readable_name": "ASAS-SN Supernovae"
+        },
+        {
+            "name": "me!",
+            "human_readable_name": "Noah"
+        }
+    ],
     "date_reference": [
         {
             "value": "2020-07-8 4:19:11.999999999975444",
