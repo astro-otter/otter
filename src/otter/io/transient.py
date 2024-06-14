@@ -681,10 +681,15 @@ class Transient(MutableMapping):
             freqs.append(val.to(freq_unit, equivalencies=u.spectral()).value)
             waves.append(val.to(wave_unit, equivalencies=u.spectral()).value)
 
-        outdata["converted_freq"] = freqs
-        outdata["converted_wave"] = waves
+        # track the index carefully here...
+        freq_wave_df = pd.DataFrame(
+            {"converted_freq": freqs, "converted_wave": waves}, index=df.index
+        )
+
         outdata["converted_wave_unit"] = [wave_unit] * len(outdata)
         outdata["converted_freq_unit"] = [freq_unit] * len(outdata)
+
+        outdata = pd.concat([outdata, freq_wave_df], axis=1)
 
         return outdata
 
