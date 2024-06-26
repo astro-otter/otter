@@ -572,25 +572,24 @@ class Transient(MutableMapping):
                 astropy_units
             )  # assume error and values have the same unit
 
-            # get the effective wavelength
+            # get and save the effective wavelength
             if "freq_eff" in data and not np.isnan(data["freq_eff"].iloc[0]):
-                freq_units = data["freq_units"]
-                if len(np.unique(freq_units)) > 1:
-                    raise OtterLimitationError(
-                        "Can not convert different units to the same unit!"
-                    )
-
-                freq_eff = np.array(data["freq_eff"]) * u.Unit(freq_units.iloc[0])
-                wave_eff = freq_eff.to(u.AA, equivalencies=u.spectral())
+                zz = zip(data["freq_eff"], data["freq_units"])
+                freq_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], freq_unit)
+                wave_eff = freq_eff.to(wave_unit, equivalencies=u.spectral())
 
             elif "wave_eff" in data and not np.isnan(data["wave_eff"].iloc[0]):
-                wave_units = data["wave_units"]
-                if len(np.unique(wave_units)) > 1:
-                    raise OtterLimitationError(
-                        "Can not convert different units to the same unit!"
-                    )
+                zz = zip(data["wave_eff"], data["wave_units"])
+                wave_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], wave_unit)
+                freq_eff = wave_eff.to(freq_unit, equivalencies=u.spectral())
 
-                wave_eff = np.array(data["wave_eff"]) * u.Unit(wave_units.iloc[0])
+            else:
+                raise ValueError("No known frequency or wavelength, please fix!")
+
+            data["converted_wave"] = wave_eff.value
+            data["converted_wave_unit"] = wave_unit
+            data["converted_freq"] = freq_eff.value
+            data["converted_freq_unit"] = freq_unit
 
             # convert using synphot
             # stuff has to be done slightly differently for xray than for the others
@@ -610,9 +609,11 @@ class Transient(MutableMapping):
 
                 # we also need to make this wave_min and wave_max
                 # instead of just the effective wavelength like for radio and uvoir
-                wave_eff = np.array(
-                    list(zip(data["wave_min"], data["wave_max"]))
-                ) * u.Unit(wave_units.iloc[0])
+                zz = zip(data["wave_min"], data["wave_max"], data["wave_units"])
+                wave_eff = u.Quantity(
+                    [np.array([m, M]) * u.Unit(uu) for m, M, uu in zz],
+                    u.Unit(wave_unit),
+                )
 
             else:
                 area = None
@@ -656,7 +657,7 @@ class Transient(MutableMapping):
         outdata = pd.concat(outdata)
 
         # copy over the flux units
-        outdata["converted_flux_unit"] = [flux_unit] * len(outdata)
+        outdata["converted_flux_unit"] = flux_unit
 
         # make sure all the datetimes are in the same format here too!!
         times = [
@@ -664,32 +665,7 @@ class Transient(MutableMapping):
             for d, f in zip(outdata.date, outdata.date_format.str.lower())
         ]
         outdata["converted_date"] = times
-        outdata["converted_date_unit"] = [date_unit] * len(outdata)
-
-        # same with frequencies and wavelengths
-        freqs = []
-        waves = []
-
-        for _, row in df.iterrows():
-            if "freq_eff" in row and not np.isnan(row["freq_eff"]):
-                val = row["freq_eff"] * u.Unit(row["freq_units"])
-            elif "wave_eff" in df and not np.isnan(row["wave_eff"]):
-                val = row["wave_eff"] * u.Unit(row["wave_units"])
-            else:
-                raise ValueError("No known frequency or wavelength, please fix!")
-
-            freqs.append(val.to(freq_unit, equivalencies=u.spectral()).value)
-            waves.append(val.to(wave_unit, equivalencies=u.spectral()).value)
-
-        # track the index carefully here...
-        freq_wave_df = pd.DataFrame(
-            {"converted_freq": freqs, "converted_wave": waves}, index=df.index
-        )
-
-        outdata["converted_wave_unit"] = [wave_unit] * len(outdata)
-        outdata["converted_freq_unit"] = [freq_unit] * len(outdata)
-
-        outdata = pd.concat([outdata, freq_wave_df], axis=1)
+        outdata["converted_date_unit"] = date_unit
 
         return outdata
 

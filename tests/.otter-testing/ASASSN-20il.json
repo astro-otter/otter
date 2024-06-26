@@ -13,13 +13,13 @@
         "default_name": "ASASSN-20il",
         "alias": [
             {
-                "value": "AT 2020pom",
+                "value": "ASASSN-20il",
                 "reference": [
                     "ASAS-SN Supernovae"
                 ]
             },
             {
-                "value": "ASASSN-20il",
+                "value": "AT 2020pom",
                 "reference": [
                     "ASAS-SN Supernovae"
                 ]
@@ -35,11 +35,19 @@
                     "me!",
                     "me!",
                     "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
                     "me!"
                 ]
             }
         ]
     },
+    "key1": "foo",
     "key2": "bar",
     "coordinate": [
         {
@@ -63,20 +71,6 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "key1": "foo",
-    "date_reference": [
-        {
-            "value": "2020-07-8 4:19:11.999999999975444",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "ASAS-SN Supernovae"
-            ],
-            "computed": false,
-            "measurement_type": "discovery",
-            "default": true
-        }
-    ],
     "schema_version": {
         "value": "0",
         "comment": "Copied from tde.space"
@@ -88,6 +82,19 @@
             "reference": [
                 "ASAS-SN Supernovae"
             ]
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2020-07-8 4:19:11.999999999975444",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "computed": false,
+            "measurement_type": "discovery",
+            "default": true
         }
     ]
 }

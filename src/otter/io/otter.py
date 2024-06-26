@@ -192,13 +192,15 @@ class Otter(object):
             "converted_date_unit",
             "converted_wave_unit",
             "converted_freq_unit",
+            "filter_key",
             "obs_type",
             "upperlimit",
             "reference",
+            "human_readable_refs",
         ]
 
         if "upperlimit" not in fullphot:
-            fullphot["upperlimit"] = [False] * len(fullphot)
+            fullphot["upperlimit"] = False
 
         if not keep_raw:
             if "telescope" in fullphot:
