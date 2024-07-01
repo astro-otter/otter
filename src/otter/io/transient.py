@@ -540,8 +540,9 @@ class Transient(MutableMapping):
                 )
 
             unit = unit[0]
+            isvegamag = "vega" in unit.lower()
             try:
-                if "vega" in unit.lower():
+                if isvegamag:
                     astropy_units = VEGAMAG
                 else:
                     astropy_units = u.Unit(unit)
@@ -618,32 +619,39 @@ class Transient(MutableMapping):
             else:
                 area = None
 
-            # we unfortunately have to loop over the points here because
-            # syncphot does not work with a 2D array of min max wavelengths
-            # for converting counts to other flux units. It also can't convert
-            # vega mags with a wavelength array because it then interprets that as the
-            # wavelengths corresponding to the SourceSpectrum.from_vega()
-            flux, flux_err = [], []
-            for wave, xray_point, xray_point_err in zip(wave_eff, q, q_err):
-                f_val = convert_flux(
-                    wave,
-                    xray_point,
-                    u.Unit(flux_unit),
-                    vegaspec=SourceSpectrum.from_vega(),
-                    area=area,
-                )
-                f_err = convert_flux(
-                    wave,
-                    xray_point_err,
-                    u.Unit(flux_unit),
-                    vegaspec=SourceSpectrum.from_vega(),
-                    area=area,
-                )
+            if obstype == "xray" or isvegamag:
+                # we unfortunately have to loop over the points here because
+                # syncphot does not work with a 2D array of min max wavelengths
+                # for converting counts to other flux units. It also can't convert
+                # vega mags with a wavelength array because it interprets that as the
+                # wavelengths corresponding to the SourceSpectrum.from_vega()
 
-                # then we take the average of the minimum and maximum values
-                # computed by syncphot
-                flux.append(np.mean(f_val).value)
-                flux_err.append(np.mean(f_err).value)
+                flux, flux_err = [], []
+                for wave, xray_point, xray_point_err in zip(wave_eff, q, q_err):
+                    f_val = convert_flux(
+                        wave,
+                        xray_point,
+                        u.Unit(flux_unit),
+                        vegaspec=SourceSpectrum.from_vega(),
+                        area=area,
+                    )
+                    f_err = convert_flux(
+                        wave,
+                        xray_point_err,
+                        u.Unit(flux_unit),
+                        vegaspec=SourceSpectrum.from_vega(),
+                        area=area,
+                    )
+
+                    # then we take the average of the minimum and maximum values
+                    # computed by syncphot
+                    flux.append(np.mean(f_val).value)
+                    flux_err.append(np.mean(f_err).value)
+
+            else:
+                # this will be faster and cover most cases
+                flux = convert_flux(wave_eff, q, u.Unit(flux_unit))
+                flux_err = convert_flux(wave_eff, q_err, u.Unit(flux_unit))
 
             flux = np.array(flux) * u.Unit(flux_unit)
             flux_err = np.array(flux_err) * u.Unit(flux_unit)
