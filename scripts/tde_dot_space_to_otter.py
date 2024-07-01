@@ -328,7 +328,7 @@ def main():
 
                 sub["value"] = indate
                 sub["reference"] = mappedsrc(source_map, src)
-                sub["measurement_type"] = "discovery"
+
                 if "derived" in d:
                     sub["computed"] = d["derived"]
                 else:
