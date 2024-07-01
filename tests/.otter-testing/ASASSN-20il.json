@@ -1,47 +1,15 @@
 {
-    "coordinate": [
-        {
-            "ra": "5:03:11.3",
-            "dec": "-22:48:52.1",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "ASAS-SN Supernovae"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": "5:03:11.3",
-            "dec": "-22:48:52.1",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "me!"
-            ],
-            "coordinate_type": "equitorial"
-        }
-    ],
-    "reference_alias": [
-        {
-            "name": "ASAS-SN Supernovae",
-            "human_readable_name": "ASAS-SN Supernovae"
-        },
-        {
-            "name": "me!",
-            "human_readable_name": "Noah"
-        }
-    ],
     "name": {
         "default_name": "ASASSN-20il",
         "alias": [
             {
-                "value": "ASASSN-20il",
+                "value": "AT 2020pom",
                 "reference": [
                     "ASAS-SN Supernovae"
                 ]
             },
             {
-                "value": "AT 2020pom",
+                "value": "ASASSN-20il",
                 "reference": [
                     "ASAS-SN Supernovae"
                 ]
@@ -68,20 +36,44 @@
                     "me!",
                     "me!",
                     "me!",
+                    "me!",
                     "me!"
                 ]
             }
         ]
     },
     "key2": "bar",
-    "key1": "foo",
-    "classification": [
+    "reference_alias": [
         {
-            "object_class": "TDE",
-            "confidence": 1.0,
+            "name": "ASAS-SN Supernovae",
+            "human_readable_name": "ASAS-SN Supernovae"
+        },
+        {
+            "name": "me!",
+            "human_readable_name": "Noah"
+        }
+    ],
+    "key1": "foo",
+    "coordinate": [
+        {
+            "ra": "5:03:11.3",
+            "dec": "-22:48:52.1",
+            "ra_units": "hour",
+            "dec_units": "deg",
             "reference": [
                 "ASAS-SN Supernovae"
-            ]
+            ],
+            "coordinate_type": "equitorial"
+        },
+        {
+            "ra": "5:03:11.3",
+            "dec": "-22:48:52.1",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "me!"
+            ],
+            "coordinate_type": "equitorial"
         }
     ],
     "schema_version": {
@@ -99,6 +91,15 @@
             "computed": false,
             "measurement_type": "discovery",
             "default": true
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "ASAS-SN Supernovae"
+            ]
         }
     ]
 }
