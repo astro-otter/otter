@@ -290,7 +290,6 @@ class Otter(object):
 
         # then read and query the summary table
         summary = pd.read_csv(summary_table)
-
         # coordinate search first
         if coords is not None:
             if not isinstance(coords, SkyCoord):

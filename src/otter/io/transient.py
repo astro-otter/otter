@@ -27,6 +27,7 @@ from ..exceptions import (
     TransientMergeError,
 )
 from ..util import XRAY_AREAS
+from .host import Host
 
 warnings.simplefilter("once", RuntimeWarning)
 warnings.simplefilter("once", UserWarning)
@@ -369,6 +370,19 @@ class Transient(MutableMapping):
         if default is None:
             return default
         return default.object_class, default.confidence, default.reference
+
+    def get_host(self) -> Host:
+        """
+        Gets the default host information of this Transient. This returns an otter.Host
+        object.
+
+        Returns:
+            An otter.Host object. This is useful becuase the Host objects have useful
+            methods for querying public catalogs for data of the host.
+        """
+        default_host = self._get_default("host")
+        host = Host(transient_name=self.default_name, **dict(default_host))
+        return host
 
     def _get_default(self, key, filt=None):
         """

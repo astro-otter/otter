@@ -379,20 +379,22 @@ def main():
 
         # use that name and objid to grab the associated photometry
         response = get(data.name_tns, data.objid_tns)
-        remaining = int(response.headers.get('x-rate-limit-remaining'))
+        remaining = int(response.headers.get("x-rate-limit-remaining"))
         if remaining == 0:
             # this means we have to wait until the reset time
             # because we are out of calls to the TNS API
-            time_to_reset = int(response.headers.get('x-rate-limit-reset')) # in seconds
-            print('###################################################################')
-            print(f'Out of API Calls! Waiting {time_to_reset}s before the next one!')
-            print('###################################################################')
+            time_to_reset = int(
+                response.headers.get("x-rate-limit-reset")
+            )  # in seconds
+            print("###################################################################")
+            print(f"Out of API Calls! Waiting {time_to_reset}s before the next one!")
+            print("###################################################################")
             time.sleep(time_to_reset)
-        
+
         outjson = response.json()
         outdata = outjson["data"]["reply"]
         phot = outdata["photometry"]
-            
+
         # now clean up the photometry
         tns_transient = tns_response_to_otter(data, phot)
         all_transients.append(tns_transient)

@@ -214,6 +214,10 @@ def main():
         with open(outfile, "w") as f:
             json.dump(dict(t_to_save), f, indent=4)
 
+    print(db.DATADIR)
+    s = db.generate_summary_table(save=True)
+    print(s)
+
 
 if __name__ == "__main__":
     main()

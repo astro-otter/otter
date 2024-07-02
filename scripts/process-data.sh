@@ -11,7 +11,7 @@ echo "Processing data and writing to $OUTDIR..."
 # check if the output director exists and if so remove it
 if [ -d $OUTDIR ]; then
     echo "$OUTDIR exists already! Removing and refresshing with new data!"
-    rm -r $OUTDIR/*
+    rm -r $OUTDIR
 fi
 
 # make OUTDIR if it doesn't exist

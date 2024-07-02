@@ -36,6 +36,8 @@ dependencies = [
   "astroquery",
   "synphot",
   "ads",
+  "skypatrol",
+  "fundamentals",
 
   # useful dev tools
   "ruff", # linter

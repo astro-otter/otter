@@ -43,3 +43,32 @@ class TransientMergeError(Exception):
     """
 
     pass
+
+
+class OtterNotImplementedError(Exception):
+    """
+    Exception thrown by methods that are not yet implemented
+    """
+
+    def __str__(self):
+        return "Not yet implemented! Please consider contributing on our GitHub!"
+
+
+class MissingEnvVarError(Exception):
+    """
+    Thrown when the querying code expects an Environment variable and doesn't get one
+    """
+
+    def __init__(self, v, url=None):
+        self.v = v
+        self.url = url
+
+    def __str__(self):
+        msg = "You are missing the following environment variables:\n"
+        for vv in self.v:
+            msg += f"\t- {vv}\n"
+        msg += "Please make an account and/or set these variables!\n"
+        if self.url is not None:
+            msg += f"See: {self.url}"
+
+        return msg
