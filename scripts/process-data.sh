@@ -56,6 +56,9 @@ python3 $FILEDIR/curated_optical_tde_catalog_to_otter.py --indir $INDIR/curated_
 # at the above github
 rm -rf $INDIR/curated_optical_tde_catalog
 
+# then the data from Goldtooth et al. (2023)
+python3 $FILEDIR/goldtooth_2023_to_otter.py --otterdir $OUTDIR --indir $INDIR/goldtooth_2023
+
 ###########################################################################
 ############### NOW QUERY PUBLIC CATALOGS FOR MORE DATA ###################
 ###########################################################################

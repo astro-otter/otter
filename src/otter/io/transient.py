@@ -338,7 +338,7 @@ class Transient(MutableMapping):
         else:
             f = "mjd"
 
-        return Time(date["value"], format=f)
+        return Time(str(date["value"]).strip(), format=f)
 
     def get_redshift(self) -> float:
         """
