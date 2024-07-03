@@ -1,5 +1,5 @@
 """
-Host object that stores information on the Transient Scraper and provides utility
+Host object that stores information on the Transient DataFinder and provides utility
 methods for pulling in data corresponding to that host
 """
 
@@ -25,12 +25,12 @@ from fundamentals.stats import rolling_window_sigma_clip
 from operator import itemgetter
 
 from ..util import VIZIER_LARGE_CATALOGS
-from ..exceptions import OtterNotImplementedError, MissingEnvVarError
+from ..exceptions import MissingEnvVarError
 
 logger = logging.getLogger(__name__)
 
 
-class Scraper(object):
+class DataFinder(object):
     def __init__(
         self,
         ra: str | float,
@@ -44,7 +44,7 @@ class Scraper(object):
         **kwargs,
     ) -> None:
         """
-        Object to store Scraper info to query public data sources of host galaxies
+        Object to store DataFinder info to query public data sources of host galaxies
 
         Args:
             ra (str|float) : The RA of the host to be passed to an astropy SkyCoord
@@ -69,11 +69,11 @@ class Scraper(object):
 
     def __repr__(self) -> str:
         """
-        String representation of the Scraper for printing
+        String representation of the DataFinder for printing
         """
 
         if self.name is None:
-            print_name = "No Name Scraper"
+            print_name = "No Name DataFinder"
         else:
             print_name = self.name
 
@@ -81,7 +81,7 @@ class Scraper(object):
 
     def __iter__(self) -> dict:
         """
-        Provides an iterator for the properties of this Scraper. Yields (key, value)
+        Provides an iterator for the properties of this DataFinder. Yields (key, value)
         """
         out = dict(
             host_ra=self.coord.ra.value,
@@ -128,7 +128,7 @@ class Scraper(object):
         """
         from astroquery.simbad import Simbad
 
-        return Scraper._wrap_astroquery(Simbad, self.coord, radius=radius, **kwargs)
+        return DataFinder._wrap_astroquery(Simbad, self.coord, radius=radius, **kwargs)
 
     def query_vizier(self, radius="5 arcsec", **kwargs):
         """
@@ -181,7 +181,7 @@ class Scraper(object):
         """
         from astroquery.vizier import Vizier
 
-        return Scraper._wrap_astroquery(
+        return DataFinder._wrap_astroquery(
             Vizier, self.coord, radius=radius, catalog=VIZIER_LARGE_CATALOGS
         )
 
@@ -311,7 +311,7 @@ class Scraper(object):
         with requests.Session() as s:
             textdata = s.get(result_url, headers=headers).text
 
-        atlas_phot = Scraper._atlas_stack(textdata, clipping_sigma=clip_sigma)
+        atlas_phot = DataFinder._atlas_stack(textdata, clipping_sigma=clip_sigma)
 
         return pd.DataFrame(atlas_phot)
 
@@ -329,7 +329,7 @@ class Scraper(object):
         from astroquery.ipac.irsa import Irsa
 
         ptf_lc_catalog = "ptf_lightcurves"
-        return Scraper._wrap_astroquery(
+        return DataFinder._wrap_astroquery(
             Irsa, self.coord, radius=radius, catalog=ptf_lc_catalog
         )
 
@@ -395,7 +395,7 @@ class Scraper(object):
         from astroquery.ipac.irsa import Irsa
 
         wise_catalogs = ["allwise_p3as_mep", "neowiser_p1bs_psd"]
-        res = Scraper._wrap_astroquery(
+        res = DataFinder._wrap_astroquery(
             Irsa, self.coord, radius="5 arcsec", catalog=wise_catalogs, **kwargs
         )
         return res
@@ -417,47 +417,104 @@ class Scraper(object):
 
         from astroquery.alma import Alma
 
-        res = Scraper._wrap_astroquery(Alma, self.coord, radius=5 * u.arcsec, **kwargs)
+        res = DataFinder._wrap_astroquery(
+            Alma, self.coord, radius=5 * u.arcsec, **kwargs
+        )
         return res
 
-    def query_first(self, image_size: u.Quantity = 5 * u.arcmin, **kwargs) -> list:
+    def query_first(
+        self, radius: u.Quantity = 5 * u.arcmin, get_image: bool = False, **kwargs
+    ) -> list:
         """
-        Query the FIRST radio survey and return a list of fits PrimaryHDU's
+        Query the FIRST radio survey and return an astropy table of the flux density
+
+        This queries Table 2 from Ofek & Frail (2011); 2011ApJ...737...45O
 
         Args:
-            image_size (u.Quantity) : An astropy Quantity with the image height/width
+            radius (u.Quantity) : An astropy Quantity with the image height/width
+            get_image (bool) : If True, download and return a list of the associated
+                               images too.
             **kwargs : any other arguments to pass to the astroquery.image_cutouts
                        get_images method
 
         Returns:
-            list of FIRST radio survey images
+            Astropy table of the flux densities. If get_image is True, it also returns
+            a list of FIRST radio survey images
         """
-        from astroquery.image_cutouts.first import First
+        from astroquery.vizier import Vizier
 
-        res = First.get_images(self.coord, image_size=image_size, **kwargs)
+        res = DataFinder._wrap_astroquery(
+            Vizier, self.coord, radius=radius, catalog="J/ApJ/737/45/table2"
+        )
+
+        if get_image:
+            from astroquery.image_cutouts.first import First
+
+            res_img = First.get_images(self.coord, image_size=radius, **kwargs)
+            return res, res_img
+
         return res
 
-    def query_nvss(self):
+    def query_nvss(self, radius: u.Quantity = 5 * u.arcsec, **kwargs):
         """
-        Query the Next generation VLA Sky Survey (NVSS)
+        Query the NRAO VLA Sky Survey (NVSS) and return a table list of the
+        result
+
+        This queries Table 1 from Ofek & Frail (2011); 2011ApJ...737...45O
+
+        Args:
+            radius (u.Quantity) : An astropy Quantity with the radius
+            **kwargs : Any other arguments to pass to query_region
         """
-        raise OtterNotImplementedError()
+        from astroquery.vizier import Vizier
+
+        res = DataFinder._wrap_astroquery(
+            Vizier, self.coord, radius=radius, catalog="J/ApJ/737/45/table1"
+        )
+        return res
 
     ###################################################################################
     ######### CONVENIENCE METHODS FOR QUERYING HOST SPECTR  ###########################
     ###################################################################################
 
-    def query_desi(self):
+    def query_sparcl(
+        self, radius: u.Quantity = 5 * u.arcsec, include: str | list = "DEFAULT"
+    ) -> Table:
         """
-        Query DESI public spectra for this host
-        """
-        raise OtterNotImplementedError()
+        Query the NOIRLab DataLabs Sparcl database for spectra for this host
 
-    def query_sdss(self):
+        Args:
+            radius (Quantity) : search radius as an Astropy.unit.Quantity
+            include [list|str] : list or string of columns to include in the result. See
+                                 the sparcl client documentation for more info. The
+                                 default returns specid, ra, dec, sparcl_id, flux,
+                                 wavelength, and the spectroscopic surveyu (_dr)
+
+        Returns:
+            astropy Table of the results, one row per spectrum
         """
-        Query SDSS public spectra for this host
+
+        from sparcl.client import SparclClient
+        from dl import queryClient as qc  # noqa: N813
+
+        client = SparclClient()
+
+        # first do a cone search on sparcl.main
+        ra, dec = self.coord.ra.value, self.coord.dec.value
+        radius_deg = radius.to(u.deg).value
+
+        adql = f"""
+        SELECT *
+        FROM sparcl.main
+        WHERE 't'=Q3C_RADIAL_QUERY(ra,dec,{ra},{dec},{radius_deg})
         """
-        raise OtterNotImplementedError()
+        cone_search_res = qc.query(adql=adql, fmt="pandas")
+
+        # then retrieve all of the spectra corresponding to those sparcl_ids
+        sparcl_ids = cone_search_res.sparcl_id.tolist()
+        res = client.retrieve(uuid_list=sparcl_ids, include=include)
+        all_spec = pd.concat([pd.DataFrame([record]) for record in res.records])
+        return Table.from_pandas(all_spec)
 
     ###################################################################################
     ######### PRIVATE HELPER METHODS FOR THE QUERYING #################################
@@ -470,7 +527,7 @@ class Scraper(object):
 
         And again adapted from https://github.com/SAGUARO-MMA/kne-cand-vetting/blob/master/kne_cand_vetting/survey_phot.py
         """
-        epochs = Scraper._atlas_read_and_sigma_clip_data(
+        epochs = DataFinder._atlas_read_and_sigma_clip_data(
             filecontent, log=log, clipping_sigma=clipping_sigma
         )
 
@@ -490,7 +547,7 @@ class Scraper(object):
                 magnitudes[epoch["F"]]["lim5sig"].append(epoch["mag5sig"])
 
         # STACK PHOTOMETRY IF REQUIRED
-        stacked_magnitudes = Scraper._stack_photometry(magnitudes, binningdays=1)
+        stacked_magnitudes = DataFinder._stack_photometry(magnitudes, binningdays=1)
 
         return stacked_magnitudes
 

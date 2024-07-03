@@ -11,6 +11,6 @@ __package__ = "otter"
 from .io.otter import Otter
 from .io.transient import Transient
 from .io.host import Host
-from .io.scraper import Scraper
+from .io.data_finder import DataFinder
 from .plotter.otter_plotter import OtterPlotter
 from .plotter.plotter import plot_light_curve, plot_sed

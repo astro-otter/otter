@@ -3,12 +3,15 @@ Host object that stores information on the Transient Host and provides utility m
 for pulling in data corresponding to that host
 """
 
-from .scraper import Scraper
+import numpy as np
 from astropy.coordinates import SkyCoord
 from astropy import units as u
 
+from .data_finder import DataFinder
+from ..exceptions import OtterLimitationError
 
-class Host(Scraper):
+
+class Host(DataFinder):
     def __init__(
         self,
         host_ra: str | float,
@@ -47,3 +50,55 @@ class Host(Scraper):
         self.z = host_redshift
         self.redshift = host_redshift  # just here for ease of use
         self.bibcodes = reference
+
+    def pcc(self, transient_coord: SkyCoord, mag: float = None):
+        """
+        Compute the Probability of Chance Coincindence as described in
+        Bloom et al. (2002) "Offset Distribution of Gamma-Ray Bursts.
+
+        This computes the probability that this galaxy is by chance nearby to the
+        transient on the sky. Or, in simpler terms this essentially computes the
+        probability that we are wrong about this being the transient host. So, a
+        smaller probability is better!
+
+        Note: This probability was initially defined for GRB afterglows, which tend to
+        be redder transients (supernova too). So, be cautious when using this algorithm
+        for TDEs!
+
+        Args:
+            transient_coord (astropy.coordinates.SkyCoord) : The coordinates of the
+                                                             transient object.
+            mag (float) : An r-band magnitude to compute from. Default is None which
+                          will prompt us to check SDSS for one within 10".
+        Returns:
+            A float probability in the range [0,1]
+        """
+
+        # first get the separation r, in arcseconds
+        r = self.coord.separation(transient_coord).arcsec
+
+        # next get the host r magnitude
+        if mag is None:
+            res = self.query_vizier(radius=10 * u.arcsec)
+
+            if len(res) == 0:
+                raise OtterLimitationError(
+                    "No magnitude found in SDSS! Please provide a magnitude via the \
+                    `mag` keyword to make this calculation!"
+                )
+
+            sdss = [k for k in res.keys() if "sdss" in k]
+            use = max(sdss, key=lambda k: int(k.split("sdss")[-1]))
+            print(f"Using the r magnitude from the {use} table")
+            mag = res[use]["rmag"][0]
+
+        # then compute the probability
+        sigma_prefactor = 1 / (3600**2 * 0.334 * np.log(10))
+        sigma_pow = 0.334 * (mag - 22.963) + 4.320
+        sigma = sigma_prefactor * 10**sigma_pow
+
+        eta = np.pi * r**2 * sigma
+
+        prob = 1 - np.exp(-eta)
+
+        return prob
