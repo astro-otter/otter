@@ -1,4 +1,5 @@
 {
+    "key2": "bar",
     "name": {
         "default_name": "ASASSN-20il",
         "alias": [
@@ -37,12 +38,12 @@
                     "me!",
                     "me!",
                     "me!",
+                    "me!",
                     "me!"
                 ]
             }
         ]
     },
-    "key2": "bar",
     "reference_alias": [
         {
             "name": "ASAS-SN Supernovae",
@@ -53,7 +54,6 @@
             "human_readable_name": "Noah"
         }
     ],
-    "key1": "foo",
     "coordinate": [
         {
             "ra": "5:03:11.3",
@@ -76,10 +76,7 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
+    "key1": "foo",
     "date_reference": [
         {
             "value": "2020-07-8 4:19:11.999999999975444",
@@ -101,5 +98,9 @@
                 "ASAS-SN Supernovae"
             ]
         }
-    ]
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    }
 }

@@ -29,21 +29,29 @@ classifiers = [
 dependencies = [
   # necessary dependencies for the src code
   "numpy>=1.20",
-  "astropy>=5.2",
+  "astropy>=6",
   "pandas",
+  "synphot",
+
+  # for the plotting
   "matplotlib",
   "plotly",
+
+  # for the DataFinder query tool
   "astroquery",
-  "synphot",
   "ads",
   "skypatrol",
   "fundamentals",
+  "astro-datalab",
+  "sparclclient",
+]
 
-  # useful dev tools
-  "ruff", # linter
-  "pre-commit", # enable pre-commit hooks
+[project.urls]
+Home = "https://github.com/astro-otter"
 
-  # tools for building the readthedocs page
+[project.optional-dependencies]
+# tools for building the readthedocs page
+docs = [
   "Sphinx>=3.0.0",
   "myst_parser>=0.13",
   "nbsphinx>=0.9.1",
@@ -53,8 +61,11 @@ dependencies = [
   "ipykernel"
 ]
 
-[project.urls]
-Home = "https://github.com/astro-otter"
+# useful tools for developers
+dev = [
+  "ruff", # linter
+  "pre-commit", # enable pre-commit hooks
+]
 
 [tool.setuptools.packages.find]
 where = ['src']

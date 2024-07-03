@@ -12,6 +12,18 @@ Source Documentation
    :members:
    :inherited-members:
 
+`otter.Host`
+------------
+.. autoclass:: otter.Host
+   :members:
+   :inherited-members:
+
+`otter.DataFinder`
+------------------
+.. autoclass:: otter.DataFinder
+   :members:
+   :inherited-members:
+
 `otter.plotter.plotter`
 -----------------------
 .. automodule:: otter.plotter.plotter
