@@ -1,25 +1,4 @@
 {
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "name": {
-        "default_name": "XJ1500+0154",
-        "alias": [
-            {
-                "value": "XJ1500+0154",
-                "reference": [
-                    "2017NatAs...1E..33L"
-                ]
-            },
-            {
-                "value": "3XMM J150052.0+015452",
-                "reference": [
-                    "2017NatAs...1E..33L"
-                ]
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "15:00:52.0",
@@ -32,50 +11,10 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "distance": [
-        {
-            "value": "0.145",
-            "reference": [
-                "2017NatAs...1E..33L"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "709",
-            "unit": "Mpc",
-            "reference": [
-                "2017NatAs...1E..33L",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": "620",
-            "unit": "Mpc",
-            "reference": [
-                "2017NatAs...1E..33L",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": [
-                "2017NatAs...1E..33L"
-            ]
-        }
-    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "reference_alias": [
         {
             "name": "2017NatAs...1E..33L",
@@ -92,6 +31,109 @@
         {
             "name": "2017ApJ...835...64G",
             "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        }
+    ],
+    "name": {
+        "default_name": "3XMM J150052.0+015452",
+        "alias": [
+            {
+                "value": "XJ1500+0154",
+                "reference": [
+                    "2017NatAs...1E..33L"
+                ]
+            },
+            {
+                "value": "3XMM J150052.0+015452",
+                "reference": [
+                    "2017NatAs...1E..33L",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2017NatAs...1E..33L",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.145",
+            "reference": [
+                "2017NatAs...1E..33L"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "709",
+            "reference": [
+                "2017NatAs...1E..33L",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity",
+            "unit": "Mpc"
+        },
+        {
+            "value": "620",
+            "reference": [
+                "2017NatAs...1E..33L",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        },
+        {
+            "value": "0.145",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017NatAs...1E..33L"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "host": [
+        {
+            "host_name": "SDSS J150052.07+015453.8",
+            "host_ra": 225.2169583333333,
+            "host_dec": 1.9149444444444443,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017NatAs...1E..33L"
+            ]
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2005-07-23 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017NatAs...1E..33L"
+            ],
+            "default": true
         }
     ]
 }

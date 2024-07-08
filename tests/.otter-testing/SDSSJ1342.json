@@ -1,19 +1,4 @@
 {
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "name": {
-        "default_name": "SDSSJ1342",
-        "alias": [
-            {
-                "value": "SDSSJ1342",
-                "reference": [
-                    "2017ApJ...838..149A"
-                ]
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "13:42:44.42",
@@ -24,54 +9,22 @@
                 "2017ApJ...838..149A"
             ],
             "coordinate_type": "equitorial"
-        }
-    ],
-    "distance": [
-        {
-            "value": "0.0366",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2012ApJ...749..115W"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
         },
         {
-            "value": "166",
-            "unit": "Mpc",
+            "ra": "13:42:44.41",
+            "dec": "+05:30:56.2",
+            "ra_units": "hour",
+            "dec_units": "deg",
             "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...749..115W",
-                "2017ApJ...835...64G"
+                "2018arXiv180205105W"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": "161",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...749..115W",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving"
+            "coordinate_type": "equitorial"
         }
     ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": "2017ApJ...835...64G",
-            "default": true
-        }
-    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -88,6 +41,181 @@
         {
             "name": "2017ApJ...835...64G",
             "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2018arXiv180205105W",
+            "human_readable_name": "Wang et al. (2018)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2018MNRAS.477.2943W",
+            "human_readable_name": "Wang, Tinggui et al. (2018)"
+        },
+        {
+            "name": "2013ApJ...774...46Y",
+            "human_readable_name": "Yang, Chen-Wei et al. (2013)"
+        }
+    ],
+    "name": {
+        "default_name": "SDSSJ1342",
+        "alias": [
+            {
+                "value": "SDSS J1342",
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "J134244",
+                "reference": [
+                    "2018arXiv180205105W",
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "SDSSJ1342",
+                "reference": [
+                    "2017ApJ...838..149A"
+                ]
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2013ApJ...774...46Y",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A",
+                "2018MNRAS.477.2943W",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0366",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2012ApJ...749..115W"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "166",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2012ApJ...749..115W",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity",
+            "unit": "Mpc"
+        },
+        {
+            "value": "161",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2012ApJ...749..115W",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        },
+        {
+            "value": "0.0365",
+            "reference": [
+                "2018arXiv180205105W"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "166",
+            "reference": [
+                "2018arXiv180205105W",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity",
+            "unit": "Mpc"
+        },
+        {
+            "value": "160",
+            "reference": [
+                "2018arXiv180205105W",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        },
+        {
+            "value": "0.0365",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2018MNRAS.477.2943W"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "0.0366",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2013ApJ...774...46Y",
+                "2017ApJ...838..149A"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "host": [
+        {
+            "host_name": "SDSS J134244.41+053056.2",
+            "host_ra": 205.6833333333333,
+            "host_dec": 5.515611111111111,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2018MNRAS.477.2943W"
+            ]
+        },
+        {
+            "host_name": "SDSS J134244.41+053056.1",
+            "host_ra": 205.6833333333333,
+            "host_dec": 5.515594444444444,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2013ApJ...774...46Y",
+                "2017ApJ...838..149A"
+            ]
         }
     ],
     "date_reference": [
@@ -100,8 +228,63 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
+        },
+        {
+            "value": "2009-04-06",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2018arXiv180205105W",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true
+        },
+        {
+            "value": "2009-04-06 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2018MNRAS.477.2943W"
+            ],
+            "default": true
+        },
+        {
+            "value": "2009-05-17 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2013ApJ...774...46Y",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "V",
+            "wave_eff": 551.0,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "W1",
+            "wave_eff": 224.6,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "W2",
+            "wave_eff": 192.8,
+            "wave_units": "nm"
         }
     ],
     "photometry": [
@@ -179,15 +362,158 @@
                 "2017ApJ...838..149A"
             ],
             "corr_s": null
-        }
-    ],
-    "filter_alias": [
+        },
         {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm"
+            "raw": [
+                16.817
+            ],
+            "raw_err": [
+                0.011
+            ],
+            "raw_units": "mag(AB)",
+            "filter_key": [
+                "V"
+            ],
+            "obs_type": [
+                "uvoir"
+            ],
+            "date": [
+                "54927.0"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false
+            ],
+            "telescope": "CRTS",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2018arXiv180205105W"
+            ],
+            "corr_s": null
+        },
+        {
+            "raw": [
+                13.346,
+                12.181,
+                13.385,
+                12.301,
+                13.512,
+                12.527,
+                13.741,
+                13.001,
+                13.786,
+                13.08,
+                13.814,
+                13.142,
+                13.84,
+                13.259,
+                13.851,
+                13.34
+            ],
+            "raw_err": [
+                0.023,
+                0.019,
+                0.016,
+                0.027,
+                0.019,
+                0.034,
+                0.021,
+                0.033,
+                0.022,
+                0.035,
+                0.017,
+                0.031,
+                0.022,
+                0.037,
+                0.021,
+                0.047
+            ],
+            "raw_units": "mag(AB)",
+            "filter_key": [
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2",
+                "W1",
+                "W2"
+            ],
+            "obs_type": [
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir",
+                "uvoir"
+            ],
+            "date": [
+                "55210.7",
+                "55210.7",
+                "55385.8",
+                "55385.8",
+                "55573.4",
+                "55573.4",
+                "56671.1",
+                "56671.1",
+                "56850.6",
+                "56850.6",
+                "57037.1",
+                "57037.1",
+                "57209.4",
+                "57209.4",
+                "57400.2",
+                "57400.2"
+            ],
+            "date_format": "MJD",
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "telescope": "WISE",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
+            "reference": [
+                "2018arXiv180205105W"
+            ],
+            "corr_s": null
         }
     ]
 }

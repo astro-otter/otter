@@ -1,44 +1,4 @@
 {
-    "filter_alias": [
-        {
-            "filter_key": "8.5GHz",
-            "freq_eff": 8.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "g",
-            "wave_eff": 471.8872246248687,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "r",
-            "wave_eff": 618.5194476741524,
-            "wave_units": "nm"
-        }
-    ],
-    "name": {
-        "default_name": "2022cmc",
-        "alias": [
-            {
-                "value": "2022cmc",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF22aaajecp",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2022cmc",
-                "reference": [
-                    "TNS"
-                ]
-            }
-        ]
-    },
     "reference_alias": [
         {
             "name": "2022Natur.612..430A",
@@ -49,22 +9,40 @@
             "human_readable_name": "Andreoni, I. (2022)"
         }
     ],
-    "date_reference": [
+    "coordinate": [
         {
-            "value": 59621.45,
-            "date_format": "mjd",
+            "ra": "13 34 43.207",
+            "dec": "+33 13 00.54",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
             "reference": [
                 "2022Natur.612..430A"
             ],
             "computed": false,
-            "date_type": "discovery"
+            "default": true,
+            "uuid": "67d62f99-b9dc-4b3e-bb18-d0cb94f8b0b2",
+            "coordinate_type": "equitorial"
         },
         {
-            "value": 59621.4463,
-            "date_format": "mjd",
+            "reference": "67d62f99-b9dc-4b3e-bb18-d0cb94f8b0b2",
+            "computed": true,
+            "coordinate_type": "galactic",
+            "l": 68.62957133676095,
+            "b": 78.8489417474028,
+            "l_units": "deg",
+            "b_units": "deg"
+        },
+        {
+            "ra": 203.6800286,
+            "dec": 33.216817166666665,
+            "epoch": "J2000",
+            "ra_units": "deg",
+            "dec_units": "deg",
             "reference": "2022TNSTR.397....1A",
-            "computed": false,
-            "date_type": "discovery"
+            "coordinate_type": "equitorial",
+            "frame": "ICRS"
         }
     ],
     "photometry": [
@@ -287,40 +265,62 @@
             "instrument": "ZTF-Cam"
         }
     ],
-    "coordinate": [
+    "name": {
+        "default_name": "2022cmc",
+        "alias": [
+            {
+                "value": "ZTF22aaajecp",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2022cmc",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2022cmc",
+                "reference": [
+                    "TNS"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
         {
-            "ra": "13 34 43.207",
-            "dec": "+33 13 00.54",
-            "epoch": "J2000",
-            "system": "ICRS",
-            "ra_units": "hourangle",
-            "dec_units": "deg",
+            "value": 59621.45,
+            "date_format": "mjd",
             "reference": [
                 "2022Natur.612..430A"
             ],
             "computed": false,
-            "default": true,
-            "uuid": "9eff2c30-c468-46e7-99a7-33aefda5aa5d",
-            "coordinate_type": "equitorial"
+            "date_type": "discovery"
         },
         {
-            "reference": "9eff2c30-c468-46e7-99a7-33aefda5aa5d",
-            "computed": true,
-            "coordinate_type": "galactic",
-            "l": 68.62957133676095,
-            "b": 78.8489417474028,
-            "l_units": "deg",
-            "b_units": "deg"
-        },
-        {
-            "ra": 203.6800286,
-            "dec": 33.216817166666665,
-            "epoch": "J2000",
-            "ra_units": "deg",
-            "dec_units": "deg",
+            "value": 59621.4463,
+            "date_format": "mjd",
             "reference": "2022TNSTR.397....1A",
-            "coordinate_type": "equitorial",
-            "frame": "ICRS"
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "8.5GHz",
+            "freq_eff": 8.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "g",
+            "wave_eff": 471.8872246248687,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "r",
+            "wave_eff": 618.5194476741524,
+            "wave_units": "nm"
         }
     ],
     "schema_version": {

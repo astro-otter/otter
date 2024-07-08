@@ -51,6 +51,7 @@ class Host(DataFinder):
         self.z = host_redshift
         self.redshift = host_redshift  # just here for ease of use
         self.bibcodes = reference
+        self.transient_name = transient_name
 
     def pcc(self, transient_coord: SkyCoord, mag: float = None):
         """

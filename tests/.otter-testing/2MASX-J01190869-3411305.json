@@ -1,0 +1,86 @@
+{
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
+    "name": {
+        "default_name": "2MASX J01190869-3411305",
+        "alias": [
+            {
+                "value": "2MASX J01190869-3411305",
+                "reference": "2023PASP..135c4101G"
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2023PASP..135c4101G",
+                "2019Natur.573..381M"
+            ]
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.018",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2019Natur.573..381M"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": 19.783333333333328,
+            "dec": -34.19166666666666,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2019Natur.573..381M"
+            ],
+            "default": true
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2010-07-14 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2019Natur.573..381M"
+            ],
+            "default": true
+        }
+    ],
+    "host": [
+        {
+            "host_name": "GSN 069",
+            "host_ra": 19.783333333333328,
+            "host_dec": -34.19166666666666,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2019Natur.573..381M"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2019Natur.573..381M",
+            "human_readable_name": "Miniutti, G. et al. (2019)"
+        }
+    ]
+}

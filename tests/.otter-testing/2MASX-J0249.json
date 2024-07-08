@@ -1,19 +1,4 @@
 {
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "name": {
-        "default_name": "2MASX J0249",
-        "alias": [
-            {
-                "value": "2MASX J0249",
-                "reference": [
-                    "2017ApJ...838..149A"
-                ]
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "02:49:17.28",
@@ -23,52 +8,10 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "distance": [
-        {
-            "value": "0.0186",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2007A&A...462L..49E"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "83.5",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2007A&A...462L..49E",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": "82",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2007A&A...462L..49E",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": "2017ApJ...835...64G",
-            "default": true
-        }
-    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -89,6 +32,95 @@
         {
             "name": "2017ApJ...835...64G",
             "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2016A&A...592A..74S",
+            "human_readable_name": "Strotjohann, N. L. et al. (2016)"
+        }
+    ],
+    "name": {
+        "default_name": "2MASX J0249",
+        "alias": [
+            {
+                "value": "XMMSL1 J024916.6-041244",
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "2MASX J0249",
+                "reference": [
+                    "2017ApJ...838..149A"
+                ]
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2007A&A...462L..49E",
+                "2016A&A...592A..74S",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0186",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2007A&A...462L..49E"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "83.5",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2007A&A...462L..49E",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity",
+            "unit": "Mpc"
+        },
+        {
+            "value": "82",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2007A&A...462L..49E",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        },
+        {
+            "value": "0.0186",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2007A&A...462L..49E",
+                "2016A&A...592A..74S",
+                "2017ApJ...838..149A"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
         }
     ],
     "date_reference": [
@@ -101,8 +133,28 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
+        },
+        {
+            "value": "2004-07-24 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2007A&A...462L..49E",
+                "2016A&A...592A..74S",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm"
         }
     ],
     "photometry": [
@@ -274,13 +326,19 @@
             "corr_s": null
         }
     ],
-    "filter_alias": [
+    "host": [
         {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm"
+            "host_name": "2MASX J02491731-0412521",
+            "host_ra": 42.320833333333326,
+            "host_dec": -4.214444444444444,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2007A&A...462L..49E",
+                "2016A&A...592A..74S",
+                "2017ApJ...838..149A"
+            ]
         }
     ]
 }

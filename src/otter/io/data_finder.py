@@ -41,7 +41,6 @@ class DataFinder(object):
         name: str = None,
         redshift: float = None,
         reference: list[str] = None,
-        transient_name: str = None,
         **kwargs,
     ) -> None:
         """
@@ -357,7 +356,7 @@ class DataFinder(object):
 
         votab = parse_single_table(io.BytesIO(resp.read()))
 
-        return Table(votab)
+        return Table(votab.array)
 
     def query_asassn(self, radius: float = 5.0, nthreads: int = 2) -> pd.DataFrame:
         """
@@ -385,7 +384,7 @@ class DataFinder(object):
 
     def query_wise(self, radius: float = 5, **kwargs) -> Table:
         """
-        Query NEOWISE and ALLWISE for their multiepoch photometry
+        Query NEOWISE for their multiepoch photometry
 
         Args:
             radius (float) : The cone search radius in arcseconds
@@ -395,7 +394,7 @@ class DataFinder(object):
         """
         from astroquery.ipac.irsa import Irsa
 
-        wise_catalogs = ["allwise_p3as_mep", "neowiser_p1bs_psd"]
+        wise_catalogs = "neowiser_p1bs_psd"
         res = DataFinder._wrap_astroquery(
             Irsa, self.coord, radius="5 arcsec", catalog=wise_catalogs, **kwargs
         )

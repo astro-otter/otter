@@ -31,26 +31,6 @@
             "frame": "ICRS"
         }
     ],
-    "date_reference": [
-        {
-            "value": "2020-09-23 0:14:24.00000000013506",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "ASAS-SN Supernovae"
-            ],
-            "computed": false,
-            "measurement_type": "discovery",
-            "default": true
-        },
-        {
-            "value": 59158.815,
-            "date_format": "mjd",
-            "date_type": "discovery",
-            "reference": "2020TNSTR3418....1H",
-            "computed": false
-        }
-    ],
     "name": {
         "default_name": "2020zeb",
         "alias": [
@@ -67,19 +47,38 @@
                 ]
             },
             {
-                "value": "ASASSN-20mi",
+                "value": "AT 2020ual",
                 "reference": [
                     "ASAS-SN Supernovae"
                 ]
             },
             {
-                "value": "AT 2020ual",
+                "value": "ASASSN-20mi",
                 "reference": [
                     "ASAS-SN Supernovae"
                 ]
             }
         ]
     },
+    "date_reference": [
+        {
+            "value": "2020-09-23 0:14:24.00000000013506",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "computed": false,
+            "default": true
+        },
+        {
+            "value": 59158.815,
+            "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": "2020TNSTR3418....1H",
+            "computed": false
+        }
+    ],
     "schema_version": {
         "value": "0",
         "comment": "Copied from tde.space"

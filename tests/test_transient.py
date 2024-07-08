@@ -6,7 +6,7 @@ are more complex and require additional tests.
 
 import pytest
 import numpy as np
-from otter import Transient
+from otter import Transient, Host
 from otter.exceptions import OtterLimitationError, IOError
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
@@ -160,6 +160,7 @@ def test_keys():
         "photometry",
         "coordinate",
         "classification",
+        "host",
     ]
 
     t = Transient(generate_test_json())
@@ -188,6 +189,7 @@ def test_get_meta():
         "name",
         "coordinate",
         "classification",
+        "host",
     ]
     assert list(meta.keys()) == true_meta_keys, msg
     assert list(meta2.keys()) == ["name", "classification"], msg
@@ -243,6 +245,19 @@ def test_get_redshift():
     z = t.get_redshift()
 
     assert float(z) == 0.354, "get_redshift did not return the correct value!"
+
+
+def test_get_host():
+    """
+    Test the get host method
+
+    This is pretty bare bones because the rest of the output is tested with test_host
+    """
+
+    t = Transient(generate_test_json())
+
+    host = t.get_host()
+    assert isinstance(host, Host)
 
 
 def test_clean_photometry():
@@ -1266,6 +1281,21 @@ def generate_test_json():
                     "2018ApJ...854...86E",
                 ],
                 "default": True,
+            }
+        ],
+        "host": [
+            {
+                "host_name": "Swift J164449.3+573451",
+                "host_ra": 251.20416666666665,
+                "host_dec": 57.58083333333334,
+                "host_ra_units": "deg",
+                "host_dec_units": "deg",
+                "reference": [
+                    "2023PASP..135c4101G",
+                    "2011Sci...333..199L",
+                    "2011Sci...333..203B",
+                    "2017ApJ...838..149A",
+                ],
             }
         ],
     }

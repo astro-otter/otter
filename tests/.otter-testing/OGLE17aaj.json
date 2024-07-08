@@ -1,17 +1,4 @@
 {
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "name": {
-        "default_name": "OGLE17aaj",
-        "alias": [
-            {
-                "value": "OGLE17aaj",
-                "reference": []
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "01:56:24.93",
@@ -19,6 +6,69 @@
             "ra_units": "hour",
             "dec_units": "deg",
             "coordinate_type": "equitorial"
+        }
+    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
+    "reference_alias": [
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2017ATel11049....1S",
+            "human_readable_name": "Sokolovsky, K. et al. (2017)"
+        },
+        {
+            "name": "2017ATel.9977....1G",
+            "human_readable_name": "Gromadzki, M. et al. (2017)"
+        },
+        {
+            "name": "2019A&A...622L...2G",
+            "human_readable_name": "Gromadzki, M. et al. (2019)"
+        }
+    ],
+    "name": {
+        "default_name": "OGLE17aaj",
+        "alias": [
+            {
+                "value": "OGLE 17aaj",
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "OGLE17aaj",
+                "reference": []
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2017ATel.9977....1G",
+                "2017ATel11049....1S",
+                "2017ApJ...835...64G",
+                "2019A&A...622L...2G",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
         }
     ],
     "distance": [
@@ -43,28 +93,18 @@
             "computed": false,
             "default": true,
             "distance_type": "comoving"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": "2017ApJ...835...64G",
-            "default": true
-        }
-    ],
-    "reference_alias": [
-        {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
         },
         {
-            "name": "2011ApJ...737..103S",
-            "human_readable_name": "Schlafly & Finkbeiner (2011)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
+            "value": "0.116",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017ATel11049....1S",
+                "2017ATel.9977....1G",
+                "2019A&A...622L...2G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
         }
     ],
     "date_reference": [
@@ -76,8 +116,34 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
+        },
+        {
+            "value": "2017-01-01 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017ATel11049....1S",
+                "2017ATel.9977....1G",
+                "2019A&A...622L...2G"
+            ],
+            "default": true
+        }
+    ],
+    "host": [
+        {
+            "host_name": "GALEXASC J015624.70-710415.8",
+            "host_ra": 29.104166666666664,
+            "host_dec": -71.07111111111111,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017ATel11049....1S",
+                "2017ATel.9977....1G",
+                "2019A&A...622L...2G"
+            ]
         }
     ]
 }

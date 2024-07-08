@@ -17,6 +17,18 @@
             "human_readable_name": "Guillochon et al. (2017)"
         },
         {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2017NatAs...1..865K",
+            "human_readable_name": "Kankare, E. et al. (2017)"
+        },
+        {
+            "name": "2017NatAs...1..865K",
+            "human_readable_name": "Kankare, E. et al. (2017)"
+        },
+        {
             "name": "2021TNSTR3297....1H",
             "human_readable_name": "Hodgkin, S. T. et al. (2021)"
         }
@@ -43,6 +55,30 @@
             "frame": "ICRS"
         }
     ],
+    "name": {
+        "default_name": "2021zlg",
+        "alias": [
+            {
+                "value": "Gaia21egv",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2021zlg",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "PS1-10adi",
+                "reference": [
+                    "2017arXiv171104577K",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
     "date_reference": [
         {
             "value": "2010-01-01",
@@ -52,7 +88,17 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
+            "default": true
+        },
+        {
+            "value": "2010-08-15 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017NatAs...1..865K",
+                "2017NatAs...1..865K"
+            ],
             "default": true
         },
         {
@@ -63,56 +109,24 @@
             "computed": false
         }
     ],
-    "name": {
-        "default_name": "2021zlg",
-        "alias": [
-            {
-                "value": "2021zlg",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "Gaia21egv",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "PS1-10adi",
-                "reference": [
-                    "2017arXiv171104577K"
-                ]
-            }
-        ]
-    },
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "classification": [
+    "host": [
         {
-            "object_class": "TDE",
-            "confidence": 0.5,
+            "host_name": "SDSS J204244.74+153032.1",
+            "host_ra": 310.68749999999994,
+            "host_dec": 15.508916666666666,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
             "reference": [
-                "2017arXiv171104577K"
-            ]
-        },
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": [
-                "2017arXiv171104577K"
-            ]
-        },
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": [
-                "2017arXiv171104577K"
+                "2023PASP..135c4101G",
+                "2017NatAs...1..865K",
+                "2017NatAs...1..865K"
             ]
         }
     ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "distance": [
         {
             "value": "0.203",
@@ -125,7 +139,6 @@
         },
         {
             "value": "1030",
-            "unit": "Mpc",
             "reference": [
                 "2017arXiv171104577K",
                 "2016A&A...594A..13P",
@@ -133,11 +146,11 @@
             ],
             "computed": false,
             "default": true,
-            "distance_type": "luminosity"
+            "distance_type": "luminosity",
+            "unit": "Mpc"
         },
         {
             "value": "855",
-            "unit": "Mpc",
             "reference": [
                 "2017arXiv171104577K",
                 "2016A&A...594A..13P",
@@ -145,7 +158,47 @@
             ],
             "computed": false,
             "default": true,
-            "distance_type": "comoving"
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        },
+        {
+            "value": "0.203",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017NatAs...1..865K",
+                "2017NatAs...1..865K"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2017NatAs...1..865K",
+                "2017arXiv171104577K",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        },
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": [
+                "2017arXiv171104577K"
+            ],
+            "default": false
+        },
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": [
+                "2017arXiv171104577K"
+            ],
+            "default": false
         }
     ],
     "photometry": [

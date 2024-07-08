@@ -1,0 +1,86 @@
+{
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
+    "name": {
+        "default_name": "XMMSL1 J131952.3+225958",
+        "alias": [
+            {
+                "value": "XMMSL1 J131952.3+225958",
+                "reference": "2023PASP..135c4101G"
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2023PASP..135c4101G",
+                "2020ApJ...891..121L"
+            ]
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.023",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2020ApJ...891..121L"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": 199.96666666666664,
+            "dec": 22.999444444444446,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2020ApJ...891..121L"
+            ],
+            "default": true
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2005-07-15 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2020ApJ...891..121L"
+            ],
+            "default": true
+        }
+    ],
+    "host": [
+        {
+            "host_name": "NGC 5092",
+            "host_ra": 199.96666666666664,
+            "host_dec": 22.999444444444446,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2020ApJ...891..121L"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2020ApJ...891..121L",
+            "human_readable_name": "Li, Dongyue et al. (2020)"
+        }
+    ]
+}
