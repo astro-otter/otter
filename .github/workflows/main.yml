@@ -39,7 +39,7 @@ jobs:
           python -m pip install pytest-cov
 
       - name: Build otter
-        run: pip install -e .
+        run: pip install --no-cache-dir .
 
       - name: Test package
         run: python -m pytest --cov=otter

@@ -3,6 +3,7 @@ Host object that stores information on the Transient DataFinder and provides uti
 methods for pulling in data corresponding to that host
 """
 
+from __future__ import annotations
 import os
 import csv
 import io

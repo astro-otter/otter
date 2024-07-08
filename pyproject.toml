@@ -32,6 +32,7 @@ dependencies = [
   "astropy>=6",
   "pandas",
   "synphot",
+  "typing-extensions",
 
   # for the plotting
   "matplotlib",

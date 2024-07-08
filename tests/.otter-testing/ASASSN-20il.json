@@ -1,5 +1,4 @@
 {
-    "key2": "bar",
     "name": {
         "default_name": "ASASSN-20il",
         "alias": [
@@ -39,11 +38,14 @@
                     "me!",
                     "me!",
                     "me!",
+                    "me!",
+                    "me!",
                     "me!"
                 ]
             }
         ]
     },
+    "key1": "foo",
     "reference_alias": [
         {
             "name": "ASAS-SN Supernovae",
@@ -76,7 +78,16 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "key1": "foo",
+    "key2": "bar",
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "ASAS-SN Supernovae"
+            ]
+        }
+    ],
     "date_reference": [
         {
             "value": "2020-07-8 4:19:11.999999999975444",
@@ -88,15 +99,6 @@
             "computed": false,
             "measurement_type": "discovery",
             "default": true
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1.0,
-            "reference": [
-                "ASAS-SN Supernovae"
-            ]
         }
     ],
     "schema_version": {

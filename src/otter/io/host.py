@@ -3,6 +3,7 @@ Host object that stores information on the Transient Host and provides utility m
 for pulling in data corresponding to that host
 """
 
+from __future__ import annotations
 import numpy as np
 from astropy.coordinates import SkyCoord
 from astropy import units as u
