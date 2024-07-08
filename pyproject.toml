@@ -27,7 +27,7 @@ classifiers = [
 
 dependencies = [
   # necessary dependencies for the src code
-  "numpy>=1.20",
+  "numpy>=1.20,<2",
   "astropy>=6",
   "pandas",
   "synphot",
@@ -44,6 +44,9 @@ dependencies = [
   "fundamentals",
   "astro-datalab",
   "sparclclient",
+
+  # only for windows OS b/c it doesn't ship with readline by default
+  'pyreadline3; platform_system == "Windows"'
 ]
 
 [project.urls]

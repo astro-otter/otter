@@ -1,4 +1,27 @@
 {
+    "coordinate": [
+        {
+            "ra": "5:03:11.3",
+            "dec": "-22:48:52.1",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "coordinate_type": "equitorial"
+        },
+        {
+            "ra": "5:03:11.3",
+            "dec": "-22:48:52.1",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "me!"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "key1": "foo",
     "name": {
         "default_name": "ASASSN-20il",
         "alias": [
@@ -40,12 +63,13 @@
                     "me!",
                     "me!",
                     "me!",
+                    "me!",
                     "me!"
                 ]
             }
         ]
     },
-    "key1": "foo",
+    "key2": "bar",
     "reference_alias": [
         {
             "name": "ASAS-SN Supernovae",
@@ -56,29 +80,6 @@
             "human_readable_name": "Noah"
         }
     ],
-    "coordinate": [
-        {
-            "ra": "5:03:11.3",
-            "dec": "-22:48:52.1",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "ASAS-SN Supernovae"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": "5:03:11.3",
-            "dec": "-22:48:52.1",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "me!"
-            ],
-            "coordinate_type": "equitorial"
-        }
-    ],
-    "key2": "bar",
     "classification": [
         {
             "object_class": "TDE",
