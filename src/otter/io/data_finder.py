@@ -455,7 +455,7 @@ class DataFinder(object):
 
         return res
 
-    def query_nvss(self, radius: u.Quantity = 5 * u.arcsec, **kwargs):
+    def query_nvss(self, radius: u.Quantity = 5 * u.arcsec, **kwargs) -> Table:
         """
         Query the NRAO VLA Sky Survey (NVSS) and return a table list of the
         result
@@ -471,6 +471,33 @@ class DataFinder(object):
         res = DataFinder._wrap_astroquery(
             Vizier, self.coord, radius=radius, catalog="J/ApJ/737/45/table1"
         )
+        return res
+
+    def query_heasarc(
+        self, radius: u.Quantity = 5 * u.arcsec, heasarc_table: str = "xray", **kwargs
+    ) -> Table:
+        """
+        Query Heasarc by the argument "heasarc_key" for the ra/dec associated with this
+        DataLoader object.
+
+        Args:
+            radius (u.Quantity) : An astropy Quantity with the radius
+            heasarc_table (str) : String with name of heasarc table to query. Default is
+                                'xray' which queries the heasarc master x-ray catalog,
+                                'radio' will query the heasarc master radio catalog. See
+                                https://heasarc.gsfc.nasa.gov/cgi-bin/W3Browse/w3catindex.pl
+                                for a complete list.
+            **kwargs : Any other arguments to pass to query_region
+
+        Returns:
+            Astropy table of the rows in `heasarc_table` that match self.coord.
+        """
+        from astroquery.heasarc import Heasarc
+
+        res = DataFinder._wrap_astroquery(
+            Heasarc, self.coord, mission=heasarc_table, radius=radius, **kwargs
+        )
+
         return res
 
     ###################################################################################

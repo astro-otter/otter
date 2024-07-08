@@ -231,3 +231,22 @@ def test_query_sparcl():
 
     assert isinstance(res, Table)
     assert len(res) >= 1, "Missing some spectroscopic data!"
+
+
+def test_query_heasarc():
+    """
+    Test querying the Heasarc x-ray catalog
+    """
+
+    df1 = construct_data_finder()
+
+    # test with x-ray
+    res = df1.query_heasarc()
+    assert isinstance(res, Table)
+    assert len(res) >= 14, "Missing some HEASARC data"
+
+    # test with radio
+    res2 = df1.query_heasarc(heasarc_table="radio")
+    assert isinstance(res2, Table)
+    assert len(res2) >= 2, "Missing some HEASARC data"
+    assert b"NVSS        " in res2["DATABASE_TABLE"].data
