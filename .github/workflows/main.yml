@@ -5,6 +5,10 @@ on:
   push:
     branches:
       - main
+env:
+  ATLAS_UNAME: ${{ secrets.ATLAS_UNAME }}
+  ATLAS_PWORD: ${{ secrets.ATLAS_PWORD }}
+  ATLAS_API_KEY: ${{ secrets.ATLAS_API_KEY }}
 
 jobs:
   tests:
@@ -43,10 +47,7 @@ jobs:
 
       - name: Test package
         run: python -m pytest --cov=otter
-        env:
-          ATLAS_UNAME: ${{ secrets.ATLAS_UNAME }}
-          ATLAS_PWORD: ${{ secrets.ATLAS_PWORD }}
-          ATLAS_API_KEY: ${{ secrets.ATLAS_API_KEY }}
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
