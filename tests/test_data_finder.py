@@ -112,9 +112,11 @@ def test_query_vizier():
     assert "II/294/sdss7" in res.keys()
 
 
-def test_query_atlas():
+def broken_test_query_atlas():
     """
     Test the query_atlas method
+
+    THIS IS BROKEN ON GITHUB ACTIONS BECAUSE WE CANT SET THE ENV VARS!!!
 
     This one will inherently take a while!!! But it's because of atlas not us...
     """

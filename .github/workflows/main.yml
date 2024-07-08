@@ -5,10 +5,6 @@ on:
   push:
     branches:
       - main
-env:
-  ATLAS_UNAME: ${{ secrets.ATLAS_UNAME }}
-  ATLAS_PWORD: ${{ secrets.ATLAS_PWORD }}
-  ATLAS_API_KEY: ${{ secrets.ATLAS_API_KEY }}
 
 jobs:
   tests:
