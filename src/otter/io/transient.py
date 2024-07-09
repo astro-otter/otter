@@ -9,6 +9,7 @@ from copy import deepcopy
 import re
 from collections.abc import MutableMapping
 from typing_extensions import Self
+import logging
 
 import numpy as np
 import pandas as pd
@@ -16,9 +17,6 @@ import pandas as pd
 import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord
-
-from synphot.units import VEGAMAG, convert_flux
-from synphot.spectrum import SourceSpectrum
 
 from ..exceptions import (
     FailedQueryError,
@@ -32,6 +30,7 @@ from .host import Host
 warnings.simplefilter("once", RuntimeWarning)
 warnings.simplefilter("once", UserWarning)
 np.seterr(divide="ignore")
+logger = logging.getLogger(__name__)
 
 
 class Transient(MutableMapping):
@@ -371,17 +370,54 @@ class Transient(MutableMapping):
             return default
         return default.object_class, default.confidence, default.reference
 
-    def get_host(self) -> Host:
+    def get_host(self, max_hosts=3, **kwargs) -> list[Host]:
         """
         Gets the default host information of this Transient. This returns an otter.Host
-        object.
+        object. If no host is known in OTTER, it uses astro-ghost to find the best
+        match.
+
+        Args:
+            max_hosts [int] : The maximum number of hosts to return
+            **kwargs : keyword arguments to be passed to getGHOST
 
         Returns:
-            An otter.Host object. This is useful becuase the Host objects have useful
-            methods for querying public catalogs for data of the host.
+            A list of otter.Host objects. This is useful becuase the Host objects have
+            useful methods for querying public catalogs for data of the host.
         """
-        default_host = self._get_default("host")
-        host = Host(transient_name=self.default_name, **dict(default_host))
+        # first try to get the host information from our local database
+        if "host" in self:
+            host = [
+                Host(transient_name=self.default_name, **dict(h)) for h in self["host"]
+            ]
+
+        # then try astro-ghost
+        else:
+            logger.warn(
+                "No host known, trying to find it with astro-ghost. \
+                See https://uiucsnastro-ghost.readthedocs.io/en/latest/index.html"
+            )
+
+            # this import has to be here otherwise the code breaks
+            from astro_ghost.ghostHelperFunctions import getTransientHosts, getGHOST
+
+            getGHOST(real=False, verbose=1)
+            res = getTransientHosts(
+                [self.default_name], [self.get_skycoord()], verbose=False
+            )
+
+            host = [
+                Host(
+                    host_ra=res["raStack"].data[i],
+                    host_dec=res["decStack"].data[i],
+                    host_ra_units="deg",
+                    host_dec_units="deg",
+                    host_name=res["objName"].data[i],
+                    transient_name=self.default_name,
+                    reference=res["astro-ghost"].data[i],
+                )
+                for i in range(len(res))
+            ]
+
         return host
 
     def _get_default(self, key, filt=None):
@@ -469,6 +505,10 @@ class Transient(MutableMapping):
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
         """
+        # these imports need to be here for some reason
+        # otherwise the code breaks
+        from synphot.units import VEGAMAG, convert_flux
+        from synphot.spectrum import SourceSpectrum
 
         # check inputs
         if by not in {"value", "raw"}:

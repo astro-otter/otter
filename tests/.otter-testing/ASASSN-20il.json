@@ -1,18 +1,19 @@
 {
+    "key1": "foo",
     "name": {
         "default_name": "ASASSN-20il",
         "alias": [
-            {
-                "value": "AT 2020pom",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            },
             {
                 "value": "ASASSN-20il",
                 "reference": [
                     "ASAS-SN Supernovae",
                     "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "AT 2020pom",
+                "reference": [
+                    "ASAS-SN Supernovae"
                 ]
             },
             {
@@ -33,11 +34,23 @@
                     "me!",
                     "me!",
                     "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
+                    "me!",
                     "me!"
                 ]
             }
         ]
     },
+    "key2": "bar",
     "coordinate": [
         {
             "ra": "5:03:11.3",
@@ -60,8 +73,6 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "key1": "foo",
-    "key2": "bar",
     "reference_alias": [
         {
             "name": "ASAS-SN Supernovae",
@@ -84,17 +95,18 @@
             "human_readable_name": "Noah"
         }
     ],
-    "distance": [
+    "host": [
         {
-            "value": "0.015841",
+            "host_name": "ESO 486-G 017",
+            "host_ra": 75.79583333333332,
+            "host_dec": -22.814444444444444,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
             "reference": [
                 "2023PASP..135c4101G",
                 "2014ApJ...788...48S",
                 "2020TNSTR.189....1B"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
+            ]
         }
     ],
     "classification": [
@@ -114,6 +126,19 @@
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
+    "distance": [
+        {
+            "value": "0.015841",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2014ApJ...788...48S",
+                "2020TNSTR.189....1B"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
     "date_reference": [
         {
             "value": "2020-07-8 4:19:11.999999999975444",
@@ -135,20 +160,6 @@
                 "2020TNSTR.189....1B"
             ],
             "default": true
-        }
-    ],
-    "host": [
-        {
-            "host_name": "ESO 486-G 017",
-            "host_ra": 75.79583333333332,
-            "host_dec": -22.814444444444444,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2014ApJ...788...48S",
-                "2020TNSTR.189....1B"
-            ]
         }
     ]
 }

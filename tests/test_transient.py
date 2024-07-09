@@ -257,7 +257,8 @@ def test_get_host():
     t = Transient(generate_test_json())
 
     host = t.get_host()
-    assert isinstance(host, Host)
+    assert isinstance(host, list)
+    assert isinstance(host[0], Host)
 
 
 def test_clean_photometry():

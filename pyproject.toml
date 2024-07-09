@@ -44,6 +44,7 @@ dependencies = [
   "fundamentals",
   "astro-datalab",
   "sparclclient",
+  "astro-ghost",
 
   # only for windows OS b/c it doesn't ship with readline by default
   'pyreadline3; platform_system == "Windows"'
