@@ -1,54 +1,4 @@
 {
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1.0,
-            "reference": [
-                "2011Natur.476..425Z",
-                "2011Sci...333..203B",
-                "2012ApJ...748...36B",
-                "2012MNRAS.421.1942W",
-                "2013ApJ...767..152Z",
-                "2016MNRAS.462L..66Y",
-                "2018ApJ...854...86E"
-            ],
-            "default": true
-        }
-    ],
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "name": {
-        "default_name": "Sw J1644+57",
-        "alias": [
-            {
-                "value": "Swift J1644+57",
-                "reference": [
-                    "2017ApJ...838..149A",
-                    "2011Sci...333..203B"
-                ]
-            },
-            {
-                "value": "GRB 110328A",
-                "reference": [
-                    "2011Sci...333..203B"
-                ]
-            },
-            {
-                "value": "Swift J164449.3+573451",
-                "reference": [
-                    "2011Sci...333..203B"
-                ]
-            },
-            {
-                "value": "Sw J1644+57",
-                "reference": [
-                    "Swift"
-                ]
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "16 44 49.93130",
@@ -67,11 +17,11 @@
             ],
             "computed": false,
             "default": true,
-            "uuid": "7f721442-2216-49f7-ab9c-7989653d6ff2",
+            "uuid": "52487c5c-e40b-46a1-aa2d-ee3429b0c4e3",
             "coordinate_type": "equitorial"
         },
         {
-            "reference": "7f721442-2216-49f7-ab9c-7989653d6ff2",
+            "reference": "52487c5c-e40b-46a1-aa2d-ee3429b0c4e3",
             "computed": true,
             "coordinate_type": "galactic",
             "l": 86.71123273634593,
@@ -87,18 +37,112 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "filter_alias": [
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
+    "reference_alias": [
         {
-            "filter_key": "4.9GHz",
-            "freq_eff": 4.9,
-            "freq_units": "GHz"
+            "name": "2011Natur.476..425Z",
+            "human_readable_name": "Zauderer et al. (2011)"
         },
         {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm"
+            "name": "2012ApJ...748...36B",
+            "human_readable_name": "Berger et al. (2012)"
+        },
+        {
+            "name": "2012MNRAS.421.1942W",
+            "human_readable_name": "Wiersema et al. (2012)"
+        },
+        {
+            "name": "2013ApJ...767..152Z",
+            "human_readable_name": "Zauderer et al. (2013)"
+        },
+        {
+            "name": "2016MNRAS.462L..66Y",
+            "human_readable_name": "Yang et al. (2016)"
+        },
+        {
+            "name": "2018ApJ...854...86E",
+            "human_readable_name": "Eftekhari et al. (2018)"
+        },
+        {
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011Sci...333..203B",
+            "human_readable_name": "Bloom et al. (2011)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2011Sci...333..199L",
+            "human_readable_name": "Levan, A. J. et al. (2011)"
+        }
+    ],
+    "name": {
+        "default_name": "Sw J1644+57",
+        "alias": [
+            {
+                "value": "Swift J164449.3+573451",
+                "reference": [
+                    "2011Sci...333..203B"
+                ]
+            },
+            {
+                "value": "GRB 110328A",
+                "reference": [
+                    "2011Sci...333..203B"
+                ]
+            },
+            {
+                "value": "Sw J1644+57",
+                "reference": [
+                    "Swift"
+                ]
+            },
+            {
+                "value": "Swift J1644+57",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2011Sci...333..203B",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2011Natur.476..425Z",
+                "2011Sci...333..199L",
+                "2011Sci...333..203B",
+                "2012ApJ...748...36B",
+                "2012MNRAS.421.1942W",
+                "2013ApJ...767..152Z",
+                "2016MNRAS.462L..66Y",
+                "2017ApJ...838..149A",
+                "2018ApJ...854...86E",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
         }
     ],
     "distance": [
@@ -151,6 +195,18 @@
             "default": true,
             "distance_type": "comoving",
             "unit": "Mpc"
+        },
+        {
+            "value": "0.3543",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2011Sci...333..199L",
+                "2011Sci...333..203B",
+                "2017ApJ...838..149A"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
         }
     ],
     "date_reference": [
@@ -177,8 +233,33 @@
             ],
             "computed": false,
             "date_type": "discovery",
-            "measurement_type": "discovery",
             "default": true
+        },
+        {
+            "value": "2011-03-29 ",
+            "date_format": "iso",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2011Sci...333..199L",
+                "2011Sci...333..203B",
+                "2017ApJ...838..149A"
+            ],
+            "date_type": "discovery",
+            "default": true
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "4.9GHz",
+            "freq_eff": 4.9,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm"
         }
     ],
     "photometry": [
@@ -918,50 +999,19 @@
             "corr_s": null
         }
     ],
-    "reference_alias": [
+    "host": [
         {
-            "name": "2011Natur.476..425Z",
-            "human_readable_name": "Zauderer et al. (2011)"
-        },
-        {
-            "name": "2012ApJ...748...36B",
-            "human_readable_name": "Berger et al. (2012)"
-        },
-        {
-            "name": "2012MNRAS.421.1942W",
-            "human_readable_name": "Wiersema et al. (2012)"
-        },
-        {
-            "name": "2013ApJ...767..152Z",
-            "human_readable_name": "Zauderer et al. (2013)"
-        },
-        {
-            "name": "2016MNRAS.462L..66Y",
-            "human_readable_name": "Yang et al. (2016)"
-        },
-        {
-            "name": "2018ApJ...854...86E",
-            "human_readable_name": "Eftekhari et al. (2018)"
-        },
-        {
-            "name": "2017ApJ...838..149A",
-            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
-        },
-        {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
-        },
-        {
-            "name": "2011Sci...333..203B",
-            "human_readable_name": "Bloom et al. (2011)"
-        },
-        {
-            "name": "2011ApJ...737..103S",
-            "human_readable_name": "Schlafly & Finkbeiner (2011)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
+            "host_name": "Swift J164449.3+573451",
+            "host_ra": 251.20416666666665,
+            "host_dec": 57.58083333333334,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2011Sci...333..199L",
+                "2011Sci...333..203B",
+                "2017ApJ...838..149A"
+            ]
         }
     ]
 }

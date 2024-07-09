@@ -9,6 +9,7 @@ from copy import deepcopy
 import re
 from collections.abc import MutableMapping
 from typing_extensions import Self
+import logging
 
 import numpy as np
 import pandas as pd
@@ -17,9 +18,6 @@ import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord
 
-from synphot.units import VEGAMAG, convert_flux
-from synphot.spectrum import SourceSpectrum
-
 from ..exceptions import (
     FailedQueryError,
     IOError,
@@ -27,10 +25,12 @@ from ..exceptions import (
     TransientMergeError,
 )
 from ..util import XRAY_AREAS
+from .host import Host
 
 warnings.simplefilter("once", RuntimeWarning)
 warnings.simplefilter("once", UserWarning)
 np.seterr(divide="ignore")
+logger = logging.getLogger(__name__)
 
 
 class Transient(MutableMapping):
@@ -196,6 +196,19 @@ class Transient(MutableMapping):
                 + " You can set strict_merge=False to override the check"
             )
 
+        # create set of the allowed keywords
+        allowed_keywords = {
+            "name",
+            "date_reference",
+            "coordinate",
+            "distance",
+            "filter_alias",
+            "schema_version",
+            "photometry",
+            "classification",
+            "host",
+        }
+
         # create a blank dictionary since we don't want to overwrite this object
         out = {}
 
@@ -230,24 +243,8 @@ class Transient(MutableMapping):
                 continue
 
             # There are some special keys that we are expecting
-            if key == "name":
-                self._merge_names(other, out)
-            elif key == "coordinate":
-                self._merge_coords(other, out)
-            elif key == "date_reference":
-                self._merge_date(other, out)
-            elif key == "distance":
-                self._merge_distance(other, out)
-            elif key == "filter_alias":
-                self._merge_filter_alias(other, out)
-            elif key == "schema_version":
-                self._merge_schema_version(other, out)
-            elif key == "photometry":
-                self._merge_photometry(other, out)
-            elif key == "spectra":
-                self._merge_spectra(other, out)
-            elif key == "classification":
-                self._merge_class(other, out)
+            if key in allowed_keywords:
+                Transient._merge_arbitrary(key, self, other, out)
             else:
                 # this is an unexpected key!
                 if strict_merge:
@@ -341,7 +338,7 @@ class Transient(MutableMapping):
         else:
             f = "mjd"
 
-        return Time(date["value"], format=f)
+        return Time(str(date["value"]).strip(), format=f)
 
     def get_redshift(self) -> float:
         """
@@ -372,6 +369,56 @@ class Transient(MutableMapping):
         if default is None:
             return default
         return default.object_class, default.confidence, default.reference
+
+    def get_host(self, max_hosts=3, **kwargs) -> list[Host]:
+        """
+        Gets the default host information of this Transient. This returns an otter.Host
+        object. If no host is known in OTTER, it uses astro-ghost to find the best
+        match.
+
+        Args:
+            max_hosts [int] : The maximum number of hosts to return
+            **kwargs : keyword arguments to be passed to getGHOST
+
+        Returns:
+            A list of otter.Host objects. This is useful becuase the Host objects have
+            useful methods for querying public catalogs for data of the host.
+        """
+        # first try to get the host information from our local database
+        if "host" in self:
+            host = [
+                Host(transient_name=self.default_name, **dict(h)) for h in self["host"]
+            ]
+
+        # then try astro-ghost
+        else:
+            logger.warn(
+                "No host known, trying to find it with astro-ghost. \
+                See https://uiucsnastro-ghost.readthedocs.io/en/latest/index.html"
+            )
+
+            # this import has to be here otherwise the code breaks
+            from astro_ghost.ghostHelperFunctions import getTransientHosts, getGHOST
+
+            getGHOST(real=False, verbose=1)
+            res = getTransientHosts(
+                [self.default_name], [self.get_skycoord()], verbose=False
+            )
+
+            host = [
+                Host(
+                    host_ra=res["raStack"].data[i],
+                    host_dec=res["decStack"].data[i],
+                    host_ra_units="deg",
+                    host_dec_units="deg",
+                    host_name=res["objName"].data[i],
+                    transient_name=self.default_name,
+                    reference=res["astro-ghost"].data[i],
+                )
+                for i in range(len(res))
+            ]
+
+        return host
 
     def _get_default(self, key, filt=None):
         """
@@ -458,6 +505,10 @@ class Transient(MutableMapping):
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
         """
+        # these imports need to be here for some reason
+        # otherwise the code breaks
+        from synphot.units import VEGAMAG, convert_flux
+        from synphot.spectrum import SourceSpectrum
 
         # check inputs
         if by not in {"value", "raw"}:
@@ -762,16 +813,6 @@ class Transient(MutableMapping):
         bothlines = [{"value": k, "reference": t1map[k] + t2map[k]} for k in inboth]
         out[key]["alias"] = line2 + line1 + bothlines
 
-    def _merge_coords(t1, t2, out):  # noqa: N805
-        """
-        Merge the coordinates subdictionaries for t1 and t2 and put it in out
-
-        Use pandas to drop any duplicates
-        """
-        key = "coordinate"
-
-        Transient._merge_arbitrary(key, t1, t2, out)
-
     def _merge_filter_alias(t1, t2, out):  # noqa: N805
         """
         Combine the filter alias lists across the transient objects
@@ -836,12 +877,6 @@ class Transient(MutableMapping):
 
                 out[key][i1] = newdict  # replace the dictionary at i1 with the new dict
 
-    def _merge_spectra(t1, t2, out):  # noqa: N805
-        """
-        Combine spectra sources
-        """
-        pass
-
     def _merge_class(t1, t2, out):  # noqa: N805
         """
         Combine the classification attribute
@@ -877,22 +912,6 @@ class Transient(MutableMapping):
             else:
                 item["default"] = False
 
-    def _merge_date(t1, t2, out):  # noqa: N805
-        """
-        Combine epoch data across two transients and write it to "out"
-        """
-        key = "date_reference"
-
-        Transient._merge_arbitrary(key, t1, t2, out)
-
-    def _merge_distance(t1, t2, out):  # noqa: N805
-        """
-        Combine distance information for these two transients
-        """
-        key = "distance"
-
-        Transient._merge_arbitrary(key, t1, t2, out)
-
     @staticmethod
     def _merge_arbitrary(key, t1, t2, out):
         """
@@ -902,24 +921,36 @@ class Transient(MutableMapping):
         a NxM pandas dataframe!
         """
 
-        df1 = pd.DataFrame(t1[key])
-        df2 = pd.DataFrame(t2[key])
+        if key == "name":
+            t1._merge_names(t2, out)
+        elif key == "filter_alias":
+            t1._merge_filter_alias(t2, out)
+        elif key == "schema_version":
+            t1._merge_schema_version(t2, out)
+        elif key == "photometry":
+            t1._merge_photometry(t2, out)
+        elif key == "classification":
+            t1._merge_class(t2, out)
+        else:
+            # this is where we can standardize some of the merging
+            df1 = pd.DataFrame(t1[key])
+            df2 = pd.DataFrame(t2[key])
 
-        merged_with_dups = pd.concat([df1, df2]).reset_index(drop=True)
+            merged_with_dups = pd.concat([df1, df2]).reset_index(drop=True)
 
-        # have to get the indexes to drop using a string rep of the df
-        # this is cause we have lists in some cells
-        to_drop = merged_with_dups.astype(str).drop_duplicates().index
+            # have to get the indexes to drop using a string rep of the df
+            # this is cause we have lists in some cells
+            to_drop = merged_with_dups.astype(str).drop_duplicates().index
 
-        merged = merged_with_dups.iloc[to_drop].reset_index(drop=True)
+            merged = merged_with_dups.iloc[to_drop].reset_index(drop=True)
 
-        outdict = merged.to_dict(orient="records")
+            outdict = merged.to_dict(orient="records")
 
-        outdict_cleaned = Transient._remove_nans(
-            outdict
-        )  # clear out the nans from pandas conversion
+            outdict_cleaned = Transient._remove_nans(
+                outdict
+            )  # clear out the nans from pandas conversion
 
-        out[key] = outdict_cleaned
+            out[key] = outdict_cleaned
 
     @staticmethod
     def _remove_nans(d):

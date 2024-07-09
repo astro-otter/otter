@@ -567,3 +567,45 @@ subschema = {
 """
 A useful variable to describe all of the subschemas that are available and can be used
 """
+
+VIZIER_LARGE_CATALOGS = [
+    "2MASS-PSC",
+    "2MASX",
+    "AC2000.2",
+    "AKARI",
+    "ALLWISE",
+    "ASCC-2.5",
+    "B/DENIS",
+    "CMC14",
+    "Gaia-DR1",
+    "GALEX",
+    "GLIMPSE",
+    "GSC-ACT",
+    "GSC1.2",
+    "GSC2.2",
+    "GSC2.3",
+    "HIP",
+    "HIP2",
+    "IRAS",
+    "NOMAD1",
+    "NVSS",
+    "PanSTARRS-DR1",
+    "PGC",
+    "Planck-DR1",
+    "PPMX",
+    "PPMXL",
+    "SDSS-DR12",
+    "SDSS-DR7",
+    "SDSS-DR9",
+    "Tycho-2",
+    "UCAC2",
+    "UCAC3",
+    "UCAC4",
+    "UKIDSS",
+    "USNO-A2",
+    "USNO-B1",
+    "WISE",
+]
+"""
+ViZier catalog names that we query for host information in the Host class
+"""

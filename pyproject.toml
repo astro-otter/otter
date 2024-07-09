@@ -9,7 +9,7 @@ readme = "README.md"
 license = {file = "LICENSE"}
 dynamic = ["version"]
 
-requires-python = ">=3.9"
+requires-python = ">=3.10,<3.12"
 
 classifiers = [
   "License :: OSI Approved :: BSD License",
@@ -20,7 +20,6 @@ classifiers = [
   "License :: OSI Approved :: BSD License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Development Status :: 2 - Pre-Alpha"
@@ -28,20 +27,35 @@ classifiers = [
 
 dependencies = [
   # necessary dependencies for the src code
-  "numpy>=1.20",
-  "astropy>=5.2",
+  "numpy>=1.20,<2",
+  "astropy>=6",
   "pandas",
+  "synphot",
+  "typing-extensions",
+
+  # for the plotting
   "matplotlib",
   "plotly",
+
+  # for the DataFinder query tool
   "astroquery",
-  "synphot",
   "ads",
+  "skypatrol",
+  "fundamentals",
+  "astro-datalab",
+  "sparclclient",
+  "astro-ghost",
 
-  # useful dev tools
-  "ruff", # linter
-  "pre-commit", # enable pre-commit hooks
+  # only for windows OS b/c it doesn't ship with readline by default
+  'pyreadline3; platform_system == "Windows"'
+]
 
-  # tools for building the readthedocs page
+[project.urls]
+Home = "https://github.com/astro-otter"
+
+[project.optional-dependencies]
+# tools for building the readthedocs page
+docs = [
   "Sphinx>=3.0.0",
   "myst_parser>=0.13",
   "nbsphinx>=0.9.1",
@@ -51,8 +65,11 @@ dependencies = [
   "ipykernel"
 ]
 
-[project.urls]
-Home = "https://github.com/astro-otter"
+# useful tools for developers
+dev = [
+  "ruff", # linter
+  "pre-commit", # enable pre-commit hooks
+]
 
 [tool.setuptools.packages.find]
 where = ['src']

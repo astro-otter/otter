@@ -1,0 +1,95 @@
+{
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
+    "name": {
+        "default_name": "Gaia 16aka",
+        "alias": [
+            {
+                "value": "Gaia 16aka",
+                "reference": "2023PASP..135c4101G"
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2023PASP..135c4101G",
+                "2016TNSTR.480....1D",
+                "2017IAUS..324..127W"
+            ]
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.31",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2016TNSTR.480....1D",
+                "2017IAUS..324..127W"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": 222.03333333333333,
+            "dec": 37.23305555555556,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2016TNSTR.480....1D",
+                "2017IAUS..324..127W"
+            ],
+            "default": true
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2016-03-31 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2016TNSTR.480....1D",
+                "2017IAUS..324..127W"
+            ],
+            "default": true
+        }
+    ],
+    "host": [
+        {
+            "host_name": "SDSS J144808.24+371358.8",
+            "host_ra": 222.03333333333333,
+            "host_dec": 37.23305555555556,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2016TNSTR.480....1D",
+                "2017IAUS..324..127W"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2016TNSTR.480....1D",
+            "human_readable_name": "Delgado, A. et al. (2016)"
+        },
+        {
+            "name": "2017IAUS..324..127W",
+            "human_readable_name": "Wyrzykowski, \u0141ukasz et al. (2017)"
+        }
+    ]
+}

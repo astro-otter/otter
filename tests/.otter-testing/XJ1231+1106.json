@@ -1,25 +1,4 @@
 {
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "name": {
-        "default_name": "XJ1231+1106",
-        "alias": [
-            {
-                "value": "XJ1231+1106",
-                "reference": [
-                    "2017arXiv170206956L"
-                ]
-            },
-            {
-                "value": "2XMM J123103.2+110648",
-                "reference": [
-                    "2017arXiv170206956L"
-                ]
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "12:31:03.2",
@@ -32,49 +11,10 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "distance": [
-        {
-            "value": "0.118",
-            "reference": [
-                "2017arXiv170206956L"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "568",
-            "unit": "Mpc",
-            "reference": [
-                "2017arXiv170206956L",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": "508",
-            "unit": "Mpc",
-            "reference": [
-                "2017arXiv170206956L",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": "2017ApJ...835...64G",
-            "default": true
-        }
-    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "reference_alias": [
         {
             "name": "2017arXiv170206956L",
@@ -91,6 +31,138 @@
         {
             "name": "2017ApJ...835...64G",
             "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2012ApJ...756...27L",
+            "human_readable_name": "Lin, Dacheng et al. (2012)"
+        },
+        {
+            "name": "2013ApJ...776L..10L",
+            "human_readable_name": "Lin, Dacheng et al. (2013)"
+        },
+        {
+            "name": "2017MNRAS.468..783L",
+            "human_readable_name": "Lin, Dacheng et al. (2017)"
+        },
+        {
+            "name": "2012ApJ...759L..16H",
+            "human_readable_name": "Ho, Luis C. et al. (2012)"
+        }
+    ],
+    "name": {
+        "default_name": "2XMM J123103.2+110648",
+        "alias": [
+            {
+                "value": "XJ1231+1106",
+                "reference": [
+                    "2017arXiv170206956L"
+                ]
+            },
+            {
+                "value": "2XMM J123103.2+110648",
+                "reference": [
+                    "2017arXiv170206956L",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2012ApJ...756...27L",
+                "2012ApJ...759L..16H",
+                "2013ApJ...776L..10L",
+                "2017ApJ...835...64G",
+                "2017MNRAS.468..783L",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.118",
+            "reference": [
+                "2017arXiv170206956L"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "568",
+            "reference": [
+                "2017arXiv170206956L",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity",
+            "unit": "Mpc"
+        },
+        {
+            "value": "508",
+            "reference": [
+                "2017arXiv170206956L",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        },
+        {
+            "value": "0.11871",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2012ApJ...756...27L",
+                "2013ApJ...776L..10L",
+                "2017MNRAS.468..783L",
+                "2012ApJ...759L..16H"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "host": [
+        {
+            "host_name": "GJ1231+1106",
+            "host_ra": 187.7625,
+            "host_dec": 11.11351111111111,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2012ApJ...756...27L",
+                "2013ApJ...776L..10L",
+                "2017MNRAS.468..783L",
+                "2012ApJ...759L..16H"
+            ]
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2003-07-13 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2012ApJ...756...27L",
+                "2013ApJ...776L..10L",
+                "2017MNRAS.468..783L",
+                "2012ApJ...759L..16H"
+            ],
+            "default": true
         }
     ]
 }

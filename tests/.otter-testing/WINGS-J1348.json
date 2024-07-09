@@ -1,19 +1,4 @@
 {
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "name": {
-        "default_name": "WINGS J1348",
-        "alias": [
-            {
-                "value": "WINGS J1348",
-                "reference": [
-                    "2017ApJ...838..149A"
-                ]
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "13:48:49.9",
@@ -26,53 +11,10 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "distance": [
-        {
-            "value": "0.062",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2013MNRAS.435.1904M"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "290",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2013MNRAS.435.1904M",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": "270",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2013MNRAS.435.1904M",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": [
-                "2017ApJ...838..149A"
-            ]
-        }
-    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -93,6 +35,94 @@
         {
             "name": "2017ApJ...835...64G",
             "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2015ApJ...807..185F",
+            "human_readable_name": "Feng, Hua et al. (2015)"
+        }
+    ],
+    "name": {
+        "default_name": "WINGS J1348",
+        "alias": [
+            {
+                "value": "WINGS J134849.88+263557.5",
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "WINGS J1348",
+                "reference": [
+                    "2017ApJ...838..149A"
+                ]
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2013MNRAS.435.1904M",
+                "2015ApJ...807..185F",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.062",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2013MNRAS.435.1904M"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": "290",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2013MNRAS.435.1904M",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity",
+            "unit": "Mpc"
+        },
+        {
+            "value": "270",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2013MNRAS.435.1904M",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving",
+            "unit": "Mpc"
+        },
+        {
+            "value": "0.062",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2013MNRAS.435.1904M",
+                "2015ApJ...807..185F",
+                "2017ApJ...838..149A"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
         }
     ],
     "date_reference": [
@@ -105,8 +135,28 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
+        },
+        {
+            "value": "1999-12-20 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2013MNRAS.435.1904M",
+                "2015ApJ...807..185F",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm"
         }
     ],
     "photometry": [
@@ -351,13 +401,19 @@
             "corr_s": null
         }
     ],
-    "filter_alias": [
+    "host": [
         {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm"
+            "host_name": "WINGS J134849.88+263557.5",
+            "host_ra": 207.20833333333331,
+            "host_dec": 26.599305555555553,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2013MNRAS.435.1904M",
+                "2015ApJ...807..185F",
+                "2017ApJ...838..149A"
+            ]
         }
     ]
 }

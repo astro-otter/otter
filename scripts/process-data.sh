@@ -11,7 +11,7 @@ echo "Processing data and writing to $OUTDIR..."
 # check if the output director exists and if so remove it
 if [ -d $OUTDIR ]; then
     echo "$OUTDIR exists already! Removing and refresshing with new data!"
-    rm -r $OUTDIR/*
+    rm -r $OUTDIR
 fi
 
 # make OUTDIR if it doesn't exist
@@ -55,6 +55,9 @@ python3 $FILEDIR/curated_optical_tde_catalog_to_otter.py --indir $INDIR/curated_
 # and then rm the curated_optical_tde_catalog directory since it is already stored
 # at the above github
 rm -rf $INDIR/curated_optical_tde_catalog
+
+# then the data from Goldtooth et al. (2023)
+python3 $FILEDIR/goldtooth_2023_to_otter.py --otterdir $OUTDIR --indir $INDIR/goldtooth_2023
 
 ###########################################################################
 ############### NOW QUERY PUBLIC CATALOGS FOR MORE DATA ###################

@@ -1,36 +1,4 @@
 {
-    "distance": [
-        {
-            "value": "646",
-            "unit": "Mpc",
-            "reference": [
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": "570",
-            "unit": "Mpc",
-            "reference": [
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving"
-        },
-        {
-            "value": 0.148,
-            "reference": [
-                "2017TNSCR.221....1B"
-            ],
-            "computed": false,
-            "distance_type": "redshift"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2016A&A...594A..13P",
@@ -45,6 +13,14 @@
             "human_readable_name": "Guillochon et al. (2017)"
         },
         {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2017ATel11049....1S",
+            "human_readable_name": "Sokolovsky, K. et al. (2017)"
+        },
+        {
             "name": "2017TNSTR.220....1C",
             "human_readable_name": "Chambers, K. C. et al. (2017)"
         },
@@ -53,9 +29,34 @@
             "human_readable_name": "Barbarino, C. et al. (2017)"
         }
     ],
+    "coordinate": [
+        {
+            "ra": "11:31:53.04",
+            "dec": "+29:59:45.24",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "ra": 172.97078162,
+            "dec": 29.9957852105,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": "2017TNSTR.220....1C"
+        }
+    ],
     "name": {
         "default_name": "2017bcc",
         "alias": [
+            {
+                "value": "2017bcc",
+                "reference": [
+                    "TNS"
+                ]
+            },
             {
                 "value": "ZTF20aacbwbm",
                 "reference": [
@@ -63,9 +64,9 @@
                 ]
             },
             {
-                "value": "2017bcc",
+                "value": "SN 2017bcc",
                 "reference": [
-                    "TNS"
+                    "2023PASP..135c4101G"
                 ]
             },
             {
@@ -95,7 +96,16 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
+            "default": true
+        },
+        {
+            "value": "2017-02-18 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017ATel11049....1S"
+            ],
             "default": true
         },
         {
@@ -109,11 +119,13 @@
     "classification": [
         {
             "object_class": "TDE",
-            "confidence": 0.1,
+            "confidence": 1,
             "reference": [
-                "2017ApJ...835...64G"
+                "2017ATel11049....1S",
+                "2017ApJ...835...64G",
+                "2023PASP..135c4101G"
             ],
-            "default": false
+            "default": true
         },
         {
             "object_class": "SLSN-II",
@@ -121,59 +133,68 @@
             "reference": [
                 "2017TNSCR.221....1B"
             ],
-            "default": true
+            "default": false
         }
     ],
-    "coordinate": [
+    "distance": [
         {
-            "ra": "11:31:53.04",
-            "dec": "+29:59:45.24",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "coordinate_type": "equitorial"
+            "value": "646",
+            "unit": "Mpc",
+            "reference": [
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
         },
         {
-            "ra": 172.97078162,
-            "dec": 29.9957852105,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS",
-            "reference": "2017TNSTR.220....1C"
+            "value": "570",
+            "unit": "Mpc",
+            "reference": [
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        },
+        {
+            "value": "0.133",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017ATel11049....1S"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": 0.148,
+            "reference": [
+                "2017TNSCR.221....1B"
+            ],
+            "computed": false,
+            "distance_type": "redshift"
+        }
+    ],
+    "host": [
+        {
+            "host_name": "SDSS J113152.97+295944.8",
+            "host_ra": 172.97083333333333,
+            "host_dec": 29.99577777777778,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017ATel11049....1S"
+            ]
         }
     ],
     "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
     },
-    "filter_alias": [
-        {
-            "filter_key": "i",
-            "wave_eff": 749.9704174464691,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "z",
-            "wave_eff": 896.1488333992431,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "g",
-            "wave_eff": 471.8872246248687,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "r",
-            "wave_eff": 618.5194476741524,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "w",
-            "wave_eff": 638.9300625093831,
-            "wave_units": "nm"
-        }
-    ],
     "photometry": [
         {
             "raw": [
@@ -318,6 +339,33 @@
             "corr_hostav": false,
             "telescope": "PS2",
             "instrument": "GPC2"
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "i",
+            "wave_eff": 749.9704174464691,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "z",
+            "wave_eff": 896.1488333992431,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "g",
+            "wave_eff": 471.8872246248687,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "r",
+            "wave_eff": 618.5194476741524,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "w",
+            "wave_eff": 638.9300625093831,
+            "wave_units": "nm"
         }
     ]
 }

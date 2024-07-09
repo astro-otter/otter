@@ -1,0 +1,86 @@
+{
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
+    "name": {
+        "default_name": "SRGE J133053.3+734824",
+        "alias": [
+            {
+                "value": "SRGE J133053.3+734824",
+                "reference": "2023PASP..135c4101G"
+            }
+        ]
+    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2023PASP..135c4101G",
+                "2021MNRAS.508.3820S"
+            ]
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.1505",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2021MNRAS.508.3820S"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": 202.72091799999995,
+            "dec": 73.806739,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2021MNRAS.508.3820S"
+            ],
+            "default": true
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2020-11-02 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2021MNRAS.508.3820S"
+            ],
+            "default": true
+        }
+    ],
+    "host": [
+        {
+            "host_name": null,
+            "host_ra": 202.72091799999995,
+            "host_dec": 73.806739,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2021MNRAS.508.3820S"
+            ]
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2021MNRAS.508.3820S",
+            "human_readable_name": "Sazonov, S. et al. (2021)"
+        }
+    ]
+}
