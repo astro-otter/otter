@@ -407,15 +407,15 @@ class Transient(MutableMapping):
 
             host = [
                 Host(
-                    host_ra=res["raStack"].data[i],
-                    host_dec=res["decStack"].data[i],
+                    host_ra=row["raStack"],
+                    host_dec=row["decStack"],
                     host_ra_units="deg",
                     host_dec_units="deg",
-                    host_name=res["objName"].data[i],
+                    host_name=row["objName"],
                     transient_name=self.default_name,
-                    reference=res["astro-ghost"].data[i],
+                    reference=["astro-ghost"],
                 )
-                for i in range(len(res))
+                for i, row in res.iterrows()
             ]
 
         return host
