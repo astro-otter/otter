@@ -12,7 +12,7 @@ body:
 
 - type: input
   attributes:
-    label: "Version of `hepfile`"
+    label: "Version of `otter`"
     placeholder: "XX.YY.ZZ"
   validations:
     required: true
@@ -26,7 +26,7 @@ body:
 
 - type: input
   attributes:
-    label: "Version of `h5py`"
+    label: "Version of `astropy`"
     placeholder: "XX.YY.ZZ"
   validations:
     required: true
