@@ -57,7 +57,7 @@ Home = "https://github.com/astro-otter"
 # tools for building the readthedocs page
 docs = [
   "Sphinx>=3.0.0",
-  "myst_parser>=0.13",
+  "myst-parser>=0.13",
   "nbsphinx>=0.9.1",
   "sphinx-book-theme>=0.0.33",
   "sphinx_copybutton",
