@@ -1,6 +1,6 @@
 [build-system]
-requires = ['setuptools>=42']
-build-backend = "setuptools.build_meta"
+requires = ['poetry']
+build-backend = "poetry????" # this is wrong, figure out later...
 
 [project]
 name = "astro-otter"
