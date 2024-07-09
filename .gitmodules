@@ -1,0 +1,4 @@
+[submodule "docs/examples"]
+	path = docs/examples
+	url = https://github.com/astro-otter/examples.git
+	branch = main

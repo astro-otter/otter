@@ -8,4 +8,4 @@ examples will be added with time!
    :maxdepth: 3
    :caption: Contents:
 
-   nbs/basic_usage
+   examples/basic_usage
