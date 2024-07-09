@@ -9,6 +9,8 @@ python:
   install:
     - method: pip
       path: .
+      extra_requirements:
+        - docs
 
 # Build from the docs/ directory with Sphinx
 sphinx:
