@@ -8,4 +8,8 @@ examples will be added with time!
    :maxdepth: 3
    :caption: Contents:
 
+   examples/welcome
    examples/basic_usage
+   examples/transient_objects
+   examples/host_objects
+   examples/plotting
