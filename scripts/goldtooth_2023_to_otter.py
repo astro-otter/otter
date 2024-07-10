@@ -61,7 +61,13 @@ def main():
     data = read_goldtooth_catalog(os.path.join(args.indir, "goldtooth_2023_data.tsv"))
 
     for i, row in data.iterrows():
-        tde = row["TDE Name"]
+        tde = (
+            row["TDE Name"]
+            .replace("^a", "")
+            .replace("^b", "")
+            .replace("^c", "")
+            .strip()
+        )
         host = row["Host Name"]
 
         try:
