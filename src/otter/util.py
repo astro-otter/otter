@@ -5,6 +5,7 @@ Some constants, mappings, and functions to be used across the software
 from __future__ import annotations
 import os
 import ads
+from ads.exceptions import APIResponseError
 import astropy.units as u
 
 """
@@ -48,9 +49,16 @@ def bibcode_to_hrn(bibcode):
     """
 
     try:
-        adsquery = list(ads.SearchQuery(bibcode=bibcode))[0]
+        qobj = ads.SearchQuery(bibcode=bibcode)
+        qobj.execute()  # do the query
+        adsquery = list(qobj)[0]
     except IndexError:
         raise ValueError(f"Could not find {bibcode} on ADS!")
+    except APIResponseError:
+        raise ValueError(
+            "Out of ADS queries! Run curl command to check like \
+        https://github.com/adsabs/adsabs-dev-api/blob/master/README.md"
+        )
 
     authors = adsquery.author
     year = adsquery.year
