@@ -625,12 +625,11 @@ class Transient(MutableMapping):
             )  # assume error and values have the same unit
 
             # get and save the effective wavelength
-            if "freq_eff" in data and not np.isnan(data["freq_eff"].iloc[0]):
-                zz = zip(data["freq_eff"], data["freq_units"])
+            if "freq_eff" in data and not pd.isna(data["freq_eff"].iloc[0]):
+                zz = zip(data["freq_eff"].astype(float), data["freq_units"])
                 freq_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], freq_unit)
                 wave_eff = freq_eff.to(wave_unit, equivalencies=u.spectral())
-
-            elif "wave_eff" in data and not np.isnan(data["wave_eff"].iloc[0]):
+            elif "wave_eff" in data and not pd.isna(data["wave_eff"].iloc[0]):
                 zz = zip(data["wave_eff"], data["wave_units"])
                 wave_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], wave_unit)
                 freq_eff = wave_eff.to(freq_unit, equivalencies=u.spectral())
@@ -969,7 +968,7 @@ class Transient(MutableMapping):
                     outsubd[key] = val
 
                 else:
-                    if not np.isnan(val):
+                    if not pd.isna(val):
                         outsubd[key] = val
             outd.append(outsubd)
 
