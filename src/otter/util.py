@@ -47,7 +47,6 @@ def bibcode_to_hrn(bibcode):
     """
     Converts a bibcode to a human_readable_name (hrn) using ADSQuery
     """
-
     try:
         qobj = ads.SearchQuery(bibcode=bibcode)
         qobj.execute()  # do the query
