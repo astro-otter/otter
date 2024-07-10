@@ -152,35 +152,28 @@ def main():
             )
             for filt, val in filter_map_radio.items()
         ]
+
         # reference alias
-        json["reference_alias"] = [
-            dict(
-                name=tde.coord_bibcode[0],
-                human_readable_name=otter.util.bibcode_to_hrn(tde.coord_bibcode[0]),
-            )
-        ] + [dict(name=val, human_readable_name=val) for val in phot_sources]
+        # gather all the bibcodes
+        all_bibcodes = [tde.coord_bibcode[0]] + phot_sources
+        if tde.redshift_ref[0] not in all_bibcodes and not np.any(
+            pd.isna(tde.redshift)
+        ):
+            all_bibcodes.append(tde.redshift_ref[0])
 
-        curr_refs = {v["name"] for v in json["reference_alias"]}
-        if tde.redshift_ref[0] not in curr_refs and not np.any(pd.isna(tde.redshift)):
-            json["reference_alias"].append(
-                dict(
-                    name=tde.redshift_ref[0],
-                    human_readable_name=otter.util.bibcode_to_hrn(tde.redshift_ref[0]),
-                )
-            )
-
-        curr_refs = {v["name"] for v in json["reference_alias"]}
-        if tde.discovery_date_ref[0] not in curr_refs and not np.any(
+        if tde.discovery_date_ref[0] not in all_bibcodes and not np.any(
             pd.isna(tde.discovery_date)
         ):
-            json["reference_alias"].append(
-                dict(
-                    name=tde.discovery_date_ref[0],
-                    human_readable_name=otter.util.bibcode_to_hrn(
-                        tde.discovery_date_ref[0]
-                    ),
-                )
-            )
+            all_bibcodes.append(tde.discovery_date_ref[0])
+
+        # find the hrn's for all of these bibcodes
+        uq_bibcodes, all_hrns = otter.util.bibcode_to_hrn(all_bibcodes)
+
+        # package these into the reference alias
+        json["reference_alias"] = [
+            dict(name=name, human_readable_name=hrn)
+            for name, hrn in zip(uq_bibcodes, all_hrns)
+        ]
 
         # print(jj.dumps(json, indent=4))
         # print('#####################################################################')

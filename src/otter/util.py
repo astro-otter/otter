@@ -7,6 +7,7 @@ import os
 import ads
 from ads.exceptions import APIResponseError
 import astropy.units as u
+import numpy as np
 
 """
 Helper functions first that just don't belong anywhere else
@@ -47,10 +48,21 @@ def bibcode_to_hrn(bibcode):
     """
     Converts a bibcode to a human_readable_name (hrn) using ADSQuery
     """
+    if isinstance(bibcode, str):
+        query = f"bibcode:{bibcode}"
+        bibcodes = [bibcode]
+    else:
+        bibcodes = np.unique(bibcode)
+
+    query = f"bibcode:{bibcodes[0]}"
+    if len(bibcodes) > 1:
+        for b in bibcodes[1:]:
+            query += f" OR {b}"
+
     try:
-        qobj = ads.SearchQuery(bibcode=bibcode)
+        qobj = ads.SearchQuery(q=query)
         qobj.execute()  # do the query
-        adsquery = list(qobj)[0]
+        adsquery = list(qobj)
     except IndexError:
         raise ValueError(f"Could not find {bibcode} on ADS!")
     except APIResponseError:
@@ -59,21 +71,34 @@ def bibcode_to_hrn(bibcode):
         https://github.com/adsabs/adsabs-dev-api/blob/master/README.md"
         )
 
-    authors = adsquery.author
-    year = adsquery.year
+    hrns = []
+    for res in adsquery:
+        authors = res.author
+        year = res.year
 
-    if len(authors) == 0:
-        raise ValueError("This ADS bibcode does not exist!")
-    elif len(authors) == 1:
-        author = authors[0]
-    elif len(authors) == 2:
-        author = authors[0] + " & " + authors[1]
-    else:  # longer than 2
-        author = authors[0] + " et al."
+        if len(authors) == 0:
+            raise ValueError("This ADS bibcode does not exist!")
+        elif len(authors) == 1:
+            author = authors[0]
+        elif len(authors) == 2:
+            author = authors[0] + " & " + authors[1]
+        else:  # longer than 2
+            author = authors[0] + " et al."
 
-    # generate the human readable name
-    hrn = author + " (" + year + ")"
-    return hrn
+        # generate the human readable name
+        hrn = author + " (" + year + ")"
+        hrns.append(hrn)
+
+    if isinstance(bibcode, str):
+        return hrns[0]
+
+    if len(hrns) != len(bibcodes):
+        raise ValueError(
+            f"ADS has multiple sources associated with one of these bibcodes! \
+            {bibcode}"
+        )
+
+    return bibcodes, hrns
 
 
 """

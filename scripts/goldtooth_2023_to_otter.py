@@ -191,8 +191,9 @@ def main():
                 )
             ]
 
+        bibcodes, hrns = bibcode_to_hrn(bibcodes)
         tnew["reference_alias"] = [
-            {"name": b, "human_readable_name": bibcode_to_hrn(b)} for b in bibcodes
+            {"name": b, "human_readable_name": hrn} for b, hrn in zip(bibcodes, hrns)
         ]
 
         if t is not None:
