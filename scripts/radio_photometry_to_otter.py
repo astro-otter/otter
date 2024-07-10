@@ -112,8 +112,8 @@ def main():
 
             json_phot = dict(
                 reference=src,
-                raw=phot.flux.tolist(),
-                raw_err=phot.flux_err.tolist(),
+                raw=phot.flux.astype(float).tolist(),
+                raw_err=phot.flux_err.astype(float).tolist(),
                 raw_units=raw_units,
                 date=phot.date.tolist(),
                 date_format=phot.date_format.tolist(),
@@ -147,12 +147,11 @@ def main():
         json["filter_alias"] = [
             dict(
                 filter_key=filt,
-                freq_eff=val["band_eff_freq"],
+                freq_eff=float(val["band_eff_freq"]),
                 freq_units=val["band_eff_freq_unit"],
             )
             for filt, val in filter_map_radio.items()
         ]
-
         # reference alias
         json["reference_alias"] = [
             dict(
