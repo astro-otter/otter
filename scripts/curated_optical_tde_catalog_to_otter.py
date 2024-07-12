@@ -180,7 +180,7 @@ def main():
         ]
 
         otterjson["filter_alias"] = [
-            dict(filter_key=filt, freq_eff=freq, freq_units="Hz")
+            dict(filter_key=filt, filter_name=filt, freq_eff=freq, freq_units="Hz")
             for filt, freq in zip(lc["filters"], lc["frequency_Hz"])
         ]
 

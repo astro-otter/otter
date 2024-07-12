@@ -75,12 +75,12 @@
     ],
     "reference_alias": [
         {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
             "name": "2020ApJ...891..121L",
             "human_readable_name": "Li, Dongyue et al. (2020)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
         }
     ]
 }

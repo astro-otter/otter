@@ -4,6 +4,7 @@ Some constants, mappings, and functions to be used across the software
 
 from __future__ import annotations
 import os
+from multiprocessing import Pool
 import ads
 from ads.exceptions import APIResponseError
 import astropy.units as u
@@ -99,6 +100,51 @@ def bibcode_to_hrn(bibcode):
         )
 
     return bibcodes, hrns
+
+
+def freq_to_band(freq: u.Quantity) -> str:
+    """
+    Converts an effective frequency to the corresponding band name based on the
+    standards listed in RADIO_BAND_MAPPING
+
+    Args:
+        freq (astropy Quantity) : Astropy Quantity of the frequency to get the band name
+    Returns:
+        string with the commonly used band name
+    """
+
+    for key, freq_range in RADIO_BAND_MAPPING.items():
+        if freq_range[0] * u.GHz < freq <= freq_range[1] * u.GHz:
+            return key
+
+    raise ValueError(f"No band name found for the frequency {freq}. Please verify that \
+                      it is in a range in RADIO_BAND_MAPPING and, if not, add it!")
+
+
+def _wrap_single_conversion(t):
+    """
+    t is a tuple of (frequency, unit)
+    """
+    return freq_to_band(t[0] * u.Unit(t[1]))
+
+
+def freqlist_to_band(
+    freq_list: list[float], freq_unit_list: list[str], ncores=1
+) -> list[str]:
+    """
+    Converts a list of effective frequencies to the corresponding band names based on
+    the standards listed in RADIO_BAND_MAPPING
+
+    Args:
+        freq_list (list[float]): floats for the frequencies
+        freq_unit_list (list[str]): List of astropy unit strings to apply to freq_list
+        ncores (int): The number of cores to multiprocess with
+
+    Returns:
+        list of strings with the band names
+    """
+    with Pool(ncores) as p:
+        return p.map(_wrap_single_conversion, zip(freq_list, freq_unit_list))
 
 
 """
@@ -370,6 +416,45 @@ NOTE: These are estimates from the following links
 * https://cxc.harvard.edu/cdo/about_chandra
 """
 
+# Radio Band names with frequency ranges in GHz
+RADIO_BAND_MAPPING = {
+    # use some lower bands from IEEE standards up to GMRT standards
+    # These are mostly here just as catchalls for low frequency radio telescopes
+    # like GEETEE or LOFAR
+    "HF": (0.003, 0.03),
+    "VHF": (0.03, 0.125),  # Official: (0.03, 0.3) but adjust to work with GMRT standard
+    # use GMRT standards for low frequencies
+    "gmrt.2": (0.125, 0.250),
+    "gmrt.3": (0.25, 0.55),  # Official: (0.25, 0.5)
+    # IEEE Standard Naming
+    # https://terasense.com/terahertz-technology/radio-frequency-bands/
+    "UHF": (0.55, 1),
+    "L": (1, 2),
+    "S": (2, 4),
+    "C": (4, 8),
+    "X": (8, 12),
+    "Ku": (12, 18),
+    "K": (18, 27),
+    "Ka": (27, 40),
+    # then switch to ALMA standard for mm
+    # https://www.eso.org/public/teles-instr/alma/receiver-bands/
+    # I widened some of the official ranges slightly so we don't leave gaps
+    # although these gaps probably wouldn't have mattered because **atmosphere**
+    "alma.1": (40, 50),  # Official: (35, 50)
+    "alma.3": (84, 116),  # skip alma.2 cause it's just a smaller range of alma.3
+    "alma.4": (116, 163),  # official: (125, 163)
+    "alma.5": (163, 211),
+    "alma.6": (211, 275),
+    "alma.7": (275, 373),
+    "alma.8": (373, 500),  # official: (385,500)
+    "alma.9": (500, 720),  # official: (602, 720)
+    "alma.10": (787, 950),
+}
+"""
+Mapping of common radio/mm band names to their corresponding frequency ranges.
+All frequencies are in GHz. The upperlimit is inclusive, that is these ranges
+are really (xx, yy].
+"""
 
 # define a working base directory constant
 BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

@@ -192,7 +192,7 @@ class Otter(object):
             "converted_date_unit",
             "converted_wave_unit",
             "converted_freq_unit",
-            "filter_key",
+            "filter_name",
             "obs_type",
             "upperlimit",
             "reference",

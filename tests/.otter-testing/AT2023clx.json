@@ -1,20 +1,14 @@
 {
-    "reference_alias": [
+    "classification": [
         {
-            "name": "2024arXiv240111773C",
-            "human_readable_name": "Charalampopoulos, P. et al. (2024)"
-        },
-        {
-            "name": "2024MNRAS.527.2452M",
-            "human_readable_name": "Mummery et al. (2023)"
-        },
-        {
-            "name": "2023TNSTR.421....1S",
-            "human_readable_name": "Stanek, K. Z. (2023)"
-        },
-        {
-            "name": "2023TNSCR.438....1T",
-            "human_readable_name": "Taguchi, K. et al. (2023)"
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2023TNSCR.438....1T",
+                "2024MNRAS.527.2452M",
+                "2024arXiv240111773C"
+            ],
+            "default": true
         }
     ],
     "coordinate": [
@@ -38,6 +32,73 @@
             "coordinate_type": "equitorial",
             "epoch": "J2000",
             "frame": "ICRS"
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2024arXiv240111773C",
+            "human_readable_name": "Charalampopoulos, P. et al. (2024)"
+        },
+        {
+            "name": "2024MNRAS.527.2452M",
+            "human_readable_name": "Mummery et al. (2023)"
+        },
+        {
+            "name": "2023TNSTR.421....1S",
+            "human_readable_name": "Stanek, K. Z. (2023)"
+        },
+        {
+            "name": "2023TNSCR.438....1T",
+            "human_readable_name": "Taguchi, K. et al. (2023)"
+        }
+    ],
+    "name": {
+        "default_name": "2023clx",
+        "alias": [
+            {
+                "value": "ASASSN-23bd",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF18aabkvpi",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2023clx",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2023clx",
+                "reference": [
+                    "2024arXiv240111773C",
+                    "2024MNRAS.527.2452M"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
+        {
+            "value": 60001.000000000015,
+            "date_format": "mjd",
+            "reference": [
+                "2024arXiv240111773C",
+                "2024MNRAS.527.2452M"
+            ],
+            "computed": false,
+            "date_type": "peak"
+        },
+        {
+            "value": 59997.21,
+            "date_format": "mjd",
+            "reference": "2023TNSTR.421....1S",
+            "computed": false,
+            "date_type": "discovery"
         }
     ],
     "photometry": [
@@ -2225,115 +2286,64 @@
             "instrument": "ZTF-Cam"
         }
     ],
-    "name": {
-        "default_name": "2023clx",
-        "alias": [
-            {
-                "value": "ASASSN-23bd",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF18aabkvpi",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "2023clx",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2023clx",
-                "reference": [
-                    "2024arXiv240111773C",
-                    "2024MNRAS.527.2452M"
-                ]
-            }
-        ]
-    },
-    "date_reference": [
-        {
-            "value": 60001.000000000015,
-            "date_format": "mjd",
-            "reference": [
-                "2024arXiv240111773C",
-                "2024MNRAS.527.2452M"
-            ],
-            "computed": false,
-            "date_type": "peak"
-        },
-        {
-            "value": 59997.21,
-            "date_format": "mjd",
-            "reference": "2023TNSTR.421....1S",
-            "computed": false,
-            "date_type": "discovery"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2023TNSCR.438....1T",
-                "2024MNRAS.527.2452M",
-                "2024arXiv240111773C"
-            ],
-            "default": true
-        }
-    ],
     "filter_alias": [
         {
             "filter_key": "U.uvot",
+            "filter_name": "U.uvot",
             "freq_eff": 872815357550259.6,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVM2.uvot",
+            "filter_name": "UVM2.uvot",
             "freq_eff": 1346484181597652.0,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVW1.uvot",
+            "filter_name": "UVW1.uvot",
             "freq_eff": 1198891057872408.0,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVW2.uvot",
+            "filter_name": "UVW2.uvot",
             "freq_eff": 1492659946412262.2,
             "freq_units": "Hz"
         },
         {
             "filter_key": "W1.wise",
+            "filter_name": "W1.wise",
             "freq_eff": 89917740678395.33,
             "freq_units": "Hz"
         },
         {
             "filter_key": "W2.wise",
+            "filter_name": "W2.wise",
             "freq_eff": 65429370473910.305,
             "freq_units": "Hz"
         },
         {
             "filter_key": "g.ztf",
+            "filter_name": "g.ztf",
             "freq_eff": 634121907623677.4,
             "freq_units": "Hz"
         },
         {
             "filter_key": "r.ztf",
+            "filter_name": "r.ztf",
             "freq_eff": 471994480402802.25,
             "freq_units": "Hz"
         },
         {
             "filter_key": "g",
+            "filter_name": "g",
             "wave_eff": 471.8872246248687,
             "wave_units": "nm"
         },
         {
             "filter_key": "r",
+            "filter_name": "r",
             "wave_eff": 618.5194476741524,
             "wave_units": "nm"
         }

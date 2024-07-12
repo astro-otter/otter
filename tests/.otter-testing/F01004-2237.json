@@ -1,4 +1,26 @@
 {
+    "coordinate": [
+        {
+            "ra": "01:02:50.007",
+            "dec": "-22:21:57.22",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2017NatAs...1E..61T"
+            ],
+            "coordinate_type": "equitorial"
+        },
+        {
+            "ra": 15.708292,
+            "dec": -22.3659,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "reference": "2022TNSTR.188....1H",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS"
+        }
+    ],
     "reference_alias": [
         {
             "name": "2017NatAs...1E..61T",
@@ -29,26 +51,71 @@
             "human_readable_name": "Hodgkin, S. T. et al. (2022)"
         }
     ],
-    "coordinate": [
+    "name": {
+        "default_name": "2022agi",
+        "alias": [
+            {
+                "value": "2022agi",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "Gaia22ahd",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "F01004-2237",
+                "reference": [
+                    "2017NatAs...1E..61T",
+                    "MAST",
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "CSS:010250.0-222157",
+                "reference": [
+                    "2017NatAs...1E..61T"
+                ]
+            },
+            {
+                "value": "SSS:010250.0-222157",
+                "reference": [
+                    "2017NatAs...1E..61T"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
         {
-            "ra": "01:02:50.007",
-            "dec": "-22:21:57.22",
-            "ra_units": "hour",
-            "dec_units": "deg",
+            "value": "2010-06-25",
+            "date_format": "iso",
+            "date_type": "discovery",
             "reference": [
-                "2017NatAs...1E..61T"
+                "2017NatAs...1E..61T",
+                "2017ApJ...835...64G"
             ],
-            "coordinate_type": "equitorial"
+            "computed": false,
+            "default": true
         },
         {
-            "ra": 15.708292,
-            "dec": -22.3659,
-            "ra_units": "deg",
-            "dec_units": "deg",
+            "value": "2010-06-25 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017NatAs...1E..61T"
+            ],
+            "default": true
+        },
+        {
+            "value": 59600.393,
+            "date_format": "mjd",
+            "date_type": "discovery",
             "reference": "2022TNSTR.188....1H",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS"
+            "computed": false
         }
     ],
     "photometry": [
@@ -2667,91 +2734,28 @@
             "instrument": "Gaia-photometric"
         }
     ],
-    "name": {
-        "default_name": "2022agi",
-        "alias": [
-            {
-                "value": "2022agi",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "Gaia22ahd",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "CSS:010250.0-222157",
-                "reference": [
-                    "2017NatAs...1E..61T"
-                ]
-            },
-            {
-                "value": "F01004-2237",
-                "reference": [
-                    "2017NatAs...1E..61T",
-                    "MAST",
-                    "2023PASP..135c4101G"
-                ]
-            },
-            {
-                "value": "SSS:010250.0-222157",
-                "reference": [
-                    "2017NatAs...1E..61T"
-                ]
-            }
-        ]
-    },
-    "date_reference": [
-        {
-            "value": "2010-06-25",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2017NatAs...1E..61T",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": "2010-06-25 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2017NatAs...1E..61T"
-            ],
-            "default": true
-        },
-        {
-            "value": 59600.393,
-            "date_format": "mjd",
-            "date_type": "discovery",
-            "reference": "2022TNSTR.188....1H",
-            "computed": false
-        }
-    ],
     "filter_alias": [
         {
             "filter_key": "V",
             "wave_eff": 551.0,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "V"
         },
         {
             "filter_key": "W1",
             "wave_eff": 224.6,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "W1"
         },
         {
             "filter_key": "W2",
             "wave_eff": 192.8,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "W2"
         },
         {
             "filter_key": "G",
+            "filter_name": "G",
             "wave_eff": 673.5412573108297,
             "wave_units": "nm"
         }

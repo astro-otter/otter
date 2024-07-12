@@ -8,40 +8,6 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "schema_version": {
-        "value": 0,
-        "comments": "From Goldtooth et al. (2023)"
-    },
-    "reference_alias": [
-        {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
-        },
-        {
-            "name": "2011ApJ...737..103S",
-            "human_readable_name": "Schlafly & Finkbeiner (2011)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
-        },
-        {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
-            "name": "2017ATel11049....1S",
-            "human_readable_name": "Sokolovsky, K. et al. (2017)"
-        },
-        {
-            "name": "2017ATel.9977....1G",
-            "human_readable_name": "Gromadzki, M. et al. (2017)"
-        },
-        {
-            "name": "2019A&A...622L...2G",
-            "human_readable_name": "Gromadzki, M. et al. (2019)"
-        }
-    ],
     "name": {
         "default_name": "OGLE17aaj",
         "alias": [
@@ -57,6 +23,34 @@
             }
         ]
     },
+    "date_reference": [
+        {
+            "value": "2016-01-28",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true
+        },
+        {
+            "value": "2017-01-01 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017ATel11049....1S",
+                "2017ATel.9977....1G",
+                "2019A&A...622L...2G"
+            ],
+            "default": true
+        }
+    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "classification": [
         {
             "object_class": "TDE",
@@ -69,6 +63,36 @@
                 "2023PASP..135c4101G"
             ],
             "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2017ATel.9977....1G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2017ATel11049....1S",
+            "human_readable_name": "Gromadzki, M. et al. (2019)"
+        },
+        {
+            "name": "2019A&A...622L...2G",
+            "human_readable_name": "Gromadzki, M. et al. (2017)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Sokolovsky, K. et al. (2017)"
         }
     ],
     "distance": [
@@ -105,30 +129,6 @@
             "computed": false,
             "default": true,
             "distance_type": "redshift"
-        }
-    ],
-    "date_reference": [
-        {
-            "value": "2016-01-28",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": "2017-01-01 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2017ATel11049....1S",
-                "2017ATel.9977....1G",
-                "2019A&A...622L...2G"
-            ],
-            "default": true
         }
     ],
     "host": [

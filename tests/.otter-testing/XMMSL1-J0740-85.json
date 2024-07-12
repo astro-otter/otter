@@ -11,10 +11,67 @@
             "coordinate_type": "equitorial"
         }
     ],
+    "name": {
+        "default_name": "XMMSL1 J0740-85",
+        "alias": [
+            {
+                "value": "XMMSL1 J074008.2-853927",
+                "reference": [
+                    "2016arXiv161001788S"
+                ]
+            },
+            {
+                "value": "XMMSL1 J0740-85",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2016arXiv161001788S",
+                    "2016arXiv161003861A",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
+        {
+            "value": "2014-04-01",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2016arXiv161001788S",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true
+        },
+        {
+            "value": "2014-04-01 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017A&A...598A..29S",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2017A&A...598A..29S",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -41,45 +98,12 @@
             "human_readable_name": "Guillochon et al. (2017)"
         },
         {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
             "name": "2017A&A...598A..29S",
             "human_readable_name": "Saxton, R. D. et al. (2017)"
-        }
-    ],
-    "name": {
-        "default_name": "XMMSL1 J0740-85",
-        "alias": [
-            {
-                "value": "XMMSL1 J074008.2-853927",
-                "reference": [
-                    "2016arXiv161001788S"
-                ]
-            },
-            {
-                "value": "XMMSL1 J0740-85",
-                "reference": [
-                    "2017ApJ...838..149A",
-                    "2016arXiv161001788S",
-                    "2016arXiv161003861A",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "classification": [
+        },
         {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2017A&A...598A..29S",
-                "2017ApJ...835...64G",
-                "2017ApJ...838..149A",
-                "2023PASP..135c4101G"
-            ],
-            "default": true
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
         }
     ],
     "distance": [
@@ -128,44 +152,22 @@
             "distance_type": "redshift"
         }
     ],
-    "date_reference": [
-        {
-            "value": "2014-04-01",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2016arXiv161001788S",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": "2014-04-01 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2017A&A...598A..29S",
-                "2017ApJ...838..149A"
-            ],
-            "default": true
-        }
-    ],
     "filter_alias": [
         {
             "filter_key": "0.3 - 2.0",
             "wave_eff": 0.7293188143129428,
             "wave_min": 0.6199209921660013,
             "wave_max": 4.132806614440009,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         },
         {
             "filter_key": "0.2 - 2.0",
             "wave_eff": 0.6888011024066681,
             "wave_min": 0.6199209921660013,
             "wave_max": 6.199209921660012,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "0.2 - 2.0"
         }
     ],
     "photometry": [

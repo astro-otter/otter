@@ -1,68 +1,64 @@
 {
-    "schema_version": {
-        "value": "0",
-        "comment": "Original Dataset"
-    },
-    "name": {
-        "default_name": "IGR J12580+0134",
-        "alias": [
-            {
-                "value": "IGR J12580+0134",
-                "reference": "IGR"
-            }
-        ]
-    },
-    "coordinate": [
+    "filter_alias": [
         {
-            "ra": "12 58 05.1",
-            "dec": "+01 34 26",
-            "epoch": "J2000",
-            "system": "ICRS",
-            "ra_units": "hourangle",
-            "dec_units": "deg",
-            "reference": [
-                "2015ApJ...809..172I",
-                "2016MNRAS.461.3375Y",
-                "2017ApJ...842..126P"
-            ],
-            "computed": false,
-            "default": true,
-            "uuid": "456ab2c0-d959-4476-aea9-6a400ae3c525",
-            "coordinate_type": "equitorial"
+            "filter_key": "6.0GHz",
+            "filter_name": "C",
+            "freq_eff": 6.0,
+            "freq_units": "GHz"
         },
         {
-            "l": 306.7781925952877,
-            "b": 64.39598414557777,
-            "l_units": "deg",
-            "b_units": "deg",
-            "reference": "456ab2c0-d959-4476-aea9-6a400ae3c525",
-            "computed": true,
-            "coordinate_type": "galactic"
-        }
-    ],
-    "distance": [
+            "filter_key": "5.5GHz",
+            "filter_name": "C",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
         {
-            "value": "0.00411",
-            "reference": [
-                "2015ApJ...809..172I",
-                "2016MNRAS.461.3375Y",
-                "2017ApJ...842..126P"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        }
-    ],
-    "classification": [
+            "filter_key": "L",
+            "filter_name": "L",
+            "freq_eff": 1.57,
+            "freq_units": "GHz"
+        },
         {
-            "object_class": "TDE",
-            "confidence": 1.0,
-            "reference": [
-                "2015ApJ...809..172I",
-                "2016MNRAS.461.3375Y",
-                "2017ApJ...842..126P"
-            ],
-            "default": true
+            "filter_key": "C",
+            "filter_name": "C",
+            "freq_eff": 6.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "VLA.L",
+            "filter_name": "L",
+            "freq_eff": 1.5195,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "VLA.C",
+            "filter_name": "C",
+            "freq_eff": 5.499,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "VLBA.L",
+            "filter_name": "L",
+            "freq_eff": 1.5474,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "VLBA.C",
+            "filter_name": "C",
+            "freq_eff": 4.9795,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "X",
+            "filter_name": "X",
+            "freq_eff": 9.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "S",
+            "filter_name": "S",
+            "freq_eff": 3.0,
+            "freq_units": "GHz"
         }
     ],
     "reference_alias": [
@@ -77,21 +73,35 @@
         {
             "name": "2017ApJ...842..126P",
             "human_readable_name": "Perlman et al. (2017)"
-        }
-    ],
-    "date_reference": [
+        },
         {
-            "value": 55572,
-            "date_format": "mjd",
-            "reference": [
-                "2015ApJ...809..172I",
-                "2016MNRAS.461.3375Y",
-                "2017ApJ...842..126P"
-            ],
-            "computed": false,
-            "date_type": "discovery"
+            "name": "2022ApJ...925..143P",
+            "human_readable_name": "Perlman, Eric S. et al. (2017)"
         }
     ],
+    "name": {
+        "default_name": "IGR J12580+0134",
+        "alias": [
+            {
+                "value": "IGR12580",
+                "reference": [
+                    "2015ApJ...809..172I"
+                ]
+            },
+            {
+                "value": "IGR 12580",
+                "reference": [
+                    "2015ApJ...809..172I"
+                ]
+            },
+            {
+                "value": "IGR J12580+0134",
+                "reference": [
+                    "IGR"
+                ]
+            }
+        ]
+    },
     "photometry": [
         {
             "reference": [
@@ -166,18 +176,346 @@
             "corr_av": false,
             "corr_host": false,
             "corr_hostav": false
-        }
-    ],
-    "filter_alias": [
-        {
-            "filter_key": "6.0GHz",
-            "freq_eff": 6.0,
-            "freq_units": "GHz"
         },
         {
-            "filter_key": "5.5GHz",
-            "freq_eff": 5.5,
-            "freq_units": "GHz"
+            "reference": "2015ApJ...809..172I",
+            "raw": [
+                211.0,
+                241.0,
+                219.0,
+                425.0,
+                355.0
+            ],
+            "raw_err": [
+                3.0,
+                3.0,
+                4.0,
+                3.0,
+                2.0
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "55925",
+                "56016",
+                "56089",
+                "55914",
+                "55981"
+            ],
+            "date_format": [
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD",
+                "MJD"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "filter_key": [
+                "L",
+                "L",
+                "L",
+                "C",
+                "C"
+            ],
+            "obs_type": "radio",
+            "telescope": "VLA",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": [
+                true,
+                true,
+                true,
+                true,
+                true
+            ],
+            "val_host": [
+                19.0,
+                19.0,
+                19.0,
+                7.0,
+                7.0
+            ],
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
+            "reference": "2017ApJ...842..126P",
+            "raw": [
+                118.0,
+                36.32
+            ],
+            "raw_err": [
+                1.2,
+                0.07
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2015-6-22",
+                "2015-6-22"
+            ],
+            "date_format": [
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                false,
+                false
+            ],
+            "filter_key": [
+                "VLA.L",
+                "VLA.C"
+            ],
+            "obs_type": "radio",
+            "telescope": "VLA",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": [
+                false,
+                false
+            ],
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
+            "reference": "2017ApJ...842..126P",
+            "raw": [
+                83.5,
+                29.9
+            ],
+            "raw_err": [
+                1.1,
+                0.2
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2015-6-08",
+                "2015-6-08"
+            ],
+            "date_format": [
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                false,
+                false
+            ],
+            "filter_key": [
+                "VLBA.L",
+                "VLBA.C"
+            ],
+            "obs_type": "radio",
+            "telescope": "VLBA",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": [
+                true,
+                false
+            ],
+            "val_host": [
+                10.8,
+                NaN
+            ],
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
+            "reference": "2022ApJ...925..143P",
+            "raw": [
+                22.7,
+                17.1,
+                33.6,
+                27.0,
+                60.0,
+                171.0,
+                61.0,
+                167.0,
+                261.0,
+                21.0,
+                50.0
+            ],
+            "raw_err": [
+                0.3,
+                0.2,
+                0.2,
+                2.0,
+                3.0,
+                5.0,
+                2.0,
+                2.0,
+                5.0,
+                2.0,
+                5.0
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2015-Jul-06",
+                "2015-Jul-14",
+                "2015-Jul-28",
+                "2016-Mar-16",
+                "2016-Mar-16",
+                "2016-Mar-16",
+                "2016-May-21",
+                "2016-May-21",
+                "2016-May-21",
+                "2019-Apr-21",
+                "2019-Jun-24"
+            ],
+            "date_format": [
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "filter_key": [
+                "X",
+                "X",
+                "C",
+                "C",
+                "S",
+                "L",
+                "C",
+                "S",
+                "L",
+                "S",
+                "L"
+            ],
+            "obs_type": "radio",
+            "telescope": "VLA",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+            ],
+            "val_host": [
+                NaN,
+                NaN,
+                NaN,
+                NaN,
+                NaN,
+                NaN,
+                NaN,
+                NaN,
+                NaN,
+                NaN,
+                NaN
+            ],
+            "corr_av": false,
+            "corr_hostav": false
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "12 58 05.1",
+            "dec": "+01 34 26",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "reference": [
+                "2015ApJ...809..172I",
+                "2016MNRAS.461.3375Y",
+                "2017ApJ...842..126P"
+            ],
+            "computed": false,
+            "default": true,
+            "uuid": "f5312849-2fce-406b-b475-8f9bd80c0059",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "reference": "f5312849-2fce-406b-b475-8f9bd80c0059",
+            "computed": true,
+            "coordinate_type": "galactic",
+            "l": 306.7781925952877,
+            "b": 64.39598414557777,
+            "l_units": "deg",
+            "b_units": "deg"
+        },
+        {
+            "ra": "12:58:05.1",
+            "dec": "+01:34:26",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "reference": [
+                "2015ApJ...809..172I"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2015ApJ...809..172I",
+                "2016MNRAS.461.3375Y",
+                "2017ApJ...842..126P"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.00411",
+            "reference": [
+                "2015ApJ...809..172I",
+                "2016MNRAS.461.3375Y",
+                "2017ApJ...842..126P"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
+    "date_reference": [
+        {
+            "value": 55572,
+            "date_format": "mjd",
+            "reference": [
+                "2015ApJ...809..172I",
+                "2016MNRAS.461.3375Y",
+                "2017ApJ...842..126P"
+            ],
+            "computed": false,
+            "date_type": "discovery"
         }
     ]
 }

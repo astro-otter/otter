@@ -11,10 +11,65 @@
             "coordinate_type": "equitorial"
         }
     ],
+    "name": {
+        "default_name": "WINGS J1348",
+        "alias": [
+            {
+                "value": "WINGS J134849.88+263557.5",
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "WINGS J1348",
+                "reference": [
+                    "2017ApJ...838..149A"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
+        {
+            "value": "1999-12-20",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true
+        },
+        {
+            "value": "1999-12-20 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2013MNRAS.435.1904M",
+                "2015ApJ...807..185F",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2013MNRAS.435.1904M",
+                "2015ApJ...807..185F",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -37,42 +92,12 @@
             "human_readable_name": "Guillochon et al. (2017)"
         },
         {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+            "name": "2015ApJ...807..185F",
+            "human_readable_name": "Auchettl, Katie et al. (2017)"
         },
         {
-            "name": "2015ApJ...807..185F",
+            "name": "2023PASP..135c4101G",
             "human_readable_name": "Feng, Hua et al. (2015)"
-        }
-    ],
-    "name": {
-        "default_name": "WINGS J1348",
-        "alias": [
-            {
-                "value": "WINGS J134849.88+263557.5",
-                "reference": [
-                    "2023PASP..135c4101G"
-                ]
-            },
-            {
-                "value": "WINGS J1348",
-                "reference": [
-                    "2017ApJ...838..149A"
-                ]
-            }
-        ]
-    },
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2013MNRAS.435.1904M",
-                "2015ApJ...807..185F",
-                "2017ApJ...838..149A",
-                "2023PASP..135c4101G"
-            ],
-            "default": true
         }
     ],
     "distance": [
@@ -125,38 +150,14 @@
             "distance_type": "redshift"
         }
     ],
-    "date_reference": [
-        {
-            "value": "1999-12-20",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": "1999-12-20 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2013MNRAS.435.1904M",
-                "2015ApJ...807..185F",
-                "2017ApJ...838..149A"
-            ],
-            "default": true
-        }
-    ],
     "filter_alias": [
         {
             "filter_key": "0.3 - 2.0",
             "wave_eff": 0.7293188143129428,
             "wave_min": 0.6199209921660013,
             "wave_max": 4.132806614440009,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         }
     ],
     "photometry": [

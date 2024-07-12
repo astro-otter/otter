@@ -8,6 +8,7 @@ import argparse
 import otter
 import pandas as pd
 import numpy as np
+from astropy import units as u
 
 
 def main():
@@ -147,6 +148,9 @@ def main():
         json["filter_alias"] = [
             dict(
                 filter_key=filt,
+                filter_name=otter.util.freq_to_band(
+                    float(val["band_eff_freq"]) * u.Unit(val["band_eff_freq_unit"])
+                ),
                 freq_eff=float(val["band_eff_freq"]),
                 freq_units=val["band_eff_freq_unit"],
             )

@@ -26,7 +26,7 @@ def test_otter_constructor():
     db = Otter(otterpath)
 
     assert db.DATADIR == otterpath
-    assert db.CWD == os.path.dirname(os.path.realpath(__file__))
+    assert db.CWD == os.path.dirname(otterpath)
 
 
 def test_get_meta():

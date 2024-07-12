@@ -22,10 +22,84 @@
             "coordinate_type": "equitorial"
         }
     ],
+    "name": {
+        "default_name": "PS1-10jh",
+        "alias": [
+            {
+                "value": "PS1-10jh",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2012Natur.485..217G",
+                    "2000A&AS..143....9W",
+                    "2012Natur.485..217G",
+                    "2024MNRAS.527.2452M",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
+        {
+            "value": "2010-05-16",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2015ApJ...815L...5G",
+                "2012Natur.485..217G",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true
+        },
+        {
+            "value": 55393.18749999996,
+            "date_format": "mjd",
+            "date_type": "peak",
+            "reference": [
+                "2012Natur.485..217G",
+                "2024MNRAS.527.2452M"
+            ],
+            "computed": false
+        },
+        {
+            "value": "2010-05-16 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2012Natur.485..217G",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2012Natur.485..217G",
+                "2015ApJ...815L...5G",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        },
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": [
+                "2015ApJ...815L...5G",
+                "2012Natur.485..217G"
+            ],
+            "default": false
+        }
+    ],
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -66,45 +140,6 @@
         {
             "name": "2023PASP..135c4101G",
             "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        }
-    ],
-    "name": {
-        "default_name": "PS1-10jh",
-        "alias": [
-            {
-                "value": "PS1-10jh",
-                "reference": [
-                    "2017ApJ...838..149A",
-                    "2012Natur.485..217G",
-                    "2000A&AS..143....9W",
-                    "2012Natur.485..217G",
-                    "2024MNRAS.527.2452M",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2012Natur.485..217G",
-                "2015ApJ...815L...5G",
-                "2017ApJ...838..149A",
-                "2023PASP..135c4101G",
-                "2024MNRAS.527.2452M"
-            ],
-            "default": true
-        },
-        {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": [
-                "2015ApJ...815L...5G",
-                "2012Natur.485..217G"
-            ],
-            "default": false
         }
     ],
     "distance": [
@@ -174,91 +209,66 @@
             "distance_type": "redshift"
         }
     ],
-    "date_reference": [
-        {
-            "value": "2010-05-16",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2015ApJ...815L...5G",
-                "2012Natur.485..217G",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": 55393.18749999996,
-            "date_format": "mjd",
-            "date_type": "peak",
-            "reference": [
-                "2012Natur.485..217G",
-                "2024MNRAS.527.2452M"
-            ],
-            "computed": false
-        },
-        {
-            "value": "2010-05-16 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2012Natur.485..217G",
-                "2017ApJ...838..149A"
-            ],
-            "default": true
-        }
-    ],
     "filter_alias": [
         {
             "filter_key": "0.3 - 2.0",
             "wave_eff": 0.7293188143129428,
             "wave_min": 0.6199209921660013,
             "wave_max": 4.132806614440009,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         },
         {
             "filter_key": "F225W",
             "wave_eff": 2372.81,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "F225W"
         },
         {
             "filter_key": "F125LP",
+            "filter_name": "F125LP",
             "freq_eff": 2089450463842676.5,
             "freq_units": "Hz"
         },
         {
             "filter_key": "F150LP",
+            "filter_name": "F150LP",
             "freq_eff": 1865557170546869.5,
             "freq_units": "Hz"
         },
         {
             "filter_key": "NUV",
+            "filter_name": "NUV",
             "freq_eff": 1322268446213041.5,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVM2.uvot",
+            "filter_name": "UVM2.uvot",
             "freq_eff": 1346484181597652.0,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVW1.uvot",
+            "filter_name": "UVW1.uvot",
             "freq_eff": 1198891057872408.0,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVW2.uvot",
+            "filter_name": "UVW2.uvot",
             "freq_eff": 1492659946412262.2,
             "freq_units": "Hz"
         },
         {
             "filter_key": "g.ps",
+            "filter_name": "g.ps",
             "freq_eff": 627363098231187.5,
             "freq_units": "Hz"
         },
         {
             "filter_key": "r.ps",
+            "filter_name": "r.ps",
             "freq_eff": 488135386922682.3,
             "freq_units": "Hz"
         }

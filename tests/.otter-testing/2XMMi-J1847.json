@@ -11,36 +11,6 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "schema_version": {
-        "value": 0,
-        "comments": "From Goldtooth et al. (2023)"
-    },
-    "reference_alias": [
-        {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
-        },
-        {
-            "name": "2011ApJ...738...52L",
-            "human_readable_name": "Lin et al. (2011)"
-        },
-        {
-            "name": "2011ApJ...737..103S",
-            "human_readable_name": "Schlafly & Finkbeiner (2011)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
-        },
-        {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
-            "name": "2018MNRAS.474.3000L",
-            "human_readable_name": "Lin, Dacheng et al. (2018)"
-        }
-    ],
     "name": {
         "default_name": "2XMMi J1847",
         "alias": [
@@ -59,6 +29,10 @@
             }
         ]
     },
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "classification": [
         {
             "object_class": "TDE",
@@ -70,6 +44,32 @@
                 "2023PASP..135c4101G"
             ],
             "default": true
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011ApJ...738...52L",
+            "human_readable_name": "Lin et al. (2011)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2018MNRAS.474.3000L",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Lin, Dacheng et al. (2018)"
         }
     ],
     "distance": [
@@ -118,6 +118,19 @@
             "distance_type": "redshift"
         }
     ],
+    "date_reference": [
+        {
+            "value": "2006-09-01 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2011ApJ...738...52L",
+                "2018MNRAS.474.3000L"
+            ],
+            "default": true
+        }
+    ],
     "host": [
         {
             "host_name": "IC 4765-f01-1504",
@@ -130,19 +143,6 @@
                 "2011ApJ...738...52L",
                 "2018MNRAS.474.3000L"
             ]
-        }
-    ],
-    "date_reference": [
-        {
-            "value": "2006-09-01 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2011ApJ...738...52L",
-                "2018MNRAS.474.3000L"
-            ],
-            "default": true
         }
     ]
 }

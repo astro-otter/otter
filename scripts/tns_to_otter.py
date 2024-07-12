@@ -237,6 +237,7 @@ def tns_phot_to_otter_phot(photlist):
         if filterused not in filters_added_to_alias:  # no double adding
             fa = dict(
                 filter_key=filterused,
+                filter_name=filterused,
                 wave_eff=FILTER_MAP_WAVE[filterused],
                 wave_units="nm",
             )

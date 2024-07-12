@@ -80,16 +80,16 @@
     ],
     "reference_alias": [
         {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
             "name": "2017IAUS..324..127W",
-            "human_readable_name": "Wyrzykowski, \u0141ukasz et al. (2017)"
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
         },
         {
             "name": "2020MNRAS.493..477C",
             "human_readable_name": "Cannizzaro, G. et al. (2020)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Wyrzykowski, \u0141ukasz et al. (2017)"
         }
     ]
 }

@@ -85,20 +85,20 @@
     ],
     "reference_alias": [
         {
-            "name": "2023PASP..135c4101G",
+            "name": "2011ATel.3811....1R",
             "human_readable_name": "Goldtooth, Aaron et al. (2023)"
         },
         {
-            "name": "2011ATel.3811....1R",
-            "human_readable_name": "Read, A. M. et al. (2011)"
-        },
-        {
             "name": "2016A&A...592A..41M",
-            "human_readable_name": "Mainetti, Deborah et al. (2016)"
+            "human_readable_name": "Oliveira, A. S. et al. (2017)"
         },
         {
             "name": "2017AJ....153..144O",
-            "human_readable_name": "Oliveira, A. S. et al. (2017)"
+            "human_readable_name": "Read, A. M. et al. (2011)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Mainetti, Deborah et al. (2016)"
         }
     ]
 }

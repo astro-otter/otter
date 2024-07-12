@@ -11,44 +11,6 @@
             "coordinate_type": "equitorial"
         }
     ],
-    "schema_version": {
-        "value": 0,
-        "comments": "From Goldtooth et al. (2023)"
-    },
-    "reference_alias": [
-        {
-            "name": "2017arXiv171104577K",
-            "human_readable_name": "Kankare et al. (2017)"
-        },
-        {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
-        },
-        {
-            "name": "2011ApJ...737..103S",
-            "human_readable_name": "Schlafly & Finkbeiner (2011)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
-        },
-        {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
-            "name": "2017NatAs...1..865K",
-            "human_readable_name": "Kankare, E. et al. (2017)"
-        },
-        {
-            "name": "2017NatAs...1..865K",
-            "human_readable_name": "Kankare, E. et al. (2017)"
-        },
-        {
-            "name": "2019ApJ...871...15J",
-            "human_readable_name": "Jiang, Ning et al. (2019)"
-        }
-    ],
     "name": {
         "default_name": "J233454",
         "alias": [
@@ -60,6 +22,10 @@
                 ]
             }
         ]
+    },
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
     },
     "classification": [
         {
@@ -88,6 +54,36 @@
                 "2017arXiv171104577K"
             ],
             "default": false
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2017arXiv171104577K",
+            "human_readable_name": "Kankare et al. (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2017NatAs...1..865K",
+            "human_readable_name": "Kankare, E. et al. (2017)"
+        },
+        {
+            "name": "2019ApJ...871...15J",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Jiang, Ning et al. (2019)"
         }
     ],
     "distance": [

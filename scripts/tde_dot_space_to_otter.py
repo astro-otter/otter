@@ -540,6 +540,7 @@ def main():
 
                 sub = deepcopy(otter_const.subschema["filter_alias"])
                 sub["filter_key"] = key
+                sub["filter_name"] = key
                 sub["wave_units"] = "nm"
                 if key in bandwavelengths:
                     sub["wave_eff"] = bandwavelengths[key]
@@ -557,8 +558,6 @@ def main():
                         del sub[key]
 
                 schema["filter_alias"].append(sub)
-
-        # ADD SPECTRA ONCE WE HAVE A BETTER IDEA OF FORMATTING
 
         # ADD HOST INFO ONCE WE HAVE A BETTER IDEA OF FORMATTING
 

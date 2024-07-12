@@ -1,4 +1,98 @@
 {
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2017ApJ...835...64G",
+                "2018TNSCR1902....1R",
+                "2021ApJ...908....4V",
+                "2023arXiv230813595C",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "01:07:33.6100",
+            "dec": "+23:28:34.39",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial"
+        },
+        {
+            "ra": 16.890125627,
+            "dec": 23.476176295,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2021ApJ...908....4V",
+                "2024MNRAS.527.2452M"
+            ]
+        },
+        {
+            "ra": "01:07:33.635",
+            "dec": "+23:28:34.28",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2018TNSTR1509....1T"
+            ]
+        },
+        {
+            "ra": 16.8901468,
+            "dec": 23.4761884,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": "2018TNSTR1509....1T",
+            "epoch": "J2000",
+            "frame": "ICRS"
+        }
+    ],
+    "distance": [
+        {
+            "value": "410",
+            "unit": "Mpc",
+            "reference": [
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": "380",
+            "unit": "Mpc",
+            "reference": [
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        },
+        {
+            "value": 0.088,
+            "reference": [
+                "2021ApJ...908....4V",
+                "2024MNRAS.527.2452M"
+            ],
+            "distance_type": "redshift"
+        },
+        {
+            "value": 0.09,
+            "reference": [
+                "2018TNSCR1902....1R"
+            ],
+            "computed": false,
+            "distance_type": "redshift"
+        }
+    ],
     "reference_alias": [
         {
             "name": "2016A&A...594A..13P",
@@ -22,6 +116,10 @@
         },
         {
             "name": "2018TNSTR1509....1T",
+            "human_readable_name": "Cendes, Yvette et al. (2023)"
+        },
+        {
+            "name": "2023arXiv230813595C",
             "human_readable_name": "Tonry, J. et al. (2018)"
         },
         {
@@ -29,34 +127,65 @@
             "human_readable_name": "Reynolds, T. (2018)"
         }
     ],
-    "coordinate": [
+    "name": {
+        "default_name": "2018hco",
+        "alias": [
+            {
+                "value": "ATLAS18way",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2018hco",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2018hco",
+                "reference": [
+                    "2021ApJ...908....4V",
+                    "2024MNRAS.527.2452M",
+                    "2018TNSTR1509....1T"
+                ]
+            },
+            {
+                "value": "ZTF18abxftqm",
+                "reference": [
+                    "MAST",
+                    "TNS"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
         {
-            "ra": "01:07:33.6100",
-            "dec": "+23:28:34.39",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "coordinate_type": "equitorial"
+            "value": "8589-09-09",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true
         },
         {
-            "ra": 16.890125627,
-            "dec": 23.476176295,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "coordinate_type": "equitorial",
+            "value": 58404.028499999986,
+            "date_format": "mjd",
+            "date_type": "peak",
             "reference": [
                 "2021ApJ...908....4V",
                 "2024MNRAS.527.2452M"
-            ]
+            ],
+            "computed": false
         },
         {
-            "ra": 16.8901468,
-            "dec": 23.4761884,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "coordinate_type": "equitorial",
+            "value": 58395.52,
+            "date_format": "mjd",
+            "date_type": "discovery",
             "reference": "2018TNSTR1509....1T",
-            "epoch": "J2000",
-            "frame": "ICRS"
+            "computed": false
         }
     ],
     "photometry": [
@@ -4156,6 +4285,183 @@
             "val_av": 0.10914026899147328
         },
         {
+            "reference": "2023arXiv230813595C",
+            "raw": [
+                0.33,
+                0.2,
+                0.111,
+                0.084,
+                0.141
+            ],
+            "raw_err": [
+                0.0,
+                0.019,
+                0.019,
+                0.0,
+                0.0
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2022-04-30",
+                "2022-04-30",
+                "2022-04-30",
+                "2022-04-30",
+                "2022-04-30"
+            ],
+            "date_format": [
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                true,
+                false,
+                false,
+                true,
+                true
+            ],
+            "filter_key": [
+                "2.1GHz",
+                "5.5GHz",
+                "9GHz",
+                "17GHz",
+                "19GHz"
+            ],
+            "obs_type": "radio",
+            "telescope": "ATCA",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": false,
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
+            "reference": "2023arXiv230813595C",
+            "raw": [
+                0.589,
+                0.171
+            ],
+            "raw_err": [
+                0.0,
+                0.025
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2022-05-7",
+                "2022-05-7"
+            ],
+            "date_format": [
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                true,
+                false
+            ],
+            "filter_key": [
+                "0.88GHz",
+                "1.36GHz"
+            ],
+            "obs_type": "radio",
+            "telescope": "MeerKAT",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": false,
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
+            "reference": "2023arXiv230813595C",
+            "raw": [
+                0.0165,
+                0.3,
+                0.343,
+                0.436,
+                0.329,
+                0.166,
+                0.252,
+                0.265,
+                0.227,
+                0.161,
+                0.371
+            ],
+            "raw_err": [
+                0.0,
+                0.0,
+                0.015,
+                0.142,
+                0.0,
+                0.03,
+                0.011,
+                0.014,
+                0.014,
+                0.01,
+                0.015
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2018-12-5",
+                "2019-05-5",
+                "2021-06-12",
+                "2021-10-14",
+                "2022-01-7",
+                "2022-01-7",
+                "2022-01-7",
+                "2022-01-7",
+                "2022-01-7",
+                "2022-01-7",
+                "2022-01-7"
+            ],
+            "date_format": [
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                true,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "filter_key": [
+                "6GHz",
+                "3GHz",
+                "6GHz",
+                "3GHz",
+                "1.5GHz",
+                "2.5GHz",
+                "3.5GHz",
+                "5GHz",
+                "7GHz",
+                "9GHz",
+                "11GHz"
+            ],
+            "obs_type": "radio",
+            "telescope": "VLA",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": false,
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
             "raw": [
                 18.823
             ],
@@ -4660,184 +4966,174 @@
             "instrument": "ZTF-Cam"
         }
     ],
-    "name": {
-        "default_name": "2018hco",
-        "alias": [
-            {
-                "value": "ATLAS18way",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "2018hco",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2018hco",
-                "reference": [
-                    "2021ApJ...908....4V",
-                    "2024MNRAS.527.2452M"
-                ]
-            },
-            {
-                "value": "ZTF18abxftqm",
-                "reference": [
-                    "MAST",
-                    "TNS"
-                ]
-            }
-        ]
-    },
-    "date_reference": [
-        {
-            "value": "8589-09-09",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": 58404.028499999986,
-            "date_format": "mjd",
-            "date_type": "peak",
-            "reference": [
-                "2021ApJ...908....4V",
-                "2024MNRAS.527.2452M"
-            ],
-            "computed": false
-        },
-        {
-            "value": 58395.52,
-            "date_format": "mjd",
-            "date_type": "discovery",
-            "reference": "2018TNSTR1509....1T",
-            "computed": false
-        }
-    ],
-    "distance": [
-        {
-            "value": "410",
-            "unit": "Mpc",
-            "reference": [
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": "380",
-            "unit": "Mpc",
-            "reference": [
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving"
-        },
-        {
-            "value": 0.088,
-            "reference": [
-                "2021ApJ...908....4V",
-                "2024MNRAS.527.2452M"
-            ],
-            "distance_type": "redshift"
-        },
-        {
-            "value": 0.09,
-            "reference": [
-                "2018TNSCR1902....1R"
-            ],
-            "computed": false,
-            "distance_type": "redshift"
-        }
-    ],
     "filter_alias": [
         {
             "filter_key": "B.uvot",
+            "filter_name": "B.uvot",
             "freq_eff": 695280559412463.5,
             "freq_units": "Hz"
         },
         {
             "filter_key": "U.uvot",
+            "filter_name": "U.uvot",
             "freq_eff": 872815357550259.6,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVM2.uvot",
+            "filter_name": "UVM2.uvot",
             "freq_eff": 1346484181597652.0,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVW1.uvot",
+            "filter_name": "UVW1.uvot",
             "freq_eff": 1198891057872408.0,
             "freq_units": "Hz"
         },
         {
             "filter_key": "UVW2.uvot",
+            "filter_name": "UVW2.uvot",
             "freq_eff": 1492659946412262.2,
             "freq_units": "Hz"
         },
         {
             "filter_key": "W1.wise",
+            "filter_name": "W1.wise",
             "freq_eff": 89917740678395.33,
             "freq_units": "Hz"
         },
         {
             "filter_key": "W2.wise",
+            "filter_name": "W2.wise",
             "freq_eff": 65429370473910.305,
             "freq_units": "Hz"
         },
         {
             "filter_key": "g.ztf",
+            "filter_name": "g.ztf",
             "freq_eff": 634121907623677.4,
             "freq_units": "Hz"
         },
         {
             "filter_key": "r.ztf",
+            "filter_name": "r.ztf",
             "freq_eff": 471994480402802.25,
             "freq_units": "Hz"
         },
         {
+            "filter_key": "6GHz",
+            "filter_name": "C",
+            "freq_eff": 6.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3GHz",
+            "filter_name": "S",
+            "freq_eff": 3.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.5GHz",
+            "filter_name": "L",
+            "freq_eff": 1.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "2.5GHz",
+            "filter_name": "S",
+            "freq_eff": 2.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.5GHz",
+            "filter_name": "S",
+            "freq_eff": 3.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5GHz",
+            "filter_name": "C",
+            "freq_eff": 5.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "7GHz",
+            "filter_name": "C",
+            "freq_eff": 7.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9GHz",
+            "filter_name": "X",
+            "freq_eff": 9.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "11GHz",
+            "filter_name": "X",
+            "freq_eff": 11.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "2.1GHz",
+            "filter_name": "S",
+            "freq_eff": 2.1,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.5GHz",
+            "filter_name": "C",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "17GHz",
+            "filter_name": "Ku",
+            "freq_eff": 17.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "19GHz",
+            "filter_name": "K",
+            "freq_eff": 19.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.88GHz",
+            "filter_name": "UHF",
+            "freq_eff": 0.88,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.36GHz",
+            "filter_name": "L",
+            "freq_eff": 1.36,
+            "freq_units": "GHz"
+        },
+        {
             "filter_key": "cyan",
+            "filter_name": "cyan",
             "wave_eff": 540.8724658332794,
             "wave_units": "nm"
         },
         {
             "filter_key": "orange",
+            "filter_name": "orange",
             "wave_eff": 686.6260690394873,
             "wave_units": "nm"
         },
         {
             "filter_key": "g",
+            "filter_name": "g",
             "wave_eff": 471.8872246248687,
             "wave_units": "nm"
         },
         {
             "filter_key": "r",
+            "filter_name": "r",
             "wave_eff": 618.5194476741524,
             "wave_units": "nm"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2017ApJ...835...64G",
-                "2018TNSCR1902....1R",
-                "2021ApJ...908....4V",
-                "2024MNRAS.527.2452M"
-            ],
-            "default": true
         }
     ],
     "schema_version": {

@@ -11,10 +11,39 @@
             "coordinate_type": "equitorial"
         }
     ],
+    "name": {
+        "default_name": "3XMM J150052.0+015452",
+        "alias": [
+            {
+                "value": "XJ1500+0154",
+                "reference": [
+                    "2017NatAs...1E..33L"
+                ]
+            },
+            {
+                "value": "3XMM J150052.0+015452",
+                "reference": [
+                    "2017NatAs...1E..33L",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2017NatAs...1E..33L",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
     "reference_alias": [
         {
             "name": "2017NatAs...1E..33L",
@@ -35,35 +64,6 @@
         {
             "name": "2023PASP..135c4101G",
             "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        }
-    ],
-    "name": {
-        "default_name": "3XMM J150052.0+015452",
-        "alias": [
-            {
-                "value": "XJ1500+0154",
-                "reference": [
-                    "2017NatAs...1E..33L"
-                ]
-            },
-            {
-                "value": "3XMM J150052.0+015452",
-                "reference": [
-                    "2017NatAs...1E..33L",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2017NatAs...1E..33L",
-                "2023PASP..135c4101G"
-            ],
-            "default": true
         }
     ],
     "distance": [
@@ -111,6 +111,18 @@
             "distance_type": "redshift"
         }
     ],
+    "date_reference": [
+        {
+            "value": "2005-07-23 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017NatAs...1E..33L"
+            ],
+            "default": true
+        }
+    ],
     "host": [
         {
             "host_name": "SDSS J150052.07+015453.8",
@@ -122,18 +134,6 @@
                 "2023PASP..135c4101G",
                 "2017NatAs...1E..33L"
             ]
-        }
-    ],
-    "date_reference": [
-        {
-            "value": "2005-07-23 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2017NatAs...1E..33L"
-            ],
-            "default": true
         }
     ]
 }

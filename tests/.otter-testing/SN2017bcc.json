@@ -1,34 +1,4 @@
 {
-    "reference_alias": [
-        {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
-        },
-        {
-            "name": "2011ApJ...737..103S",
-            "human_readable_name": "Schlafly & Finkbeiner (2011)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
-        },
-        {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
-            "name": "2017ATel11049....1S",
-            "human_readable_name": "Sokolovsky, K. et al. (2017)"
-        },
-        {
-            "name": "2017TNSTR.220....1C",
-            "human_readable_name": "Chambers, K. C. et al. (2017)"
-        },
-        {
-            "name": "2017TNSCR.221....1B",
-            "human_readable_name": "Barbarino, C. et al. (2017)"
-        }
-    ],
     "coordinate": [
         {
             "ra": "11:31:53.04",
@@ -48,17 +18,89 @@
             "reference": "2017TNSTR.220....1C"
         }
     ],
+    "distance": [
+        {
+            "value": "646",
+            "unit": "Mpc",
+            "reference": [
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": "570",
+            "unit": "Mpc",
+            "reference": [
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "comoving"
+        },
+        {
+            "value": "0.133",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017ATel11049....1S"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        },
+        {
+            "value": 0.148,
+            "reference": [
+                "2017TNSCR.221....1B"
+            ],
+            "computed": false,
+            "distance_type": "redshift"
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2017ATel11049....1S",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Sokolovsky, K. et al. (2017)"
+        },
+        {
+            "name": "2017TNSTR.220....1C",
+            "human_readable_name": "Chambers, K. C. et al. (2017)"
+        },
+        {
+            "name": "2017TNSCR.221....1B",
+            "human_readable_name": "Barbarino, C. et al. (2017)"
+        }
+    ],
     "name": {
         "default_name": "2017bcc",
         "alias": [
             {
-                "value": "2017bcc",
+                "value": "ZTF20aacbwbm",
                 "reference": [
                     "TNS"
                 ]
             },
             {
-                "value": "ZTF20aacbwbm",
+                "value": "2017bcc",
                 "reference": [
                     "TNS"
                 ]
@@ -70,14 +112,14 @@
                 ]
             },
             {
+                "value": "SN2017bcc",
+                "reference": []
+            },
+            {
                 "value": "AT2017bcc",
                 "reference": [
                     "2017ApJ...835...64G"
                 ]
-            },
-            {
-                "value": "SN2017bcc",
-                "reference": []
             },
             {
                 "value": "PS17bgn",
@@ -134,48 +176,6 @@
                 "2017TNSCR.221....1B"
             ],
             "default": false
-        }
-    ],
-    "distance": [
-        {
-            "value": "646",
-            "unit": "Mpc",
-            "reference": [
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": "570",
-            "unit": "Mpc",
-            "reference": [
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving"
-        },
-        {
-            "value": "0.133",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2017ATel11049....1S"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": 0.148,
-            "reference": [
-                "2017TNSCR.221....1B"
-            ],
-            "computed": false,
-            "distance_type": "redshift"
         }
     ],
     "host": [
@@ -344,26 +344,31 @@
     "filter_alias": [
         {
             "filter_key": "i",
+            "filter_name": "i",
             "wave_eff": 749.9704174464691,
             "wave_units": "nm"
         },
         {
             "filter_key": "z",
+            "filter_name": "z",
             "wave_eff": 896.1488333992431,
             "wave_units": "nm"
         },
         {
             "filter_key": "g",
+            "filter_name": "g",
             "wave_eff": 471.8872246248687,
             "wave_units": "nm"
         },
         {
             "filter_key": "r",
+            "filter_name": "r",
             "wave_eff": 618.5194476741524,
             "wave_units": "nm"
         },
         {
             "filter_key": "w",
+            "filter_name": "w",
             "wave_eff": 638.9300625093831,
             "wave_units": "nm"
         }

@@ -7,6 +7,7 @@ from otter import DataFinder
 from astropy.coordinates import SkyCoord
 from astropy.table import Table
 from astroquery.utils import TableList
+from requests.exceptions import ConnectionError, Timeout
 
 
 def construct_data_finder(**kwargs):
@@ -224,13 +225,19 @@ def test_query_nvss():
 def test_query_sparcl():
     """
     Test querying SPARCL for spectra
+
+    Note: Sparcl likes to throttle us so I'm wrapping this in a try/except for some very
+    specific errors that requests will throw
     """
 
     df1 = construct_data_finder()
-    res = df1.query_sparcl()
+    try:
+        res = df1.query_sparcl()
+        assert isinstance(res, Table)
+        assert len(res) >= 1, "Missing some spectroscopic data!"
 
-    assert isinstance(res, Table)
-    assert len(res) >= 1, "Missing some spectroscopic data!"
+    except (ConnectionError, Timeout):  # NOTE: NEVER add AttributeError to this list
+        pass
 
 
 def test_query_heasarc():
