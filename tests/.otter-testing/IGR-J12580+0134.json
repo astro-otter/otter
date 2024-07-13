@@ -1,66 +1,4 @@
 {
-    "filter_alias": [
-        {
-            "filter_key": "6.0GHz",
-            "filter_name": "C",
-            "freq_eff": 6.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "5.5GHz",
-            "filter_name": "C",
-            "freq_eff": 5.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "L",
-            "filter_name": "L",
-            "freq_eff": 1.57,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "C",
-            "filter_name": "C",
-            "freq_eff": 6.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "VLA.L",
-            "filter_name": "L",
-            "freq_eff": 1.5195,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "VLA.C",
-            "filter_name": "C",
-            "freq_eff": 5.499,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "VLBA.L",
-            "filter_name": "L",
-            "freq_eff": 1.5474,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "VLBA.C",
-            "filter_name": "C",
-            "freq_eff": 4.9795,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "X",
-            "filter_name": "X",
-            "freq_eff": 9.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "S",
-            "filter_name": "S",
-            "freq_eff": 3.0,
-            "freq_units": "GHz"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2015ApJ...809..172I",
@@ -79,29 +17,6 @@
             "human_readable_name": "Perlman, Eric S. et al. (2017)"
         }
     ],
-    "name": {
-        "default_name": "IGR J12580+0134",
-        "alias": [
-            {
-                "value": "IGR12580",
-                "reference": [
-                    "2015ApJ...809..172I"
-                ]
-            },
-            {
-                "value": "IGR 12580",
-                "reference": [
-                    "2015ApJ...809..172I"
-                ]
-            },
-            {
-                "value": "IGR J12580+0134",
-                "reference": [
-                    "IGR"
-                ]
-            }
-        ]
-    },
     "photometry": [
         {
             "reference": [
@@ -216,11 +131,11 @@
                 false
             ],
             "filter_key": [
-                "L",
-                "L",
-                "L",
-                "C",
-                "C"
+                "1.57GHz",
+                "1.57GHz",
+                "1.57GHz",
+                "6.0GHz",
+                "6.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "VLA",
@@ -267,8 +182,8 @@
                 false
             ],
             "filter_key": [
-                "VLA.L",
-                "VLA.C"
+                "1.5195GHz",
+                "5.499GHz"
             ],
             "obs_type": "radio",
             "telescope": "VLA",
@@ -305,8 +220,8 @@
                 false
             ],
             "filter_key": [
-                "VLBA.L",
-                "VLBA.C"
+                "1.5474GHz",
+                "4.9795GHz"
             ],
             "obs_type": "radio",
             "telescope": "VLBA",
@@ -392,17 +307,17 @@
                 false
             ],
             "filter_key": [
-                "X",
-                "X",
-                "C",
-                "C",
-                "S",
-                "L",
-                "C",
-                "S",
-                "L",
-                "S",
-                "L"
+                "9.0GHz",
+                "9.0GHz",
+                "6.0GHz",
+                "6.0GHz",
+                "3.0GHz",
+                "1.5GHz",
+                "6.0GHz",
+                "3.0GHz",
+                "1.5GHz",
+                "3.0GHz",
+                "1.5GHz"
             ],
             "obs_type": "radio",
             "telescope": "VLA",
@@ -438,42 +353,66 @@
             "corr_hostav": false
         }
     ],
-    "coordinate": [
+    "filter_alias": [
         {
-            "ra": "12 58 05.1",
-            "dec": "+01 34 26",
-            "epoch": "J2000",
-            "system": "ICRS",
-            "ra_units": "hourangle",
-            "dec_units": "deg",
-            "reference": [
-                "2015ApJ...809..172I",
-                "2016MNRAS.461.3375Y",
-                "2017ApJ...842..126P"
-            ],
-            "computed": false,
-            "default": true,
-            "uuid": "f5312849-2fce-406b-b475-8f9bd80c0059",
-            "coordinate_type": "equitorial"
+            "filter_key": "6.0GHz",
+            "filter_name": "C",
+            "freq_eff": 6.0,
+            "freq_units": "GHz"
         },
         {
-            "reference": "f5312849-2fce-406b-b475-8f9bd80c0059",
-            "computed": true,
-            "coordinate_type": "galactic",
-            "l": 306.7781925952877,
-            "b": 64.39598414557777,
-            "l_units": "deg",
-            "b_units": "deg"
+            "filter_key": "5.5GHz",
+            "filter_name": "C",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
         },
         {
-            "ra": "12:58:05.1",
-            "dec": "+01:34:26",
-            "ra_units": "hour",
-            "dec_units": "degree",
-            "reference": [
-                "2015ApJ...809..172I"
-            ],
-            "coordinate_type": "equitorial"
+            "filter_key": "1.57GHz",
+            "filter_name": "L",
+            "freq_eff": 1.57,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.5195GHz",
+            "filter_name": "L",
+            "freq_eff": 1.5195,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.499GHz",
+            "filter_name": "C",
+            "freq_eff": 5.499,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.5474GHz",
+            "filter_name": "L",
+            "freq_eff": 1.5474,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "4.9795GHz",
+            "filter_name": "C",
+            "freq_eff": 4.9795,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.0GHz",
+            "filter_name": "X",
+            "freq_eff": 9.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.0GHz",
+            "filter_name": "S",
+            "freq_eff": 3.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.5GHz",
+            "filter_name": "L",
+            "freq_eff": 1.5,
+            "freq_units": "GHz"
         }
     ],
     "classification": [
@@ -488,6 +427,86 @@
             "default": true
         }
     ],
+    "name": {
+        "default_name": "IGR J12580+0134",
+        "alias": [
+            {
+                "value": "IGR12580",
+                "reference": [
+                    "2015ApJ...809..172I"
+                ]
+            },
+            {
+                "value": "IGR J12580+0134",
+                "reference": [
+                    "IGR"
+                ]
+            },
+            {
+                "value": "IGR 12580",
+                "reference": [
+                    "2015ApJ...809..172I"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "12 58 05.1",
+            "dec": "+01 34 26",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "computed": "False",
+            "default": true,
+            "uuid": "5eedd6a1-8882-4e29-83d6-21a04eb5b74b",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2015ApJ...809..172I",
+                "2016MNRAS.461.3375Y",
+                "2017ApJ...842..126P"
+            ]
+        },
+        {
+            "ra": "12:58:05.1",
+            "dec": "+01:34:26",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2015ApJ...809..172I"
+            ]
+        },
+        {
+            "ra": "12:58:05.1",
+            "dec": "+01:34:26",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2015ApJ...809..172I"
+            ]
+        },
+        {
+            "computed": "True",
+            "default": true,
+            "coordinate_type": "galactic",
+            "l": "306.7781925952877",
+            "b": "64.39598414557777",
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": [
+                "5eedd6a1-8882-4e29-83d6-21a04eb5b74b"
+            ]
+        }
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    },
     "distance": [
         {
             "value": "0.00411",
@@ -501,10 +520,6 @@
             "distance_type": "redshift"
         }
     ],
-    "schema_version": {
-        "value": "0",
-        "comment": "Original Dataset"
-    },
     "date_reference": [
         {
             "value": 55572,

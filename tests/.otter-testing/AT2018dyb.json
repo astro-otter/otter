@@ -1,60 +1,4 @@
 {
-    "filter_alias": [
-        {
-            "filter_key": "B.uvot",
-            "filter_name": "B.uvot",
-            "freq_eff": 695280559412463.5,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "U.uvot",
-            "filter_name": "U.uvot",
-            "freq_eff": 872815357550259.6,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVM2.uvot",
-            "filter_name": "UVM2.uvot",
-            "freq_eff": 1346484181597652.0,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVW1.uvot",
-            "filter_name": "UVW1.uvot",
-            "freq_eff": 1198891057872408.0,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVW2.uvot",
-            "filter_name": "UVW2.uvot",
-            "freq_eff": 1492659946412262.2,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "1.36GHz",
-            "filter_name": "L",
-            "freq_eff": 1.36,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "2.1GHz",
-            "filter_name": "S",
-            "freq_eff": 2.1,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "5.5GHz",
-            "filter_name": "C",
-            "freq_eff": 5.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "9GHz",
-            "filter_name": "X",
-            "freq_eff": 9.0,
-            "freq_units": "GHz"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2019ApJ...887..218L",
@@ -73,19 +17,6 @@
             "human_readable_name": "Brimacombe, J. et al. (2018)"
         }
     ],
-    "name": {
-        "default_name": "AT2018dyb",
-        "alias": [
-            {
-                "value": "AT2018dyb",
-                "reference": [
-                    "2019ApJ...887..218L",
-                    "2024MNRAS.527.2452M",
-                    "2018TNSTR.982....1B"
-                ]
-            }
-        ]
-    },
     "photometry": [
         {
             "raw": [
@@ -1373,7 +1304,7 @@
             "filter_key": [
                 "2.1GHz",
                 "5.5GHz",
-                "9GHz"
+                "9.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "ATCA",
@@ -1419,27 +1350,60 @@
             "corr_hostav": false
         }
     ],
-    "coordinate": [
+    "filter_alias": [
         {
-            "ra": 242.745322,
-            "dec": -60.923441,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2019ApJ...887..218L",
-                "2024MNRAS.527.2452M"
-            ],
-            "coordinate_type": "equitorial"
+            "filter_key": "B.uvot",
+            "filter_name": "B.uvot",
+            "freq_eff": 695280559412463.5,
+            "freq_units": "Hz"
         },
         {
-            "ra": "16:10:58.774",
-            "dec": "-60:55:23.16",
-            "ra_units": "hour",
-            "dec_units": "degree",
-            "reference": [
-                "2018TNSTR.982....1B"
-            ],
-            "coordinate_type": "equitorial"
+            "filter_key": "U.uvot",
+            "filter_name": "U.uvot",
+            "freq_eff": 872815357550259.6,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVM2.uvot",
+            "filter_name": "UVM2.uvot",
+            "freq_eff": 1346484181597652.0,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVW1.uvot",
+            "filter_name": "UVW1.uvot",
+            "freq_eff": 1198891057872408.0,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVW2.uvot",
+            "filter_name": "UVW2.uvot",
+            "freq_eff": 1492659946412262.2,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "1.36GHz",
+            "filter_name": "L",
+            "freq_eff": 1.36,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "2.1GHz",
+            "filter_name": "S",
+            "freq_eff": 2.1,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.5GHz",
+            "filter_name": "C",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.0GHz",
+            "filter_name": "X",
+            "freq_eff": 9.0,
+            "freq_units": "GHz"
         }
     ],
     "classification": [
@@ -1449,6 +1413,44 @@
             "reference": [
                 "2019ApJ...887..218L",
                 "2023arXiv230813595C",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        }
+    ],
+    "name": {
+        "default_name": "AT2018dyb",
+        "alias": [
+            {
+                "value": "AT2018dyb",
+                "reference": [
+                    "2019ApJ...887..218L",
+                    "2024MNRAS.527.2452M",
+                    "2018TNSTR.982....1B"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "16:10:58.774",
+            "dec": "-60:55:23.16",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2018TNSTR.982....1B"
+            ],
+            "default": false
+        },
+        {
+            "ra": "242.745322",
+            "dec": "-60.923441",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2019ApJ...887..218L",
                 "2024MNRAS.527.2452M"
             ],
             "default": true

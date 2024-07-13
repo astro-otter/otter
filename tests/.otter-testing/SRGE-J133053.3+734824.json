@@ -8,7 +8,9 @@
         "alias": [
             {
                 "value": "SRGE J133053.3+734824",
-                "reference": "2023PASP..135c4101G"
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
             }
         ]
     },

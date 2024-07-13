@@ -11,6 +11,7 @@ import time
 from copy import deepcopy
 from collections import OrderedDict
 
+import numpy as np
 import pandas as pd
 from astropy.coordinates import SkyCoord, search_around_sky
 from astropy import units as u
@@ -214,7 +215,7 @@ def tns_phot_to_otter_phot(photlist):
             date=str(date),  # always strings since some dates are formatted differently
             date_format="mjd",
             filter_key=filterused,
-            reference="TNS",  # CORRECT THIS LATER? SEE GITHUB ISSUE
+            reference=["TNS"],  # CORRECT THIS LATER? SEE GITHUB ISSUE
             obs_type=filter_to_obstype(filterused),
             # We assume that a sane observational astronomer would upload raw
             # but host subtracted photometry...
@@ -275,7 +276,9 @@ def tns_response_to_otter(row, photlist):
             coordinate_type="equitorial",
             ra_units="deg",
             dec_units="deg",
-            reference=row.Discovery_ADS_bibcode_tns,
+            reference=np.unique(
+                [b.strip() for b in row.Discovery_ADS_bibcode_tns.split(",")]
+            ).tolist(),
         )
     ]
 
@@ -299,7 +302,9 @@ def tns_response_to_otter(row, photlist):
                 value=Time(row.discoverydate_tns).mjd,
                 date_format="mjd",
                 date_type="discovery",
-                reference=row.Discovery_ADS_bibcode_tns,
+                reference=np.unique(
+                    [b.strip() for b in row.Discovery_ADS_bibcode_tns.split(",")]
+                ).tolist(),
                 computed=False,
             )
         ]
@@ -314,9 +319,9 @@ def tns_response_to_otter(row, photlist):
                     value=row.redshift_tns,
                     computed=False,
                     distance_type="redshift",
-                    reference=[
-                        b.strip() for b in row.Class_ADS_bibcodes_tns.split(",")
-                    ],
+                    reference=np.unique(
+                        [b.strip() for b in row.Class_ADS_bibcodes_tns.split(",")]
+                    ).tolist(),
                 )
             ]
 
@@ -325,9 +330,9 @@ def tns_response_to_otter(row, photlist):
                 dict(
                     object_class=row.type_tns,
                     confidence=0.5,
-                    reference=[
-                        b.strip() for b in row.Class_ADS_bibcodes_tns.split(",")
-                    ],
+                    reference=np.unique(
+                        [b.strip() for b in row.Class_ADS_bibcodes_tns.split(",")]
+                    ).tolist(),
                 )
             ]
 
@@ -342,7 +347,6 @@ def tns_response_to_otter(row, photlist):
     if not pd.isna(row.Class_ADS_bibcodes_tns):
         for bib in row.Class_ADS_bibcodes_tns.split(","):
             toadd = dict(name=bib, human_readable_name=bibcode_to_hrn(bib))
-
             out["reference_alias"].append(toadd)
 
     return out

@@ -1,47 +1,4 @@
 {
-    "coordinate": [
-        {
-            "ra": "22:26:48.37",
-            "dec": "+17:08:52.4",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2019MNRAS.488.1878N"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 336.701543422,
-            "dec": 17.1478884031,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2019MNRAS.488.1878N",
-                "2024MNRAS.527.2452M"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": "22:26:48.370",
-            "dec": "+17:08:52.40",
-            "ra_units": "hour",
-            "dec_units": "degree",
-            "reference": [
-                "2017TNSTR.646....1C"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 336.701543422,
-            "dec": 17.1478884031,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2017TNSTR.646....1C",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2019MNRAS.488.1878N",
@@ -72,38 +29,6 @@
             "human_readable_name": "Chambers, K. C. et al. (2017)"
         }
     ],
-    "name": {
-        "default_name": "2017eqx",
-        "alias": [
-            {
-                "value": "PS17dhz",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "2017eqx",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2017eqx",
-                "reference": [
-                    "2019MNRAS.488.1878N",
-                    "2019MNRAS.488.1878N",
-                    "2024MNRAS.527.2452M",
-                    "2017TNSTR.646....1C"
-                ]
-            },
-            {
-                "value": "AT 2017eqx",
-                "reference": [
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
     "date_reference": [
         {
             "value": "2017-06-01",
@@ -113,18 +38,7 @@
                 "2019MNRAS.488.1878N",
                 "2017ApJ...835...64G"
             ],
-            "computed": false,
             "default": true
-        },
-        {
-            "value": 57912.22750000004,
-            "date_format": "mjd",
-            "date_type": "peak",
-            "reference": [
-                "2019MNRAS.488.1878N",
-                "2024MNRAS.527.2452M"
-            ],
-            "computed": false
         },
         {
             "value": "2017-06-07 ",
@@ -134,14 +48,76 @@
                 "2023PASP..135c4101G",
                 "2019MNRAS.488.1878N"
             ],
-            "default": true
+            "default": false
         },
         {
-            "value": 57911.56,
+            "value": "57911.56",
             "date_format": "mjd",
             "date_type": "discovery",
-            "reference": "2017TNSTR.646....1C",
-            "computed": false
+            "reference": [
+                "2017TNSTR.646....1C"
+            ],
+            "default": false
+        },
+        {
+            "value": "57912.22750000004",
+            "date_format": "mjd",
+            "date_type": "peak",
+            "reference": [
+                "2019MNRAS.488.1878N",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "22:26:48.37",
+            "dec": "+17:08:52.4",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": true,
+            "reference": [
+                "2019MNRAS.488.1878N",
+                "2019MNRAS.488.1878N"
+            ]
+        },
+        {
+            "ra": "22:26:48.370",
+            "dec": "+17:08:52.40",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "reference": [
+                "2017TNSTR.646....1C"
+            ]
+        },
+        {
+            "ra": "336.701543422",
+            "dec": "17.1478884031",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "reference": [
+                "2019MNRAS.488.1878N",
+                "2024MNRAS.527.2452M"
+            ]
+        },
+        {
+            "ra": "336.701543422",
+            "dec": "17.1478884031",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": [
+                "2017TNSTR.646....1C"
+            ]
         }
     ],
     "photometry": [
@@ -1070,8 +1046,8 @@
                 true
             ],
             "filter_key": [
-                "6GHz",
-                "6GHz"
+                "6.0GHz",
+                "6.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "VLA",
@@ -1095,7 +1071,9 @@
             "date": "57911.560000000056",
             "date_format": "mjd",
             "filter_key": "i",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -1204,10 +1182,76 @@
             "freq_units": "Hz"
         },
         {
-            "filter_key": "6GHz",
+            "filter_key": "6.0GHz",
             "filter_name": "C",
             "freq_eff": 6.0,
             "freq_units": "GHz"
+        }
+    ],
+    "name": {
+        "default_name": "2017eqx",
+        "alias": [
+            {
+                "value": "2017eqx",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "PS17dhz",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2017eqx",
+                "reference": [
+                    "2019MNRAS.488.1878N",
+                    "2019MNRAS.488.1878N",
+                    "2024MNRAS.527.2452M",
+                    "2017TNSTR.646....1C"
+                ]
+            },
+            {
+                "value": "AT 2017eqx",
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
+    "distance": [
+        {
+            "value": "0.1089",
+            "distance_type": "redshift",
+            "reference": [
+                "2019MNRAS.488.1878N",
+                "2019MNRAS.488.1878N",
+                "2024MNRAS.527.2452M",
+                "2023PASP..135c4101G",
+                "2019MNRAS.488.1878N"
+            ],
+            "default": true
+        },
+        {
+            "value": "469.6",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2019MNRAS.488.1878N",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        },
+        {
+            "value": "523.1",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2019MNRAS.488.1878N"
+            ],
+            "default": true
         }
     ],
     "host": [
@@ -1240,56 +1284,5 @@
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
-    },
-    "distance": [
-        {
-            "value": "0.1089",
-            "reference": [
-                "2019MNRAS.488.1878N"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "523.1",
-            "reference": [
-                "2019MNRAS.488.1878N"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity",
-            "unit": "Mpc"
-        },
-        {
-            "value": "469.6",
-            "reference": [
-                "2019MNRAS.488.1878N",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving",
-            "unit": "Mpc"
-        },
-        {
-            "value": 0.1089,
-            "reference": [
-                "2019MNRAS.488.1878N",
-                "2024MNRAS.527.2452M"
-            ],
-            "distance_type": "redshift"
-        },
-        {
-            "value": "0.1089",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2019MNRAS.488.1878N"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        }
-    ]
+    }
 }

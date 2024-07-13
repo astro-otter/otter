@@ -123,7 +123,7 @@ def main():
                     "b": float(row.b.value),
                     "l_units": "deg",
                     "b_units": "deg",
-                    "reference": str(uu),
+                    "reference": [str(uu)],
                     "computed": True,
                     "coordinate_type": "galactic",
                 }

@@ -1,33 +1,49 @@
 {
-    "date_reference": [
+    "distance": [
         {
-            "value": "2019-09-24 9:50:24.000000000012278",
-            "date_format": "iso",
-            "date_type": "discovery",
+            "value": "0.0151",
+            "distance_type": "redshift",
             "reference": [
-                "ASAS-SN Supernovae"
+                "2020MNRAS.499..482N,2021ApJ...908....4V",
+                "2024MNRAS.527.2452M",
+                "2019TNSCR1921....1S"
             ],
-            "computed": false,
             "default": true
         },
         {
-            "value": 58763.4168287037,
-            "date_format": "mjd",
-            "date_type": "peak",
+            "value": "0.01513",
+            "distance_type": "redshift",
             "reference": [
-                "2020MNRAS.499..482N,2021ApJ...908....4V",
-                "2024MNRAS.527.2452M"
+                "2020arXiv200602454N"
             ],
-            "computed": false
-        }
-    ],
-    "classification": [
+            "default": false
+        },
         {
-            "object_class": "TDE",
-            "confidence": 1,
+            "value": "65.6",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
             "reference": [
-                "2017ApJ...835...64G",
-                "2020MNRAS.499..482N,2021ApJ...908....4V",
+                "2020arXiv200602454N"
+            ],
+            "default": true
+        },
+        {
+            "value": "66.72",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2020arXiv200602454N",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        },
+        {
+            "value": "71.85",
+            "distance_type": "dispersion_measure",
+            "unit": "km/s",
+            "reference": [
+                "2023ApJ...957...86H",
                 "2024MNRAS.527.2452M"
             ],
             "default": true
@@ -69,75 +85,70 @@
         {
             "name": "2023ApJ...957...86H",
             "human_readable_name": "Hammerstein, Erica et al. (2023)"
+        },
+        {
+            "name": "2020TNSTR2817....1C",
+            "human_readable_name": "Chambers, K. C. et al. (2020)"
+        },
+        {
+            "name": "2019TNSTR1857....1F",
+            "human_readable_name": "Forster, F. (2019)"
+        },
+        {
+            "name": "2019TNSCR1921....1S",
+            "human_readable_name": "Siebert, M. R. et al. (2019)"
         }
     ],
-    "name": {
-        "default_name": "AT2019qiz",
-        "alias": [
-            {
-                "value": "AT2019qiz (= ZTF19abzrhgq)",
-                "reference": [
-                    "ASAS-SN Supernovae"
-                ]
-            },
-            {
-                "value": "AT2019qiz",
-                "reference": [
-                    "2020arXiv200602454N",
-                    "ASAS-SN Supernovae",
-                    "MAST",
-                    "2020MNRAS.499..482N,2021ApJ...908....4V",
-                    "2024MNRAS.527.2452M"
-                ]
-            }
-        ]
-    },
-    "distance": [
+    "classification": [
         {
-            "value": "0.01513",
+            "object_class": "TDE",
+            "confidence": 1,
             "reference": [
-                "2020arXiv200602454N"
+                "2017ApJ...835...64G",
+                "2019TNSCR1921....1S",
+                "2020MNRAS.499..482N,2021ApJ...908....4V",
+                "2024MNRAS.527.2452M"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
+            "default": true
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2019-09-24 9:50:24.000000000012278",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "ASAS-SN Supernovae"
+            ],
+            "default": true
         },
         {
-            "value": "65.6",
+            "value": "56556.621",
+            "date_format": "mjd",
+            "date_type": "discovery",
             "reference": [
-                "2020arXiv200602454N"
+                "2020TNSTR2817....1C"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity",
-            "unit": "Mpc"
+            "default": false
         },
         {
-            "value": "66.72",
+            "value": "58745.49980324074",
+            "date_format": "mjd",
+            "date_type": "discovery",
             "reference": [
-                "2020arXiv200602454N",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
+                "2019TNSTR1857....1F"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving",
-            "unit": "Mpc"
+            "default": false
         },
         {
-            "value": 0.0151,
+            "value": "58763.4168287037",
+            "date_format": "mjd",
+            "date_type": "peak",
             "reference": [
                 "2020MNRAS.499..482N,2021ApJ...908....4V",
                 "2024MNRAS.527.2452M"
             ],
-            "distance_type": "redshift"
-        },
-        {
-            "value": 71.85,
-            "reference": "2023ApJ...957...86H",
-            "distance_type": "dispersion_measure",
-            "unit": "km/s",
-            "error": 1.93
+            "default": true
         }
     ],
     "coordinate": [
@@ -146,27 +157,51 @@
             "dec": "-10:13:31.5",
             "ra_units": "hour",
             "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
             "reference": [
                 "ASAS-SN Supernovae"
-            ],
-            "coordinate_type": "equitorial"
+            ]
         },
         {
-            "ra": 71.657837,
-            "dec": -10.226355,
+            "ra": "71.657816604",
+            "dec": "-10.2263196282",
             "ra_units": "deg",
             "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": [
+                "2020TNSTR2817....1C"
+            ]
+        },
+        {
+            "ra": "71.657833",
+            "dec": "-10.226361",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": [
+                "2019TNSTR1857....1F"
+            ]
+        },
+        {
+            "ra": "71.657837",
+            "dec": "-10.226355",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": true,
             "reference": [
                 "2020MNRAS.499..482N,2021ApJ...908....4V",
                 "2024MNRAS.527.2452M"
-            ],
-            "coordinate_type": "equitorial"
+            ]
         }
     ],
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
     "photometry": [
         {
             "raw": [
@@ -4086,6 +4121,292 @@
             "corr_host": false,
             "corr_hostav": false,
             "val_av": 0.3027263389745362
+        },
+        {
+            "raw": [
+                19.74
+            ],
+            "raw_err": [
+                0.13
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "56556.62099999981",
+            "date_format": "mjd",
+            "filter_key": "z",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "PS1",
+            "instrument": "GPC1"
+        },
+        {
+            "raw": [
+                16.3
+            ],
+            "raw_err": [
+                0
+            ],
+            "upperlimit": true,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58738.55299769994",
+            "date_format": "mjd",
+            "filter_key": "orange",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "ATLAS-HKO",
+            "instrument": "ATLAS-02"
+        },
+        {
+            "raw": [
+                18.002
+            ],
+            "raw_err": [
+                0.103
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58744.5259953998",
+            "date_format": "mjd",
+            "filter_key": "orange",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "ATLAS-MLO",
+            "instrument": "ATLAS-01"
+        },
+        {
+            "raw": [
+                16.04
+            ],
+            "raw_err": [
+                0.2
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58759.05799769983",
+            "date_format": "mjd",
+            "filter_key": "G",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "Gaia",
+            "instrument": "Gaia-photometric"
+        },
+        {
+            "raw": [
+                21.5
+            ],
+            "raw_err": [
+                0
+            ],
+            "upperlimit": true,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58705.21499999985",
+            "date_format": "mjd",
+            "filter_key": "G",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "Gaia",
+            "instrument": "Gaia-photometric"
+        },
+        {
+            "raw": [
+                17.63
+            ],
+            "raw_err": [
+                0.05
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58746.503622699995",
+            "date_format": "mjd",
+            "filter_key": "g",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                19.2243
+            ],
+            "raw_err": [
+                0
+            ],
+            "upperlimit": true,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58742.503622699995",
+            "date_format": "mjd",
+            "filter_key": "g",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                19.5256
+            ],
+            "raw_err": [
+                0
+            ],
+            "upperlimit": true,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58739.50118059991",
+            "date_format": "mjd",
+            "filter_key": "g",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                17.82
+            ],
+            "raw_err": [
+                0.07
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58745.49981479999",
+            "date_format": "mjd",
+            "filter_key": "r",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                17.8184
+            ],
+            "raw_err": [
+                0.0682373
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58745.4998031999",
+            "date_format": "mjd",
+            "filter_key": "r",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "P48",
+            "instrument": "ZTF-Cam"
+        },
+        {
+            "raw": [
+                16.08
+            ],
+            "raw_err": [
+                0.03
+            ],
+            "upperlimit": false,
+            "raw_units": [
+                "mag(AB)"
+            ],
+            "date": "58775.60000000009",
+            "date_format": "mjd",
+            "filter_key": "i",
+            "reference": [
+                "TNS"
+            ],
+            "obs_type": "uvoir",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": true,
+            "corr_hostav": false,
+            "telescope": "PS2",
+            "instrument": "GPC2"
         }
     ],
     "filter_alias": [
@@ -4142,6 +4463,104 @@
             "filter_name": "r.ztf",
             "freq_eff": 471994480402802.25,
             "freq_units": "Hz"
+        },
+        {
+            "filter_key": "z",
+            "filter_name": "z",
+            "wave_eff": 896.1488333992431,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "orange",
+            "filter_name": "orange",
+            "wave_eff": 686.6260690394873,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "G",
+            "filter_name": "G",
+            "wave_eff": 673.5412573108297,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "g",
+            "filter_name": "g",
+            "wave_eff": 471.8872246248687,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "r",
+            "filter_name": "r",
+            "wave_eff": 618.5194476741524,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "i",
+            "filter_name": "i",
+            "wave_eff": 749.9704174464691,
+            "wave_units": "nm"
         }
-    ]
+    ],
+    "name": {
+        "default_name": "2013kp",
+        "alias": [
+            {
+                "value": "Gaia19eks",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ATLAS19vfr",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2019qiz",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF19abzrhgq",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2019qiz (= ZTF19abzrhgq)",
+                "reference": [
+                    "ASAS-SN Supernovae"
+                ]
+            },
+            {
+                "value": "2013kp",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2019qiz",
+                "reference": [
+                    "2020arXiv200602454N",
+                    "ASAS-SN Supernovae",
+                    "MAST",
+                    "2020MNRAS.499..482N,2021ApJ...908....4V",
+                    "2024MNRAS.527.2452M"
+                ]
+            },
+            {
+                "value": "PS19gdd",
+                "reference": [
+                    "TNS",
+                    "TNS"
+                ]
+            }
+        ]
+    },
+    "schema_version": {
+        "value": "0",
+        "comment": "Copied from tde.space"
+    }
 }

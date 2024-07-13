@@ -1,27 +1,4 @@
 {
-    "coordinate": [
-        {
-            "ra": 34.474792,
-            "dec": -9.614137,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2023ApJ...942....9H",
-                "2024MNRAS.527.2452M"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 34.4748733233,
-            "dec": -9.61412619912,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2020TNSTR2274....1F",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2023ApJ...942....9H",
@@ -40,59 +17,52 @@
             "human_readable_name": "Forster, F. et al. (2020)"
         }
     ],
-    "name": {
-        "default_name": "2020qhs",
-        "alias": [
-            {
-                "value": "2020qhs",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF20abowque",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "PS20krl",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ATLAS20upw",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2020qhs",
-                "reference": [
-                    "2023ApJ...942....9H",
-                    "2024MNRAS.527.2452M"
-                ]
-            }
-        ]
-    },
     "date_reference": [
         {
-            "value": 59055.95833333331,
+            "value": "59055.95833333331",
             "date_format": "mjd",
+            "date_type": "peak",
             "reference": [
                 "2023ApJ...942....9H",
                 "2024MNRAS.527.2452M"
             ],
-            "computed": false,
-            "date_type": "peak"
+            "default": true
         },
         {
-            "value": 59056.4415625,
+            "value": "59056.4415625",
             "date_format": "mjd",
-            "reference": "2020TNSTR2274....1F",
-            "computed": false,
-            "date_type": "discovery"
+            "date_type": "discovery",
+            "reference": [
+                "2020TNSTR2274....1F"
+            ],
+            "default": true
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "34.474792",
+            "dec": "-9.614137",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2023ApJ...942....9H",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        },
+        {
+            "ra": "34.4748733233",
+            "dec": "-9.61412619912",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": [
+                "2020TNSTR2274....1F"
+            ],
+            "default": false
         }
     ],
     "photometry": [
@@ -4401,7 +4371,9 @@
             "date": "59119.503000000026",
             "date_format": "mjd",
             "filter_key": "i",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -4425,7 +4397,9 @@
             "date": "59050.59700000007",
             "date_format": "mjd",
             "filter_key": "cyan",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -4449,7 +4423,9 @@
             "date": "59048.62300000014",
             "date_format": "mjd",
             "filter_key": "orange",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -4473,7 +4449,9 @@
             "date": "59056.44156249985",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -4497,7 +4475,9 @@
             "date": "59056.44156249985",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -4521,7 +4501,9 @@
             "date": "59061.45355319977",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -4545,7 +4527,9 @@
             "date": "59083.57800000021",
             "date_format": "mjd",
             "filter_key": "w",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -4648,6 +4632,42 @@
             "wave_units": "nm"
         }
     ],
+    "name": {
+        "default_name": "2020qhs",
+        "alias": [
+            {
+                "value": "ATLAS20upw",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2020qhs",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF20abowque",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "PS20krl",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2020qhs",
+                "reference": [
+                    "2023ApJ...942....9H",
+                    "2024MNRAS.527.2452M"
+                ]
+            }
+        ]
+    },
     "distance": [
         {
             "value": 0.345,
@@ -4660,7 +4680,10 @@
         {
             "value": 215.46,
             "error": 44.2,
-            "reference": "2023ApJ...957...86H",
+            "reference": [
+                "2023ApJ...957...86H",
+                "2024MNRAS.527.2452M"
+            ],
             "unit": "km/s",
             "distance_type": "dispersion_measure"
         }

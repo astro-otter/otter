@@ -1,125 +1,4 @@
 {
-    "filter_alias": [
-        {
-            "filter_key": "4.5GHz",
-            "filter_name": "C",
-            "freq_eff": 4.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "5.5GHz",
-            "filter_name": "C",
-            "freq_eff": 5.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm",
-            "filter_name": "0.3 - 2.0"
-        },
-        {
-            "filter_key": "7.9GHz",
-            "filter_name": "C",
-            "freq_eff": 7.9,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "8.4GHz",
-            "filter_name": "X",
-            "freq_eff": 8.4,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "22.5GHz",
-            "filter_name": "K",
-            "freq_eff": 22.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "22GHz",
-            "filter_name": "K",
-            "freq_eff": 22.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "9GHz",
-            "filter_name": "X",
-            "freq_eff": 9.0,
-            "freq_units": "GHz"
-        }
-    ],
-    "distance": [
-        {
-            "value": "1.1853",
-            "reference": [
-                "2012ApJ...753...77C",
-                "2015ApJ...805...68P",
-                "2017MNRAS.472.4469B"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "1.1853",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2012ApJ...753...77C"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "8376.4",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...753...77C",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity",
-            "unit": "Mpc"
-        },
-        {
-            "value": "3833.1",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...753...77C",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving",
-            "unit": "Mpc"
-        },
-        {
-            "value": "1.1853",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2011ATel.3384....1K",
-                "2012MNRAS.420.2684C",
-                "2017ApJ...838..149A"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": 1.1853,
-            "reference": [
-                "2012ApJ...753...77C"
-            ],
-            "distance_type": "redshift",
-            "compute": false
-        }
-    ],
     "reference_alias": [
         {
             "name": "2012ApJ...753...77C",
@@ -158,25 +37,6 @@
             "human_readable_name": "Krimm, H. A. et al. (2011)"
         }
     ],
-    "name": {
-        "default_name": "Sw J2058+05",
-        "alias": [
-            {
-                "value": "Swift J2058+05",
-                "reference": [
-                    "2017ApJ...838..149A",
-                    "2023PASP..135c4101G"
-                ]
-            },
-            {
-                "value": "Sw J2058+05",
-                "reference": [
-                    "Swift",
-                    "2012ApJ...753...77C"
-                ]
-            }
-        ]
-    },
     "photometry": [
         {
             "reference": [
@@ -525,7 +385,7 @@
             ],
             "filter_key": [
                 "8.4GHz",
-                "22GHz"
+                "22.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "VLBA",
@@ -560,7 +420,7 @@
             ],
             "filter_key": [
                 "5.5GHz",
-                "9GHz"
+                "9.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "ATCA",
@@ -571,52 +431,99 @@
             "corr_hostav": false
         }
     ],
-    "coordinate": [
+    "filter_alias": [
         {
-            "ra": "20 58 19.90",
-            "dec": "+05 13 32.0",
-            "epoch": "J2000",
-            "system": "ICRS",
-            "ra_units": "hourangle",
-            "dec_units": "deg",
+            "filter_key": "4.5GHz",
+            "filter_name": "C",
+            "freq_eff": 4.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.5GHz",
+            "filter_name": "C",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
+        },
+        {
+            "filter_key": "7.9GHz",
+            "filter_name": "C",
+            "freq_eff": 7.9,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "8.4GHz",
+            "filter_name": "X",
+            "freq_eff": 8.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "22.5GHz",
+            "filter_name": "K",
+            "freq_eff": 22.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "22.0GHz",
+            "filter_name": "K",
+            "freq_eff": 22.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.0GHz",
+            "filter_name": "X",
+            "freq_eff": 9.0,
+            "freq_units": "GHz"
+        }
+    ],
+    "distance": [
+        {
+            "value": "1.1853",
+            "distance_type": "redshift",
             "reference": [
                 "2012ApJ...753...77C",
                 "2015ApJ...805...68P",
-                "2017MNRAS.472.4469B"
-            ],
-            "computed": false,
-            "default": true,
-            "uuid": "a49cb708-c7cf-4449-a202-d72628d71f30",
-            "coordinate_type": "equitorial"
-        },
-        {
-            "reference": "a49cb708-c7cf-4449-a202-d72628d71f30",
-            "computed": true,
-            "coordinate_type": "galactic",
-            "l": 53.61702902648376,
-            "b": -25.11893929017656,
-            "l_units": "deg",
-            "b_units": "deg"
-        },
-        {
-            "ra": "20:58:19.85",
-            "dec": "+05:13:33.00",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2017ApJ...838..149A"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": "20:58:19.90",
-            "dec": "+05:13:32.0",
-            "ra_units": "hour",
-            "dec_units": "degree",
-            "reference": [
+                "2017MNRAS.472.4469B",
+                "2017ApJ...838..149A",
+                "2012ApJ...753...77C",
+                "2023PASP..135c4101G",
+                "2011ATel.3384....1K",
+                "2012MNRAS.420.2684C",
+                "2017ApJ...838..149A",
                 "2012ApJ...753...77C"
             ],
-            "coordinate_type": "equitorial"
+            "default": true
+        },
+        {
+            "value": "3833.1",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2012ApJ...753...77C",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        },
+        {
+            "value": "8376.4",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2012ApJ...753...77C",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
         }
     ],
     "classification": [
@@ -638,45 +545,128 @@
     ],
     "date_reference": [
         {
-            "value": "55698.0",
-            "date_format": "mjd",
+            "value": "2011-05-20",
+            "date_format": "iso",
+            "date_type": "discovery",
             "reference": [
                 "2012ApJ...753...77C",
-                "2015ApJ...805...68P",
-                "2017MNRAS.472.4469B"
+                "2012ApJ...753...77C",
+                "2012ApJ...753...77C",
+                "2012ApJ...753...77C",
+                "2012ApJ...753...77C",
+                "2012ApJ...753...77C",
+                "2012ApJ...753...77C",
+                "2012ApJ...753...77C"
             ],
-            "computed": false,
-            "date_type": "discovery"
+            "default": true
         },
         {
             "value": "2011-05-27",
             "date_format": "iso",
+            "date_type": "discovery",
             "reference": [
                 "2017ApJ...838..149A",
                 "2017ApJ...835...64G"
             ],
-            "computed": false,
-            "date_type": "discovery",
-            "default": true
+            "default": false
         },
         {
             "value": "2011-05-27 ",
             "date_format": "iso",
+            "date_type": "discovery",
             "reference": [
                 "2023PASP..135c4101G",
                 "2011ATel.3384....1K",
                 "2012MNRAS.420.2684C",
                 "2017ApJ...838..149A"
             ],
-            "date_type": "discovery",
-            "default": true
+            "default": false
         },
         {
-            "value": "2011-05-20",
-            "date_format": "iso",
-            "reference": "2012ApJ...753...77C",
-            "computed": false,
-            "date_type": "discovery"
+            "value": "55698.0",
+            "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B"
+            ],
+            "default": false
+        }
+    ],
+    "name": {
+        "default_name": "Sw J2058+05",
+        "alias": [
+            {
+                "value": "Swift J2058+05",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "Sw J2058+05",
+                "reference": [
+                    "Swift",
+                    "2012ApJ...753...77C"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "20 58 19.90",
+            "dec": "+05 13 32.0",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "computed": "False",
+            "default": true,
+            "uuid": "d7f71a34-27ce-419d-b276-9b3b9ab5bb9e",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B",
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B"
+            ]
+        },
+        {
+            "ra": "20:58:19.85",
+            "dec": "+05:13:33.00",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2017ApJ...838..149A"
+            ]
+        },
+        {
+            "ra": "20:58:19.90",
+            "dec": "+05:13:32.0",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2012ApJ...753...77C"
+            ]
+        },
+        {
+            "computed": "True",
+            "default": true,
+            "coordinate_type": "galactic",
+            "l": "53.61702902648376",
+            "b": "-25.11893929017656",
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": [
+                "d7f71a34-27ce-419d-b276-9b3b9ab5bb9e"
+            ]
         }
     ],
     "schema_version": {

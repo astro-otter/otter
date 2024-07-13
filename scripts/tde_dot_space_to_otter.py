@@ -92,7 +92,14 @@ def clean_schema(schema):
     """
     Clean out Nones and empty lists from the given subschema
     """
-    protected_keys = {"corr_k", "corr_s", "corr_av", "corr_host", "corr_hostav"}
+    protected_keys = {
+        "reference",
+        "corr_k",
+        "corr_s",
+        "corr_av",
+        "corr_host",
+        "corr_hostav",
+    }
     for key, val in list(schema.items()):
         if val is None or (isinstance(val, (list, dict)) and len(val) == 0):
             if key not in protected_keys:
@@ -111,7 +118,7 @@ def main():
     if not os.path.exists(args.outdir):
         os.mkdir(args.outdir)
 
-    exc = {"ASAS-SN Supernovae", "MAST"}
+    exc = {"ASAS-SN Supernovae", "MAST", "Swift TOO"}
 
     def mappedsrc(source_map, src):
         out = []
@@ -587,7 +594,7 @@ def main():
                 {
                     "object_class": "TDE",
                     "confidence": 0.1,  # we don't trust this classification very much
-                    "reference": "2017ApJ...835...64G",
+                    "reference": ["2017ApJ...835...64G"],
                     "default": True,
                 }
             ]

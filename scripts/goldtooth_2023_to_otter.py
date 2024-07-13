@@ -134,7 +134,7 @@ def main():
                 },
                 "name": {
                     "default_name": tde,
-                    "alias": [{"value": tde, "reference": goldtooth_bibcode}],
+                    "alias": [{"value": tde, "reference": [goldtooth_bibcode]}],
                 },
                 "classification": [
                     dict(object_class="TDE", confidence=1, reference=bibcodes)

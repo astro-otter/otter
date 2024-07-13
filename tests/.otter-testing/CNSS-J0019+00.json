@@ -1,79 +1,8 @@
 {
-    "schema_version": {
-        "value": "0",
-        "comment": "Original Dataset"
-    },
-    "name": {
-        "default_name": "CNSS J0019+00",
-        "alias": [
-            {
-                "value": "CNSS J0019+00",
-                "reference": "CNSS"
-            }
-        ]
-    },
-    "coordinate": [
-        {
-            "ra": "00 19 47.335038",
-            "dec": "+00 35 26.8102",
-            "epoch": "J2000",
-            "system": "ICRS",
-            "ra_units": "hourangle",
-            "dec_units": "deg",
-            "reference": [
-                "2020ApJ...903..116A"
-            ],
-            "computed": false,
-            "default": true,
-            "uuid": "77ed2b6a-08c5-410b-8d6a-6e59d0c7311f",
-            "coordinate_type": "equitorial"
-        },
-        {
-            "l": 106.29996914088225,
-            "b": -61.254791571842965,
-            "l_units": "deg",
-            "b_units": "deg",
-            "reference": "77ed2b6a-08c5-410b-8d6a-6e59d0c7311f",
-            "computed": true,
-            "coordinate_type": "galactic"
-        }
-    ],
-    "distance": [
-        {
-            "value": "0.018",
-            "reference": [
-                "2020ApJ...903..116A"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1.0,
-            "reference": [
-                "2020ApJ...903..116A"
-            ],
-            "default": true
-        }
-    ],
     "reference_alias": [
         {
             "name": "2020ApJ...903..116A",
             "human_readable_name": "Anderson et al. (2020)"
-        }
-    ],
-    "date_reference": [
-        {
-            "value": "56580.0",
-            "date_format": "mjd",
-            "reference": [
-                "2020ApJ...903..116A"
-            ],
-            "computed": false,
-            "date_type": "discovery"
         }
     ],
     "photometry": [
@@ -150,6 +79,431 @@
             "corr_av": false,
             "corr_host": false,
             "corr_hostav": false
+        },
+        {
+            "reference": "2020ApJ...903..116A",
+            "raw": [
+                0.296,
+                0.279,
+                0.276,
+                4.4,
+                5.1,
+                3.31,
+                4.53,
+                6.8,
+                7.49,
+                7.72,
+                8.21,
+                8.14,
+                6.85,
+                6.5,
+                6.34,
+                6.17,
+                5.93,
+                5.63,
+                5.45,
+                5.23,
+                4.85,
+                4.16,
+                4.06,
+                3.33,
+                3.23,
+                3.8,
+                4.38,
+                5.14,
+                6.64,
+                7.77,
+                7.88,
+                8.08,
+                8.19,
+                7.74,
+                6.24,
+                5.96,
+                5.68,
+                5.03,
+                4.32,
+                3.1,
+                3.1,
+                4.87,
+                5.27,
+                7.5,
+                7.25,
+                7.24,
+                6.31,
+                5.93,
+                5.61,
+                5.22,
+                3.86,
+                3.44,
+                2.11,
+                2.08,
+                4.18,
+                4.93,
+                4.44,
+                3.79,
+                2.94,
+                1.6,
+                1.36,
+                1.02,
+                0.71,
+                0.67,
+                2.11,
+                1.88,
+                1.35
+            ],
+            "raw_err": [
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.1,
+                0.36,
+                0.41,
+                0.16,
+                0.11,
+                0.07,
+                0.08,
+                0.04,
+                0.04,
+                0.05,
+                0.04,
+                0.04,
+                0.04,
+                0.04,
+                0.04,
+                0.04,
+                0.04,
+                0.05,
+                0.04,
+                0.05,
+                0.04,
+                0.2,
+                0.17,
+                0.17,
+                0.08,
+                0.06,
+                0.06,
+                0.07,
+                0.1,
+                0.1,
+                0.14,
+                0.15,
+                0.08,
+                0.1,
+                0.11,
+                0.25,
+                0.22,
+                0.66,
+                0.2,
+                0.17,
+                0.1,
+                0.09,
+                0.06,
+                0.05,
+                0.05,
+                0.06,
+                0.04,
+                0.04,
+                0.04,
+                0.03,
+                0.16,
+                0.14,
+                0.07,
+                0.06,
+                0.05,
+                0.05,
+                0.05,
+                0.05,
+                0.05,
+                0.05,
+                0.24,
+                0.29,
+                0.16
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2013-12-29",
+                "2014-01-11",
+                "2014-02-17",
+                "2015-03-21",
+                "2015-04-19",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-05-11",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-06-13",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2015-10-15",
+                "2016-07-9",
+                "2016-07-9",
+                "2016-07-9",
+                "2016-07-9",
+                "2016-07-9",
+                "2016-07-9",
+                "2016-07-9",
+                "2016-07-9",
+                "2016-07-9",
+                "2016-07-9",
+                "2017-12-20",
+                "2017-12-20",
+                "2017-12-20"
+            ],
+            "date_format": [
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                true,
+                true,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "filter_key": [
+                "2.9GHz",
+                "2.9GHz",
+                "2.9GHz",
+                "2.9GHz",
+                "2.9GHz",
+                "1.4GHz",
+                "1.8GHz",
+                "2.6GHz",
+                "2.9GHz",
+                "3.2GHz",
+                "4.4GHz",
+                "5.1GHz",
+                "7.1GHz",
+                "7.8GHz",
+                "8.1GHz",
+                "8.6GHz",
+                "9.1GHz",
+                "9.6GHz",
+                "10.2GHz",
+                "10.7GHz",
+                "11.4GHz",
+                "13.3GHz",
+                "13.8GHz",
+                "15.8GHz",
+                "16.3GHz",
+                "1.3GHz",
+                "1.5GHz",
+                "1.8GHz",
+                "2.4GHz",
+                "3.0GHz",
+                "3.4GHz",
+                "3.8GHz",
+                "4.5GHz",
+                "5.1GHz",
+                "7.1GHz",
+                "7.7GHz",
+                "8.5GHz",
+                "9.8GHz",
+                "11.0GHz",
+                "15.7GHz",
+                "16.3GHz",
+                "1.3GHz",
+                "1.8GHz",
+                "2.4GHz",
+                "2.9GHz",
+                "3.3GHz",
+                "4.7GHz",
+                "5.3GHz",
+                "5.7GHz",
+                "6.2GHz",
+                "8.5GHz",
+                "9.5GHz",
+                "13.5GHz",
+                "14.5GHz",
+                "1.3GHz",
+                "1.8GHz",
+                "2.5GHz",
+                "3.4GHz",
+                "4.8GHz",
+                "7.4GHz",
+                "8.5GHz",
+                "10.9GHz",
+                "13.5GHz",
+                "16.5GHz",
+                "1.2GHz",
+                "1.58GHz",
+                "1.87GHz"
+            ],
+            "obs_type": "radio",
+            "telescope": "VLA",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": false,
+            "corr_av": false,
+            "corr_hostav": false
         }
     ],
     "filter_alias": [
@@ -170,6 +524,439 @@
             "filter_name": "S",
             "freq_eff": 2.5,
             "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.4GHz",
+            "filter_name": "L",
+            "freq_eff": 1.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.8GHz",
+            "filter_name": "L",
+            "freq_eff": 1.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "2.6GHz",
+            "filter_name": "S",
+            "freq_eff": 2.6,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.2GHz",
+            "filter_name": "S",
+            "freq_eff": 3.2,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "4.4GHz",
+            "filter_name": "C",
+            "freq_eff": 4.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.1GHz",
+            "filter_name": "C",
+            "freq_eff": 5.1,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "7.1GHz",
+            "filter_name": "C",
+            "freq_eff": 7.1,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "7.8GHz",
+            "filter_name": "C",
+            "freq_eff": 7.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "8.1GHz",
+            "filter_name": "X",
+            "freq_eff": 8.1,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "8.6GHz",
+            "filter_name": "X",
+            "freq_eff": 8.6,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.1GHz",
+            "filter_name": "X",
+            "freq_eff": 9.1,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.6GHz",
+            "filter_name": "X",
+            "freq_eff": 9.6,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "10.2GHz",
+            "filter_name": "X",
+            "freq_eff": 10.2,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "10.7GHz",
+            "filter_name": "X",
+            "freq_eff": 10.7,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "11.4GHz",
+            "filter_name": "X",
+            "freq_eff": 11.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "13.3GHz",
+            "filter_name": "Ku",
+            "freq_eff": 13.3,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "13.8GHz",
+            "filter_name": "Ku",
+            "freq_eff": 13.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "15.8GHz",
+            "filter_name": "Ku",
+            "freq_eff": 15.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "16.3GHz",
+            "filter_name": "Ku",
+            "freq_eff": 16.3,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.3GHz",
+            "filter_name": "L",
+            "freq_eff": 1.3,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.5GHz",
+            "filter_name": "L",
+            "freq_eff": 1.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "2.4GHz",
+            "filter_name": "S",
+            "freq_eff": 2.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.4GHz",
+            "filter_name": "S",
+            "freq_eff": 3.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.8GHz",
+            "filter_name": "S",
+            "freq_eff": 3.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "4.5GHz",
+            "filter_name": "C",
+            "freq_eff": 4.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "7.7GHz",
+            "filter_name": "C",
+            "freq_eff": 7.7,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "8.5GHz",
+            "filter_name": "X",
+            "freq_eff": 8.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.8GHz",
+            "filter_name": "X",
+            "freq_eff": 9.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "11.0GHz",
+            "filter_name": "X",
+            "freq_eff": 11.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "15.7GHz",
+            "filter_name": "Ku",
+            "freq_eff": 15.7,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.3GHz",
+            "filter_name": "S",
+            "freq_eff": 3.3,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "4.7GHz",
+            "filter_name": "C",
+            "freq_eff": 4.7,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.3GHz",
+            "filter_name": "C",
+            "freq_eff": 5.3,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.7GHz",
+            "filter_name": "C",
+            "freq_eff": 5.7,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "6.2GHz",
+            "filter_name": "C",
+            "freq_eff": 6.2,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.5GHz",
+            "filter_name": "X",
+            "freq_eff": 9.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "13.5GHz",
+            "filter_name": "Ku",
+            "freq_eff": 13.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "14.5GHz",
+            "filter_name": "Ku",
+            "freq_eff": 14.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "4.8GHz",
+            "filter_name": "C",
+            "freq_eff": 4.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "7.4GHz",
+            "filter_name": "C",
+            "freq_eff": 7.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "10.9GHz",
+            "filter_name": "X",
+            "freq_eff": 10.9,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "16.5GHz",
+            "filter_name": "Ku",
+            "freq_eff": 16.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.2GHz",
+            "filter_name": "L",
+            "freq_eff": 1.2,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.58GHz",
+            "filter_name": "L",
+            "freq_eff": 1.58,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.87GHz",
+            "filter_name": "L",
+            "freq_eff": 1.87,
+            "freq_units": "GHz"
         }
-    ]
+    ],
+    "distance": [
+        {
+            "value": "0.018",
+            "distance_type": "redshift",
+            "reference": [
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A"
+            ],
+            "default": true
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2020ApJ...903..116A"
+            ],
+            "default": true
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2015-03-21",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A",
+                "2020ApJ...903..116A"
+            ],
+            "default": true
+        },
+        {
+            "value": "56580.0",
+            "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": [
+                "2020ApJ...903..116A"
+            ],
+            "default": false
+        }
+    ],
+    "name": {
+        "default_name": "CNSS J0019+00",
+        "alias": [
+            {
+                "value": "CNSS J0019+00",
+                "reference": [
+                    "CNSS",
+                    "2020ApJ...903..116A"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "00 19 47.335038",
+            "dec": "+00 35 26.8102",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "computed": "False",
+            "default": true,
+            "uuid": "ce3cfadc-6865-4fef-a6d2-fd8b5cc9ab16",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2020ApJ...903..116A"
+            ]
+        },
+        {
+            "ra": "00:19:47.3",
+            "dec": "+00:35:27",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2020ApJ...903..116A"
+            ]
+        },
+        {
+            "computed": "True",
+            "default": true,
+            "coordinate_type": "galactic",
+            "l": "106.29996914088225",
+            "b": "-61.254791571842965",
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": [
+                "ce3cfadc-6865-4fef-a6d2-fd8b5cc9ab16"
+            ]
+        }
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    }
 }

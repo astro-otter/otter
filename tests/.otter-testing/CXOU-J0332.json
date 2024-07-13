@@ -1,72 +1,8 @@
 {
-    "coordinate": [
-        {
-            "ra": "03:32:38.8",
-            "dec": "-27:51:34",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2017arXiv170204422B"
-            ],
-            "coordinate_type": "equitorial"
-        }
-    ],
-    "name": {
-        "default_name": "CXOU J0332",
-        "alias": [
-            {
-                "value": "CXOU J033238.8-275134",
-                "reference": [
-                    "2017arXiv170204422B"
-                ]
-            },
-            {
-                "value": "CXOU J0332",
-                "reference": [
-                    "2017arXiv170204422B",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "date_reference": [
-        {
-            "value": "2014-10-01",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2017arXiv170204422B"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": "2014-10-01 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2017MNRAS.467.4841B"
-            ],
-            "default": true
-        }
-    ],
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2017MNRAS.467.4841B",
-                "2017arXiv170204422B",
-                "2023PASP..135c4101G"
-            ],
-            "default": true
-        }
-    ],
     "reference_alias": [
         {
             "name": "2017arXiv170204422B",
@@ -89,17 +25,67 @@
             "human_readable_name": "Goldtooth, Aaron et al. (2023)"
         }
     ],
-    "host": [
+    "classification": [
         {
-            "host_name": "CANDELS J033238.77-275133.7",
-            "host_ra": 53.16249999999999,
-            "host_dec": -27.859444444444446,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2017MNRAS.467.4841B",
+                "2017arXiv170204422B",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2014-10-01",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017arXiv170204422B"
+            ],
+            "default": false
+        },
+        {
+            "value": "2014-10-01 ",
+            "date_format": "iso",
+            "date_type": "discovery",
             "reference": [
                 "2023PASP..135c4101G",
                 "2017MNRAS.467.4841B"
-            ]
+            ],
+            "default": true
+        }
+    ],
+    "name": {
+        "default_name": "CXOU J0332",
+        "alias": [
+            {
+                "value": "CXOU J033238.8-275134",
+                "reference": [
+                    "2017arXiv170204422B"
+                ]
+            },
+            {
+                "value": "CXOU J0332",
+                "reference": [
+                    "2017arXiv170204422B",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": "03:32:38.8",
+            "dec": "-27:51:34",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2017arXiv170204422B"
+            ],
+            "coordinate_type": "equitorial"
         }
     ],
     "distance": [
@@ -112,6 +98,19 @@
             "computed": false,
             "default": true,
             "distance_type": "redshift"
+        }
+    ],
+    "host": [
+        {
+            "host_name": "CANDELS J033238.77-275133.7",
+            "host_ra": 53.16249999999999,
+            "host_dec": -27.859444444444446,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017MNRAS.467.4841B"
+            ]
         }
     ]
 }

@@ -1,26 +1,4 @@
 {
-    "coordinate": [
-        {
-            "ra": "18:08:07.549",
-            "dec": "+13:15:05.40",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2017ATel10216....1K"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 272.031417,
-            "dec": 13.251511,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2019TNSTR1760....1H",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2017ATel10216....1K",
@@ -51,42 +29,7 @@
             "human_readable_name": "Hodgkin, S. T. et al. (2019)"
         }
     ],
-    "name": {
-        "default_name": "2019pqt",
-        "alias": [
-            {
-                "value": "Gaia19dya",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "2019pqt",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "MAXI J1807+132",
-                "reference": [
-                    "2017ATel10216....1K",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
     "date_reference": [
-        {
-            "value": "2017-03-27",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2017ATel10216....1K",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
         {
             "value": "2017-03-15 ",
             "date_format": "iso",
@@ -99,11 +42,49 @@
             "default": true
         },
         {
-            "value": 58732.14,
+            "value": "2017-03-27",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017ATel10216....1K",
+                "2017ApJ...835...64G"
+            ],
+            "default": false
+        },
+        {
+            "value": "58732.14",
             "date_format": "mjd",
             "date_type": "discovery",
-            "reference": "2019TNSTR1760....1H",
-            "computed": false
+            "reference": [
+                "2019TNSTR1760....1H"
+            ],
+            "default": false
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "18:08:07.549",
+            "dec": "+13:15:05.40",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2017ATel10216....1K"
+            ],
+            "default": true
+        },
+        {
+            "ra": "272.031417",
+            "dec": "13.251511",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": [
+                "2019TNSTR1760....1H"
+            ],
+            "default": false
         }
     ],
     "photometry": [
@@ -164,7 +145,9 @@
             "date": "58732.14000000013",
             "date_format": "mjd",
             "filter_key": "G",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -188,7 +171,9 @@
             "date": "58708.955000000075",
             "date_format": "mjd",
             "filter_key": "G",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -225,9 +210,29 @@
             "wave_units": "nm"
         }
     ],
-    "schema_version": {
-        "value": 0,
-        "comments": "From Goldtooth et al. (2023)"
+    "name": {
+        "default_name": "2019pqt",
+        "alias": [
+            {
+                "value": "2019pqt",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "Gaia19dya",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "MAXI J1807+132",
+                "reference": [
+                    "2017ATel10216....1K",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
     },
     "distance": [
         {
@@ -254,5 +259,9 @@
             ],
             "default": true
         }
-    ]
+    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    }
 }

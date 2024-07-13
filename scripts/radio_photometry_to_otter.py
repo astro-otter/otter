@@ -12,10 +12,10 @@ from astropy import units as u
 
 
 def main():
-    p = argparse.ArgumentParser()
-    p.add_argument("--otterdir", help="Directory where the otter json files will go")
-    p.add_argument("--indir", help="Directory where dirty files are")
-    args = p.parse_args()
+    pp = argparse.ArgumentParser()
+    pp.add_argument("--otterdir", help="Directory where the otter json files will go")
+    pp.add_argument("--indir", help="Directory where dirty files are")
+    args = pp.parse_args()
 
     db = otter.Otter(args.otterdir)
 
@@ -25,6 +25,9 @@ def main():
 
     # drop duplicated names in meta and keep the first
     meta = meta.drop_duplicates(subset="name", keep="first")
+
+    # add a column to phot with the unique key
+    phot["filter_uq_key"] = phot.band_eff_freq.astype(str) + phot.band_eff_freq_unit
 
     # merge the meta and phot data
     data = pd.merge(phot, meta, on="name", how="inner")
@@ -42,10 +45,6 @@ def main():
     all_jsons = []
 
     for name, tde in data.groupby("name"):
-        ########### FOR NOW JUST CAUSE IT'S BROKEN ###################
-        if name in {"AT2020opy", "AT2019azh", "AT2020vwl", "CNSS J0019+00"}:
-            continue
-
         json = {}
         tde = tde.reset_index()
 
@@ -93,7 +92,7 @@ def main():
                 dict(
                     value=tde.discovery_date.tolist()[0].strip(),
                     date_format=tde.discovery_date_format.tolist()[0].lower(),
-                    reference=tde.discovery_date_ref.tolist()[0],
+                    reference=tde.discovery_date_ref.tolist(),
                     computed=False,
                     date_type="discovery",
                 )
@@ -102,42 +101,42 @@ def main():
         # now the radio photometry
         phot_sources = []
         json["photometry"] = []
-        for (src, tele), phot in tde.groupby(["bibcode", "telescope"]):
+        for (src, tele), p in tde.groupby(["bibcode", "telescope"]):
             if src not in phot_sources:
                 phot_sources.append(src)
 
-            if len(np.unique(phot.flux_unit)) == 1:
-                raw_units = phot.flux_unit.tolist()[0]
+            if len(np.unique(p.flux_unit)) == 1:
+                raw_units = p.flux_unit.tolist()[0]
             else:
-                raw_units = phot.flux_unit.values
+                raw_units = p.flux_unit.values
 
             json_phot = dict(
                 reference=src,
-                raw=phot.flux.astype(float).tolist(),
-                raw_err=phot.flux_err.astype(float).tolist(),
+                raw=p.flux.astype(float).tolist(),
+                raw_err=p.flux_err.astype(float).tolist(),
                 raw_units=raw_units,
-                date=phot.date.tolist(),
-                date_format=phot.date_format.tolist(),
-                upperlimit=phot.upperlimit.tolist(),
-                filter_key=phot["band_name"].tolist(),
+                date=p.date.tolist(),
+                date_format=p.date_format.tolist(),
+                upperlimit=p.upperlimit.tolist(),
+                filter_key=p.filter_uq_key.tolist(),
                 obs_type="radio",
                 telescope=tele,
             )
 
             corrs = ["corr_k", "corr_s", "corr_host", "corr_av", "corr_hostav"]
             for c in corrs:
-                json_phot[c] = False if np.all(pd.isna(phot[c])) else phot[c].tolist()
+                json_phot[c] = False if np.all(pd.isna(p[c])) else p[c].tolist()
                 if np.any(json_phot[c]):
                     v = c.replace("corr", "val")
-                    json_phot[v] = phot[v].tolist()
+                    json_phot[v] = p[v].tolist()
 
             json["photometry"].append(json_phot)
 
         # filter alias
         # radio filters first
-        filter_keys1 = ["band_name", "band_eff_freq", "band_eff_freq_unit"]
+        filter_keys1 = ["filter_uq_key", "band_eff_freq", "band_eff_freq_unit"]
         filter_map = (
-            tde[filter_keys1].drop_duplicates().set_index("band_name")
+            tde[filter_keys1].drop_duplicates().set_index("filter_uq_key")
         )  # .to_dict(orient='index')
         try:
             filter_map_radio = filter_map.to_dict(orient="index")

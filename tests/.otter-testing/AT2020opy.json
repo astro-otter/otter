@@ -1,51 +1,4 @@
 {
-    "coordinate": [
-        {
-            "ra": "15 56 25.728",
-            "dec": "+23 22 21.15",
-            "epoch": "J2000",
-            "system": "ICRS",
-            "ra_units": "hourangle",
-            "dec_units": "deg",
-            "reference": [
-                "2023MNRAS.518..847G"
-            ],
-            "computed": false,
-            "default": true,
-            "uuid": "f6230c2a-3e1c-4b8c-8a21-d54b26338187",
-            "coordinate_type": "equitorial"
-        },
-        {
-            "reference": "f6230c2a-3e1c-4b8c-8a21-d54b26338187",
-            "computed": true,
-            "coordinate_type": "galactic",
-            "l": 38.41156935899329,
-            "b": 48.23253616380998,
-            "l_units": "deg",
-            "b_units": "deg"
-        },
-        {
-            "ra": 239.107203,
-            "dec": 23.37241,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2023ApJ...942....9H",
-                "2024MNRAS.527.2452M"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 239.107200193,
-            "dec": 23.3725405112,
-            "epoch": "J2000",
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2020TNSTR2111....1M",
-            "coordinate_type": "equitorial",
-            "frame": "ICRS"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2023MNRAS.518..847G",
@@ -61,66 +14,139 @@
         },
         {
             "name": "2020TNSTR2111....1M",
-            "human_readable_name": "Marques-Chaves, R. et al. (2020)"
+            "human_readable_name": "Hammerstein, Erica et al. (2023)"
         }
     ],
-    "name": {
-        "default_name": "2020opy",
-        "alias": [
-            {
-                "value": "2020opy",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "PS20fxm",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF20abjwvae",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2020opy",
-                "reference": [
-                    "TNS",
-                    "2023ApJ...942....9H",
-                    "2024MNRAS.527.2452M"
-                ]
-            }
-        ]
-    },
     "date_reference": [
         {
-            "value": 59038.23,
+            "value": "2459038.732",
+            "date_format": "jd",
+            "date_type": "discovery",
+            "reference": [
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M",
+                "2020TNSTR2111....1M"
+            ],
+            "default": true
+        },
+        {
+            "value": "59038.23",
             "date_format": "mjd",
+            "date_type": "discovery",
             "reference": [
                 "2023MNRAS.518..847G"
             ],
-            "computed": false,
-            "date_type": "discovery"
+            "default": false
         },
         {
-            "value": 59089.15443287036,
+            "value": "59038.23241898148",
             "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": [
+                "2020TNSTR2111....1M"
+            ],
+            "default": false
+        },
+        {
+            "value": "59089.15443287036",
+            "date_format": "mjd",
+            "date_type": "peak",
             "reference": [
                 "2023ApJ...942....9H",
                 "2024MNRAS.527.2452M"
             ],
-            "computed": false,
-            "date_type": "peak"
+            "default": true
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "15 56 25.728",
+            "dec": "+23 22 21.15",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "computed": "False",
+            "default": false,
+            "uuid": "74539bcb-d672-4ca6-9e7f-aa9d6c8e86bc",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2023MNRAS.518..847G"
+            ]
         },
         {
-            "value": 59038.23241898148,
-            "date_format": "mjd",
-            "reference": "2020TNSTR2111....1M",
-            "computed": false,
-            "date_type": "discovery"
+            "ra": "15:56:25.727",
+            "dec": "+23:22:20.82",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2020TNSTR2111....1M"
+            ]
+        },
+        {
+            "ra": "239.107200193",
+            "dec": "23.3725405112",
+            "epoch": "J2000",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "frame": "ICRS",
+            "reference": [
+                "2020TNSTR2111....1M"
+            ]
+        },
+        {
+            "ra": "239.107203",
+            "dec": "23.37241",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "default": true,
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2023ApJ...942....9H",
+                "2024MNRAS.527.2452M"
+            ]
+        },
+        {
+            "computed": "True",
+            "default": true,
+            "coordinate_type": "galactic",
+            "l": "38.41156935899329",
+            "b": "48.23253616380998",
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": [
+                "74539bcb-d672-4ca6-9e7f-aa9d6c8e86bc"
+            ]
         }
     ],
     "photometry": [
@@ -5750,6 +5776,249 @@
             "val_av": 0.17764905720754073
         },
         {
+            "reference": "2023MNRAS.518..847G",
+            "raw": [
+                94.0,
+                141.0
+            ],
+            "raw_err": [
+                15.0,
+                18.0
+            ],
+            "raw_units": "uJy",
+            "date": [
+                "14-Aug-2021",
+                "11-May-2022"
+            ],
+            "date_format": [
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                false,
+                false
+            ],
+            "filter_key": [
+                "1.28GHz",
+                "1.28GHz"
+            ],
+            "obs_type": "radio",
+            "telescope": "MeerKAT",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": false,
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
+            "reference": "2023MNRAS.518..847G",
+            "raw": [
+                65.0,
+                61.0,
+                68.0,
+                40.0,
+                47.0,
+                51.0,
+                63.0,
+                98.8,
+                137.0,
+                137.0,
+                134.0,
+                139.0,
+                134.0,
+                91.0,
+                75.0,
+                60.0,
+                53.0,
+                139.0,
+                198.0,
+                175.0,
+                241.0,
+                256.0,
+                252.0,
+                228.0,
+                251.0
+            ],
+            "raw_err": [
+                7.0,
+                6.0,
+                10.0,
+                13.0,
+                16.0,
+                63.0,
+                12.0,
+                10.0,
+                10.0,
+                9.5,
+                8.0,
+                11.0,
+                15.0,
+                12.0,
+                11.0,
+                13.0,
+                25.0,
+                11.0,
+                9.0,
+                14.0,
+                16.0,
+                17.0,
+                17.0,
+                27.0,
+                100.0
+            ],
+            "raw_units": "uJy",
+            "date": [
+                "06-Oct-2020",
+                "15-Oct-2020",
+                "15-Oct-2020",
+                "15-Oct-2020",
+                "15-Oct-2020",
+                "15-Oct-2020",
+                "15-Oct-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "17-Dec-2020",
+                "03-Jun-2021",
+                "03-Jun-2021",
+                "03-Jun-2021",
+                "03-Jun-2021",
+                "03-Jun-2021",
+                "03-Jun-2021",
+                "03-Jun-2021",
+                "03-Jun-2021"
+            ],
+            "date_format": [
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "filter_key": [
+                "10.0GHz",
+                "11.0GHz",
+                "9.0GHz",
+                "4.55GHz",
+                "5.04GHz",
+                "6.13GHz",
+                "7.6GHz",
+                "16.5GHz",
+                "13.5GHz",
+                "11.0GHz",
+                "9.0GHz",
+                "7.5GHz",
+                "6.5GHz",
+                "5.5GHz",
+                "4.5GHz",
+                "3.76GHz",
+                "3.24GHz",
+                "11.0GHz",
+                "9.0GHz",
+                "7.5GHz",
+                "6.5GHz",
+                "5.5GHz",
+                "4.5GHz",
+                "3.5GHz",
+                "2.5GHz"
+            ],
+            "obs_type": "radio",
+            "telescope": "VLA",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": false,
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
+            "reference": "2023MNRAS.518..847G",
+            "raw": [
+                141.0,
+                261.0
+            ],
+            "raw_err": [
+                29.0,
+                0.0
+            ],
+            "raw_units": "uJy",
+            "date": [
+                "23-Jun-2022",
+                "23-Jun-2022"
+            ],
+            "date_format": [
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                false,
+                true
+            ],
+            "filter_key": [
+                "1.26GHz",
+                "0.65GHz"
+            ],
+            "obs_type": "radio",
+            "telescope": "uGMRT",
+            "corr_k": false,
+            "corr_s": false,
+            "corr_host": false,
+            "corr_av": false,
+            "corr_hostav": false
+        },
+        {
             "raw": [
                 20.91
             ],
@@ -5763,7 +6032,9 @@
             "date": "59007.30200000014",
             "date_format": "mjd",
             "filter_key": "i",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -5787,7 +6058,9 @@
             "date": "59044.19553240016",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -5811,7 +6084,9 @@
             "date": "59038.23241900001",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -5835,7 +6110,9 @@
             "date": "59047.214861100074",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -5859,7 +6136,9 @@
             "date": "59041.255312500056",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -5883,7 +6162,9 @@
             "date": "59038.21366900019",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -5968,6 +6249,114 @@
             "freq_units": "Hz"
         },
         {
+            "filter_key": "10.0GHz",
+            "filter_name": "X",
+            "freq_eff": 10.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "11.0GHz",
+            "filter_name": "X",
+            "freq_eff": 11.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.0GHz",
+            "filter_name": "X",
+            "freq_eff": 9.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "4.55GHz",
+            "filter_name": "C",
+            "freq_eff": 4.55,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "6.13GHz",
+            "filter_name": "C",
+            "freq_eff": 6.13,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "7.6GHz",
+            "filter_name": "C",
+            "freq_eff": 7.6,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "16.5GHz",
+            "filter_name": "Ku",
+            "freq_eff": 16.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "13.5GHz",
+            "filter_name": "Ku",
+            "freq_eff": 13.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "7.5GHz",
+            "filter_name": "C",
+            "freq_eff": 7.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "6.5GHz",
+            "filter_name": "C",
+            "freq_eff": 6.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "4.5GHz",
+            "filter_name": "C",
+            "freq_eff": 4.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.76GHz",
+            "filter_name": "S",
+            "freq_eff": 3.76,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.24GHz",
+            "filter_name": "S",
+            "freq_eff": 3.24,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "3.5GHz",
+            "filter_name": "S",
+            "freq_eff": 3.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "2.5GHz",
+            "filter_name": "S",
+            "freq_eff": 2.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.28GHz",
+            "filter_name": "L",
+            "freq_eff": 1.28,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.26GHz",
+            "filter_name": "L",
+            "freq_eff": 1.26,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.65GHz",
+            "filter_name": "UHF",
+            "freq_eff": 0.65,
+            "freq_units": "GHz"
+        },
+        {
             "filter_key": "i",
             "filter_name": "i",
             "wave_eff": 749.9704174464691,
@@ -5986,27 +6375,49 @@
             "wave_units": "nm"
         }
     ],
-    "schema_version": {
-        "value": "0",
-        "comment": "Original Dataset"
+    "name": {
+        "default_name": "2020opy",
+        "alias": [
+            {
+                "value": "2020opy",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "PS20fxm",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF20abjwvae",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2020opy",
+                "reference": [
+                    "TNS",
+                    "2023ApJ...942....9H",
+                    "2024MNRAS.527.2452M",
+                    "2020TNSTR2111....1M"
+                ]
+            }
+        ]
     },
     "distance": [
         {
             "value": "0.159",
+            "distance_type": "redshift",
             "reference": [
-                "2023MNRAS.518..847G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": 0.159,
-            "reference": [
+                "2023MNRAS.518..847G",
                 "2023ApJ...942....9H",
-                "2024MNRAS.527.2452M"
+                "2024MNRAS.527.2452M",
+                "2023ApJ...942....9H"
             ],
-            "distance_type": "redshift"
+            "default": true
         }
     ],
     "classification": [
@@ -6020,5 +6431,9 @@
             ],
             "default": true
         }
-    ]
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset"
+    }
 }

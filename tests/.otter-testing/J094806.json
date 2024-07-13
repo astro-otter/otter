@@ -1,50 +1,4 @@
 {
-    "name": {
-        "default_name": "2022wyq",
-        "alias": [
-            {
-                "value": "2022wyq",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF20acyxwgf",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "J094806",
-                "reference": [
-                    "2017arXiv171104577K",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "coordinate": [
-        {
-            "ra": "09:48:06.55",
-            "dec": "+03:18:01.9",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2017arXiv171104577K"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 147.0274064,
-            "dec": 3.3005179,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2022TNSTR2919....1F",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2017arXiv171104577K",
@@ -79,68 +33,56 @@
             "human_readable_name": "Fremling, C. (2022)"
         }
     ],
-    "host": [
+    "coordinate": [
         {
-            "host_name": "SDSS J094806.55+031801.9",
-            "host_ra": 147.02916666666664,
-            "host_dec": 3.3005277777777775,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2017NatAs...1..865K",
-                "2017NatAs...1..865K",
-                "2019ApJ...871...15J"
-            ]
-        }
-    ],
-    "distance": [
-        {
-            "value": "0.207",
+            "ra": "09:48:06.55",
+            "dec": "+03:18:01.9",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
             "reference": [
                 "2017arXiv171104577K"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
+            "default": true
         },
         {
-            "value": "1050",
+            "ra": "147.0274064",
+            "dec": "3.3005179",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS",
             "reference": [
-                "2017arXiv171104577K",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
+                "2022TNSTR2919....1F"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity",
-            "unit": "Mpc"
-        },
-        {
-            "value": "871",
-            "reference": [
-                "2017arXiv171104577K",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving",
-            "unit": "Mpc"
-        },
-        {
-            "value": "0.207",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2017NatAs...1..865K",
-                "2017NatAs...1..865K",
-                "2019ApJ...871...15J"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
+            "default": false
         }
     ],
+    "name": {
+        "default_name": "2022wyq",
+        "alias": [
+            {
+                "value": "2022wyq",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF20acyxwgf",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "J094806",
+                "reference": [
+                    "2017arXiv171104577K",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
     "classification": [
         {
             "object_class": "TDE",
@@ -170,6 +112,57 @@
             "default": false
         }
     ],
+    "distance": [
+        {
+            "value": "0.207",
+            "distance_type": "redshift",
+            "reference": [
+                "2017arXiv171104577K",
+                "2023PASP..135c4101G",
+                "2017NatAs...1..865K",
+                "2017NatAs...1..865K",
+                "2019ApJ...871...15J"
+            ],
+            "default": true
+        },
+        {
+            "value": "1050",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2017arXiv171104577K",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        },
+        {
+            "value": "871",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2017arXiv171104577K",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        }
+    ],
+    "host": [
+        {
+            "host_name": "SDSS J094806.55+031801.9",
+            "host_ra": 147.02916666666664,
+            "host_dec": 3.3005277777777775,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2017NatAs...1..865K",
+                "2017NatAs...1..865K",
+                "2019ApJ...871...15J"
+            ]
+        }
+    ],
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
@@ -179,7 +172,9 @@
             "value": 59695.193,
             "date_format": "mjd",
             "date_type": "discovery",
-            "reference": "2022TNSTR2919....1F",
+            "reference": [
+                "2022TNSTR2919....1F"
+            ],
             "computed": false
         }
     ],
@@ -198,7 +193,9 @@
             "date": "59693.21900000004",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -222,7 +219,9 @@
             "date": "59859.518999999855",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -246,7 +245,9 @@
             "date": "59695.19299999997",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,

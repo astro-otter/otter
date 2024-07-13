@@ -46,8 +46,8 @@ def test_get_meta():
     metahyz = db.get_meta(names="2018hyz")[0]
     assert isinstance(metahyz, Transient)
     assert metahyz["name/default_name"] == "2018hyz"
-    assert metahyz["date_reference"][0]["value"] == 58428.64
-    assert metahyz["date_reference"][0]["date_format"] == "mjd"
+    assert metahyz["date_reference"][0]["value"] == "2018-10-14"
+    assert metahyz["date_reference"][0]["date_format"] == "iso"
     assert metahyz["classification"][0]["object_class"] == "TDE"
 
 
@@ -223,5 +223,5 @@ def test_generate_summary_table():
     # check a random row
     sumtab_hyz = sumtab[sumtab.name == "2018hyz"].iloc[0]
     assert sumtab_hyz["name"] == "2018hyz"
-    assert sumtab_hyz["z"] == "0.0457"
+    assert sumtab_hyz["z"] == "0.0457266"
     assert sumtab_hyz["json_path"] == os.path.join(otterpath, "AT2018hyz.json")

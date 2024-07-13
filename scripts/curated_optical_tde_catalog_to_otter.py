@@ -136,7 +136,7 @@ def main():
                 dict(
                     value=indata["host"]["vel_disp_km/s"],
                     error=indata["host"]["e_vel_disp_km/s"],
-                    reference=ref,
+                    reference=[ref, catalog_bibcode],
                     unit="km/s",
                     distance_type="dispersion_measure",
                 )

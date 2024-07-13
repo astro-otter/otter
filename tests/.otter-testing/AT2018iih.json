@@ -1,62 +1,24 @@
 {
-    "classification": [
+    "distance": [
         {
-            "object_class": "TDE",
-            "confidence": 1,
+            "value": "0.212",
+            "distance_type": "redshift",
             "reference": [
-                "2020TNSCR2246....1D",
                 "2021ApJ...908....4V",
+                "2024MNRAS.527.2452M",
+                "2020TNSCR2246....1D"
+            ],
+            "default": true
+        },
+        {
+            "value": "148.6",
+            "distance_type": "dispersion_measure",
+            "unit": "km/s",
+            "reference": [
+                "2023ApJ...955L...6Y",
                 "2024MNRAS.527.2452M"
             ],
             "default": true
-        }
-    ],
-    "coordinate": [
-        {
-            "ra": 262.016347739,
-            "dec": 30.692086894,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2021ApJ...908....4V",
-                "2024MNRAS.527.2452M"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 262.016375,
-            "dec": 30.692061,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2018TNSTR1750....1T",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS"
-        }
-    ],
-    "distance": [
-        {
-            "value": 0.212,
-            "reference": [
-                "2021ApJ...908....4V",
-                "2024MNRAS.527.2452M"
-            ],
-            "distance_type": "redshift"
-        },
-        {
-            "value": 148.6,
-            "reference": "2023ApJ...955L...6Y",
-            "distance_type": "dispersion_measure",
-            "error": 14.4,
-            "unit": "km/s"
-        },
-        {
-            "value": 0.212,
-            "reference": [
-                "2020TNSCR2246....1D"
-            ],
-            "distance_type": "redshift",
-            "computed": false
         }
     ],
     "reference_alias": [
@@ -81,59 +43,64 @@
             "human_readable_name": "Dahiwale, A. & Fremling, C. (2020)"
         }
     ],
-    "name": {
-        "default_name": "2018iih",
-        "alias": [
-            {
-                "value": "2018iih",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ATLAS18yzs",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "Gaia18dpo",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF18acaqdaa",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2018iih",
-                "reference": [
-                    "2021ApJ...908....4V",
-                    "2024MNRAS.527.2452M"
-                ]
-            }
-        ]
-    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2020TNSCR2246....1D",
+                "2021ApJ...908....4V",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        }
+    ],
     "date_reference": [
         {
-            "value": 58461.09348350004,
+            "value": "58431.19599537037",
             "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": [
+                "2018TNSTR1750....1T"
+            ],
+            "default": true
+        },
+        {
+            "value": "58461.09348350004",
+            "date_format": "mjd",
+            "date_type": "peak",
             "reference": [
                 "2021ApJ...908....4V",
                 "2024MNRAS.527.2452M"
             ],
-            "computed": false,
-            "date_type": "peak"
+            "default": true
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "262.016347739",
+            "dec": "30.692086894",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2021ApJ...908....4V",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
         },
         {
-            "value": 58431.19599537037,
-            "date_format": "mjd",
-            "reference": "2018TNSTR1750....1T",
-            "computed": false,
-            "date_type": "discovery"
+            "ra": "262.016375",
+            "dec": "30.692061",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": [
+                "2018TNSTR1750....1T"
+            ],
+            "default": false
         }
     ],
     "photometry": [
@@ -11946,7 +11913,9 @@
             "date": "58431.195995400194",
             "date_format": "mjd",
             "filter_key": "cyan",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -11970,7 +11939,9 @@
             "date": "58423.2629976999",
             "date_format": "mjd",
             "filter_key": "orange",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -11994,7 +11965,9 @@
             "date": "58451.127997700125",
             "date_format": "mjd",
             "filter_key": "G",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12018,7 +11991,9 @@
             "date": "58407.220000000205",
             "date_format": "mjd",
             "filter_key": "G",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12042,7 +12017,9 @@
             "date": "58541.46121530002",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12066,7 +12043,9 @@
             "date": "58541.46121530002",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12090,7 +12069,9 @@
             "date": "58538.52775460016",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12114,7 +12095,9 @@
             "date": "58511.50625000009",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12138,7 +12121,9 @@
             "date": "58506.52890049992",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12162,7 +12147,9 @@
             "date": "58506.52890049992",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12186,7 +12173,9 @@
             "date": "58506.52890049992",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12210,7 +12199,9 @@
             "date": "58492.54982639989",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12234,7 +12225,9 @@
             "date": "58492.54982639989",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12258,7 +12251,9 @@
             "date": "58492.54982639989",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12282,7 +12277,9 @@
             "date": "58575.45456020022",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12306,7 +12303,9 @@
             "date": "58572.47369210003",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12330,7 +12329,9 @@
             "date": "58526.528182900045",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12354,7 +12355,9 @@
             "date": "58511.547395799775",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12378,7 +12381,9 @@
             "date": "58511.547395799775",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12402,7 +12407,9 @@
             "date": "58481.54721060023",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12426,7 +12433,9 @@
             "date": "58431.1379976999",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12450,7 +12459,9 @@
             "date": "58424.09399309987",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12474,7 +12485,9 @@
             "date": "58400.17609999981",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -12564,5 +12577,41 @@
             "wave_eff": 618.5194476741524,
             "wave_units": "nm"
         }
-    ]
+    ],
+    "name": {
+        "default_name": "2018iih",
+        "alias": [
+            {
+                "value": "2018iih",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF18acaqdaa",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "Gaia18dpo",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ATLAS18yzs",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2018iih",
+                "reference": [
+                    "2021ApJ...908....4V",
+                    "2024MNRAS.527.2452M"
+                ]
+            }
+        ]
+    }
 }

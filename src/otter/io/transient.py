@@ -209,6 +209,36 @@ class Transient(MutableMapping):
             "host",
         }
 
+        merge_subkeys_map = {
+            "name": None,
+            "date_reference": ["value", "date_format", "date_type"],
+            "coordinate": None,  # may need to update this if we run into problems
+            "distance": ["value", "distance_type", "unit"],
+            "filter_alias": None,
+            "schema_version": None,
+            "photometry": None,
+            "classification": None,
+            "host": [
+                "host_ra",
+                "host_dec",
+                "host_ra_units",
+                "host_dec_units",
+                "host_name",
+            ],
+        }
+
+        groupby_key_for_default_map = {
+            "name": None,
+            "date_reference": "date_type",
+            "coordinate": "coordinate_type",
+            "distance": "distance_type",
+            "filter_alias": None,
+            "schema_version": None,
+            "photometry": None,
+            "classification": None,
+            "host": None,
+        }
+
         # create a blank dictionary since we don't want to overwrite this object
         out = {}
 
@@ -244,14 +274,19 @@ class Transient(MutableMapping):
 
             # There are some special keys that we are expecting
             if key in allowed_keywords:
-                Transient._merge_arbitrary(key, self, other, out)
+                Transient._merge_arbitrary(
+                    key,
+                    self,
+                    other,
+                    out,
+                    merge_subkeys=merge_subkeys_map[key],
+                    groupby_key=groupby_key_for_default_map[key],
+                )
             else:
                 # this is an unexpected key!
                 if strict_merge:
                     # since this is a strict merge we don't want unexpected data!
-                    raise TransientMergeError(
-                        f"{key} was not expected! Only keeping the old information!"
-                    )
+                    raise TransientMergeError(f"{key} was not expected! Can not merge!")
                 else:
                     # Throw a warning and only keep the old stuff
                     warnings.warn(
@@ -912,7 +947,7 @@ class Transient(MutableMapping):
                 item["default"] = False
 
     @staticmethod
-    def _merge_arbitrary(key, t1, t2, out):
+    def _merge_arbitrary(key, t1, t2, out, merge_subkeys=None, groupby_key=None):
         """
         Merge two arbitrary datasets inside the json file using pandas
 
@@ -939,37 +974,60 @@ class Transient(MutableMapping):
 
             # have to get the indexes to drop using a string rep of the df
             # this is cause we have lists in some cells
-            to_drop = merged_with_dups.astype(str).drop_duplicates().index
+            # We also need to deal with merging the lists of references across rows
+            # that we deem to be duplicates. This solution to do this quickly is from
+            # https://stackoverflow.com/questions/36271413/ \
+            # pandas-merge-nearly-duplicate-rows-based-on-column-value
+            if merge_subkeys is None:
+                merge_subkeys = merged_with_dups.columns.tolist()
+                merge_subkeys.remove("reference")
+            else:
+                for k in merge_subkeys:
+                    if k not in merged_with_dups:
+                        merge_subkeys.remove(k)
 
-            merged = merged_with_dups.iloc[to_drop].reset_index(drop=True)
+            merged = (
+                merged_with_dups.astype(str)
+                .groupby(merge_subkeys)["reference"]
+                .apply(lambda x: x.sum())
+                .reset_index()
+            )
 
-            outdict = merged.to_dict(orient="records")
+            # then we have to turn the merged reference strings into a string list
+            merged["reference"] = merged.reference.str.replace("][", ",")
 
-            outdict_cleaned = Transient._remove_nans(
-                outdict
-            )  # clear out the nans from pandas conversion
+            # then eval the string of a list to get back an actual list of sources
+            merged["reference"] = merged.reference.apply(lambda v: eval(v))
+
+            # decide on default values
+            if groupby_key is None:
+                iterate_through = [(0, merged)]
+            else:
+                iterate_through = merged.groupby(groupby_key)
+
+            # we will make whichever value has more references the default
+            outdict = []
+            for data_type, df in iterate_through:
+                lengths = df.reference.map(len)
+                max_idx_arr = np.argmax(lengths)
+
+                if isinstance(max_idx_arr, np.int64):
+                    max_idx = max_idx_arr
+                elif len(max_idx_arr) == 0:
+                    raise ValueError("Something went wrong with deciding the default")
+                else:
+                    max_idx = max_idx_arr[0]  # arbitrarily choose the first
+
+                defaults = np.full(len(df), False, dtype=bool)
+                defaults[max_idx] = True
+
+                df["default"] = defaults
+                outdict.append(df)
+            outdict = pd.concat(outdict)
+
+            # from https://stackoverflow.com/questions/52504972/ \
+            # converting-a-pandas-df-to-json-without-nan
+            outdict = outdict.replace("nan", np.nan)
+            outdict_cleaned = [{**x[i]} for i, x in outdict.stack().groupby(level=0)]
 
             out[key] = outdict_cleaned
-
-    @staticmethod
-    def _remove_nans(d):
-        """
-        Remove nans from a record dictionary
-
-        THIS IS SLOW: O(n^2)!!! WILL NEED TO BE SPED UP LATER
-        """
-
-        outd = []
-        for item in d:
-            outsubd = {}
-            for key, val in item.items():
-                if not isinstance(val, float):
-                    # this definitely is not NaN
-                    outsubd[key] = val
-
-                else:
-                    if not pd.isna(val):
-                        outsubd[key] = val
-            outd.append(outsubd)
-
-        return outd

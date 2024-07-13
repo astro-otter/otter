@@ -1,50 +1,4 @@
 {
-    "coordinate": [
-        {
-            "ra": "13 34 43.207",
-            "dec": "+33 13 00.54",
-            "epoch": "J2000",
-            "system": "ICRS",
-            "ra_units": "hourangle",
-            "dec_units": "deg",
-            "reference": [
-                "2022Natur.612..430A"
-            ],
-            "computed": false,
-            "default": true,
-            "uuid": "078ef84b-20b7-409c-ae76-b6a1804ad6b7",
-            "coordinate_type": "equitorial"
-        },
-        {
-            "reference": "078ef84b-20b7-409c-ae76-b6a1804ad6b7",
-            "computed": true,
-            "coordinate_type": "galactic",
-            "l": 68.62957133676095,
-            "b": 78.8489417474028,
-            "l_units": "deg",
-            "b_units": "deg"
-        },
-        {
-            "ra": "13:34:43.207",
-            "dec": "+33:13:00.54",
-            "ra_units": "hour",
-            "dec_units": "degree",
-            "reference": [
-                "2022TNSTR.397....1A"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 203.6800286,
-            "dec": 33.216817166666665,
-            "epoch": "J2000",
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2022TNSTR.397....1A",
-            "coordinate_type": "equitorial",
-            "frame": "ICRS"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2022Natur.612..430A",
@@ -59,53 +13,267 @@
             "human_readable_name": "Andreoni, I. (2022)"
         }
     ],
-    "name": {
-        "default_name": "2022cmc",
-        "alias": [
-            {
-                "value": "2022cmc",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF22aaajecp",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2022cmc",
-                "reference": [
-                    "TNS",
-                    "2022TNSTR.397....1A"
-                ]
-            }
-        ]
-    },
     "date_reference": [
-        {
-            "value": 59621.45,
-            "date_format": "mjd",
-            "reference": [
-                "2022Natur.612..430A"
-            ],
-            "computed": false,
-            "date_type": "discovery"
-        },
         {
             "value": "2459621.946",
             "date_format": "jd",
-            "reference": "2022TNSTR.397....1A",
-            "computed": false,
-            "date_type": "discovery"
+            "date_type": "discovery",
+            "reference": [
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A",
+                "2022TNSTR.397....1A"
+            ],
+            "default": true
         },
         {
-            "value": 59621.4463,
+            "value": "59621.4463",
             "date_format": "mjd",
-            "reference": "2022TNSTR.397....1A",
-            "computed": false,
-            "date_type": "discovery"
+            "date_type": "discovery",
+            "reference": [
+                "2022TNSTR.397....1A"
+            ],
+            "default": false
+        },
+        {
+            "value": "59621.45",
+            "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": [
+                "2022Natur.612..430A"
+            ],
+            "default": false
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "13 34 43.207",
+            "dec": "+33 13 00.54",
+            "epoch": "J2000",
+            "system": "ICRS",
+            "ra_units": "hourangle",
+            "dec_units": "deg",
+            "computed": "False",
+            "default": true,
+            "uuid": "82abe397-9b7c-4760-8161-d4d272b854b8",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2022Natur.612..430A"
+            ]
+        },
+        {
+            "ra": "13:34:43.207",
+            "dec": "+33:13:00.54",
+            "ra_units": "hour",
+            "dec_units": "degree",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2022TNSTR.397....1A"
+            ]
+        },
+        {
+            "ra": "203.6800286",
+            "dec": "33.216817166666665",
+            "epoch": "J2000",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "default": false,
+            "coordinate_type": "equitorial",
+            "frame": "ICRS",
+            "reference": [
+                "2022TNSTR.397....1A"
+            ]
+        },
+        {
+            "computed": "True",
+            "default": true,
+            "coordinate_type": "galactic",
+            "l": "68.62957133676095",
+            "b": "78.8489417474028",
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": [
+                "82abe397-9b7c-4760-8161-d4d272b854b8"
+            ]
         }
     ],
     "photometry": [
@@ -270,10 +438,10 @@
                 true
             ],
             "filter_key": [
-                "350 GHz",
-                "667 GHz",
-                "350 GHz",
-                "667 GHz"
+                "350.0GHz",
+                "667.0GHz",
+                "350.0GHz",
+                "667.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "JCMT",
@@ -367,20 +535,20 @@
                 false
             ],
             "filter_key": [
-                "86 GHz",
-                "102 GHz",
-                "216 GHz",
-                "232 GHz",
-                "136 GHz",
-                "152 GHz",
-                "86 GHz",
-                "102 GHz",
-                "86 GHz",
-                "102 GHz",
-                "86 GHz",
-                "102 GHz",
-                "136 GHz",
-                "152 GHz"
+                "86.0GHz",
+                "102.0GHz",
+                "216.0GHz",
+                "232.0GHz",
+                "136.0GHz",
+                "152.0GHz",
+                "86.0GHz",
+                "102.0GHz",
+                "86.0GHz",
+                "102.0GHz",
+                "86.0GHz",
+                "102.0GHz",
+                "136.0GHz",
+                "152.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "NOEMA",
@@ -479,21 +647,21 @@
                 false
             ],
             "filter_key": [
-                "225 GHz",
-                "225 GHz",
-                "340 GHz",
-                "225 GHz",
-                "340 GHz",
-                "225 GHz",
-                "347 GHz",
-                "225 GHz",
-                "347 GHz",
-                "225 GHz",
-                "347 GHz",
-                "225 GHz",
-                "225 GHz",
-                "225 GHz",
-                "225 GHz"
+                "225.0GHz",
+                "225.0GHz",
+                "340.0GHz",
+                "225.0GHz",
+                "340.0GHz",
+                "225.0GHz",
+                "347.0GHz",
+                "225.0GHz",
+                "347.0GHz",
+                "225.0GHz",
+                "347.0GHz",
+                "225.0GHz",
+                "225.0GHz",
+                "225.0GHz",
+                "225.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "SMA",
@@ -1083,9 +1251,9 @@
                 true
             ],
             "filter_key": [
-                "0.402 GHz",
-                "1.264 GHz",
-                "0.750 GHz"
+                "0.402GHz",
+                "1.264GHz",
+                "0.75GHz"
             ],
             "obs_type": "radio",
             "telescope": "uGMRT",
@@ -1492,11 +1660,11 @@
                 false
             ],
             "filter_key": [
-                "5GHz",
-                "5GHz",
-                "5GHz",
-                "5GHz",
-                "5GHz"
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz",
+                "5.0GHz"
             ],
             "obs_type": "radio",
             "telescope": "eMERLIN",
@@ -1520,7 +1688,9 @@
             "date": "59600.41262729978",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -1544,7 +1714,9 @@
             "date": "59621.44629629981",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -1568,7 +1740,9 @@
             "date": "59622.50270830002",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -1592,7 +1766,9 @@
             "date": "59624.40252309991",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -1616,7 +1792,9 @@
             "date": "59622.52371530002",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -1641,7 +1819,7 @@
             "freq_units": "GHz"
         },
         {
-            "filter_key": "5GHz",
+            "filter_key": "5.0GHz",
             "filter_name": "C",
             "freq_eff": 5.0,
             "freq_units": "GHz"
@@ -1692,12 +1870,6 @@
             "filter_key": "17.1GHz",
             "filter_name": "Ku",
             "freq_eff": 17.1,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "5.0GHz",
-            "filter_name": "C",
-            "freq_eff": 5.0,
             "freq_units": "GHz"
         },
         {
@@ -1785,67 +1957,67 @@
             "freq_units": "GHz"
         },
         {
-            "filter_key": "225 GHz",
+            "filter_key": "225.0GHz",
             "filter_name": "alma.6",
             "freq_eff": 225.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "86 GHz",
+            "filter_key": "86.0GHz",
             "filter_name": "alma.3",
             "freq_eff": 86.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "102 GHz",
+            "filter_key": "102.0GHz",
             "filter_name": "alma.3",
             "freq_eff": 102.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "340 GHz",
+            "filter_key": "340.0GHz",
             "filter_name": "alma.7",
             "freq_eff": 340.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "350 GHz",
+            "filter_key": "350.0GHz",
             "filter_name": "alma.7",
             "freq_eff": 350.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "667 GHz",
+            "filter_key": "667.0GHz",
             "filter_name": "alma.9",
             "freq_eff": 667.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "216 GHz",
+            "filter_key": "216.0GHz",
             "filter_name": "alma.6",
             "freq_eff": 216.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "232 GHz",
+            "filter_key": "232.0GHz",
             "filter_name": "alma.6",
             "freq_eff": 232.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "136 GHz",
+            "filter_key": "136.0GHz",
             "filter_name": "alma.4",
             "freq_eff": 136.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "152 GHz",
+            "filter_key": "152.0GHz",
             "filter_name": "alma.4",
             "freq_eff": 152.0,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "347 GHz",
+            "filter_key": "347.0GHz",
             "filter_name": "alma.7",
             "freq_eff": 347.0,
             "freq_units": "GHz"
@@ -1869,19 +2041,19 @@
             "freq_units": "GHz"
         },
         {
-            "filter_key": "0.402 GHz",
+            "filter_key": "0.402GHz",
             "filter_name": "gmrt.3",
             "freq_eff": 0.402,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "1.264 GHz",
+            "filter_key": "1.264GHz",
             "filter_name": "L",
             "freq_eff": 1.264,
             "freq_units": "GHz"
         },
         {
-            "filter_key": "0.750 GHz",
+            "filter_key": "0.75GHz",
             "filter_name": "UHF",
             "freq_eff": 0.75,
             "freq_units": "GHz"
@@ -1899,6 +2071,41 @@
             "wave_units": "nm"
         }
     ],
+    "name": {
+        "default_name": "2022cmc",
+        "alias": [
+            {
+                "value": "2022cmc",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF22aaajecp",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2022cmc",
+                "reference": [
+                    "TNS",
+                    "2022TNSTR.397....1A"
+                ]
+            }
+        ]
+    },
+    "distance": [
+        {
+            "value": "1.19325",
+            "reference": [
+                "2022Natur.612..430A"
+            ],
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
+        }
+    ],
     "classification": [
         {
             "object_class": "TDE",
@@ -1913,16 +2120,5 @@
     "schema_version": {
         "value": "0",
         "comment": "Original Dataset"
-    },
-    "distance": [
-        {
-            "value": "1.19325",
-            "reference": [
-                "2022Natur.612..430A"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        }
-    ]
+    }
 }

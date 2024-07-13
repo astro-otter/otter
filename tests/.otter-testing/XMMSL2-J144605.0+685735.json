@@ -8,7 +8,9 @@
         "alias": [
             {
                 "value": "XMMSL2 J144605.0+685735",
-                "reference": "2023PASP..135c4101G"
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
             }
         ]
     },

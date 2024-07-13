@@ -8,7 +8,9 @@
         "alias": [
             {
                 "value": "Gaia 16aax",
-                "reference": "2023PASP..135c4101G"
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
             }
         ]
     },

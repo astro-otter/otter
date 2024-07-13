@@ -1,138 +1,8 @@
 {
-    "coordinate": [
-        {
-            "ra": "13:42:44.42",
-            "dec": "+05:30:56.14",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2017ApJ...838..149A"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": "13:42:44.41",
-            "dec": "+05:30:56.2",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2018arXiv180205105W"
-            ],
-            "coordinate_type": "equitorial"
-        }
-    ],
-    "name": {
-        "default_name": "SDSSJ1342",
-        "alias": [
-            {
-                "value": "SDSS J1342",
-                "reference": [
-                    "2023PASP..135c4101G"
-                ]
-            },
-            {
-                "value": "SDSSJ1342",
-                "reference": [
-                    "2017ApJ...838..149A"
-                ]
-            },
-            {
-                "value": "J134244",
-                "reference": [
-                    "2018arXiv180205105W",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "date_reference": [
-        {
-            "value": "2009-05-17",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": "2009-04-06",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2018arXiv180205105W",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true
-        },
-        {
-            "value": "2009-04-06 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2018MNRAS.477.2943W"
-            ],
-            "default": true
-        },
-        {
-            "value": "2009-05-17 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2013ApJ...774...46Y",
-                "2017ApJ...838..149A"
-            ],
-            "default": true
-        }
-    ],
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2013ApJ...774...46Y",
-                "2017ApJ...835...64G",
-                "2017ApJ...838..149A",
-                "2018MNRAS.477.2943W",
-                "2023PASP..135c4101G"
-            ],
-            "default": true
-        }
-    ],
-    "host": [
-        {
-            "host_name": "SDSS J134244.41+053056.2",
-            "host_ra": 205.6833333333333,
-            "host_dec": 5.515611111111111,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2018MNRAS.477.2943W"
-            ]
-        },
-        {
-            "host_name": "SDSS J134244.41+053056.1",
-            "host_ra": 205.6833333333333,
-            "host_dec": 5.515594444444444,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2013ApJ...774...46Y",
-                "2017ApJ...838..149A"
-            ]
-        }
-    ],
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -171,124 +41,201 @@
             "human_readable_name": "Yang, Chen-Wei et al. (2013)"
         }
     ],
-    "distance": [
+    "classification": [
         {
-            "value": "0.0366",
+            "object_class": "TDE",
+            "confidence": 1,
             "reference": [
+                "2013ApJ...774...46Y",
+                "2017ApJ...835...64G",
                 "2017ApJ...838..149A",
-                "2012ApJ...749..115W"
+                "2018MNRAS.477.2943W",
+                "2023PASP..135c4101G"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
+            "default": true
+        }
+    ],
+    "date_reference": [
         {
-            "value": "166",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...749..115W",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity",
-            "unit": "Mpc"
-        },
-        {
-            "value": "161",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...749..115W",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving",
-            "unit": "Mpc"
-        },
-        {
-            "value": "0.0365",
-            "reference": [
-                "2018arXiv180205105W"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "166",
+            "value": "2009-04-06",
+            "date_format": "iso",
+            "date_type": "discovery",
             "reference": [
                 "2018arXiv180205105W",
-                "2016A&A...594A..13P",
                 "2017ApJ...835...64G"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity",
-            "unit": "Mpc"
+            "default": false
         },
         {
-            "value": "160",
-            "reference": [
-                "2018arXiv180205105W",
-                "2016A&A...594A..13P",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving",
-            "unit": "Mpc"
-        },
-        {
-            "value": "0.0365",
+            "value": "2009-04-06 ",
+            "date_format": "iso",
+            "date_type": "discovery",
             "reference": [
                 "2023PASP..135c4101G",
                 "2018MNRAS.477.2943W"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
+            "default": false
         },
         {
-            "value": "0.0366",
+            "value": "2009-05-17",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2017ApJ...835...64G"
+            ],
+            "default": false
+        },
+        {
+            "value": "2009-05-17 ",
+            "date_format": "iso",
+            "date_type": "discovery",
             "reference": [
                 "2023PASP..135c4101G",
                 "2013ApJ...774...46Y",
                 "2017ApJ...838..149A"
             ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
+            "default": true
         }
     ],
-    "filter_alias": [
+    "name": {
+        "default_name": "SDSSJ1342",
+        "alias": [
+            {
+                "value": "SDSS J1342",
+                "reference": [
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "SDSSJ1342",
+                "reference": [
+                    "2017ApJ...838..149A"
+                ]
+            },
+            {
+                "value": "J134244",
+                "reference": [
+                    "2018arXiv180205105W",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
         {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm",
-            "filter_name": "0.3 - 2.0"
+            "ra": "13:42:44.41",
+            "dec": "+05:30:56.2",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": true,
+            "reference": [
+                "2018arXiv180205105W",
+                "2018arXiv180205105W",
+                "2018arXiv180205105W",
+                "2018arXiv180205105W"
+            ]
         },
         {
-            "filter_key": "V",
-            "wave_eff": 551.0,
-            "wave_units": "nm",
-            "filter_name": "V"
+            "ra": "13:42:44.42",
+            "dec": "+05:30:56.14",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "reference": [
+                "2017ApJ...838..149A"
+            ]
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0365",
+            "distance_type": "redshift",
+            "reference": [
+                "2018arXiv180205105W",
+                "2023PASP..135c4101G",
+                "2018MNRAS.477.2943W"
+            ],
+            "default": false
         },
         {
-            "filter_key": "W1",
-            "wave_eff": 224.6,
-            "wave_units": "nm",
-            "filter_name": "W1"
+            "value": "0.0366",
+            "distance_type": "redshift",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2012ApJ...749..115W",
+                "2023PASP..135c4101G",
+                "2013ApJ...774...46Y",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
         },
         {
-            "filter_key": "W2",
-            "wave_eff": 192.8,
-            "wave_units": "nm",
-            "filter_name": "W2"
+            "value": "160",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2018arXiv180205105W",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "default": false
+        },
+        {
+            "value": "161",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2012ApJ...749..115W",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        },
+        {
+            "value": "166",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2017ApJ...838..149A",
+                "2016A&A...594A..13P",
+                "2012ApJ...749..115W",
+                "2017ApJ...835...64G",
+                "2018arXiv180205105W",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        }
+    ],
+    "host": [
+        {
+            "host_ra": "205.6833333333333",
+            "host_dec": "5.515594444444444",
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "host_name": "SDSS J134244.41+053056.1",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2013ApJ...774...46Y",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        },
+        {
+            "host_ra": "205.6833333333333",
+            "host_dec": "5.515611111111111",
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "host_name": "SDSS J134244.41+053056.2",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2018MNRAS.477.2943W"
+            ],
+            "default": false
         }
     ],
     "photometry": [
@@ -518,6 +465,34 @@
                 "2018arXiv180205105W"
             ],
             "corr_s": null
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
+        },
+        {
+            "filter_key": "V",
+            "wave_eff": 551.0,
+            "wave_units": "nm",
+            "filter_name": "V"
+        },
+        {
+            "filter_key": "W1",
+            "wave_eff": 224.6,
+            "wave_units": "nm",
+            "filter_name": "W1"
+        },
+        {
+            "filter_key": "W2",
+            "wave_eff": 192.8,
+            "wave_units": "nm",
+            "filter_name": "W2"
         }
     ]
 }

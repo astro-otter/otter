@@ -1,55 +1,21 @@
 {
-    "classification": [
+    "distance": [
         {
-            "object_class": "TDE",
-            "confidence": 1,
+            "value": "0.049",
+            "distance_type": "redshift",
             "reference": [
-                "2022TNSCR3389....1F",
+                "2022TNSCR3389....1F"
+            ],
+            "default": false
+        },
+        {
+            "value": "0.0491",
+            "distance_type": "redshift",
+            "reference": [
                 "2022TNSTR2885....1F",
                 "2024MNRAS.527.2452M"
             ],
             "default": true
-        }
-    ],
-    "coordinate": [
-        {
-            "ra": 350.849102,
-            "dec": 10.685503,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2022TNSTR2885....1F",
-                "2024MNRAS.527.2452M"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 350.849073051,
-            "dec": 10.6855533611,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2022TNSTR2885....1F",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS"
-        }
-    ],
-    "distance": [
-        {
-            "value": 0.0491,
-            "reference": [
-                "2022TNSTR2885....1F",
-                "2024MNRAS.527.2452M"
-            ],
-            "distance_type": "redshift"
-        },
-        {
-            "value": 0.049,
-            "reference": [
-                "2022TNSCR3389....1F"
-            ],
-            "distance_type": "redshift",
-            "computed": false
         }
     ],
     "reference_alias": [
@@ -66,59 +32,64 @@
             "human_readable_name": "Fulton, M. et al. (2022)"
         }
     ],
-    "name": {
-        "default_name": "2022wtn",
-        "alias": [
-            {
-                "value": "ATLAS22bikj",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF22abkfhua",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "2022wtn",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "PS22jwq",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2022wtn",
-                "reference": [
-                    "2022TNSTR2885....1F",
-                    "2024MNRAS.527.2452M"
-                ]
-            }
-        ]
-    },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2022TNSCR3389....1F",
+                "2022TNSTR2885....1F",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        }
+    ],
     "date_reference": [
         {
-            "value": 59881.958333333336,
+            "value": "59854.255",
             "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": [
+                "2022TNSTR2885....1F"
+            ],
+            "default": true
+        },
+        {
+            "value": "59881.958333333336",
+            "date_format": "mjd",
+            "date_type": "peak",
             "reference": [
                 "2022TNSTR2885....1F",
                 "2024MNRAS.527.2452M"
             ],
-            "computed": false,
-            "date_type": "peak"
+            "default": true
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "350.849073051",
+            "dec": "10.6855533611",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": [
+                "2022TNSTR2885....1F"
+            ],
+            "default": false
         },
         {
-            "value": 59854.255,
-            "date_format": "mjd",
-            "reference": "2022TNSTR2885....1F",
-            "computed": false,
-            "date_type": "discovery"
+            "ra": "350.849102",
+            "dec": "10.685503",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2022TNSTR2885....1F",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
         }
     ],
     "photometry": [
@@ -2431,7 +2402,9 @@
             "date": "59864.379689999856",
             "date_format": "mjd",
             "filter_key": "orange",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -2455,7 +2428,9 @@
             "date": "59863.466539999936",
             "date_format": "mjd",
             "filter_key": "orange",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -2479,7 +2454,9 @@
             "date": "59856.26699999999",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -2503,7 +2480,9 @@
             "date": "59854.25499999989",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -2527,7 +2506,9 @@
             "date": "59854.25497689983",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -2551,7 +2532,9 @@
             "date": "59852.33799999999",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -2575,7 +2558,9 @@
             "date": "59852.33795139985",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -2599,7 +2584,9 @@
             "date": "59853.27677999996",
             "date_format": "mjd",
             "filter_key": "w",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -2671,5 +2658,41 @@
             "wave_eff": 638.9300625093831,
             "wave_units": "nm"
         }
-    ]
+    ],
+    "name": {
+        "default_name": "2022wtn",
+        "alias": [
+            {
+                "value": "ZTF22abkfhua",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2022wtn",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ATLAS22bikj",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "PS22jwq",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2022wtn",
+                "reference": [
+                    "2022TNSTR2885....1F",
+                    "2024MNRAS.527.2452M"
+                ]
+            }
+        ]
+    }
 }

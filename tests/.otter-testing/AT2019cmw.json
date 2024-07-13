@@ -1,27 +1,4 @@
 {
-    "coordinate": [
-        {
-            "ra": 282.164495,
-            "dec": 51.013537,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2022ApJ...925...67L",
-                "2024MNRAS.527.2452M"
-            ],
-            "coordinate_type": "equitorial"
-        },
-        {
-            "ra": 282.164466934,
-            "dec": 51.0135177737,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": "2019TNSTR.464....1N",
-            "coordinate_type": "equitorial",
-            "epoch": "J2000",
-            "frame": "ICRS"
-        }
-    ],
     "reference_alias": [
         {
             "name": "2022ApJ...925...67L",
@@ -36,59 +13,52 @@
             "human_readable_name": "Nordin, J. et al. (2019)"
         }
     ],
-    "name": {
-        "default_name": "2019cmw",
-        "alias": [
-            {
-                "value": "ATLAS19kel",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "PS19cws",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "2019cmw",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF19aaniqrr",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2019cmw",
-                "reference": [
-                    "2022ApJ...925...67L",
-                    "2024MNRAS.527.2452M"
-                ]
-            }
-        ]
-    },
     "date_reference": [
         {
-            "value": 58581.89299999999,
+            "value": "58567.51133101852",
             "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": [
+                "2019TNSTR.464....1N"
+            ],
+            "default": true
+        },
+        {
+            "value": "58581.89299999999",
+            "date_format": "mjd",
+            "date_type": "peak",
             "reference": [
                 "2022ApJ...925...67L",
                 "2024MNRAS.527.2452M"
             ],
-            "computed": false,
-            "date_type": "peak"
+            "default": true
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "282.164466934",
+            "dec": "51.0135177737",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "epoch": "J2000",
+            "frame": "ICRS",
+            "reference": [
+                "2019TNSTR.464....1N"
+            ],
+            "default": false
         },
         {
-            "value": 58567.51133101852,
-            "date_format": "mjd",
-            "reference": "2019TNSTR.464....1N",
-            "computed": false,
-            "date_type": "discovery"
+            "ra": "282.164495",
+            "dec": "51.013537",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "reference": [
+                "2022ApJ...925...67L",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
         }
     ],
     "photometry": [
@@ -10069,7 +10039,9 @@
             "date": "58609.55500000017",
             "date_format": "mjd",
             "filter_key": "w",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -10093,7 +10065,9 @@
             "date": "58612.505995399784",
             "date_format": "mjd",
             "filter_key": "cyan",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -10117,7 +10091,9 @@
             "date": "58610.61799769988",
             "date_format": "mjd",
             "filter_key": "orange",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -10141,7 +10117,9 @@
             "date": "58567.51134259999",
             "date_format": "mjd",
             "filter_key": "g",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -10165,7 +10143,9 @@
             "date": "58572.431631899904",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -10189,7 +10169,9 @@
             "date": "58560.46755790012",
             "date_format": "mjd",
             "filter_key": "r",
-            "reference": "TNS",
+            "reference": [
+                "TNS"
+            ],
             "obs_type": "uvoir",
             "corr_k": false,
             "corr_s": false,
@@ -10292,6 +10274,42 @@
             "wave_units": "nm"
         }
     ],
+    "name": {
+        "default_name": "2019cmw",
+        "alias": [
+            {
+                "value": "ATLAS19kel",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "PS19cws",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF19aaniqrr",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2019cmw",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2019cmw",
+                "reference": [
+                    "2022ApJ...925...67L",
+                    "2024MNRAS.527.2452M"
+                ]
+            }
+        ]
+    },
     "distance": [
         {
             "value": 0.5167,
