@@ -1,36 +1,38 @@
 {
-    "reference_alias": [
+    "filter_alias": [
         {
-            "name": "2017ApJ...838..149A",
-            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         },
         {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
+            "filter_key": "6.0GHz",
+            "filter_name": "C",
+            "freq_eff": 6.0,
+            "freq_units": "GHz"
         },
         {
-            "name": "2015ATel.6877....1F",
-            "human_readable_name": "Foley et al. (2015)"
-        },
+            "filter_key": "21.7GHz",
+            "filter_name": "K",
+            "freq_eff": 21.7,
+            "freq_units": "GHz"
+        }
+    ],
+    "classification": [
         {
-            "name": "2011ApJ...737..103S",
-            "human_readable_name": "Schlafly & Finkbeiner (2011)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
-        },
-        {
-            "name": "2000A&AS..143....9W",
-            "human_readable_name": "Wenger et al. (2000)"
-        },
-        {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
-            "name": "2023arXiv230813595C",
-            "human_readable_name": "Foley, R. J. et al. (2015)"
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2015ATel.6877....1F",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G",
+                "2023arXiv230813595C"
+            ],
+            "default": true
         }
     ],
     "photometry": [
@@ -236,42 +238,6 @@
             "corr_hostav": false
         }
     ],
-    "filter_alias": [
-        {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm",
-            "filter_name": "0.3 - 2.0"
-        },
-        {
-            "filter_key": "6.0GHz",
-            "filter_name": "C",
-            "freq_eff": 6.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "21.7GHz",
-            "filter_name": "K",
-            "freq_eff": 21.7,
-            "freq_units": "GHz"
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2015ATel.6877....1F",
-                "2017ApJ...835...64G",
-                "2017ApJ...838..149A",
-                "2023PASP..135c4101G",
-                "2023arXiv230813595C"
-            ],
-            "default": true
-        }
-    ],
     "name": {
         "default_name": "DES14C1kia",
         "alias": [
@@ -291,6 +257,40 @@
             }
         ]
     },
+    "reference_alias": [
+        {
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2015ATel.6877....1F",
+            "human_readable_name": "Foley et al. (2015)"
+        },
+        {
+            "name": "2011ApJ...737..103S",
+            "human_readable_name": "Schlafly & Finkbeiner (2011)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        },
+        {
+            "name": "2000A&AS..143....9W",
+            "human_readable_name": "Wenger et al. (2000)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2023arXiv230813595C",
+            "human_readable_name": "Foley, R. J. et al. (2015)"
+        }
+    ],
     "coordinate": [
         {
             "ra": "03:34:47.49",
@@ -299,8 +299,8 @@
             "dec_units": "deg",
             "coordinate_type": "equitorial",
             "reference": [
-                "2015ATel.6877....1F",
-                "2000A&AS..143....9W"
+                "2000A&AS..143....9W",
+                "2015ATel.6877....1F"
             ],
             "default": true
         },
@@ -314,48 +314,6 @@
                 "2015ATel.6877....1F"
             ],
             "default": false
-        }
-    ],
-    "schema_version": {
-        "value": 0,
-        "comments": "From Goldtooth et al. (2023)"
-    },
-    "distance": [
-        {
-            "value": "0.162",
-            "distance_type": "redshift",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2015ATel.6877....1F",
-                "2023PASP..135c4101G",
-                "2015ATel.6877....1F",
-                "2017ApJ...838..149A"
-            ],
-            "default": true
-        },
-        {
-            "value": "689",
-            "distance_type": "comoving",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2015ATel.6877....1F",
-                "2017ApJ...835...64G"
-            ],
-            "default": true
-        },
-        {
-            "value": "801",
-            "distance_type": "luminosity",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2015ATel.6877....1F",
-                "2017ApJ...835...64G"
-            ],
-            "default": true
         }
     ],
     "date_reference": [
@@ -373,8 +331,48 @@
             "date_format": "iso",
             "date_type": "discovery",
             "reference": [
-                "2023PASP..135c4101G",
                 "2015ATel.6877....1F",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
+    "distance": [
+        {
+            "value": "0.162",
+            "distance_type": "redshift",
+            "reference": [
+                "2015ATel.6877....1F",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        },
+        {
+            "value": "689",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2015ATel.6877....1F",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        },
+        {
+            "value": "801",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2015ATel.6877....1F",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
                 "2017ApJ...838..149A"
             ],
             "default": true

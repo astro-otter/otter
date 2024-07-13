@@ -997,7 +997,9 @@ class Transient(MutableMapping):
             merged["reference"] = merged.reference.str.replace("][", ",")
 
             # then eval the string of a list to get back an actual list of sources
-            merged["reference"] = merged.reference.apply(lambda v: eval(v))
+            merged["reference"] = merged.reference.apply(
+                lambda v: np.unique(eval(v)).tolist()
+            )
 
             # decide on default values
             if groupby_key is None:

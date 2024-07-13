@@ -1,23 +1,4 @@
 {
-    "distance": [
-        {
-            "value": "0.112",
-            "distance_type": "redshift",
-            "reference": [
-                "2022TNSAN.106....1F",
-                "2024MNRAS.527.2452M"
-            ],
-            "default": true
-        },
-        {
-            "value": "0.12",
-            "distance_type": "redshift",
-            "reference": [
-                "2022TNSCR1214....1F"
-            ],
-            "default": false
-        }
-    ],
     "reference_alias": [
         {
             "name": "2022TNSAN.106....1F",
@@ -36,16 +17,84 @@
             "human_readable_name": "Fulton, M. et al. (2022)"
         }
     ],
-    "classification": [
+    "filter_alias": [
         {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2022TNSAN.106....1F",
-                "2022TNSCR1214....1F",
-                "2024MNRAS.527.2452M"
-            ],
-            "default": true
+            "filter_key": "U.uvot",
+            "filter_name": "U.uvot",
+            "freq_eff": 872815357550259.6,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVM2.uvot",
+            "filter_name": "UVM2.uvot",
+            "freq_eff": 1346484181597652.0,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVW1.uvot",
+            "filter_name": "UVW1.uvot",
+            "freq_eff": 1198891057872408.0,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVW2.uvot",
+            "filter_name": "UVW2.uvot",
+            "freq_eff": 1492659946412262.2,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "W1.wise",
+            "filter_name": "W1.wise",
+            "freq_eff": 89917740678395.33,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "W2.wise",
+            "filter_name": "W2.wise",
+            "freq_eff": 65429370473910.305,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "g.ztf",
+            "filter_name": "g.ztf",
+            "freq_eff": 634121907623677.4,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "i.ztf",
+            "filter_name": "i.ztf",
+            "freq_eff": 380021535091050.2,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "r.ztf",
+            "filter_name": "r.ztf",
+            "freq_eff": 471994480402802.25,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "orange",
+            "filter_name": "orange",
+            "wave_eff": 686.6260690394873,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "G",
+            "filter_name": "G",
+            "wave_eff": 673.5412573108297,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "g",
+            "filter_name": "g",
+            "wave_eff": 471.8872246248687,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "r",
+            "filter_name": "r",
+            "wave_eff": 618.5194476741524,
+            "wave_units": "nm"
         }
     ],
     "date_reference": [
@@ -94,6 +143,61 @@
                 "2024MNRAS.527.2452M"
             ],
             "default": true
+        }
+    ],
+    "name": {
+        "default_name": "2022hvp",
+        "alias": [
+            {
+                "value": "2022hvp",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "Gaia22clk",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF22aagyuao",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ATLAS22mlo",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2022hvp",
+                "reference": [
+                    "2022TNSAN.106....1F",
+                    "2024MNRAS.527.2452M"
+                ]
+            }
+        ]
+    },
+    "distance": [
+        {
+            "value": "0.112",
+            "distance_type": "redshift",
+            "reference": [
+                "2022TNSAN.106....1F",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        },
+        {
+            "value": "0.12",
+            "distance_type": "redshift",
+            "reference": [
+                "2022TNSCR1214....1F"
+            ],
+            "default": false
         }
     ],
     "photometry": [
@@ -3719,120 +3823,16 @@
             "instrument": "ZTF-Cam"
         }
     ],
-    "filter_alias": [
+    "classification": [
         {
-            "filter_key": "U.uvot",
-            "filter_name": "U.uvot",
-            "freq_eff": 872815357550259.6,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVM2.uvot",
-            "filter_name": "UVM2.uvot",
-            "freq_eff": 1346484181597652.0,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVW1.uvot",
-            "filter_name": "UVW1.uvot",
-            "freq_eff": 1198891057872408.0,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVW2.uvot",
-            "filter_name": "UVW2.uvot",
-            "freq_eff": 1492659946412262.2,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "W1.wise",
-            "filter_name": "W1.wise",
-            "freq_eff": 89917740678395.33,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "W2.wise",
-            "filter_name": "W2.wise",
-            "freq_eff": 65429370473910.305,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "g.ztf",
-            "filter_name": "g.ztf",
-            "freq_eff": 634121907623677.4,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "i.ztf",
-            "filter_name": "i.ztf",
-            "freq_eff": 380021535091050.2,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "r.ztf",
-            "filter_name": "r.ztf",
-            "freq_eff": 471994480402802.25,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "orange",
-            "filter_name": "orange",
-            "wave_eff": 686.6260690394873,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "G",
-            "filter_name": "G",
-            "wave_eff": 673.5412573108297,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "g",
-            "filter_name": "g",
-            "wave_eff": 471.8872246248687,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "r",
-            "filter_name": "r",
-            "wave_eff": 618.5194476741524,
-            "wave_units": "nm"
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2022TNSAN.106....1F",
+                "2022TNSCR1214....1F",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
         }
-    ],
-    "name": {
-        "default_name": "2022hvp",
-        "alias": [
-            {
-                "value": "ZTF22aagyuao",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "Gaia22clk",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "2022hvp",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ATLAS22mlo",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2022hvp",
-                "reference": [
-                    "2022TNSAN.106....1F",
-                    "2024MNRAS.527.2452M"
-                ]
-            }
-        ]
-    }
+    ]
 }

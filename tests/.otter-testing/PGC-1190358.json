@@ -1,8 +1,82 @@
 {
+    "coordinate": [
+        {
+            "ra": "15:05:28.56",
+            "dec": "+01:17:31.20",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2017ApJ...838..149A"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "name": {
+        "default_name": "PGC 1190358",
+        "alias": [
+            {
+                "value": "PGC 1190358",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2016A&A...586A...9H",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.00766",
+            "distance_type": "redshift",
+            "reference": [
+                "2015arXiv150506612H",
+                "2016A&A...586A...9H",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        },
+        {
+            "value": "33.8",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2015arXiv150506612H",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        },
+        {
+            "value": "34.1",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2015arXiv150506612H",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -33,79 +107,14 @@
             "human_readable_name": "Goldtooth, Aaron et al. (2023)"
         }
     ],
-    "classification": [
+    "filter_alias": [
         {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2016A&A...586A...9H",
-                "2017ApJ...835...64G",
-                "2017ApJ...838..149A",
-                "2023PASP..135c4101G"
-            ],
-            "default": true
-        }
-    ],
-    "name": {
-        "default_name": "PGC 1190358",
-        "alias": [
-            {
-                "value": "PGC 1190358",
-                "reference": [
-                    "2017ApJ...838..149A",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "coordinate": [
-        {
-            "ra": "15:05:28.56",
-            "dec": "+01:17:31.20",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2017ApJ...838..149A"
-            ],
-            "coordinate_type": "equitorial"
-        }
-    ],
-    "distance": [
-        {
-            "value": "0.00766",
-            "distance_type": "redshift",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2015arXiv150506612H",
-                "2023PASP..135c4101G",
-                "2016A&A...586A...9H",
-                "2017ApJ...838..149A"
-            ],
-            "default": true
-        },
-        {
-            "value": "33.8",
-            "distance_type": "comoving",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2015arXiv150506612H",
-                "2017ApJ...835...64G"
-            ],
-            "default": true
-        },
-        {
-            "value": "34.1",
-            "distance_type": "luminosity",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2015arXiv150506612H",
-                "2017ApJ...835...64G"
-            ],
-            "default": true
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         }
     ],
     "photometry": [
@@ -206,14 +215,18 @@
             "corr_s": null
         }
     ],
-    "filter_alias": [
+    "host": [
         {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm",
-            "filter_name": "0.3 - 2.0"
+            "host_name": "N5846-162",
+            "host_ra": 226.3708333333333,
+            "host_dec": 1.292547222222222,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2023PASP..135c4101G",
+                "2016A&A...586A...9H",
+                "2017ApJ...838..149A"
+            ]
         }
     ],
     "date_reference": [
@@ -227,20 +240,6 @@
                 "2017ApJ...838..149A"
             ],
             "default": true
-        }
-    ],
-    "host": [
-        {
-            "host_name": "N5846-162",
-            "host_ra": 226.3708333333333,
-            "host_dec": 1.292547222222222,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2016A&A...586A...9H",
-                "2017ApJ...838..149A"
-            ]
         }
     ]
 }

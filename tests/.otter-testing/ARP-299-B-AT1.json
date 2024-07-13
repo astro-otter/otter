@@ -25,7 +25,7 @@
             ],
             "computed": false,
             "default": true,
-            "uuid": "b5cc626b-e36a-4590-b4ed-c3f10743d759",
+            "uuid": "3114e4b5-d45e-4406-9660-ff4b8d64c812",
             "coordinate_type": "equitorial"
         },
         {
@@ -34,7 +34,7 @@
             "l_units": "deg",
             "b_units": "deg",
             "reference": [
-                "b5cc626b-e36a-4590-b4ed-c3f10743d759"
+                "3114e4b5-d45e-4406-9660-ff4b8d64c812"
             ],
             "computed": true,
             "coordinate_type": "galactic"

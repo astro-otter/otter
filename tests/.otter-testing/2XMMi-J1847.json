@@ -1,8 +1,85 @@
 {
+    "coordinate": [
+        {
+            "ra": "18:47:25.16",
+            "dec": "-63:17:24.96",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2011ApJ...738...52L"
+            ],
+            "coordinate_type": "equitorial"
+        }
+    ],
+    "name": {
+        "default_name": "2XMMi J1847",
+        "alias": [
+            {
+                "value": "2XMMi J1847",
+                "reference": [
+                    "2011ApJ...738...52L"
+                ]
+            },
+            {
+                "value": "2XMMi J184725.1-631724",
+                "reference": [
+                    "2011ApJ...738...52L",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2011ApJ...738...52L",
+                "2017ApJ...835...64G",
+                "2018MNRAS.474.3000L",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.0353",
+            "distance_type": "redshift",
+            "reference": [
+                "2011ApJ...738...52L",
+                "2018MNRAS.474.3000L",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        },
+        {
+            "value": "155",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2011ApJ...738...52L",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        },
+        {
+            "value": "160",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2011ApJ...738...52L",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G"
+            ],
+            "default": true
+        }
+    ],
     "reference_alias": [
         {
             "name": "2016A&A...594A..13P",
@@ -29,82 +106,18 @@
             "human_readable_name": "Lin, Dacheng et al. (2018)"
         }
     ],
-    "classification": [
+    "host": [
         {
-            "object_class": "TDE",
-            "confidence": 1,
+            "host_name": "IC 4765-f01-1504",
+            "host_ra": 281.85416666666663,
+            "host_dec": -63.290277777777774,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
             "reference": [
-                "2011ApJ...738...52L",
-                "2017ApJ...835...64G",
-                "2018MNRAS.474.3000L",
-                "2023PASP..135c4101G"
-            ],
-            "default": true
-        }
-    ],
-    "name": {
-        "default_name": "2XMMi J1847",
-        "alias": [
-            {
-                "value": "2XMMi J1847",
-                "reference": [
-                    "2011ApJ...738...52L"
-                ]
-            },
-            {
-                "value": "2XMMi J184725.1-631724",
-                "reference": [
-                    "2011ApJ...738...52L",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "coordinate": [
-        {
-            "ra": "18:47:25.16",
-            "dec": "-63:17:24.96",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2011ApJ...738...52L"
-            ],
-            "coordinate_type": "equitorial"
-        }
-    ],
-    "distance": [
-        {
-            "value": "0.0353",
-            "distance_type": "redshift",
-            "reference": [
-                "2011ApJ...738...52L",
                 "2023PASP..135c4101G",
                 "2011ApJ...738...52L",
                 "2018MNRAS.474.3000L"
-            ],
-            "default": true
-        },
-        {
-            "value": "155",
-            "distance_type": "comoving",
-            "unit": "Mpc",
-            "reference": [
-                "2016A&A...594A..13P",
-                "2011ApJ...738...52L",
-                "2017ApJ...835...64G"
-            ],
-            "default": true
-        },
-        {
-            "value": "160",
-            "distance_type": "luminosity",
-            "unit": "Mpc",
-            "reference": [
-                "2016A&A...594A..13P",
-                "2011ApJ...738...52L",
-                "2017ApJ...835...64G"
-            ],
-            "default": true
+            ]
         }
     ],
     "date_reference": [
@@ -118,20 +131,6 @@
                 "2018MNRAS.474.3000L"
             ],
             "default": true
-        }
-    ],
-    "host": [
-        {
-            "host_name": "IC 4765-f01-1504",
-            "host_ra": 281.85416666666663,
-            "host_dec": -63.290277777777774,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2011ApJ...738...52L",
-                "2018MNRAS.474.3000L"
-            ]
         }
     ]
 }

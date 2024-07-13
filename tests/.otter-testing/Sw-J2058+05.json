@@ -1,42 +1,176 @@
 {
-    "reference_alias": [
+    "date_reference": [
         {
-            "name": "2012ApJ...753...77C",
-            "human_readable_name": "Cenko et al. (2012)"
+            "value": "2011-05-20",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2012ApJ...753...77C"
+            ],
+            "default": false
         },
         {
-            "name": "2015ApJ...805...68P",
-            "human_readable_name": "Pasham et al. (2015)"
+            "value": "2011-05-27",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": false
         },
         {
-            "name": "2017MNRAS.472.4469B",
-            "human_readable_name": "Brown et al. (2017)"
+            "value": "2011-05-27 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2011ATel.3384....1K",
+                "2012MNRAS.420.2684C",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
         },
         {
-            "name": "2017ApJ...838..149A",
-            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
-        },
-        {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
-        },
-        {
-            "name": "2011ATel.3384....1K",
-            "human_readable_name": "Auchettl, Katie et al. (2017)"
-        },
-        {
-            "name": "2012MNRAS.420.2684C",
-            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
-        },
-        {
-            "name": "2023PASP..135c4101G",
-            "human_readable_name": "Krimm, H. A. et al. (2011)"
+            "value": "55698.0",
+            "date_format": "mjd",
+            "date_type": "discovery",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017MNRAS.472.4469B"
+            ],
+            "default": false
         }
     ],
+    "filter_alias": [
+        {
+            "filter_key": "4.5GHz",
+            "filter_name": "C",
+            "freq_eff": 4.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.5GHz",
+            "filter_name": "C",
+            "freq_eff": 5.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
+        },
+        {
+            "filter_key": "7.9GHz",
+            "filter_name": "C",
+            "freq_eff": 7.9,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "8.4GHz",
+            "filter_name": "X",
+            "freq_eff": 8.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "22.5GHz",
+            "filter_name": "K",
+            "freq_eff": 22.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "22.0GHz",
+            "filter_name": "K",
+            "freq_eff": 22.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.0GHz",
+            "filter_name": "X",
+            "freq_eff": 9.0,
+            "freq_units": "GHz"
+        }
+    ],
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2011ATel.3384....1K",
+                "2012ApJ...753...77C",
+                "2012MNRAS.420.2684C",
+                "2015ApJ...805...68P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A",
+                "2017MNRAS.472.4469B",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        }
+    ],
+    "distance": [
+        {
+            "value": "1.1853",
+            "distance_type": "redshift",
+            "reference": [
+                "2011ATel.3384....1K",
+                "2012ApJ...753...77C",
+                "2012MNRAS.420.2684C",
+                "2015ApJ...805...68P",
+                "2017ApJ...838..149A",
+                "2017MNRAS.472.4469B",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        },
+        {
+            "value": "3833.1",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        },
+        {
+            "value": "8376.4",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
+    "name": {
+        "default_name": "Sw J2058+05",
+        "alias": [
+            {
+                "value": "Swift J2058+05",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2023PASP..135c4101G"
+                ]
+            },
+            {
+                "value": "Sw J2058+05",
+                "reference": [
+                    "Swift",
+                    "2012ApJ...753...77C"
+                ]
+            }
+        ]
+    },
     "photometry": [
         {
             "reference": [
@@ -431,188 +565,44 @@
             "corr_hostav": false
         }
     ],
-    "filter_alias": [
+    "reference_alias": [
         {
-            "filter_key": "4.5GHz",
-            "filter_name": "C",
-            "freq_eff": 4.5,
-            "freq_units": "GHz"
+            "name": "2012ApJ...753...77C",
+            "human_readable_name": "Cenko et al. (2012)"
         },
         {
-            "filter_key": "5.5GHz",
-            "filter_name": "C",
-            "freq_eff": 5.5,
-            "freq_units": "GHz"
+            "name": "2015ApJ...805...68P",
+            "human_readable_name": "Pasham et al. (2015)"
         },
         {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm",
-            "filter_name": "0.3 - 2.0"
+            "name": "2017MNRAS.472.4469B",
+            "human_readable_name": "Brown et al. (2017)"
         },
         {
-            "filter_key": "7.9GHz",
-            "filter_name": "C",
-            "freq_eff": 7.9,
-            "freq_units": "GHz"
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
         },
         {
-            "filter_key": "8.4GHz",
-            "filter_name": "X",
-            "freq_eff": 8.4,
-            "freq_units": "GHz"
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
         },
         {
-            "filter_key": "22.5GHz",
-            "filter_name": "K",
-            "freq_eff": 22.5,
-            "freq_units": "GHz"
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
         },
         {
-            "filter_key": "22.0GHz",
-            "filter_name": "K",
-            "freq_eff": 22.0,
-            "freq_units": "GHz"
+            "name": "2011ATel.3384....1K",
+            "human_readable_name": "Auchettl, Katie et al. (2017)"
         },
         {
-            "filter_key": "9.0GHz",
-            "filter_name": "X",
-            "freq_eff": 9.0,
-            "freq_units": "GHz"
+            "name": "2012MNRAS.420.2684C",
+            "human_readable_name": "Goldtooth, Aaron et al. (2023)"
+        },
+        {
+            "name": "2023PASP..135c4101G",
+            "human_readable_name": "Krimm, H. A. et al. (2011)"
         }
     ],
-    "distance": [
-        {
-            "value": "1.1853",
-            "distance_type": "redshift",
-            "reference": [
-                "2012ApJ...753...77C",
-                "2015ApJ...805...68P",
-                "2017MNRAS.472.4469B",
-                "2017ApJ...838..149A",
-                "2012ApJ...753...77C",
-                "2023PASP..135c4101G",
-                "2011ATel.3384....1K",
-                "2012MNRAS.420.2684C",
-                "2017ApJ...838..149A",
-                "2012ApJ...753...77C"
-            ],
-            "default": true
-        },
-        {
-            "value": "3833.1",
-            "distance_type": "comoving",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...753...77C",
-                "2017ApJ...835...64G"
-            ],
-            "default": true
-        },
-        {
-            "value": "8376.4",
-            "distance_type": "luminosity",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...753...77C",
-                "2017ApJ...835...64G"
-            ],
-            "default": true
-        }
-    ],
-    "classification": [
-        {
-            "object_class": "TDE",
-            "confidence": 1.0,
-            "reference": [
-                "2011ATel.3384....1K",
-                "2012ApJ...753...77C",
-                "2012MNRAS.420.2684C",
-                "2015ApJ...805...68P",
-                "2017ApJ...835...64G",
-                "2017ApJ...838..149A",
-                "2017MNRAS.472.4469B",
-                "2023PASP..135c4101G"
-            ],
-            "default": true
-        }
-    ],
-    "date_reference": [
-        {
-            "value": "2011-05-20",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2012ApJ...753...77C",
-                "2012ApJ...753...77C",
-                "2012ApJ...753...77C",
-                "2012ApJ...753...77C",
-                "2012ApJ...753...77C",
-                "2012ApJ...753...77C",
-                "2012ApJ...753...77C",
-                "2012ApJ...753...77C"
-            ],
-            "default": true
-        },
-        {
-            "value": "2011-05-27",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2017ApJ...835...64G"
-            ],
-            "default": false
-        },
-        {
-            "value": "2011-05-27 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2011ATel.3384....1K",
-                "2012MNRAS.420.2684C",
-                "2017ApJ...838..149A"
-            ],
-            "default": false
-        },
-        {
-            "value": "55698.0",
-            "date_format": "mjd",
-            "date_type": "discovery",
-            "reference": [
-                "2012ApJ...753...77C",
-                "2015ApJ...805...68P",
-                "2017MNRAS.472.4469B"
-            ],
-            "default": false
-        }
-    ],
-    "name": {
-        "default_name": "Sw J2058+05",
-        "alias": [
-            {
-                "value": "Swift J2058+05",
-                "reference": [
-                    "2017ApJ...838..149A",
-                    "2023PASP..135c4101G"
-                ]
-            },
-            {
-                "value": "Sw J2058+05",
-                "reference": [
-                    "Swift",
-                    "2012ApJ...753...77C"
-                ]
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "20 58 19.90",
@@ -623,12 +613,9 @@
             "dec_units": "deg",
             "computed": "False",
             "default": true,
-            "uuid": "d7f71a34-27ce-419d-b276-9b3b9ab5bb9e",
+            "uuid": "0042d2d6-3836-4d26-8253-27c243d8b50e",
             "coordinate_type": "equitorial",
             "reference": [
-                "2012ApJ...753...77C",
-                "2015ApJ...805...68P",
-                "2017MNRAS.472.4469B",
                 "2012ApJ...753...77C",
                 "2015ApJ...805...68P",
                 "2017MNRAS.472.4469B"
@@ -665,14 +652,10 @@
             "l_units": "deg",
             "b_units": "deg",
             "reference": [
-                "d7f71a34-27ce-419d-b276-9b3b9ab5bb9e"
+                "0042d2d6-3836-4d26-8253-27c243d8b50e"
             ]
         }
     ],
-    "schema_version": {
-        "value": 0,
-        "comments": "From Goldtooth et al. (2023)"
-    },
     "host": [
         {
             "host_name": "Swift J205819.7+051329",
@@ -687,5 +670,9 @@
                 "2017ApJ...838..149A"
             ]
         }
-    ]
+    ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    }
 }

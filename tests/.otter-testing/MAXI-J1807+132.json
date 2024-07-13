@@ -29,15 +29,41 @@
             "human_readable_name": "Hodgkin, S. T. et al. (2019)"
         }
     ],
+    "filter_alias": [
+        {
+            "filter_key": "UVM2",
+            "wave_eff": 225.47802478793594,
+            "wave_units": "nm",
+            "filter_name": "UVM2"
+        },
+        {
+            "filter_key": "UVW1",
+            "wave_eff": 261.3713060531025,
+            "wave_units": "nm",
+            "filter_name": "UVW1"
+        },
+        {
+            "filter_key": "UVW2",
+            "wave_eff": 207.98754332676123,
+            "wave_units": "nm",
+            "filter_name": "UVW2"
+        },
+        {
+            "filter_key": "G",
+            "filter_name": "G",
+            "wave_eff": 673.5412573108297,
+            "wave_units": "nm"
+        }
+    ],
     "date_reference": [
         {
             "value": "2017-03-15 ",
             "date_format": "iso",
             "date_type": "discovery",
             "reference": [
-                "2023PASP..135c4101G",
+                "2017ATel.9988....1N",
                 "2021MNRAS.501..261A",
-                "2017ATel.9988....1N"
+                "2023PASP..135c4101G"
             ],
             "default": true
         },
@@ -87,6 +113,30 @@
             "default": false
         }
     ],
+    "name": {
+        "default_name": "2019pqt",
+        "alias": [
+            {
+                "value": "Gaia19dya",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "2019pqt",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "MAXI J1807+132",
+                "reference": [
+                    "2017ATel10216....1K",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
     "photometry": [
         {
             "raw": [
@@ -184,56 +234,6 @@
             "instrument": "Gaia-photometric"
         }
     ],
-    "filter_alias": [
-        {
-            "filter_key": "UVM2",
-            "wave_eff": 225.47802478793594,
-            "wave_units": "nm",
-            "filter_name": "UVM2"
-        },
-        {
-            "filter_key": "UVW1",
-            "wave_eff": 261.3713060531025,
-            "wave_units": "nm",
-            "filter_name": "UVW1"
-        },
-        {
-            "filter_key": "UVW2",
-            "wave_eff": 207.98754332676123,
-            "wave_units": "nm",
-            "filter_name": "UVW2"
-        },
-        {
-            "filter_key": "G",
-            "filter_name": "G",
-            "wave_eff": 673.5412573108297,
-            "wave_units": "nm"
-        }
-    ],
-    "name": {
-        "default_name": "2019pqt",
-        "alias": [
-            {
-                "value": "2019pqt",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "Gaia19dya",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "MAXI J1807+132",
-                "reference": [
-                    "2017ATel10216....1K",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
     "distance": [
         {
             "value": NaN,

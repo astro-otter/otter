@@ -13,193 +13,278 @@
             "human_readable_name": "Andreoni, I. (2022)"
         }
     ],
+    "filter_alias": [
+        {
+            "filter_key": "8.5GHz",
+            "filter_name": "X",
+            "freq_eff": 8.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "15.5GHz",
+            "filter_name": "Ku",
+            "freq_eff": 15.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "5.0GHz",
+            "filter_name": "C",
+            "freq_eff": 5.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.3GHz",
+            "filter_name": "L",
+            "freq_eff": 1.3,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "9.5GHz",
+            "filter_name": "X",
+            "freq_eff": 9.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "10.5GHz",
+            "filter_name": "X",
+            "freq_eff": 10.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "11.5GHz",
+            "filter_name": "X",
+            "freq_eff": 11.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "12.8GHz",
+            "filter_name": "Ku",
+            "freq_eff": 12.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "14.3GHz",
+            "filter_name": "Ku",
+            "freq_eff": 14.3,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "15.9GHz",
+            "filter_name": "Ku",
+            "freq_eff": 15.9,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "17.1GHz",
+            "filter_name": "Ku",
+            "freq_eff": 17.1,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "7.0GHz",
+            "filter_name": "C",
+            "freq_eff": 7.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "41.0GHz",
+            "filter_name": "alma.1",
+            "freq_eff": 41.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "43.0GHz",
+            "filter_name": "alma.1",
+            "freq_eff": 43.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "45.0GHz",
+            "filter_name": "alma.1",
+            "freq_eff": 45.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "47.0GHz",
+            "filter_name": "alma.1",
+            "freq_eff": 47.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "31.5GHz",
+            "filter_name": "Ka",
+            "freq_eff": 31.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "33.5GHz",
+            "filter_name": "Ka",
+            "freq_eff": 33.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "35.5GHz",
+            "filter_name": "Ka",
+            "freq_eff": 35.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "37.5GHz",
+            "filter_name": "Ka",
+            "freq_eff": 37.5,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "19.2GHz",
+            "filter_name": "K",
+            "freq_eff": 19.2,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "21.2GHz",
+            "filter_name": "K",
+            "freq_eff": 21.2,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "23.2GHz",
+            "filter_name": "K",
+            "freq_eff": 23.2,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "25.2GHz",
+            "filter_name": "K",
+            "freq_eff": 25.2,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "17.4GHz",
+            "filter_name": "Ku",
+            "freq_eff": 17.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "225.0GHz",
+            "filter_name": "alma.6",
+            "freq_eff": 225.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "86.0GHz",
+            "filter_name": "alma.3",
+            "freq_eff": 86.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "102.0GHz",
+            "filter_name": "alma.3",
+            "freq_eff": 102.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "340.0GHz",
+            "filter_name": "alma.7",
+            "freq_eff": 340.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "350.0GHz",
+            "filter_name": "alma.7",
+            "freq_eff": 350.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "667.0GHz",
+            "filter_name": "alma.9",
+            "freq_eff": 667.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "216.0GHz",
+            "filter_name": "alma.6",
+            "freq_eff": 216.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "232.0GHz",
+            "filter_name": "alma.6",
+            "freq_eff": 232.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "136.0GHz",
+            "filter_name": "alma.4",
+            "freq_eff": 136.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "152.0GHz",
+            "filter_name": "alma.4",
+            "freq_eff": 152.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "347.0GHz",
+            "filter_name": "alma.7",
+            "freq_eff": 347.0,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "31.4GHz",
+            "filter_name": "Ka",
+            "freq_eff": 31.4,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "35.6GHz",
+            "filter_name": "Ka",
+            "freq_eff": 35.6,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "15.8GHz",
+            "filter_name": "Ku",
+            "freq_eff": 15.8,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.402GHz",
+            "filter_name": "gmrt.3",
+            "freq_eff": 0.402,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "1.264GHz",
+            "filter_name": "L",
+            "freq_eff": 1.264,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "0.75GHz",
+            "filter_name": "UHF",
+            "freq_eff": 0.75,
+            "freq_units": "GHz"
+        },
+        {
+            "filter_key": "g",
+            "filter_name": "g",
+            "wave_eff": 471.8872246248687,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "r",
+            "filter_name": "r",
+            "wave_eff": 618.5194476741524,
+            "wave_units": "nm"
+        }
+    ],
     "date_reference": [
         {
             "value": "2459621.946",
             "date_format": "jd",
             "date_type": "discovery",
             "reference": [
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
-                "2022TNSTR.397....1A",
                 "2022TNSTR.397....1A"
             ],
             "default": true
@@ -233,7 +318,7 @@
             "dec_units": "deg",
             "computed": "False",
             "default": true,
-            "uuid": "82abe397-9b7c-4760-8161-d4d272b854b8",
+            "uuid": "1139cba9-33c7-4021-833c-06dcb3e3d39e",
             "coordinate_type": "equitorial",
             "reference": [
                 "2022Natur.612..430A"
@@ -272,10 +357,34 @@
             "l_units": "deg",
             "b_units": "deg",
             "reference": [
-                "82abe397-9b7c-4760-8161-d4d272b854b8"
+                "1139cba9-33c7-4021-833c-06dcb3e3d39e"
             ]
         }
     ],
+    "name": {
+        "default_name": "2022cmc",
+        "alias": [
+            {
+                "value": "2022cmc",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "ZTF22aaajecp",
+                "reference": [
+                    "TNS"
+                ]
+            },
+            {
+                "value": "AT2022cmc",
+                "reference": [
+                    "TNS",
+                    "2022TNSTR.397....1A"
+                ]
+            }
+        ]
+    },
     "photometry": [
         {
             "reference": [
@@ -1805,296 +1914,6 @@
             "instrument": "ZTF-Cam"
         }
     ],
-    "filter_alias": [
-        {
-            "filter_key": "8.5GHz",
-            "filter_name": "X",
-            "freq_eff": 8.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "15.5GHz",
-            "filter_name": "Ku",
-            "freq_eff": 15.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "5.0GHz",
-            "filter_name": "C",
-            "freq_eff": 5.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "1.3GHz",
-            "filter_name": "L",
-            "freq_eff": 1.3,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "9.5GHz",
-            "filter_name": "X",
-            "freq_eff": 9.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "10.5GHz",
-            "filter_name": "X",
-            "freq_eff": 10.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "11.5GHz",
-            "filter_name": "X",
-            "freq_eff": 11.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "12.8GHz",
-            "filter_name": "Ku",
-            "freq_eff": 12.8,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "14.3GHz",
-            "filter_name": "Ku",
-            "freq_eff": 14.3,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "15.9GHz",
-            "filter_name": "Ku",
-            "freq_eff": 15.9,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "17.1GHz",
-            "filter_name": "Ku",
-            "freq_eff": 17.1,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "7.0GHz",
-            "filter_name": "C",
-            "freq_eff": 7.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "41.0GHz",
-            "filter_name": "alma.1",
-            "freq_eff": 41.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "43.0GHz",
-            "filter_name": "alma.1",
-            "freq_eff": 43.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "45.0GHz",
-            "filter_name": "alma.1",
-            "freq_eff": 45.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "47.0GHz",
-            "filter_name": "alma.1",
-            "freq_eff": 47.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "31.5GHz",
-            "filter_name": "Ka",
-            "freq_eff": 31.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "33.5GHz",
-            "filter_name": "Ka",
-            "freq_eff": 33.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "35.5GHz",
-            "filter_name": "Ka",
-            "freq_eff": 35.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "37.5GHz",
-            "filter_name": "Ka",
-            "freq_eff": 37.5,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "19.2GHz",
-            "filter_name": "K",
-            "freq_eff": 19.2,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "21.2GHz",
-            "filter_name": "K",
-            "freq_eff": 21.2,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "23.2GHz",
-            "filter_name": "K",
-            "freq_eff": 23.2,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "25.2GHz",
-            "filter_name": "K",
-            "freq_eff": 25.2,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "17.4GHz",
-            "filter_name": "Ku",
-            "freq_eff": 17.4,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "225.0GHz",
-            "filter_name": "alma.6",
-            "freq_eff": 225.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "86.0GHz",
-            "filter_name": "alma.3",
-            "freq_eff": 86.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "102.0GHz",
-            "filter_name": "alma.3",
-            "freq_eff": 102.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "340.0GHz",
-            "filter_name": "alma.7",
-            "freq_eff": 340.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "350.0GHz",
-            "filter_name": "alma.7",
-            "freq_eff": 350.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "667.0GHz",
-            "filter_name": "alma.9",
-            "freq_eff": 667.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "216.0GHz",
-            "filter_name": "alma.6",
-            "freq_eff": 216.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "232.0GHz",
-            "filter_name": "alma.6",
-            "freq_eff": 232.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "136.0GHz",
-            "filter_name": "alma.4",
-            "freq_eff": 136.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "152.0GHz",
-            "filter_name": "alma.4",
-            "freq_eff": 152.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "347.0GHz",
-            "filter_name": "alma.7",
-            "freq_eff": 347.0,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "31.4GHz",
-            "filter_name": "Ka",
-            "freq_eff": 31.4,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "35.6GHz",
-            "filter_name": "Ka",
-            "freq_eff": 35.6,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "15.8GHz",
-            "filter_name": "Ku",
-            "freq_eff": 15.8,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "0.402GHz",
-            "filter_name": "gmrt.3",
-            "freq_eff": 0.402,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "1.264GHz",
-            "filter_name": "L",
-            "freq_eff": 1.264,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "0.75GHz",
-            "filter_name": "UHF",
-            "freq_eff": 0.75,
-            "freq_units": "GHz"
-        },
-        {
-            "filter_key": "g",
-            "filter_name": "g",
-            "wave_eff": 471.8872246248687,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "r",
-            "filter_name": "r",
-            "wave_eff": 618.5194476741524,
-            "wave_units": "nm"
-        }
-    ],
-    "name": {
-        "default_name": "2022cmc",
-        "alias": [
-            {
-                "value": "2022cmc",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "ZTF22aaajecp",
-                "reference": [
-                    "TNS"
-                ]
-            },
-            {
-                "value": "AT2022cmc",
-                "reference": [
-                    "TNS",
-                    "2022TNSTR.397....1A"
-                ]
-            }
-        ]
-    },
     "distance": [
         {
             "value": "1.19325",

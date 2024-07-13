@@ -1,8 +1,172 @@
 {
+    "coordinate": [
+        {
+            "ra": "22:02:15.49",
+            "dec": "-61:39:33.6",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": true,
+            "reference": [
+                "2015ATel.7642....1N",
+                "ASAS-SN Supernovae"
+            ]
+        },
+        {
+            "ra": "330.564375",
+            "dec": "-61.659611",
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "reference": [
+                "2016Sci...351..257D",
+                "2024MNRAS.527.2452M"
+            ]
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2015-06-14 ",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2015ATel.7642....1N",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G"
+            ],
+            "default": true
+        },
+        {
+            "value": "2015-06-14 6:0:0.0",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2015ATel.7642....1N",
+                "ASAS-SN Supernovae"
+            ],
+            "default": false
+        },
+        {
+            "value": "57189.294",
+            "date_format": "mjd",
+            "date_type": "peak",
+            "reference": [
+                "2016Sci...351..257D",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        }
+    ],
+    "name": {
+        "default_name": "ASASSN-15lh",
+        "alias": [
+            {
+                "value": "ASASSN-15lh",
+                "reference": [
+                    "2017ApJ...838..149A",
+                    "2016Sci...351..257D",
+                    "2015ATel.7642....1N",
+                    "2014Ap&SS.354...89B",
+                    "ASAS-SN Supernovae",
+                    "MAST",
+                    "2012PASP..124..668Y",
+                    "2016Sci...351..257D",
+                    "2024MNRAS.527.2452M",
+                    "2023PASP..135c4101G"
+                ]
+            }
+        ]
+    },
     "schema_version": {
         "value": 0,
         "comments": "From Goldtooth et al. (2023)"
     },
+    "classification": [
+        {
+            "object_class": "TDE",
+            "confidence": 1,
+            "reference": [
+                "2015ATel.7642....1N",
+                "2016Sci...351..257D",
+                "2016arXiv160902927L",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        },
+        {
+            "object_class": "TDE",
+            "confidence": 0.1,
+            "reference": [
+                "2016Sci...351..257D"
+            ],
+            "default": false
+        },
+        {
+            "object_class": "TDE",
+            "confidence": 1.0,
+            "reference": [
+                "2012PASP..124..668Y"
+            ],
+            "default": false
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.2326",
+            "distance_type": "redshift",
+            "reference": [
+                "2012PASP..124..668Y",
+                "2015ATel.7642....1N",
+                "2016Sci...351..257D",
+                "2017ApJ...838..149A",
+                "2023PASP..135c4101G",
+                "2024MNRAS.527.2452M",
+                "ASAS-SN Supernovae"
+            ],
+            "default": true
+        },
+        {
+            "value": "1198",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2012PASP..124..668Y",
+                "2015ATel.7642....1N",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A",
+                "ASAS-SN Supernovae"
+            ],
+            "default": true
+        },
+        {
+            "value": "225.0",
+            "distance_type": "dispersion_measure",
+            "unit": "km/s",
+            "reference": [
+                "2018A&A...610A..14K",
+                "2024MNRAS.527.2452M"
+            ],
+            "default": true
+        },
+        {
+            "value": "972",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2012PASP..124..668Y",
+                "2015ATel.7642....1N",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A",
+                "ASAS-SN Supernovae"
+            ],
+            "default": true
+        }
+    ],
     "reference_alias": [
         {
             "name": "2017ApJ...838..149A",
@@ -65,172 +229,92 @@
             "human_readable_name": "Nicholls, B. et al. (2015)"
         }
     ],
-    "classification": [
+    "filter_alias": [
         {
-            "object_class": "TDE",
-            "confidence": 1,
-            "reference": [
-                "2015ATel.7642....1N",
-                "2016Sci...351..257D",
-                "2016arXiv160902927L",
-                "2017ApJ...838..149A",
-                "2023PASP..135c4101G",
-                "2024MNRAS.527.2452M"
-            ],
-            "default": true
+            "filter_key": "0.3 - 2.0",
+            "wave_eff": 0.7293188143129428,
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         },
         {
-            "object_class": "TDE",
-            "confidence": 0.1,
-            "reference": [
-                "2016Sci...351..257D"
-            ],
-            "default": false
+            "filter_key": "B",
+            "wave_eff": 445.0,
+            "wave_units": "nm",
+            "filter_name": "B"
         },
         {
-            "object_class": "TDE",
-            "confidence": 1.0,
-            "reference": [
-                "2012PASP..124..668Y"
-            ],
-            "default": false
-        }
-    ],
-    "date_reference": [
-        {
-            "value": "2015-06-14 ",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2015ATel.7642....1N",
-                "2017ApJ...838..149A"
-            ],
-            "default": true
+            "filter_key": "U",
+            "wave_eff": 365.0,
+            "wave_units": "nm",
+            "filter_name": "U"
         },
         {
-            "value": "2015-06-14 6:0:0.0",
-            "date_format": "iso",
-            "date_type": "discovery",
-            "reference": [
-                "2015ATel.7642....1N",
-                "ASAS-SN Supernovae"
-            ],
-            "default": false
+            "filter_key": "UVM2",
+            "wave_eff": 225.47802478793594,
+            "wave_units": "nm",
+            "filter_name": "UVM2"
         },
         {
-            "value": "57189.294",
-            "date_format": "mjd",
-            "date_type": "peak",
-            "reference": [
-                "2016Sci...351..257D",
-                "2024MNRAS.527.2452M"
-            ],
-            "default": true
-        }
-    ],
-    "name": {
-        "default_name": "ASASSN-15lh",
-        "alias": [
-            {
-                "value": "ASASSN-15lh",
-                "reference": [
-                    "2017ApJ...838..149A",
-                    "2016Sci...351..257D",
-                    "2015ATel.7642....1N",
-                    "2014Ap&SS.354...89B",
-                    "ASAS-SN Supernovae",
-                    "MAST",
-                    "2012PASP..124..668Y",
-                    "2016Sci...351..257D",
-                    "2024MNRAS.527.2452M",
-                    "2023PASP..135c4101G"
-                ]
-            }
-        ]
-    },
-    "coordinate": [
-        {
-            "ra": "22:02:15.49",
-            "dec": "-61:39:33.6",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "coordinate_type": "equitorial",
-            "default": true,
-            "reference": [
-                "2015ATel.7642....1N",
-                "ASAS-SN Supernovae",
-                "2015ATel.7642....1N",
-                "ASAS-SN Supernovae"
-            ]
+            "filter_key": "UVW1",
+            "wave_eff": 261.3713060531025,
+            "wave_units": "nm",
+            "filter_name": "UVW1"
         },
         {
-            "ra": "330.564375",
-            "dec": "-61.659611",
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "coordinate_type": "equitorial",
-            "default": false,
-            "reference": [
-                "2016Sci...351..257D",
-                "2024MNRAS.527.2452M"
-            ]
-        }
-    ],
-    "distance": [
-        {
-            "value": "0.2326",
-            "distance_type": "redshift",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2015ATel.7642....1N",
-                "ASAS-SN Supernovae",
-                "2012PASP..124..668Y",
-                "2016Sci...351..257D",
-                "2024MNRAS.527.2452M",
-                "2023PASP..135c4101G",
-                "2015ATel.7642....1N",
-                "2017ApJ...838..149A"
-            ],
-            "default": true
+            "filter_key": "UVW2",
+            "wave_eff": 207.98754332676123,
+            "wave_units": "nm",
+            "filter_name": "UVW2"
         },
         {
-            "value": "1198",
-            "distance_type": "luminosity",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2015ATel.7642....1N",
-                "ASAS-SN Supernovae",
-                "2017ApJ...835...64G",
-                "2012PASP..124..668Y"
-            ],
-            "default": true
+            "filter_key": "V",
+            "wave_eff": 551.0,
+            "wave_units": "nm",
+            "filter_name": "V"
         },
         {
-            "value": "225.0",
-            "distance_type": "dispersion_measure",
-            "unit": "km/s",
-            "reference": [
-                "2018A&A...610A..14K",
-                "2024MNRAS.527.2452M"
-            ],
-            "default": true
+            "filter_key": "B.uvot",
+            "filter_name": "B.uvot",
+            "freq_eff": 695280559412463.5,
+            "freq_units": "Hz"
         },
         {
-            "value": "972",
-            "distance_type": "comoving",
-            "unit": "Mpc",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2015ATel.7642....1N",
-                "ASAS-SN Supernovae",
-                "2017ApJ...835...64G",
-                "2012PASP..124..668Y"
-            ],
-            "default": true
+            "filter_key": "U.uvot",
+            "filter_name": "U.uvot",
+            "freq_eff": 872815357550259.6,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVM2.uvot",
+            "filter_name": "UVM2.uvot",
+            "freq_eff": 1346484181597652.0,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVW1.uvot",
+            "filter_name": "UVW1.uvot",
+            "freq_eff": 1198891057872408.0,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "UVW2.uvot",
+            "filter_name": "UVW2.uvot",
+            "freq_eff": 1492659946412262.2,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "W1.wise",
+            "filter_name": "W1.wise",
+            "freq_eff": 89917740678395.33,
+            "freq_units": "Hz"
+        },
+        {
+            "filter_key": "W2.wise",
+            "filter_name": "W2.wise",
+            "freq_eff": 65429370473910.305,
+            "freq_units": "Hz"
         }
     ],
     "photometry": [
@@ -6026,94 +6110,6 @@
             "corr_host": false,
             "corr_hostav": false,
             "val_av": 0.09645923483068546
-        }
-    ],
-    "filter_alias": [
-        {
-            "filter_key": "0.3 - 2.0",
-            "wave_eff": 0.7293188143129428,
-            "wave_min": 0.6199209921660013,
-            "wave_max": 4.132806614440009,
-            "wave_units": "nm",
-            "filter_name": "0.3 - 2.0"
-        },
-        {
-            "filter_key": "B",
-            "wave_eff": 445.0,
-            "wave_units": "nm",
-            "filter_name": "B"
-        },
-        {
-            "filter_key": "U",
-            "wave_eff": 365.0,
-            "wave_units": "nm",
-            "filter_name": "U"
-        },
-        {
-            "filter_key": "UVM2",
-            "wave_eff": 225.47802478793594,
-            "wave_units": "nm",
-            "filter_name": "UVM2"
-        },
-        {
-            "filter_key": "UVW1",
-            "wave_eff": 261.3713060531025,
-            "wave_units": "nm",
-            "filter_name": "UVW1"
-        },
-        {
-            "filter_key": "UVW2",
-            "wave_eff": 207.98754332676123,
-            "wave_units": "nm",
-            "filter_name": "UVW2"
-        },
-        {
-            "filter_key": "V",
-            "wave_eff": 551.0,
-            "wave_units": "nm",
-            "filter_name": "V"
-        },
-        {
-            "filter_key": "B.uvot",
-            "filter_name": "B.uvot",
-            "freq_eff": 695280559412463.5,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "U.uvot",
-            "filter_name": "U.uvot",
-            "freq_eff": 872815357550259.6,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVM2.uvot",
-            "filter_name": "UVM2.uvot",
-            "freq_eff": 1346484181597652.0,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVW1.uvot",
-            "filter_name": "UVW1.uvot",
-            "freq_eff": 1198891057872408.0,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "UVW2.uvot",
-            "filter_name": "UVW2.uvot",
-            "freq_eff": 1492659946412262.2,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "W1.wise",
-            "filter_name": "W1.wise",
-            "freq_eff": 89917740678395.33,
-            "freq_units": "Hz"
-        },
-        {
-            "filter_key": "W2.wise",
-            "filter_name": "W2.wise",
-            "freq_eff": 65429370473910.305,
-            "freq_units": "Hz"
         }
     ],
     "host": [
