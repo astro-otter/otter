@@ -62,6 +62,9 @@ python3 $FILEDIR/goldtooth_2023_to_otter.py --otterdir $OUTDIR --indir $INDIR/go
 # then the radio data that Noah, Collin, and Kate gathered
 python3 $FILEDIR/radio_photometry_to_otter.py --otterdir $OUTDIR --indir $INDIR/radio-data
 
+# then the data for the IR selected TDEs from Masterson et al. (2024)
+python3 $FILEDIR/masterson24_to_otter.py --otterdir $OUTDIR --indir $INDIR/masterson24_data
+
 ###########################################################################
 ############### NOW QUERY PUBLIC CATALOGS FOR MORE DATA ###################
 ###########################################################################
