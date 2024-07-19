@@ -389,8 +389,9 @@ def main():
             if not np.all(pd.isna(grp.flux_uperr)) and not np.all(
                 pd.isna(grp.flux_lowerr)
             ):
-                to_app["flux_uperr"] = grp.flux_uperr.tolist()
-                to_app["flux_lowerr"] = grp.flux_lowerr.tolist()
+                to_app["raw_err_detail"] = dict(
+                    upper=grp.flux_uperr.tolist(), lower=grp.flux_lowerr.tolist()
+                )
 
             otter_json["photometry"].append(to_app)
 

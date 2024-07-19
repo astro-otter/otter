@@ -120,8 +120,19 @@ def main():
                 upperlimit=p.upperlimit.tolist(),
                 filter_key=p.filter_uq_key.tolist(),
                 obs_type="radio",
-                telescope=tele,
             )
+
+            if not pd.isna(tele):
+                json_phot["telescope"] = tele
+
+            raw_err_detail = {}
+            for key in ["statistical_err", "systematic_err", "iss_err"]:
+                if not np.all(pd.isna(p[key])):
+                    k = key.split("_")[0]
+                    raw_err_detail[k] = p[key].tolist()
+
+            if len(raw_err_detail) > 0:
+                json_phot["raw_err_detail"] = raw_err_detail
 
             corrs = ["corr_k", "corr_s", "corr_host", "corr_av", "corr_hostav"]
             for c in corrs:
