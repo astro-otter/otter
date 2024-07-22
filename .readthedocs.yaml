@@ -15,3 +15,7 @@ python:
 # Build from the docs/ directory with Sphinx
 sphinx:
   configuration: docs/conf.py
+
+# keep around the examples submodule
+submodules:
+  include: all
