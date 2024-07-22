@@ -39,7 +39,7 @@ class OtterPlotter:
         elif self.backend == "plotly.graph_objects":
             self.plot = self._plot_plotly
         else:
-            raise ValueError("Unknown backend!")
+            raise ValueError("Unknown plotting backend!")
 
     def _plot_matplotlib(self, x, y, xerr=None, yerr=None, ax=None, **kwargs):
         """
@@ -53,17 +53,19 @@ class OtterPlotter:
         ax.errorbar(x, y, xerr=xerr, yerr=yerr, **kwargs)
         return ax
 
-    def _plot_plotly(self, x, y, xerr=None, yerr=None, go=None, *args, **kwargs):
+    def _plot_plotly(self, x, y, xerr=None, yerr=None, ax=None, *args, **kwargs):
         """
         General plotting method using plotly, is called by _plotly_light_curve and
         _plotly_sed
         """
 
-        if go is None:
+        if ax is None:
             go = self.plotter.Figure()
+        else:
+            go = ax
 
         fig = go.add_scatter(
-            x=x, y=y, error_x=dict(array=xerr), error_y=dict(array=yerr)
+            x=x, y=y, error_x=dict(array=xerr), error_y=dict(array=yerr), **kwargs
         )
 
         return fig
