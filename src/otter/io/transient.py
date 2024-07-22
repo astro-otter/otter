@@ -736,24 +736,24 @@ class Transient(MutableMapping):
                         u.Unit(flux_unit),
                         vegaspec=SourceSpectrum.from_vega(),
                         area=area,
-                    )
-                    f_err = convert_flux(
-                        wave,
-                        xray_point_err,
-                        u.Unit(flux_unit),
-                        vegaspec=SourceSpectrum.from_vega(),
-                        area=area,
+                    ).value
+
+                    # approximate the uncertainty as dX = dY/Y * X
+                    f_err = np.multiply(
+                        f_val, np.divide(xray_point_err.value, xray_point.value)
                     )
 
                     # then we take the average of the minimum and maximum values
                     # computed by syncphot
-                    flux.append(np.mean(f_val).value)
-                    flux_err.append(np.mean(f_err).value)
+                    flux.append(np.mean(f_val))
+                    flux_err.append(np.mean(f_err))
 
             else:
                 # this will be faster and cover most cases
-                flux = convert_flux(wave_eff, q, u.Unit(flux_unit))
-                flux_err = convert_flux(wave_eff, q_err, u.Unit(flux_unit))
+                flux = convert_flux(wave_eff, q, u.Unit(flux_unit)).value
+
+                # approximate the uncertainty as dX = dY/Y * X
+                flux_err = np.multiply(flux, np.divide(q_err.value, q.value))
 
             flux = np.array(flux) * u.Unit(flux_unit)
             flux_err = np.array(flux_err) * u.Unit(flux_unit)
