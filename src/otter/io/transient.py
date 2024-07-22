@@ -674,6 +674,7 @@ class Transient(MutableMapping):
                 indata_err = np.array(data[by + "_err"].astype(float))
             else:
                 indata_err = np.zeros(len(data))
+
             q = indata * u.Unit(astropy_units)
             q_err = indata_err * u.Unit(
                 astropy_units
