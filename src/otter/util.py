@@ -402,9 +402,12 @@ XRAY_AREAS = {
     # https://www.cosmos.esa.int/web/xmm-newton/technical-details-mirrors
     "xmm": 1500 * u.cm**2,
     "xmm slew": 1500 * u.cm**2,
+    "xmm-slew": 1500 * u.cm**2,
     "xmm pointed": 1500 * u.cm**2,
     # https://cxc.harvard.edu/cdo/about_chandra
     "chandra": 600 * u.cm**2,
+    # https://www.cosmos.esa.int/documents/332006/954765/Brunner_TopicK.pdf
+    "erosita": 1500 * u.cm**2,
 }
 """
 X-Ray telescope areas that are used for converting from counts to other units.

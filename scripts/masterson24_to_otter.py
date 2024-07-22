@@ -359,6 +359,7 @@ def main():
                     corr_hostav=False,
                     val_host=grp.refflux.tolist(),
                     obs_type="uvoir",
+                    reference=["2024ApJ...961..211M"],
                 )
             )
 
@@ -384,6 +385,7 @@ def main():
                 corr_av=False,
                 corr_hostav=False,
                 obs_type="xray",
+                reference=["2024ApJ...961..211M"],
             )
 
             if not np.all(pd.isna(grp.flux_uperr)) and not np.all(

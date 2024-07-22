@@ -566,9 +566,29 @@ class Transient(MutableMapping):
             df = pd.DataFrame(item)
             dfs.append(df)
 
+        if len(dfs) == 0:
+            raise FailedQueryError("No photometry for this object!")
         c = pd.concat(dfs)
 
+        # extract the filter information and substitute in any missing columns
+        # because of how we handle this later, we just need to make sure the effective
+        # wavelengths are never nan
+        def fill_wave(row):
+            if "wave_eff" not in row or (
+                pd.isna(row.wave_eff) and not pd.isna(row.freq_eff)
+            ):
+                freq_eff = row.freq_eff * u.Unit(row.freq_units)
+                wave_eff = freq_eff.to(u.Unit(wave_unit), equivalencies=u.spectral())
+                return wave_eff.value, wave_unit
+            elif not pd.isna(row.wave_eff):
+                return row.wave_eff, row.wave_units
+            else:
+                raise ValueError("Missing frequency or wavelength information!")
+
         filters = pd.DataFrame(self["filter_alias"])
+        res = filters.apply(fill_wave, axis=1)
+        filters["wave_eff"], filters["wave_units"] = zip(*res)
+        # merge the photometry with the filter information
         df = c.merge(filters, on="filter_key")
 
         # make sure 'by' is in df
@@ -660,17 +680,14 @@ class Transient(MutableMapping):
             )  # assume error and values have the same unit
 
             # get and save the effective wavelength
-            if "freq_eff" in data and not pd.isna(data["freq_eff"].iloc[0]):
-                zz = zip(data["freq_eff"].astype(float), data["freq_units"])
-                freq_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], freq_unit)
-                wave_eff = freq_eff.to(wave_unit, equivalencies=u.spectral())
-            elif "wave_eff" in data and not pd.isna(data["wave_eff"].iloc[0]):
-                zz = zip(data["wave_eff"], data["wave_units"])
-                wave_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], wave_unit)
-                freq_eff = wave_eff.to(freq_unit, equivalencies=u.spectral())
+            # because of cleaning we did to the filter dataframe above wave_eff
+            # should NEVER be nan!
+            if np.any(pd.isna(data["wave_eff"])):
+                raise ValueError("Flushing out the effective wavelength array failed!")
 
-            else:
-                raise ValueError("No known frequency or wavelength, please fix!")
+            zz = zip(data["wave_eff"], data["wave_units"])
+            wave_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], wave_unit)
+            freq_eff = wave_eff.to(freq_unit, equivalencies=u.spectral())
 
             data["converted_wave"] = wave_eff.value
             data["converted_wave_unit"] = wave_unit
@@ -690,7 +707,7 @@ class Transient(MutableMapping):
                         )
                 else:
                     raise OtterLimitationError(
-                        "Can not convert x-ray data without a " + "telescope"
+                        "Can not convert x-ray data without a telescope"
                     )
 
                 # we also need to make this wave_min and wave_max
