@@ -36,7 +36,9 @@ class Otter(object):
 
     """
 
-    def __init__(self, datadir: str = None, debug: bool = False) -> None:
+    def __init__(
+        self, datadir: str = None, gen_summary: bool = True, debug: bool = False
+    ) -> None:
         # save inputs
         if datadir is None:
             self.CWD = os.path.dirname(os.path.abspath("__FILE__"))
@@ -46,6 +48,9 @@ class Otter(object):
             self.DATADIR = datadir
 
         self.debug = debug
+
+        if gen_summary:
+            self.generate_summary_table(save=True)
 
         # make sure the data directory exists
         if not os.path.exists(self.DATADIR):
