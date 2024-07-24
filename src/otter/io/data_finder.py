@@ -11,15 +11,17 @@ import re
 import time
 import math
 from urllib.request import urlopen
+import requests
 
 from astropy import units as u
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
 from astropy.table import Table
 from astropy.io.votable import parse_single_table
+from astropy.io import ascii
 
+import numpy as np
 import pandas as pd
-import requests
 import logging
 
 from fundamentals.stats import rolling_window_sigma_clip
@@ -382,23 +384,83 @@ class DataFinder(object):
         )
         return light_curve.data
 
-    def query_wise(self, radius: float = 5, **kwargs) -> Table:
+    def query_wise(
+        self,
+        radius: float = 5,
+        datadir: str = "ipac/",
+        overwrite: bool = False,
+        **kwargs,
+    ) -> pd.DataFrame:
         """
         Query NEOWISE for their multiepoch photometry
 
+        The method used to query wise here was taken from this github repo:
+        https://github.com/HC-Hwang/wise_light_curves/tree/master
+        and you should cite this other paper that the authors of this code developed
+        it for: https://ui.adsabs.harvard.edu/abs/2020MNRAS.493.2271H/abstract
+
+        This will download the ipac data files to the "datadir" argument. by default,
+        these will go into os.getcwd()/ipac
+
         Args:
             radius (float) : The cone search radius in arcseconds
+            overwrite (bool) : Overwrite the existing datasets downloaded from wise
             **kwargs : Other optional arguments for the astroquery query_region
         Returns:
             An astropy Table of the multiepoch wise data for this host
         """
-        from astroquery.ipac.irsa import Irsa
+        # from https://www.cambridge.org/core/journals/
+        # publications-of-the-astronomical-society-of-australia/article/
+        # recalibrating-the-widefield-infrared-survey-explorer-wise-w4-filter/
+        # B238BFFE19A533A2D2638FE88CCC2E89
+        band_vals = {"w1": 3.4, "w2": 4.6, "w3": 12, "w4": 22}  # in um
 
-        wise_catalogs = "neowiser_p1bs_psd"
-        res = DataFinder._wrap_astroquery(
-            Irsa, self.coord, radius="5 arcsec", catalog=wise_catalogs, **kwargs
+        ra, dec = self.coord.ra.value, self.coord.dec.value
+
+        fbasename = f"wise_{self.name}"
+        allwise_name = f"{fbasename}_allwise.ipac"
+        neowise_name = f"{fbasename}_neowise.ipac"
+
+        if not os.path.exists(datadir):
+            os.makedirs(datadir)
+
+        self._download_single_data(
+            name=fbasename,
+            ra=ra,
+            dec=dec,
+            root_path=datadir,
+            radius=radius,
+            overwrite=overwrite,
         )
-        return res
+
+        allwise = ascii.read(f"ipac/{allwise_name}", format="ipac")
+        neowise = ascii.read(f"ipac/{neowise_name}", format="ipac")
+
+        allwise, neowise = self._only_good_data(allwise, neowise)
+        if allwise is None or neowise is None:
+            print(f"Limited good infrared data for {self.name}, skipping!")
+
+        mjd, mag, mag_err, filts = self._make_full_lightcurve_multibands(
+            allwise, neowise, bands=["w1", "w2", "w3", "w4"]
+        )
+
+        df = pd.DataFrame(
+            dict(
+                name=[self.name] * len(mjd),
+                date_mjd=mjd,
+                filter=filts,
+                filter_eff=[band_vals[f] for f in filts],
+                filter_eff_unit=["um"] * len(mjd),
+                flux=mag,
+                flux_err=mag_err,
+                flux_unit=["mag(AB)"] * len(mjd),
+                upperlimit=[False] * len(mjd),
+            )
+        )
+
+        # clean up the wise data by filtering out negative flux
+        wise = df[df.flux > 0].reset_index(drop=True)
+        return wise
 
     def query_alma(self, radius: float = 5, **kwargs) -> Table:
         """
@@ -742,3 +804,230 @@ class DataFinder(object):
         print("completed the ``stack_photometry`` method")
 
         return alldata
+
+    """
+    The following code was taken and modified for the purposes of this package from
+    https://github.com/HC-Hwang/wise_light_curves/blob/master/wise_light_curves.py
+
+    Original Authors:
+    - Matthew Hill
+    - Hsiang-Chih Hwang
+
+    Update Author:
+    - Noah Franz
+    """
+
+    @staticmethod
+    def _get_by_position(ra, dec, radius=2.5):
+        allwise_cat = "allwise_p3as_mep"
+        neowise_cat = "neowiser_p1bs_psd"
+        query_url = "http://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query"
+        payload = {
+            "catalog": allwise_cat,
+            "spatial": "cone",
+            "objstr": " ".join([str(ra), str(dec)]),
+            "radius": str(radius),
+            "radunits": "arcsec",
+            "outfmt": "1",
+        }
+        r = requests.get(query_url, params=payload)
+        allwise = ascii.read(r.text)
+        payload = {
+            "catalog": neowise_cat,
+            "spatial": "cone",
+            "objstr": " ".join([str(ra), str(dec)]),
+            "radius": str(radius),
+            "radunits": "arcsec",
+            "outfmt": "1",
+            "selcols": "ra,dec,sigra,sigdec,sigradec,glon,glat,elon,elat,w1mpro,w1sigmpro,w1snr,w1rchi2,w2mpro,w2sigmpro,w2snr,w2rchi2,rchi2,nb,na,w1sat,w2sat,satnum,cc_flags,det_bit,ph_qual,sso_flg,qual_frame,qi_fact,saa_sep,moon_masked,w1frtr,w2frtr,mjd,allwise_cntr,r_allwise,pa_allwise,n_allwise,w1mpro_allwise,w1sigmpro_allwise,w2mpro_allwise,w2sigmpro_allwise,w3mpro_allwise,w3sigmpro_allwise,w4mpro_allwise,w4sigmpro_allwise",  # noqa: E501
+        }
+        r = requests.get(query_url, params=payload)
+
+        neowise = ascii.read(r.text, guess=False, format="ipac")
+
+        return allwise, neowise
+
+    @staticmethod
+    def _download_single_data(
+        name, ra, dec, root_path="ipac/", radius=2.5, overwrite=False
+    ):
+        # ra, dec: in degree
+        # name, ra, dec = row['Name'], row['RAJ2000'], row['DEJ2000']
+        # name = 'J' + ra + dec
+        if root_path[-1] != "/":
+            root_path += "/"
+        if (
+            not overwrite
+            and os.path.isfile(root_path + name + "_allwise.ipac")
+            and os.path.isfile(root_path + name + "_neowise.ipac")
+        ):
+            pass
+        else:
+            allwise, neowise = DataFinder._get_by_position(ra, dec, radius=radius)
+            allwise.write(
+                root_path + name + "_allwise.ipac", format="ascii.ipac", overwrite=True
+            )
+            neowise.write(
+                root_path + name + "_neowise.ipac", format="ascii.ipac", overwrite=True
+            )
+
+    @staticmethod
+    def _get_data_arrays(table, t, mag, magerr):
+        """Get the time series from a potentially masked astropy table"""
+        if table.masked:
+            full_mask = table[t].mask | table[mag].mask | table[magerr].mask
+            t = table[t].data
+            mag = table[mag].data
+            magerr = table[magerr].data
+
+            t.mask = full_mask
+            mag.mask = full_mask
+            magerr.mask = full_mask
+
+            return t.compressed(), mag.compressed(), magerr.compressed()
+
+        else:
+            return table[t].data, table[mag].data, table[magerr].data
+
+    @staticmethod
+    def _make_full_lightcurve(allwise, neowise, band):
+        """band = 'w1', 'w2', 'w3', or 'w4'"""
+        """Get a combined AllWISE and NEOWISE lightcurve from their Astropy tables"""
+
+        if band not in ["w1", "w2", "w3", "w4"]:
+            raise ValueError("band can only be w1, w2, w3, or w4")
+
+        use_neowise = band in {"w1", "w2"}
+        use_allwise = allwise is not None
+
+        if use_neowise and use_allwise:
+            t, m, e = DataFinder._get_data_arrays(
+                allwise, "mjd", band + "mpro_ep", band + "sigmpro_ep"
+            )
+            t_n, m_n, e_n = DataFinder._get_data_arrays(
+                neowise, "mjd", band + "mpro", band + "sigmpro"
+            )
+            t, m, e = (
+                np.concatenate((t, t_n)),
+                np.concatenate((m, m_n)),
+                np.concatenate((e, e_n)),
+            )
+
+        elif use_neowise and not use_allwise:
+            t, m, e = DataFinder._get_data_arrays(
+                neowise, "mjd", band + "mpro", band + "sigmpro"
+            )
+
+        elif not use_neowise and use_allwise:
+            t, m, e = DataFinder._get_data_arrays(
+                allwise, "mjd", band + "mpro_ep", band + "sigmpro_ep"
+            )
+
+        else:
+            raise Exception("No good allwise or neowise data!")
+
+        t_index = t.argsort()
+        t, m, e = map(lambda e: e[t_index], [t, m, e])
+
+        return t, m, e
+
+    @staticmethod
+    def _make_full_lightcurve_multibands(allwise, neowise, bands=["w1", "w2"]):
+        t, m, e = DataFinder._make_full_lightcurve(allwise, neowise, bands[0])
+        filts = [bands[0] for i in range(len(t))]
+        for band in bands[1:]:
+            try:
+                t_tmp, m_tmp, e_tmp = DataFinder._make_full_lightcurve(
+                    allwise, neowise, band
+                )
+            except Exception:
+                continue
+            t = np.concatenate((t, t_tmp))
+            m = np.concatenate((m, m_tmp))
+            e = np.concatenate((e, e_tmp))
+            filts += [band for i in range(len(t_tmp))]
+        return t, m, e, np.array(filts)
+
+    @staticmethod
+    def _cntr_to_source_id(cntr):
+        cntr = str(cntr)
+
+        # fill leanding 0s
+        if len(cntr) < 19:
+            num_leading_zeros = 19 - len(cntr)
+            cntr = "0" * num_leading_zeros + cntr
+
+        pm = "p"
+        if cntr[4] == "0":
+            pm = "m"
+
+        t = chr(96 + int(cntr[8:10]))
+
+        return "%s%s%s_%cc%s-%s" % (
+            cntr[0:4],
+            pm,
+            cntr[5:8],
+            t,
+            cntr[11:13],
+            cntr[13:19],
+        )
+
+    @staticmethod
+    def _only_good_data(allwise, neowise):
+        """
+        Select good-quality data. The criteria include:
+        - matching the all-wise ID
+
+        To be done:
+        - deal with multiple cntr
+
+        This filtering is described here:
+        https://wise2.ipac.caltech.edu/docs/release/neowise/expsup/sec2_3.html
+        """
+
+        neowise_prefilter_n = len(neowise)
+        neowise = neowise[
+            (neowise["qual_frame"] > 0.0)
+            * (neowise["qi_fact"] > 0.9)
+            * (neowise["saa_sep"] > 0)
+            * (neowise["moon_masked"] == "00")
+        ]
+        neowise_postfilter_n = len(neowise)
+        print(
+            f"Filtered out {neowise_prefilter_n-neowise_postfilter_n} neowise points,\
+            leaving {neowise_postfilter_n}"
+        )
+
+        cntr_list = []
+        for data in neowise:
+            if data["allwise_cntr"] not in cntr_list and data["allwise_cntr"] > 10.0:
+                cntr_list.append(data["allwise_cntr"])
+
+        if len(cntr_list) >= 2:
+            print("multiple cntr:")
+            print(cntr_list)
+            return None, neowise
+
+        if len(cntr_list) == 0:
+            # import pdb; pdb.set_trace()
+            # raise Exception('No center!')
+            return None, neowise
+
+        cntr = cntr_list[0]
+
+        source_id = DataFinder._cntr_to_source_id(cntr)
+
+        allwise_prefilter_n = len(allwise)
+        allwise = allwise[
+            (allwise["source_id_mf"] == source_id)
+            * (allwise["saa_sep"] > 0.0)
+            * (allwise["moon_masked"] == "0000")
+            * (allwise["qi_fact"] > 0.9)
+        ]
+        allwise_postfilter_n = len(neowise)
+        print(
+            f"Filtered out {allwise_prefilter_n-allwise_postfilter_n} allwise points, \
+            leaving {allwise_postfilter_n}"
+        )
+
+        return allwise, neowise

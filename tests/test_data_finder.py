@@ -179,10 +179,10 @@ def test_query_wise():
     df1 = construct_data_finder()
     res = df1.query_wise()
 
-    assert isinstance(res, Table)
-    assert "ra" in res.columns
-    assert "mjd" in res.columns
-    assert "w1mag" in res.columns
+    assert isinstance(res, pd.DataFrame)
+    assert "flux" in res.columns
+    assert "date_mjd" in res.columns
+    assert "name" in res.columns
     assert len(res) >= 35, "Missing some WISE data!"
 
 

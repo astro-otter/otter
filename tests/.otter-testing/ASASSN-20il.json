@@ -21,15 +21,46 @@
             "human_readable_name": "Noah"
         }
     ],
+    "key2": "bar",
+    "coordinate": [
+        {
+            "ra": "5:03:11.3",
+            "dec": "-22:48:52.1",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "reference": [
+                "me!"
+            ]
+        },
+        {
+            "ra": "5:03:11.3",
+            "dec": "-22:48:52.1",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": true,
+            "reference": [
+                "ASAS-SN Supernovae",
+                "me!"
+            ]
+        },
+        {
+            "ra": "5:03:11.3",
+            "dec": "-22:48:52.1",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "coordinate_type": "equitorial",
+            "default": false,
+            "reference": [
+                "me!"
+            ]
+        }
+    ],
     "name": {
         "default_name": "ASASSN-20il",
         "alias": [
-            {
-                "value": "new_test_tde",
-                "reference": [
-                    "me!"
-                ]
-            },
             {
                 "value": "ASASSN-20il",
                 "reference": [
@@ -42,21 +73,29 @@
                 "reference": [
                     "ASAS-SN Supernovae"
                 ]
+            },
+            {
+                "value": "new_test_tde",
+                "reference": [
+                    "me!",
+                    "me!",
+                    "me!"
+                ]
             }
         ]
     },
-    "coordinate": [
+    "key1": "foo",
+    "distance": [
         {
-            "ra": "5:03:11.3",
-            "dec": "-22:48:52.1",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "coordinate_type": "equitorial",
+            "value": "0.015841",
             "reference": [
-                "ASAS-SN Supernovae",
-                "me!"
+                "2023PASP..135c4101G",
+                "2014ApJ...788...48S",
+                "2020TNSTR.189....1B"
             ],
-            "default": true
+            "computed": false,
+            "default": true,
+            "distance_type": "redshift"
         }
     ],
     "host": [
@@ -95,6 +134,10 @@
             "default": false
         }
     ],
+    "schema_version": {
+        "value": 0,
+        "comments": "From Goldtooth et al. (2023)"
+    },
     "classification": [
         {
             "object_class": "TDE",
@@ -107,24 +150,5 @@
             ],
             "default": true
         }
-    ],
-    "schema_version": {
-        "value": 0,
-        "comments": "From Goldtooth et al. (2023)"
-    },
-    "distance": [
-        {
-            "value": "0.015841",
-            "reference": [
-                "2023PASP..135c4101G",
-                "2014ApJ...788...48S",
-                "2020TNSTR.189....1B"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        }
-    ],
-    "key1": "foo",
-    "key2": "bar"
+    ]
 }
