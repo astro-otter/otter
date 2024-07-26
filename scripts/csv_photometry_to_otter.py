@@ -27,9 +27,6 @@ def main():
     # drop duplicated names in meta and keep the first
     meta = meta.drop_duplicates(subset="name", keep="first")
 
-    # add a column to phot with the unique key
-    phot["filter_uq_key"] = phot.band_eff_freq.astype(str) + phot.band_eff_freq_unit
-
     # merge the meta and phot data
     data = pd.merge(phot, meta, on="name", how="inner")
 
@@ -127,9 +124,11 @@ def main():
         ]
 
         phot_sources = []
+        unique_filter_keys = []
+        index_for_match = []
         json["photometry"] = []
         for (src, tele, obstype), p in tde.groupby(
-            ["bibcode", "telescope", "obs_type"]
+            ["bibcode", "telescope", "obs_type"], dropna=False
         ):
             if src not in phot_sources:
                 phot_sources.append(src)
@@ -139,6 +138,19 @@ def main():
             else:
                 raw_units = p.flux_unit.values
 
+            # add a column to phot with the unique filter key
+            if obstype == "radio":
+                filter_uq_key = (
+                    p.band_eff_freq.astype(str) + p.band_eff_freq_unit
+                ).tolist()
+            elif obstype == "uvoir":
+                filter_uq_key = p.band_name.astype(str).tolist()
+            else:
+                raise ValueError("not prepared for this obstype!")
+
+            unique_filter_keys += filter_uq_key
+            index_for_match += p.index.tolist()
+
             json_phot = dict(
                 reference=src,
                 raw=p.flux.astype(float).tolist(),
@@ -147,7 +159,7 @@ def main():
                 date=p.date.tolist(),
                 date_format=p.date_format.tolist(),
                 upperlimit=p.upperlimit.tolist(),
-                filter_key=p.filter_uq_key.tolist(),
+                filter_key=filter_uq_key,
                 obs_type=obstype,
             )
 
@@ -171,6 +183,8 @@ def main():
                     json_phot[v] = p[v].tolist()
 
             json["photometry"].append(json_phot)
+
+        tde["filter_uq_key"] = pd.Series(unique_filter_keys, index=index_for_match)
 
         # filter alias
         # radio filters first

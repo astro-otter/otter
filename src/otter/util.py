@@ -3,6 +3,7 @@ Some constants, mappings, and functions to be used across the software
 """
 
 from __future__ import annotations
+from itertools import chain
 import os
 from multiprocessing import Pool
 import ads
@@ -49,9 +50,9 @@ def wave_to_obstype(wave_eff):
     Args:
         wave_eff (u.Quantity) : An astropy quantity in wavelength space
     """
-    if wave_eff > 1 * u.mm:
+    if wave_eff > 0.1 * u.mm:
         return "radio"
-    elif wave_eff <= 1 * u.mm and wave_eff >= 10 * u.nm:
+    elif wave_eff <= 0.1 * u.mm and wave_eff >= 10 * u.nm:
         return "uvoir"
     else:
         return "xray"
@@ -75,7 +76,12 @@ def bibcode_to_hrn(bibcode):
         query = f"bibcode:{bibcode}"
         bibcodes = [bibcode]
     else:
-        bibcodes = np.unique(bibcode)
+        # make sure the bibcodes are lists instead of strings of lists
+        bibcode = [b.strip("[]").replace("'", "").split(", ") for b in bibcode]
+
+        bibcode = list(chain(*[v if isinstance(v, list) else [v] for v in bibcode]))
+
+        bibcodes = np.unique(bibcode).flatten()
 
     query = f"bibcode:{bibcodes[0]}"
     if len(bibcodes) > 1:
@@ -88,11 +94,11 @@ def bibcode_to_hrn(bibcode):
         adsquery = list(qobj)
     except IndexError:
         raise ValueError(f"Could not find {bibcode} on ADS!")
-    except APIResponseError:
+    except APIResponseError as exc:
         raise ValueError(
             "Out of ADS queries! Run curl command to check like \
         https://github.com/adsabs/adsabs-dev-api/blob/master/README.md"
-        )
+        ) from exc
 
     hrns = []
     for res in adsquery:

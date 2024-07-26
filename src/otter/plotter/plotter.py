@@ -19,7 +19,7 @@ def query_quick_view(
     otter_path: str = None,
     ptype: str = "both",
     sed_dim: str = "freq",
-    time_tol: float = 1,
+    dt_over_t: float = 0,
     plotting_kwargs: dict = {},
     phot_cleaning_kwargs: dict = {},
     result_length_tol=10,
@@ -74,7 +74,7 @@ def query_quick_view(
     for t in res:
         try:
             fig = quick_view(
-                t, ptype, sed_dim, time_tol, plotting_kwargs, **phot_cleaning_kwargs
+                t, ptype, sed_dim, dt_over_t, plotting_kwargs, **phot_cleaning_kwargs
             )
         except (KeyError, FailedQueryError):
             warn(f"No photometry associated with {t.default_name}, skipping!")
@@ -90,7 +90,7 @@ def quick_view(
     t: Transient,
     ptype: str = "both",
     sed_dim: str = "freq",
-    time_tol: float = 1,
+    dt_over_t: float = 0,
     plotting_kwargs: dict = {},
     **kwargs,
 ) -> plt.Figure:
@@ -106,8 +106,8 @@ def quick_view(
                       - lc -> Plot just the light curve
         sed_dim (str) : The x dimension to plot in the SED. Options are "freq" or
                         "wave". Default is "freq".
-        time_tol (float) : The tolerance to split the days by. Default is 1 day. must be
-                           in units of days.
+        dt_over_t (float) : The tolerance to split the days by. Default is 1 day. must
+                           be unitless.
         plotting_kwargs (dict) : dictionary of key word arguments to pass to
                                  otter.plotter.plot_light_curve or
                                  otter.plotter.plot_sed.
@@ -125,9 +125,9 @@ def quick_view(
 
     allphot = t.clean_photometry(**kwargs)
     allphot = allphot.sort_values("converted_date")
-    allphot["time_grp"] = (
-        allphot["converted_date"].diff().fillna(-np.inf).gt(time_tol).cumsum()
-    )
+    allphot["time_tol"] = dt_over_t * allphot["converted_date"]
+    allphot["time_diff"] = allphot["converted_date"].diff().fillna(-np.inf)
+    allphot["time_grp"] = (allphot.time_diff > allphot.time_tol).cumsum()
 
     plt_lc = (ptype == "both") or (ptype == "lc")
     plt_sed = (ptype == "both") or (ptype == "sed")
