@@ -60,7 +60,10 @@ rm -rf $INDIR/curated_optical_tde_catalog
 python3 $FILEDIR/goldtooth_2023_to_otter.py --otterdir $OUTDIR --indir $INDIR/goldtooth_2023
 
 # then the radio data that Noah, Collin, and Kate gathered
-python3 $FILEDIR/radio_photometry_to_otter.py --otterdir $OUTDIR --indir $INDIR/radio-data
+python3 $FILEDIR/csv_photometry_to_otter.py --otterdir $OUTDIR --indir $INDIR/radio-data
+
+# some other optical photometry
+python3 $FILEDIR/csv_photometry_to_otter.py --otterdir $OUTDIR --indir $INDIR/optical-data
 
 # then the data for the IR selected TDEs from Masterson et al. (2024)
 python3 $FILEDIR/masterson24_to_otter.py --otterdir $OUTDIR --indir $INDIR/masterson24_data

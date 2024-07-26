@@ -27,6 +27,28 @@ def filter_to_obstype(band_name):
             f"No Effective Wavelength Known for {band_name}, please add it to constants"
         ) from exc
 
+    return wave_to_obstype(wave_eff)
+
+
+def freq_to_obstype(freq_eff):
+    """
+    Converts a frequency value to either 'radio', 'uvoir', 'xray'
+
+    Args:
+        freq_eff (u.Quantity) : An astropy quantity in frequency space
+    """
+
+    wave_eff = freq_eff.to(u.nm, equivalencies=u.spectral())
+    return wave_to_obstype(wave_eff)
+
+
+def wave_to_obstype(wave_eff):
+    """
+    Converts a wavelength value to either 'radio', 'uvoir', 'xray'
+
+    Args:
+        wave_eff (u.Quantity) : An astropy quantity in wavelength space
+    """
     if wave_eff > 1 * u.mm:
         return "radio"
     elif wave_eff <= 1 * u.mm and wave_eff >= 10 * u.nm:

@@ -15,13 +15,14 @@ def main():
     pp = argparse.ArgumentParser()
     pp.add_argument("--otterdir", help="Directory where the otter json files will go")
     pp.add_argument("--indir", help="Directory where dirty files are")
+    pp.add_argument("--debug", action=argparse.BooleanOptionalAction)
     args = pp.parse_args()
 
     db = otter.Otter(args.otterdir)
 
     # read in the metadata and photometry files
-    meta = pd.read_csv(os.path.join(args.indir, "tde_radio_data_meta.csv"))
-    phot = pd.read_csv(os.path.join(args.indir, "tde_radio_data_photometry.csv"))
+    meta = pd.read_csv(os.path.join(args.indir, "meta.csv"))
+    phot = pd.read_csv(os.path.join(args.indir, "photometry.csv"))
 
     # drop duplicated names in meta and keep the first
     meta = meta.drop_duplicates(subset="name", keep="first")
@@ -90,7 +91,7 @@ def main():
         if not np.any(pd.isna(tde.discovery_date)):
             json["date_reference"] = [
                 dict(
-                    value=tde.discovery_date.tolist()[0].strip(),
+                    value=str(tde.discovery_date.tolist()[0]).strip(),
                     date_format=tde.discovery_date_format.tolist()[0].lower(),
                     reference=tde.discovery_date_ref.tolist(),
                     computed=False,
@@ -98,10 +99,38 @@ def main():
                 )
             ]
 
+        # host information
+        if not np.any(pd.isna(tde.host_ref)):
+            host_info = dict(
+                host_name=tde.host_name.tolist()[0].strip(),
+                host_ra=tde.host_ra.tolist()[0],
+                host_dec=tde.host_dec.tolist()[0],
+                host_ra_units=tde.host_ra_unit.tolist()[0],
+                host_dec_units=tde.host_dec_unit.tolist()[0],
+                reference=[tde.host_ref.tolist()[0]],
+            )
+
+            if not pd.isna(tde.host_redshift.tolist()[0]):
+                host_info["host_z"] = tde.host_redshift.tolist()[0]
+
+            if "host" in json:
+                json["host"].append(host_info)
+            else:
+                json["host"] = [host_info]
+
         # now the radio photometry
+        tde["obs_type"] = [
+            otter.util.freq_to_obstype(vv * u.Unit(uu))
+            for vv, uu in zip(
+                tde.band_eff_freq.astype(float).values, tde.band_eff_freq_unit.values
+            )
+        ]
+
         phot_sources = []
         json["photometry"] = []
-        for (src, tele), p in tde.groupby(["bibcode", "telescope"]):
+        for (src, tele, obstype), p in tde.groupby(
+            ["bibcode", "telescope", "obs_type"]
+        ):
             if src not in phot_sources:
                 phot_sources.append(src)
 
@@ -119,7 +148,7 @@ def main():
                 date_format=p.date_format.tolist(),
                 upperlimit=p.upperlimit.tolist(),
                 filter_key=p.filter_uq_key.tolist(),
-                obs_type="radio",
+                obs_type=obstype,
             )
 
             if not pd.isna(tele):
@@ -155,17 +184,27 @@ def main():
             print(filter_map)
             print(name)
             raise Exception
-        json["filter_alias"] = [
-            dict(
-                filter_key=filt,
-                filter_name=otter.util.freq_to_band(
-                    float(val["band_eff_freq"]) * u.Unit(val["band_eff_freq_unit"])
-                ),
-                freq_eff=float(val["band_eff_freq"]),
-                freq_units=val["band_eff_freq_unit"],
+
+        json["filter_alias"] = []
+        for filt, val in filter_map_radio.items():
+            obs_type = otter.util.freq_to_obstype(
+                float(val["band_eff_freq"]) * u.Unit(val["band_eff_freq_unit"])
             )
-            for filt, val in filter_map_radio.items()
-        ]
+            if obs_type == "radio":
+                filter_name = otter.util.freq_to_band(
+                    float(val["band_eff_freq"]) * u.Unit(val["band_eff_freq_unit"])
+                )
+            else:
+                filter_name = filt
+
+            json["filter_alias"].append(
+                dict(
+                    filter_key=filt,
+                    filter_name=filter_name,
+                    freq_eff=float(val["band_eff_freq"]),
+                    freq_units=val["band_eff_freq_unit"],
+                )
+            )
 
         # reference alias
         # gather all the bibcodes
@@ -179,6 +218,9 @@ def main():
             pd.isna(tde.discovery_date)
         ):
             all_bibcodes.append(tde.discovery_date_ref[0])
+
+        if tde.host_ref[0] not in all_bibcodes and not np.any(pd.isna(tde.host_ref)):
+            all_bibcodes.append(tde.host_ref[0])
 
         # find the hrn's for all of these bibcodes
         uq_bibcodes, all_hrns = otter.util.bibcode_to_hrn(all_bibcodes)
@@ -196,7 +238,7 @@ def main():
 
         all_jsons.append(json)
 
-    db.save(all_jsons, testing=False)
+    db.save(all_jsons, testing=args.debug)
 
 
 if __name__ == "__main__":
