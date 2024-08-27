@@ -79,7 +79,7 @@ def main():
         f.write(out2)
 
     # we need to regenerate the summary.csv table too
-    db = Otter(otterdir)
+    db = Otter(datadir=otterdir, gen_summary=True)
     db.generate_summary_table(save=True)
 
 

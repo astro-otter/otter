@@ -28,7 +28,7 @@ def main():
         raise ValueError("Incorrect arguments provided!")
 
     # find the otter directory and then generate the summary table
-    db = Otter(otterpath)
+    db = Otter(datadir=otterpath)
     db.generate_summary_table(save=True)
 
 

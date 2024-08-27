@@ -24,7 +24,7 @@ def main():
     otterpath = args.otterdir
 
     # read in the OTTER database
-    db = Otter(otterpath)
+    db = Otter(datadir=otterpath, gen_summary=True)
 
     # perform the conversion
     injsons = glob.glob(os.path.join(datapath, "*.json"))

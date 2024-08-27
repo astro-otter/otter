@@ -18,7 +18,7 @@ def main():
     pp.add_argument("--debug", action=argparse.BooleanOptionalAction)
     args = pp.parse_args()
 
-    db = otter.Otter(args.otterdir)
+    db = otter.Otter(datadir=args.otterdir, gen_summary=True)
 
     # read in the metadata and photometry files
     meta = pd.read_csv(os.path.join(args.indir, "meta.csv"))
@@ -170,6 +170,12 @@ def main():
             for key in ["statistical_err", "systematic_err", "iss_err"]:
                 if not np.all(pd.isna(p[key])):
                     k = key.split("_")[0]
+
+                    # fill the nan values
+                    # this is to match with the official json format
+                    # and works with arangodb document structure
+                    p[key].fillna(0, inplace=True)
+
                     raw_err_detail[k] = p[key].tolist()
 
             if len(raw_err_detail) > 0:
@@ -180,6 +186,12 @@ def main():
                 json_phot[c] = False if np.all(pd.isna(p[c])) else p[c].tolist()
                 if np.any(json_phot[c]):
                     v = c.replace("corr", "val")
+
+                    # fill the nan values
+                    # this is to match with the official json format
+                    # and works with arangodb document structure
+                    p[v].fillna("null", inplace=True)
+
                     json_phot[v] = p[v].tolist()
 
             json["photometry"].append(json_phot)

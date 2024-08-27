@@ -8,6 +8,9 @@ import json
 import glob
 from warnings import warn
 
+from pyArango.connection import Connection
+from pyArango.database import Database
+
 import pandas as pd
 
 from astropy.coordinates import SkyCoord, search_around_sky
@@ -24,7 +27,7 @@ warnings.simplefilter("once", UserWarning)
 warnings.simplefilter("once", u.UnitsWarning)
 
 
-class Otter(object):
+class Otter(Database):
     """
     This is the primary class for users to access the otter backend database
 
@@ -37,7 +40,14 @@ class Otter(object):
     """
 
     def __init__(
-        self, datadir: str = None, gen_summary: bool = True, debug: bool = False
+        self,
+        url: str = "http://127.0.0.1:8529",
+        username: str = "root",
+        password: str = os.environ.get("OTTERDB_PASS", None),
+        gen_summary: bool = False,
+        datadir: str = None,
+        debug: bool = False,
+        **kwargs,
     ) -> None:
         # save inputs
         if datadir is None:
@@ -62,6 +72,9 @@ class Otter(object):
                     + "to create the directory!"
                 )
                 pass
+
+        connection = Connection(username=username, password=password, arangoURL=url)
+        super().__init__(connection, "otter", **kwargs)
 
     def get_meta(self, **kwargs) -> Table:
         """
@@ -247,6 +260,138 @@ class Otter(object):
         raw: bool = False,
     ) -> dict:
         """
+        Searches the arango database table and reads relevant JSON files
+
+        WARNING! This does not do any conversions for you!
+        This is how it differs from the `get_meta` method. Users should prefer to use
+        `get_meta`, `getPhot`, and `getSpec` independently because it is a better
+        workflow and can return the data in an astropy table with everything in the
+        same units.
+
+        Args:
+            names (list[str]): A list of names to get the metadata for
+            coords (SkyCoord): An astropy SkyCoord object with coordinates to match to
+            radius (float): The radius in arcseconds for a cone search, default is 0.05"
+            minz (float): The minimum redshift to search for
+            maxz (float): The maximum redshift to search for
+            refs (list[str]): A list of ads bibcodes to match to. Will only return
+                              metadata for transients that have this as a reference.
+            hasphot (bool): if True, only returns transients which have photometry.
+            hasspec (bool): if True, only return transients that have spectra.
+
+        Return:
+           Get all of the raw (unconverted!) data for objects that match the criteria.
+        """
+        # write some AQL filters based on the inputs
+        query_filters = ""
+
+        if hasphot is True:
+            query_filters += "FILTER 'photometry' IN ATTRIBUTES(transient)\n"
+
+        if hasspec is True:
+            query_filters += "FILTER 'spectra' IN ATTRIBUTES(transient)\n"
+
+        if minz is not None:
+            sfilt = f"""
+            FILTER TO_NUMBER(transient.distance.redshift[*].value) >= {minz} \n
+            """
+            query_filters += sfilt
+        if maxz is not None:
+            sfilt = f"""
+            FILTER TO_NUMBER(transient.distance.redshift[*].value) <= {maxz} \n
+            """
+            query_filters += sfilt
+
+        if names is not None:
+            if isinstance(names, str):
+                query_filters += f"FILTER transient.name LIKE '%{names}%'\n"
+            elif isinstance(names, list):
+                namefilt = f"""
+            FOR name IN {names}
+                FILTER name IN transient.name.alias[*].value\n
+                """
+                query_filters += namefilt
+            else:
+                raise Exception("Names must be either a string or list")
+
+        if refs is not None:
+            if isinstance(refs, str):  # this is just a single bibcode
+                query_filters += f"FILTER {refs} IN transient.reference_alias[*].name"
+            elif isinstance(refs, list):
+                query_filters += f"""
+                FOR ref IN {refs}
+                    FILTER ref IN transient.reference_alias[*].name
+                """
+            else:
+                raise Exception("reference list must be either a string or a list")
+
+        # define the query
+        query = f"""
+        FOR transient IN transients
+            {query_filters}
+            RETURN transient
+        """
+
+        # set batch size to 100 million (for now at least)
+        result = self.AQLQuery(query, rawResults=True, batchSize=100_000_000)
+
+        # now that we have the query results do the RA and Dec queries if they exist
+        if coords is not None:
+            # get the catalog RAs and Decs to compare against
+            query_coords = coords
+            good_tdes = []
+
+            for tde in result:
+                for coordinfo in tde["coordinate"]:
+                    if "ra" in coordinfo and "dec" in coordinfo:
+                        coord = SkyCoord(
+                            coordinfo["ra"],
+                            coordinfo["dec"],
+                            unit=(coordinfo["ra_units"], coordinfo["dec_units"]),
+                        )
+                    elif "l" in coordinfo and "b" in coordinfo:
+                        # this is galactic
+                        coord = SkyCoord(
+                            coordinfo["l"],
+                            coordinfo["b"],
+                            unit=(coordinfo["l_units"], coordinfo["b_units"]),
+                            frame="galactic",
+                        )
+                    else:
+                        raise ValueError(
+                            "Either needs to have ra and dec or l and b as keys!"
+                        )
+                    if query_coords.separation(coord) < radius * u.arcsec:
+                        good_tdes.append(tde)
+                        break  # we've confirmed this tde is in the cone!
+
+            if not raw:
+                return [Transient(t) for t in good_tdes]
+            else:
+                return good_tdes
+
+        else:
+            if not raw:
+                return [Transient(res) for res in result.result]
+            else:
+                return result.result
+
+    def _query_datadir(
+        self,
+        names: list[str] = None,
+        coords: SkyCoord = None,
+        radius: float = 5,
+        minz: float = None,
+        maxz: float = None,
+        refs: list[str] = None,
+        hasphot: bool = False,
+        hasspec: bool = False,
+        raw: bool = False,
+    ) -> dict:
+        """
+        This is a private method and is here just for the pipeline!!!
+        This should not be used by end users!
+
         Searches the summary.csv table and reads relevant JSON files
 
         WARNING! This does not do any conversions for you!
@@ -389,7 +534,7 @@ class Otter(object):
             print(transient["name/default_name"])
 
             coord = transient.get_skycoord()
-            res = self.cone_search(coords=coord)
+            res = self._query_datadir(coords=coord)
 
             if len(res) == 0:
                 # This is a new object to upload

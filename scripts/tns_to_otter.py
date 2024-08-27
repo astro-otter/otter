@@ -368,7 +368,7 @@ def main():
     args = p.parse_args()
 
     # Create a connection with the database
-    db = Otter(args.otterdir)
+    db = Otter(datadir=args.otterdir, gen_summary=True)
 
     # then download the TNS daily csv and crossmatch with OTTER
     # the crossmatching does all the photometry searching too

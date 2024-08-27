@@ -276,7 +276,7 @@ def main():
         with open(outpath, "w+") as outfile:
             outfile.write(out)
 
-    otter = Otter(args.outdir)
+    otter = Otter(datadir=args.outdir, gen_summary=True)
     otter.generate_summary_table(save=True)
 
 

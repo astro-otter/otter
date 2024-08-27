@@ -258,7 +258,7 @@ def main():
     pp.add_argument("--indir", help="Directory where dirty files are")
     args = pp.parse_args()
 
-    db = otter.Otter(args.otterdir)
+    db = otter.Otter(datadir=args.otterdir, gen_summary=True)
 
     # define some paths we need
     pklfiles = glob.glob(os.path.join(args.indir, "pkl", "*.pkl"))

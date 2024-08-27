@@ -53,7 +53,7 @@ def main():
     }
 
     # connect to otter
-    db = Otter(args.otterdir)
+    db = Otter(datadir=args.otterdir, gen_summary=True)
 
     # parse and clean the Table 1 dataset
     to_search = {"name": [], "year": [], "tde": []}
@@ -114,11 +114,11 @@ def main():
             host = None
 
         # check otter for this object
-        t = db.query(names=tde)
+        t = db._query_datadir(names=tde)
         if len(t) == 0:
             # this one didn't have a name matching the name given in Goldtooth et al.
             # let's try searching with the host coord
-            t = db.cone_search(host_coord, radius=10)
+            t = db._query_datadir(coords=host_coord, radius=10)
 
         if len(t) > 0:
             t = t[0]

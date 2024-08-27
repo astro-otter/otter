@@ -631,7 +631,7 @@ def main():
 
     # add the data to the output directory
     p = args.outdir
-    otter = Otter(p)
+    otter = Otter(datadir=p, gen_summary=True)
 
     otter.save(allschemas, testing=False)
 
