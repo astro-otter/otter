@@ -139,17 +139,19 @@ def main():
                 "classification": [
                     dict(object_class="TDE", confidence=1, reference=bibcodes)
                 ],
-                "distance": [
-                    dict(
-                        value=row["z"],
-                        reference=bibcodes,
-                        computed=False,
-                        default=True,
-                        distance_type="redshift",
-                    )
-                ],
             }
         )
+
+        if not pd.isna(row["z"]):
+            tnew["distance"] = [
+                dict(
+                    value=row["z"],
+                    reference=bibcodes,
+                    computed=False,
+                    default=True,
+                    distance_type="redshift",
+                )
+            ]
 
         if t is None:
             # just use the host coordinates, this should be good for TDEs

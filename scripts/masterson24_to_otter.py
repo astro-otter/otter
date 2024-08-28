@@ -326,7 +326,7 @@ def main():
             dict(
                 value=row["t _disrupt"],
                 reference=row.bibcode,
-                unit="mjd",
+                date_format="mjd",
                 date_type="explosion",
             )
         ]

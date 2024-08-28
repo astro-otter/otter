@@ -32,6 +32,7 @@ dependencies = [
   "pandas",
   "synphot",
   "typing-extensions",
+  "pyarango",
 
   # for the plotting
   "matplotlib",
