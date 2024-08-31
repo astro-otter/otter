@@ -293,12 +293,24 @@ class Otter(Database):
 
         if minz is not None:
             sfilt = f"""
-            FILTER TO_NUMBER(transient.distance.redshift[*].value) >= {minz} \n
+            FILTER 'redshift' IN t.distance[*].distance_type
+            LET redshifts = (
+                FOR val IN t.distance
+                FILTER val.distance_type == 'redshift'
+                RETURN val
+            )
+            FILTER TO_NUMBER(redshifts[*].value) >= {minz}
             """
             query_filters += sfilt
         if maxz is not None:
             sfilt = f"""
-            FILTER TO_NUMBER(transient.distance.redshift[*].value) <= {maxz} \n
+            FILTER 'redshift' IN t.distance[*].distance_type
+            LET redshifts = (
+                FOR val IN t.distance
+                FILTER val.distance_type == 'redshift'
+                RETURN val
+            )
+            FILTER TO_NUMBER(redshifts[*].value) <= {maxz}
             """
             query_filters += sfilt
 
