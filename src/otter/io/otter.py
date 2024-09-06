@@ -258,6 +258,7 @@ class Otter(Database):
         hasphot: bool = False,
         hasspec: bool = False,
         raw: bool = False,
+        **kwargs,
     ) -> dict:
         """
         Searches the arango database table and reads relevant JSON files
