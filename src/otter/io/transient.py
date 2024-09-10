@@ -601,6 +601,14 @@ class Transient(MutableMapping):
         # skip rows where 'by' is nan
         df = df[df[by].notna()]
 
+        # remove rows where the flux is less than zero since this is nonphysical
+        # See Mummery et al. (2023) Section 5.2 for why we need to do this when using
+        # ZTF data:
+        # "Because the origin of the negative late-time flux is currently un-
+        # known (and under investigation), we have not attempted to correct
+        # the TDE lightcurves for this systematic effect. "
+        df = df[df[by].astype(float) > 0]
+
         # drop irrelevant obs_types before continuing
         if obs_type is not None:
             valid_obs_types = {"radio", "uvoir", "xray"}
@@ -675,6 +683,7 @@ class Transient(MutableMapping):
             else:
                 indata_err = np.zeros(len(data))
 
+            # convert to an astropy quantity
             q = indata * u.Unit(astropy_units)
             q_err = indata_err * u.Unit(
                 astropy_units
