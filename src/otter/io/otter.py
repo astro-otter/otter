@@ -258,6 +258,8 @@ class Otter(Database):
         hasphot: bool = False,
         hasspec: bool = False,
         raw: bool = False,
+        classification: str = None,
+        class_confidence_threshold: float = 0,
         **kwargs,
     ) -> dict:
         """
@@ -279,6 +281,9 @@ class Otter(Database):
                               metadata for transients that have this as a reference.
             hasphot (bool): if True, only returns transients which have photometry.
             hasspec (bool): if True, only return transients that have spectra.
+            classification (str): A classification string to search for
+            class_confidence_threshold (float): classification confidence cutoff for
+                                                query, between 0 and 1. Default is 0.
 
         Return:
            Get all of the raw (unconverted!) data for objects that match the criteria.
@@ -291,6 +296,13 @@ class Otter(Database):
 
         if hasspec is True:
             query_filters += "FILTER 'spectra' IN ATTRIBUTES(transient)\n"
+
+        if classification is not None:
+            query_filters += f"""
+            FOR subdoc IN transient.classification
+                FILTER subdoc.confidence > TO_NUMBER({class_confidence_threshold})
+                FILTER subdoc.object_class LIKE '%{classification}%'
+            """
 
         if minz is not None:
             sfilt = f"""
