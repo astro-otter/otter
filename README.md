@@ -36,6 +36,39 @@ To install the OTTER API use
 python3 -m pip install astro-otter
 ```
 
+## Developer Instructions
+1. Set the `OTTER_ROOT` environment variable
+   ```
+   export OTTER_ROOT=/path/to/where/to/clone
+   ```
+2. Clone the relevant repos:
+   ```
+   git clone https://github.com/astro-otter/otter.git $OTTER_ROOT/otter
+   git clone https://github.com/astro-otter/otterdb.git $OTTER_ROOT/otterdb
+   ```
+3. Install the NASA ADS Python API by following the instructions at https://ads.readthedocs.io/en/latest/#getting-started
+4. Install otter, the API for this database. From
+   the root directory where you installed these repos:
+   ```
+   cd $OTTER_ROOT/otter
+   python -m pip install -e .
+   ```
+5. Process the data to build the local "database" (although it is really just a directory).
+   Then, you can build the "database" by running the
+   following commands:
+   ```
+   cd $OTTER_ROOT/otter/scripts/
+   python3 gen_summary_table.py --otterroot $OTTER_ROOT
+   ```
+6. Easily access the data using the Otter code! In python:
+  ```
+  import os
+  from otter import Otter
+  otter = Otter(os.path.join(os.environ['OTTER_ROOT'], 'otterdb', '.otter'))
+  res = otter.query(names='AT2018hyz')
+  print(res)
+  ```
+
 ## Installation from Source
 To install the OTTER API from the source code use
 ```
