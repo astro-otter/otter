@@ -295,6 +295,9 @@ def main():
                     schema["distance"].append(clean_schema(sub))
                 del j["comovingdist"]
 
+            if len(schema["distance"]) == 0:
+                del schema["distance"]
+
         # dates
         if "discoverdate" in j:
             for ii, d in enumerate(j["discoverdate"]):
