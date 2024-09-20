@@ -12,6 +12,7 @@ from pyArango.connection import Connection
 from pyArango.database import Database
 
 import pandas as pd
+import numpy as np
 
 from astropy.coordinates import SkyCoord, search_around_sky
 from astropy.table import Table
@@ -19,6 +20,7 @@ from astropy import units as u
 
 from .transient import Transient
 from ..exceptions import FailedQueryError, OtterLimitationError
+from ..util import bibcode_to_hrn, freq_to_obstype, freq_to_band
 
 import warnings
 
@@ -465,6 +467,9 @@ class Otter(Database):
 
         # then read and query the summary table
         summary = pd.read_csv(summary_table)
+        if len(summary) == 0:
+            return []
+
         # coordinate search first
         if coords is not None:
             if not isinstance(coords, SkyCoord):
@@ -673,3 +678,415 @@ class Otter(Database):
             alljsons.to_csv(os.path.join(self.DATADIR, "summary.csv"))
 
         return alljsons
+
+    @staticmethod
+    def from_csvs(
+        metafile: str, photfile: str = None, local_outpath: str = "private_otter_data"
+    ) -> Otter:
+        """
+        Converts private metadata and photometry csvs to an Otter object stored
+        *locally* so you don't need to worry about accidentally uploading them to the
+        real Otter database.
+
+        Args:
+            metafile (str) : String filepath or string io csv object of the csv metadata
+            photfile (str) : String filepath or string io csv object of the csv
+                                          photometry
+            local_outpath (str) : The outpath to write the OTTER json files to\
+
+        Returns:
+            An Otter object where the json files are stored locally
+        """
+        # read in the metadata and photometry file
+        meta = pd.read_csv(metafile)
+        phot = None
+        if photfile is not None:
+            phot = pd.read_csv(photfile)
+
+            # we need to generate columns of wave_eff and freq_eff
+            wave_eff = []
+            freq_eff = []
+            wave_eff_unit = u.nm
+            freq_eff_unit = u.GHz
+            for val, unit in zip(phot.filter_eff, phot.filter_eff_units):
+                wave_eff.append(
+                    (val * u.Unit(unit)).to(wave_eff_unit, equivalencies=u.spectral())
+                )
+                freq_eff.append(
+                    (val * u.Unit(unit)).to(freq_eff_unit, equivalencies=u.spectral())
+                )
+
+            phot["band_eff_wave"] = wave_eff
+            phot["band_eff_wave_unit"] = wave_eff_unit
+            phot["band_eff_freq"] = freq_eff
+            phot["band_eff_freq_unit"] = freq_eff_unit
+
+        if not os.path.exists(local_outpath):
+            os.mkdir(local_outpath)
+
+        # drop duplicated names in meta and keep the first
+        meta = meta.drop_duplicates(subset="name", keep="first")
+
+        # merge the meta and phot data
+        if phot is not None:
+            data = pd.merge(phot, meta, on="name", how="inner")
+        else:
+            data = meta
+
+        # perform some data checks
+        assert (
+            len(data[pd.isna(data.ra)].name.unique()) == 0
+        ), "Missing some RA and Decs, please check the input files!"
+        if phot is not None:
+            for name in meta.name:
+                assert len(data[data.name == name]) == len(
+                    phot[phot.name == name]
+                ), f"failed on {name}"
+
+        # actually do the data conversion to OTTER
+        all_jsons = []
+        for name, tde in data.groupby("name"):
+            json = {}
+            tde = tde.reset_index()
+
+            # name first
+            json["name"] = dict(
+                default_name=name,
+                alias=[dict(value=name, reference=[tde.coord_bibcode[0]])],
+            )
+
+            # coordinates
+            json["coordinate"] = [
+                dict(
+                    ra=tde.ra[0],
+                    dec=tde.dec[0],
+                    ra_units=tde.ra_unit[0],
+                    dec_units=tde.dec_unit[0],
+                    reference=[tde.coord_bibcode[0]],
+                    coordinate_type="equitorial",
+                )
+            ]
+
+            ### distance info
+            json["distance"] = []
+
+            # redshift
+            if "redshift" in tde and not np.any(pd.isna(tde["redshift"])):
+                json["distance"].append(
+                    dict(
+                        value=tde.redshift[0],
+                        reference=[tde.redshift_bibcode[0]],
+                        computed=False,
+                        distance_type="redshift",
+                    )
+                )
+
+            # luminosity distance
+            if "luminosity_distance" in tde and not np.any(
+                pd.isna(tde["luminosity_distance"])
+            ):
+                json["distance"].append(
+                    value=tde.luminosity_distance[0],
+                    reference=[tde.luminosity_distance_bibcode[0]],
+                    unit=tde.luminosity_distance_unit[0],
+                    computed=False,
+                    distance_type="luminosity",
+                )
+
+            # comoving distance
+            if "comoving_distance" in tde and not np.any(
+                pd.isna(tde["comoving_distance"])
+            ):
+                json["distance"].append(
+                    value=tde.comoving_distance[0],
+                    reference=[tde.comoving_distance_bibcode[0]],
+                    unit=tde.comoving_distance_unit[0],
+                    computed=False,
+                    distance_type="comoving",
+                )
+
+            # remove the distance list if it is empty still
+            if len(json["distance"]) == 0:
+                del json["distance"]
+
+            ### Classification information that is in the csvs
+            # classification
+            if "classification" in tde:
+                json["classification"] = [
+                    dict(
+                        object_class=tde.classification[0],
+                        confidence=1,  # we know this is at least an tde
+                        reference=[tde.classification_bibcode[0]],
+                    )
+                ]
+
+            # discovery date
+            # print(tde)
+            if "discovery_date" in tde and not np.any(pd.isna(tde.discovery_date)):
+                json["date_reference"] = [
+                    dict(
+                        value=str(tde.discovery_date.tolist()[0]).strip(),
+                        date_format=tde.discovery_date_format.tolist()[0].lower(),
+                        reference=tde.discovery_date_bibcode.tolist(),
+                        computed=False,
+                        date_type="discovery",
+                    )
+                ]
+
+            # host information
+            if "host_ref" in tde and not np.any(pd.isna(tde.host_ref)):
+                host_info = dict(
+                    host_name=tde.host_name.tolist()[0].strip(),
+                    host_ra=tde.host_ra.tolist()[0],
+                    host_dec=tde.host_dec.tolist()[0],
+                    host_ra_units=tde.host_ra_unit.tolist()[0],
+                    host_dec_units=tde.host_dec_unit.tolist()[0],
+                    reference=[tde.host_ref.tolist()[0]],
+                )
+
+                if not pd.isna(tde.host_redshift.tolist()[0]):
+                    host_info["host_z"] = tde.host_redshift.tolist()[0]
+
+                if "host" in json:
+                    json["host"].append(host_info)
+                else:
+                    json["host"] = [host_info]
+
+            # skip the photometry code if there is no photometry file
+            # if there is a photometry file then we want to convert it below
+            phot_sources = []
+            if phot is not None:
+                tde["obs_type"] = [
+                    freq_to_obstype(vv * u.Unit(uu))
+                    for vv, uu in zip(
+                        tde.band_eff_freq.astype(float).values,
+                        tde.band_eff_freq_unit.values,
+                    )
+                ]
+
+                unique_filter_keys = []
+                index_for_match = []
+                json["photometry"] = []
+                for (src, tele, obstype), p in tde.groupby(
+                    ["bibcode", "telescope", "obs_type"], dropna=False
+                ):
+                    if src not in phot_sources:
+                        phot_sources.append(src)
+
+                    if len(np.unique(p.flux_unit)) == 1:
+                        raw_units = p.flux_unit.tolist()[0]
+                    else:
+                        raw_units = p.flux_unit.values
+
+                    # add a column to phot with the unique filter key
+                    if obstype == "radio":
+                        filter_uq_key = (
+                            p.band_eff_freq.astype(str) + p.band_eff_freq_unit
+                        ).tolist()
+                    elif obstype in ("uvoir", "xray"):
+                        filter_uq_key = p.band_name.astype(str).tolist()
+                    else:
+                        raise ValueError("not prepared for this obstype!")
+
+                    unique_filter_keys += filter_uq_key
+                    index_for_match += p.index.tolist()
+
+                    if "upperlimit" not in p:
+                        p["upperlimit"] = False
+
+                    json_phot = dict(
+                        reference=src,
+                        raw=p.flux.astype(float).tolist(),
+                        raw_err=p.flux_err.astype(float).tolist(),
+                        raw_units=raw_units,
+                        date=p.date.tolist(),
+                        date_format=p.date_format.tolist(),
+                        upperlimit=p.upperlimit.tolist(),
+                        filter_key=filter_uq_key,
+                        obs_type=obstype,
+                    )
+
+                    if not pd.isna(tele):
+                        json_phot["telescope"] = tele
+
+                    if pd.isna(tele) and obstype == "xray":
+                        raise ValueError("The telescope is required for X-ray data!")
+
+                    # check the minimum and maximum filter values
+                    if obstype == "xray" and (
+                        "filter_min" not in p or "filter_max" not in p
+                    ):
+                        raise ValueError(
+                            "Minimum and maximum filters required for X-ray data!"
+                        )
+
+                    # check optional keys
+                    optional_keys = [
+                        "date_err",
+                        "sigma",
+                        "instrument",
+                        "phot_type",
+                        "exptime",
+                        "aperature",
+                        "observer",
+                        "reducer",
+                        "pipeline",
+                    ]
+                    for k in optional_keys:
+                        if k in p:
+                            json_phot[k] = p[k].tolist()
+
+                    # handle more detailed uncertainty information
+                    raw_err_detail = {}
+                    for key in ["statistical_err", "systematic_err", "iss_err"]:
+                        if key in p and not np.all(pd.isna(p[key])):
+                            k = key.split("_")[0]
+
+                            # fill the nan values
+                            # this is to match with the official json format
+                            # and works with arangodb document structure
+                            p[key].fillna(0, inplace=True)
+
+                            raw_err_detail[k] = p[key].tolist()
+
+                    if len(raw_err_detail) > 0:
+                        json_phot["raw_err_detail"] = raw_err_detail
+
+                    # check the possible corrections
+                    corrs = ["val_k", "val_s", "val_host", "val_av", "val_hostav"]
+                    for c in corrs:
+                        bool_v_key = c.replace("val", "corr")
+                        json_phot[c] = False
+
+                        if c in p:
+                            # fill the nan values
+                            # this is to match with the official json format
+                            # and works with arangodb document structure
+                            p[c].fillna("null", inplace=True)
+
+                            json_phot[c] = p[c].tolist()
+                            json_phot[bool_v_key] = [v != "null" for v in json_phot[c]]
+
+                    json["photometry"].append(json_phot)
+
+                tde["filter_uq_key"] = pd.Series(
+                    unique_filter_keys, index=index_for_match
+                )
+
+                # filter alias
+                # radio filters first
+                filter_keys1 = ["filter_uq_key", "band_eff_wave", "band_eff_wave_unit"]
+                if "filter_min" in tde:
+                    filter_keys1.append("filter_min")
+                if "filter_max" in tde:
+                    filter_keys1.append("filter_max")
+
+                filter_map = (
+                    tde[filter_keys1].drop_duplicates().set_index("filter_uq_key")
+                )  # .to_dict(orient='index')
+                try:
+                    filter_map_radio = filter_map.to_dict(orient="index")
+                except Exception:
+                    print(filter_map)
+                    print(name)
+                    raise Exception
+
+                json["filter_alias"] = []
+                for filt, val in filter_map_radio.items():
+                    obs_type = freq_to_obstype(
+                        float(val["band_eff_wave"]) * u.Unit(val["band_eff_wave_unit"])
+                    )
+                    if obs_type == "radio":
+                        filter_name = freq_to_band(
+                            float(val["band_eff_wave"])
+                            * u.Unit(val["band_eff_wave_unit"])
+                        )
+                    else:
+                        filter_name = filt
+
+                    filter_alias_dict = dict(
+                        filter_key=filt,
+                        filter_name=filter_name,
+                        wave_eff=float(val["band_eff_wave"]),
+                        wave_units=val["band_eff_wave_unit"],
+                    )
+
+                    if "filter_min" in val:
+                        filter_alias_dict["wave_min"] = (
+                            val["filter_min"] * u.Unit(phot.filter_eff_units)
+                        ).to(
+                            u.Unit(
+                                val["band_eff_wave_unit"], equivalencies=u.spectral()
+                            )
+                        )
+
+                    if "filter_max" in val:
+                        filter_alias_dict["wave_max"] = (
+                            val["filter_max"] * u.Unit(phot.filter_eff_units)
+                        ).to(
+                            u.Unit(
+                                val["band_eff_wave_unit"], equivalencies=u.spectral()
+                            )
+                        )
+
+                    json["filter_alias"].append(filter_alias_dict)
+
+            # reference alias
+            # gather all the bibcodes
+            all_bibcodes = [tde.coord_bibcode[0]] + phot_sources
+            if (
+                "redshift_bibcode" in tde
+                and tde.redshift_bibcode[0] not in all_bibcodes
+                and not np.any(pd.isna(tde.redshift))
+            ):
+                all_bibcodes.append(tde.redshift_bibcode[0])
+
+            if (
+                "luminosity_distance_bibcode" in tde
+                and tde.luminosity_distance_bibcode[0] not in all_bibcodes
+                and not np.any(pd.isna(tde.luminosity_distance))
+            ):
+                all_bibcodes.append(tde.luminosity_distance_bibcode[0])
+
+            if (
+                "comoving_distance_bibcode" in tde
+                and tde.comoving_distance_bibcode[0] not in all_bibcodes
+                and not np.any(pd.isna(tde.comoving_distance))
+            ):
+                all_bibcodes.append(tde.comoving_distance_bibcode[0])
+
+            if (
+                "discovery_date_bibcode" in tde
+                and tde.discovery_date_bibcode[0] not in all_bibcodes
+                and not np.any(pd.isna(tde.discovery_date))
+            ):
+                all_bibcodes.append(tde.discovery_date_bibcode[0])
+
+            if (
+                "classification_bibcode" in tde
+                and tde.classification_bibcode[0] not in all_bibcodes
+                and not np.any(pd.isna(tde.classification))
+            ):
+                all_bibcodes.append(tde.classification_bibcode[0])
+
+            if (
+                "host_bibcode" in tde
+                and tde.host_bibcode not in all_bibcodes
+                and not np.any(pd.isna(tde.host_bibcode))
+            ):
+                all_bibcodes.append(tde.host_bibcode[0])
+
+            # find the hrn's for all of these bibcodes
+            uq_bibcodes, all_hrns = bibcode_to_hrn(all_bibcodes)
+
+            # package these into the reference alias
+            json["reference_alias"] = [
+                dict(name=name, human_readable_name=hrn)
+                for name, hrn in zip(uq_bibcodes, all_hrns)
+            ]
+
+            all_jsons.append(Transient(json))
+
+        db = Otter(datadir=local_outpath, gen_summary=True)
+        db.save(all_jsons)
+        return db
