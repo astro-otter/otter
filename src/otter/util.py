@@ -81,7 +81,15 @@ def bibcode_to_hrn(bibcode):
 
         bibcode = list(chain(*[v if isinstance(v, list) else [v] for v in bibcode]))
 
-        bibcodes = np.unique(bibcode).flatten()
+        bibcodes_flat = np.array(bibcode).flatten()
+        bibcodes_cleaned = np.array([b.strip() for b in bibcodes_flat])
+
+        bibcodes = list(np.unique(bibcodes_cleaned))
+
+    protected_vals = ["private", "new", "current work"]
+    for val in protected_vals:
+        if val in bibcodes:
+            bibcodes.pop(bibcodes.index(val))
 
     query = f"bibcode:{bibcodes[0]}"
     if len(bibcodes) > 1:

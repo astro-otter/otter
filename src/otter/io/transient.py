@@ -550,6 +550,9 @@ class Transient(MutableMapping):
             raise IOError("Please choose either value or raw!")
 
         # turn the photometry key into a pandas dataframe
+        if "photometry" not in self:
+            raise FailedQueryError("No photometry for this object!")
+
         dfs = []
         for item in self["photometry"]:
             max_len = 0
@@ -631,6 +634,7 @@ class Transient(MutableMapping):
 
         # Figure out what columns are good to groupby in the photometry
         outdata = []
+
         if "telescope" in df:
             tele = True
             to_grp_by = ["obs_type", by + "_units", "telescope"]

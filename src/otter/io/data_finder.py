@@ -389,6 +389,7 @@ class DataFinder(object):
         radius: float = 5,
         datadir: str = "ipac/",
         overwrite: bool = False,
+        verbose=False,
         **kwargs,
     ) -> pd.DataFrame:
         """
@@ -436,8 +437,8 @@ class DataFinder(object):
         allwise = ascii.read(f"ipac/{allwise_name}", format="ipac")
         neowise = ascii.read(f"ipac/{neowise_name}", format="ipac")
 
-        allwise, neowise = self._only_good_data(allwise, neowise)
-        if allwise is None or neowise is None:
+        allwise, neowise = self._only_good_data(allwise, neowise, verbose=verbose)
+        if verbose and (allwise is None or neowise is None):
             print(f"Limited good infrared data for {self.name}, skipping!")
 
         mjd, mag, mag_err, filts = self._make_full_lightcurve_multibands(
@@ -973,7 +974,7 @@ class DataFinder(object):
         )
 
     @staticmethod
-    def _only_good_data(allwise, neowise):
+    def _only_good_data(allwise, neowise, verbose=False):
         """
         Select good-quality data. The criteria include:
         - matching the all-wise ID
@@ -993,10 +994,11 @@ class DataFinder(object):
             * (neowise["moon_masked"] == "00")
         ]
         neowise_postfilter_n = len(neowise)
-        print(
-            f"Filtered out {neowise_prefilter_n-neowise_postfilter_n} neowise points,\
-            leaving {neowise_postfilter_n}"
-        )
+        if verbose:
+            print(
+                f"Filtered out {neowise_prefilter_n-neowise_postfilter_n} neowise \
+                points, leaving {neowise_postfilter_n}"
+            )
 
         cntr_list = []
         for data in neowise:
@@ -1025,9 +1027,10 @@ class DataFinder(object):
             * (allwise["qi_fact"] > 0.9)
         ]
         allwise_postfilter_n = len(neowise)
-        print(
-            f"Filtered out {allwise_prefilter_n-allwise_postfilter_n} allwise points, \
-            leaving {allwise_postfilter_n}"
-        )
+        if verbose:
+            print(
+                f"Filtered out {allwise_prefilter_n-allwise_postfilter_n} allwise \
+                points, leaving {allwise_postfilter_n}"
+            )
 
         return allwise, neowise

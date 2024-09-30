@@ -7,6 +7,7 @@ import os
 import json
 import glob
 from warnings import warn
+from copy import deepcopy
 
 from pyArango.connection import Connection
 from pyArango.database import Database
@@ -19,7 +20,7 @@ from astropy.table import Table
 from astropy import units as u
 
 from .transient import Transient
-from ..exceptions import FailedQueryError, OtterLimitationError
+from ..exceptions import FailedQueryError, OtterLimitationError, TransientMergeError
 from ..util import bibcode_to_hrn, freq_to_obstype, freq_to_band
 
 import warnings
@@ -259,9 +260,9 @@ class Otter(Database):
         refs: list[str] = None,
         hasphot: bool = False,
         hasspec: bool = False,
-        raw: bool = False,
         classification: str = None,
         class_confidence_threshold: float = 0,
+        query_private=False,
         **kwargs,
     ) -> dict:
         """
@@ -392,16 +393,38 @@ class Otter(Database):
                         good_tdes.append(tde)
                         break  # we've confirmed this tde is in the cone!
 
-            if not raw:
-                return [Transient(t) for t in good_tdes]
-            else:
-                return good_tdes
+            arango_query_results = [Transient(t) for t in good_tdes]
 
         else:
-            if not raw:
-                return [Transient(res) for res in result.result]
+            arango_query_results = [Transient(res) for res in result.result]
+
+        if not query_private:
+            return arango_query_results
+
+        private_results = self._query_datadir(
+            names=names,
+            coords=coords,
+            radius=radius,
+            minz=minz,
+            maxz=maxz,
+            refs=refs,
+            hasphot=hasphot,
+            hasspec=hasspec,
+        )
+
+        partially_merged = deepcopy(arango_query_results)
+        new_transients = []
+        for jj, t_private in enumerate(private_results):
+            for ii, t_public in enumerate(arango_query_results):
+                try:
+                    partially_merged[ii] += t_private
+                    break
+                except TransientMergeError:
+                    continue
             else:
-                return result.result
+                new_transients.append(t_private)
+
+        return partially_merged + new_transients
 
     def _query_datadir(
         self,
@@ -450,13 +473,7 @@ class Otter(Database):
             # read in the metdata from all json files
             # this could be dangerous later on!!
             allfiles = glob.glob(os.path.join(self.DATADIR, "*.json"))
-            jsondata = []
-
-            # read the data from all the json files and convert to Transients
-            for jsonfile in allfiles:
-                with open(jsonfile, "r") as j:
-                    t = Transient(json.load(j))
-                    jsondata.append(t.get_meta())
+            jsondata = [self.load_file(jsonfile) for jsonfile in allfiles]
 
             return jsondata
 
@@ -710,16 +727,20 @@ class Otter(Database):
             freq_eff_unit = u.GHz
             for val, unit in zip(phot.filter_eff, phot.filter_eff_units):
                 wave_eff.append(
-                    (val * u.Unit(unit)).to(wave_eff_unit, equivalencies=u.spectral())
+                    (val * u.Unit(unit))
+                    .to(wave_eff_unit, equivalencies=u.spectral())
+                    .value
                 )
                 freq_eff.append(
-                    (val * u.Unit(unit)).to(freq_eff_unit, equivalencies=u.spectral())
+                    (val * u.Unit(unit))
+                    .to(freq_eff_unit, equivalencies=u.spectral())
+                    .value
                 )
 
             phot["band_eff_wave"] = wave_eff
-            phot["band_eff_wave_unit"] = wave_eff_unit
+            phot["band_eff_wave_unit"] = str(wave_eff_unit)
             phot["band_eff_freq"] = freq_eff
-            phot["band_eff_freq_unit"] = freq_eff_unit
+            phot["band_eff_freq_unit"] = str(freq_eff_unit)
 
         if not os.path.exists(local_outpath):
             os.mkdir(local_outpath)
@@ -859,7 +880,7 @@ class Otter(Database):
                 tde["obs_type"] = [
                     freq_to_obstype(vv * u.Unit(uu))
                     for vv, uu in zip(
-                        tde.band_eff_freq.astype(float).values,
+                        tde.band_eff_freq.values,
                         tde.band_eff_freq_unit.values,
                     )
                 ]
@@ -867,24 +888,37 @@ class Otter(Database):
                 unique_filter_keys = []
                 index_for_match = []
                 json["photometry"] = []
-                for (src, tele, obstype), p in tde.groupby(
-                    ["bibcode", "telescope", "obs_type"], dropna=False
-                ):
+
+                if "telescope" in tde:
+                    to_grpby = ["bibcode", "telescope", "obs_type"]
+                else:
+                    to_grpby = ["bibcode", "obs_type"]
+
+                for grp_keys, p in tde.groupby(to_grpby, dropna=False):
+                    if len(grp_keys) == 3:
+                        src, tele, obstype = grp_keys
+                    else:
+                        src, obstype = grp_keys
+                        tele = None
+
                     if src not in phot_sources:
                         phot_sources.append(src)
 
                     if len(np.unique(p.flux_unit)) == 1:
                         raw_units = p.flux_unit.tolist()[0]
                     else:
-                        raw_units = p.flux_unit.values
+                        raw_units = p.flux_unit.tolist()
 
                     # add a column to phot with the unique filter key
                     if obstype == "radio":
                         filter_uq_key = (
-                            p.band_eff_freq.astype(str) + p.band_eff_freq_unit
+                            p.band_eff_freq.astype(str)
+                            + p.band_eff_freq_unit.astype(str)
                         ).tolist()
+
                     elif obstype in ("uvoir", "xray"):
-                        filter_uq_key = p.band_name.astype(str).tolist()
+                        filter_uq_key = p["filter"].astype(str).tolist()
+
                     else:
                         raise ValueError("not prepared for this obstype!")
 
@@ -998,8 +1032,10 @@ class Otter(Database):
                     )
                     if obs_type == "radio":
                         filter_name = freq_to_band(
-                            float(val["band_eff_wave"])
-                            * u.Unit(val["band_eff_wave_unit"])
+                            (
+                                float(val["band_eff_wave"])
+                                * u.Unit(val["band_eff_wave_unit"])
+                            ).to(u.GHz, equivalencies=u.spectral())
                         )
                     else:
                         filter_name = filt
