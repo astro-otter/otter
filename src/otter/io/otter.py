@@ -313,9 +313,10 @@ class Otter(Database):
             LET redshifts1 = (
                 FOR val IN transient.distance
                 FILTER val.distance_type == 'redshift'
+                FILTER TO_NUMBER(val.value) >= {minz}
                 RETURN val
             )
-            FILTER TO_NUMBER(redshifts1[*].value) >= {minz}
+            FILTER COUNT(redshifts1) > 0
             """
             query_filters += sfilt
         if maxz is not None:
@@ -324,9 +325,10 @@ class Otter(Database):
             LET redshifts2 = (
                 FOR val IN transient.distance
                 FILTER val.distance_type == 'redshift'
+                FILTER TO_NUMBER(val.value) <= {maxz}
                 RETURN val
             )
-            FILTER TO_NUMBER(redshifts2[*].value) <= {maxz}
+            FILTER COUNT(redshifts2) > 0
             """
             query_filters += sfilt
 

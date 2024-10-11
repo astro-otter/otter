@@ -73,6 +73,7 @@ def bibcode_to_hrn(bibcode):
     Converts a bibcode to a human_readable_name (hrn) using ADSQuery
     """
     if isinstance(bibcode, str):
+        bibcode = bibcode.strip()
         query = f"bibcode:{bibcode}"
         bibcodes = [bibcode]
     else:
@@ -125,6 +126,9 @@ def bibcode_to_hrn(bibcode):
         # generate the human readable name
         hrn = author + " (" + year + ")"
         hrns.append(hrn)
+
+    if len(hrns) == 0 and len(bibcodes) != 0:
+        raise ValueError(f"Could not find any bibcodes associated with {bibcodes}!")
 
     if isinstance(bibcode, str):
         return hrns[0]

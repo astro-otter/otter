@@ -12,6 +12,26 @@ import numpy as np
 from otter import Otter, Transient, util
 
 
+def fix_old_bibcodes(ref):
+    # build in some temporary checks until the catalog is fixed
+    if ref == "Wevers 2020MNRAS.497L...1W":
+        ref = ref.replace("Wevers ", "")
+
+    if ref == "2018A%26A...610A..14K":
+        ref = "2018A&A...610A..14K"
+
+    if ref == "2024arXiv240111773C":
+        ref = "2024A&A...689A.350C"
+
+    if ref == "SDSS":
+        # this is just for now until I figure out what this means in more detail
+        # this reference is to the SDSS DR18 paper which briefly describes
+        # updates to their velocity dispersion calculations
+        ref = "2023ApJS..267...44A"
+
+    return ref
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--otterdir", help="Directory where the otter json files will go")
@@ -47,6 +67,7 @@ def main():
         hrn = []
         for v in bibcodes:
             try:
+                v = fix_old_bibcodes(v)
                 hrn.append(util.bibcode_to_hrn(v))
             except ValueError:
                 print(f"ADS Query did not work for {path} with bibcode {v}!")
@@ -110,19 +131,7 @@ def main():
         # now the velocity dispersion
         if "vel_disp_km/s" in indata["host"]:
             ref = indata["host"]["vel_disp_source"]
-
-            # build in some temporary checks until the catalog is fixed
-            if ref == "Wevers 2020MNRAS.497L...1W":
-                ref = ref.replace("Wevers ", "")
-
-            if ref == "2018A%26A...610A..14K":
-                ref = "2018A&A...610A..14K"
-
-            if ref == "SDSS":
-                # this is just for now until I figure out what this means in more detail
-                # this reference is to the SDSS DR18 paper which briefly describes
-                # updates to their velocity dispersion calculations
-                ref = "2023ApJS..267...44A"
+            ref = fix_old_bibcodes(ref)
 
             hrn = util.bibcode_to_hrn(ref)
 

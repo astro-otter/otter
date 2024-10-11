@@ -10,6 +10,7 @@ import json
 import time
 from copy import deepcopy
 from collections import OrderedDict
+import warnings
 
 import numpy as np
 import pandas as pd
@@ -346,9 +347,11 @@ def tns_response_to_otter(row, photlist):
 
     if not pd.isna(row.Class_ADS_bibcodes_tns):
         for bib in row.Class_ADS_bibcodes_tns.split(","):
-            toadd = dict(name=bib, human_readable_name=bibcode_to_hrn(bib))
-            out["reference_alias"].append(toadd)
-
+            try:
+                toadd = dict(name=bib, human_readable_name=bibcode_to_hrn(bib))
+                out["reference_alias"].append(toadd)
+            except ValueError:
+                warnings.warn(f"Skipping the bibcode {bib}")
     return out
 
 
