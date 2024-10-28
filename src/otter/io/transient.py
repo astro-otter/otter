@@ -766,8 +766,16 @@ class Transient(MutableMapping):
                 # this will be faster and cover most cases
                 flux = convert_flux(wave_eff, q, u.Unit(flux_unit)).value
 
-                # approximate the uncertainty as dX = dY/Y * X
-                flux_err = np.multiply(flux, np.divide(q_err.value, q.value))
+                # since the error propagation is different between logarithmic units
+                # and linear units, unfortunately
+                if isinstance(u.Unit(flux_unit), u.LogUnit):
+                    # approximate the uncertainty as dX = dY/Y * |ln(10)/2.5|
+                    prefactor = np.abs(np.log(10) / 2.5)  # this is basically 1
+                else:
+                    # approximate the uncertainty as dX = dY/Y * X
+                    prefactor = flux
+
+                flux_err = np.multiply(prefactor, np.divide(q_err.value, q.value))
 
             flux = np.array(flux) * u.Unit(flux_unit)
             flux_err = np.array(flux_err) * u.Unit(flux_unit)
