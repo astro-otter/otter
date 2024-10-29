@@ -368,6 +368,9 @@ class Transient(MutableMapping):
         """
         key = "date_reference"
         date = self._get_default(key, filt='df["date_type"] == "discovery"')
+        if date is None:
+            return date
+
         if "date_format" in date:
             f = date["date_format"]
         else:
@@ -405,7 +408,7 @@ class Transient(MutableMapping):
             return default
         return default.object_class, default.confidence, default.reference
 
-    def get_host(self, max_hosts=3, **kwargs) -> list[Host]:
+    def get_host(self, max_hosts=3, search=False, **kwargs) -> list[Host]:
         """
         Gets the default host information of this Transient. This returns an otter.Host
         object. If no host is known in OTTER, it uses astro-ghost to find the best
@@ -427,6 +430,9 @@ class Transient(MutableMapping):
 
         # then try astro-ghost
         else:
+            if not search:
+                return None
+
             logger.warn(
                 "No host known, trying to find it with astro-ghost. \
                 See https://uiucsnastro-ghost.readthedocs.io/en/latest/index.html"
