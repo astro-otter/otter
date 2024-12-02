@@ -46,7 +46,7 @@ class Otter(Database):
         self,
         url: str = "http://127.0.0.1:8529",
         username: str = "root",
-        password: str = os.environ.get("OTTERDB_PASS", None),
+        password: str = os.environ.get("OTTERDB_PASS", ""),
         gen_summary: bool = False,
         datadir: str = None,
         debug: bool = False,
@@ -558,6 +558,67 @@ class Otter(Database):
         outdata = [self.load_file(path) for path in summary.json_path]
 
         return outdata
+
+    def upload(self, collection="vetting", testing=False) -> None:
+        """
+        Upload the data stored here to the arangodb document database
+
+        Args:
+            collection (str) : The collection to add the documents to. Default is
+                               "vetting" where the documents will then be vetted by
+                               our team.
+            testing (bool) : True if don't actually upload, False is default
+
+        Returns:
+            If testing is false (the default), returns the arangodb upload result. If
+            testing is true, returns the list of merged dictionaries that would get
+            uploaded.
+
+        Raises:
+            OtterLimitationError: If some objects in OTTER are within 5" we can't figure
+                                  out which ones to merge with which ones.
+
+        """
+
+        if not self.hasCollection(collection):
+            raise ValueError(f"{collection} not in {self}!")
+
+        local_data = self._query_datadir()
+        docs = []
+        for t in local_data:
+            coord = t.get_skycoord()
+            res = self.query(ra=coord.ra.deg, dec=coord.dec.deg)
+
+            if len(res) > 1:
+                raise OtterLimitationError("Some objects in Otter are too close!")
+
+            elif len(res) == 1:
+                # this object exists in otter already, let's grab the transient data and
+                # merge the files
+                merged = t + res[0]
+
+                # copy over the special arangodb keys
+                merged["_key"] = res[0]["_key"]
+                merged["_id"] = res[0]["_id"]
+
+                # we also have to delete the document from the OTTER database
+                doc = self.fetchDocument(merged["_id"])
+                if not testing:
+                    doc.delete()
+                else:
+                    print(f"Would delete\n{doc}")
+
+            else:
+                # this means the object doesn't exist in otter already
+                merged = t
+
+            docs.append(dict(merged))
+
+        if testing:
+            return docs
+
+        upload_result = self[collection].bulkSave(docs)
+        return upload_result
 
     def save(self, schema: list[dict], testing=False) -> None:
         """
@@ -1125,6 +1186,7 @@ class Otter(Database):
 
             all_jsons.append(Transient(json))
 
-        db = Otter(datadir=local_outpath, gen_summary=True)
+        db = Otter(datadir=local_outpath)
         db.save(all_jsons)
+        db.generate_summary_table(save=True)
         return db
