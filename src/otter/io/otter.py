@@ -590,8 +590,7 @@ class Otter(Database):
         local_data = self._query_datadir()
         docs = []
         for t in local_data:
-            coord = t.get_skycoord()
-            res = self.query(ra=coord.ra.deg, dec=coord.dec.deg)
+            res = self.query(coords=t.get_skycoord())
 
             if len(res) > 1:
                 raise OtterLimitationError("Some objects in Otter are too close!")
@@ -616,13 +615,13 @@ class Otter(Database):
                 # this means the object doesn't exist in otter already
                 merged = t
 
-            docs.append(dict(merged))
+            # now add the document
+            doc = self[collection].createDocument(merged)
+            if not testing:
+                doc.save()
+            docs.append(doc)
 
-        if testing:
-            return docs
-
-        upload_result = self[collection].bulkSave(docs)
-        return upload_result
+        return docs
 
     def save(self, schema: list[dict], testing=False) -> None:
         """
@@ -1034,7 +1033,12 @@ class Otter(Database):
                         "pipeline",
                     ]
                     for k in optional_keys:
-                        if k in p:
+                        if k in p and not np.all(pd.isna(p[k])):
+                            # fill the nan values
+                            # this is to match with the official json format
+                            # and works with arangodb document structure
+                            p[k].fillna("null", inplace=True)
+
                             json_phot[k] = p[k].tolist()
 
                     # handle more detailed uncertainty information
