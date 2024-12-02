@@ -561,7 +561,11 @@ class Otter(Database):
 
     def upload(self, collection="vetting", testing=False) -> None:
         """
-        Upload the data stored here to the arangodb document database
+        Upload the local/private data stored in self.DATADIR to the vetting collection
+        (like a SQL table) in the central arangodb document database.
+
+        WARNING! This will make any data in self.DATADIR public! Please double check
+        before using this method!
 
         Args:
             collection (str) : The collection to add the documents to. Default is
