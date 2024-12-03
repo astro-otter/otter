@@ -939,6 +939,12 @@ class Otter(Database):
                 else:
                     json["host"] = [host_info]
 
+            # comments
+            if "comment" in tde and not np.any(pd.isna(tde.comment)):
+                if "schema_version" not in json:
+                    json["schema_version"] = {}
+                json["schema_version"]["comment"] = tde.comment.tolist()[0]
+
             # skip the photometry code if there is no photometry file
             # if there is a photometry file then we want to convert it below
             phot_sources = []

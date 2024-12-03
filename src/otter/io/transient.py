@@ -931,10 +931,19 @@ class Transient(MutableMapping):
         Just keep whichever schema version is greater
         """
         key = "schema_version/value"
+        if "comment" not in t1["schema_version"]:
+            t1["schema_version/comment"] = ""
+
+        if "comment" not in t2["schema_version"]:
+            t2["schema_version/comment"] = ""
+
         if int(t1[key]) > int(t2[key]):
             out["schema_version"] = deepcopy(t1["schema_version"])
+            out["schema_version"]["comment"] = t1["comment"] + ";" + t2["comment"]
         else:
             out["schema_version"] = deepcopy(t2["schema_version"])
+
+        out["schema_version"]["comment"] = t1["comment"] + ";" + t2["comment"]
 
     def _merge_photometry(t1, t2, out):  # noqa: N805
         """
