@@ -4,12 +4,20 @@ for pulling in data corresponding to that host
 """
 
 from __future__ import annotations
+
+from urllib.request import urlopen
+import json
+
 import numpy as np
 from astropy.coordinates import SkyCoord
 from astropy import units as u
 
 from .data_finder import DataFinder
 from ..exceptions import OtterLimitationError
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Host(DataFinder):
@@ -21,6 +29,7 @@ class Host(DataFinder):
         host_dec_units: str | u.Unit,
         host_name: str = None,
         host_redshift: float = None,
+        redshift_type: str = None,
         reference: list[str] = None,
         transient_name: str = None,
         **kwargs,
@@ -41,6 +50,8 @@ class Host(DataFinder):
                                                       SkyCoord
             host_name (str) : The name of the host galaxy
             host_redshift (float) : The redshift of the host galaxy
+            redshift_type (str) : Either "phot" or "spec", tells you if the redshift
+                                  is a phot-z or spec-z.
             reference (list[str]) : a list of bibcodes that found this to be the host
             transient_name (str) : the name of the transient associated with this host
             kwargs : Just here so we can pass **Transient['host'] into this constructor
@@ -52,6 +63,7 @@ class Host(DataFinder):
         self.redshift = host_redshift  # just here for ease of use
         self.bibcodes = reference
         self.transient_name = transient_name
+        self.redshift_type = redshift_type
 
     def pcc(self, transient_coord: SkyCoord, mag: float = None):
         """
@@ -104,3 +116,71 @@ class Host(DataFinder):
         prob = 1 - np.exp(-eta)
 
         return prob
+
+    ###################################################################################
+    ######### METHODS FOR FINDING HOSTS  ###########################
+    ###################################################################################
+    @staticmethod
+    def query_blast(tns_name: str) -> dict:
+        """
+        Query the BLAST host galaxy service
+
+        Args:
+            tns_name (str) : The TNS target name to grab the data from BLAST for
+
+        Returns:
+            best match BLAST ID, host ra, host dec, host redshift. Redshift will be
+            spectroscopic if available, otherwise photometric.
+        """
+
+        # clean up the input name a little
+        if tns_name[:2] == "AT":
+            tns_name = tns_name.replace("AT", "")
+
+        failed_query_res = None
+
+        # do the query
+        blast_base_url = "https://blast.scimma.org"
+        blast_query_url = f"{blast_base_url}/api/transient/?name={tns_name}&format=json"
+        with urlopen(blast_query_url) as response:
+            if response.status != 200:
+                logger.warn(f"BLAST query failed with response code {response.status}!")
+                return failed_query_res
+            else:
+                blast_data = json.loads(response.read())
+        if len(blast_data) == 0:
+            logger.warn("BLAST query returned no results!")
+            return failed_query_res
+
+        blast_data = blast_data[0]
+        if "host" not in blast_data:
+            logger.warn("BLAST query found the object but it has no host associated!")
+            return failed_query_res
+
+        blast_host = blast_data["host"]
+
+        if blast_host["redshift"] is not None:
+            # prefer spec-z over phot-z
+            z = blast_host["redshift"]
+            z_type = "spec"
+        else:
+            # well I guess we need to use phot-z
+            z = blast_host["photometric_redshift"]
+            z_type = "phot"
+
+        refs = [
+            "2021ApJ...908..170G",  # GHOST citation
+            "2024arXiv241017322J",  # BLAST citation
+        ]
+
+        return Host(
+            host_ra=blast_host["ra_deg"],
+            host_dec=blast_host["dec_deg"],
+            host_ra_units="deg",
+            host_dec_units="deg",
+            host_name=blast_host["id"],
+            host_redshift=z,
+            redshift_type=z_type,
+            reference=refs,
+            transient_name=tns_name,
+        )

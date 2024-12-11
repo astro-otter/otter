@@ -411,8 +411,10 @@ class Transient(MutableMapping):
     def get_host(self, max_hosts=3, search=False, **kwargs) -> list[Host]:
         """
         Gets the default host information of this Transient. This returns an otter.Host
-        object. If no host is known in OTTER, it uses astro-ghost to find the best
-        match.
+        object. If search=True, it will also check the BLAST host association database
+        for the best match and return it as well. Note that if search is True then
+        this has the potential to return max_hosts + 1, if BLAST also returns a result.
+        The BLAST result will always be the last value in the returned list.
 
         Args:
             max_hosts [int] : The maximum number of hosts to return
@@ -423,41 +425,25 @@ class Transient(MutableMapping):
             useful methods for querying public catalogs for data of the host.
         """
         # first try to get the host information from our local database
+        host = []
         if "host" in self:
-            host = [
-                Host(transient_name=self.default_name, **dict(h)) for h in self["host"]
-            ]
+            max_hosts = min([max_hosts, len(self["host"])])
+            for h in self["host"][:max_hosts]:
+                host.append(Host(transient_name=self.default_name, **dict(h)))
 
-        # then try astro-ghost
-        else:
-            if not search:
-                return None
-
+        # then try BLAST
+        if search:
             logger.warn(
-                "No host known, trying to find it with astro-ghost. \
-                See https://uiucsnastro-ghost.readthedocs.io/en/latest/index.html"
+                "Trying to find a host with BLAST/astro-ghost. Note\
+                 that this won't work for older targets! See https://blast.scimma.org"
             )
 
-            # this import has to be here otherwise the code breaks
-            from astro_ghost.ghostHelperFunctions import getTransientHosts, getGHOST
-
-            getGHOST(real=False, verbose=1)
-            res = getTransientHosts(
-                [self.default_name], [self.get_skycoord()], verbose=False
-            )
-
-            host = [
-                Host(
-                    host_ra=row["raStack"],
-                    host_dec=row["decStack"],
-                    host_ra_units="deg",
-                    host_dec_units="deg",
-                    host_name=row["objName"],
-                    transient_name=self.default_name,
-                    reference=["astro-ghost"],
-                )
-                for i, row in res.iterrows()
-            ]
+            # default_name should always be the TNS name if we have one
+            print(self.default_name)
+            blast_host = Host.query_blast(self.default_name)
+            print(blast_host)
+            if blast_host is not None:
+                host.append(blast_host)
 
         return host
 
@@ -937,13 +923,14 @@ class Transient(MutableMapping):
         if "comment" not in t2["schema_version"]:
             t2["schema_version/comment"] = ""
 
-        if int(t1[key]) > int(t2[key]):
+        if key in t1 and key in t2 and int(t1[key]) > int(t2[key]):
             out["schema_version"] = deepcopy(t1["schema_version"])
-            out["schema_version"]["comment"] = t1["comment"] + ";" + t2["comment"]
         else:
             out["schema_version"] = deepcopy(t2["schema_version"])
 
-        out["schema_version"]["comment"] = t1["comment"] + ";" + t2["comment"]
+        out["schema_version"]["comment"] = (
+            t1["schema_version/comment"] + ";" + t2["schema_version/comment"]
+        )
 
     def _merge_photometry(t1, t2, out):  # noqa: N805
         """
