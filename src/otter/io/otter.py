@@ -11,6 +11,7 @@ from copy import deepcopy
 
 from pyArango.connection import Connection
 from pyArango.database import Database
+from pyArango.document import Document
 
 import pandas as pd
 import numpy as np
@@ -28,6 +29,14 @@ import warnings
 warnings.simplefilter("once", RuntimeWarning)
 warnings.simplefilter("once", UserWarning)
 warnings.simplefilter("once", u.UnitsWarning)
+
+
+def _np_encoder(object):
+    """
+    Numpy data type encoder for json.dump
+    """
+    if isinstance(object, (np.generic, np.ndarray)):
+        return object.item()
 
 
 class Otter(Database):
@@ -559,7 +568,26 @@ class Otter(Database):
 
         return outdata
 
-    def upload(self, collection="vetting", testing=False) -> None:
+    def upload(self, json_data, collection="vetting", testing=False) -> Document:
+        """
+        Upload json_data to collection
+
+        Args:
+            json_data [dict] : A dictionary of the json data to upload to Otter
+            collection [str] : The collection to upload to
+            testing [bool] : Default is False
+
+        Returns:
+            The pyArango document that was uplaoded
+        """
+
+        # now add the document
+        doc = self[collection].createDocument(json_data)
+        if not testing:
+            doc.save()
+        return doc
+
+    def upload_private(self, collection="vetting", testing=False) -> None:
         """
         Upload the local/private data stored in self.DATADIR to the vetting collection
         (like a SQL table) in the central arangodb document database.
@@ -615,11 +643,7 @@ class Otter(Database):
                 # this means the object doesn't exist in otter already
                 merged = t
 
-            # now add the document
-            doc = self[collection].createDocument(merged)
-            if not testing:
-                doc.save()
-            docs.append(doc)
+            docs.append(self.upload(merged, collection=collection, testing=testing))
 
         return docs
 
@@ -700,7 +724,7 @@ class Otter(Database):
         if isinstance(schema, Transient):
             schema = dict(schema)
 
-        out = json.dumps(schema, indent=4)
+        out = json.dumps(schema, indent=4, default=_np_encoder)
         # out = '[' + out
         # out += ']'
 
@@ -1201,6 +1225,9 @@ class Otter(Database):
             all_jsons.append(Transient(json))
 
         db = Otter(datadir=local_outpath)
+
+        # always save this document as a new one
+        print(dict(all_jsons[0]))
         db.save(all_jsons)
         db.generate_summary_table(save=True)
         return db
