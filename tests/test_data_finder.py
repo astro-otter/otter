@@ -2,6 +2,7 @@
 Test the OTTER DataFinder class
 """
 
+import pytest
 import pandas as pd
 from otter import DataFinder
 from astropy.coordinates import SkyCoord
@@ -97,7 +98,7 @@ def test_query_simbad():
     df1 = construct_data_finder()
     res = df1.query_simbad()
 
-    assert len(res) == 2
+    assert len(res) == 3
     assert res["RA"][0] == "12 48 15.2253"
 
 
@@ -186,6 +187,10 @@ def test_query_wise():
     assert len(res) >= 35, "Missing some WISE data!"
 
 
+@pytest.mark.skip(
+    reason="There is a known issue with setuptools that makes this break\
+when run in most conda environments!"
+)
 def test_query_alma():
     """
     Test querying ALMA

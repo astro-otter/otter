@@ -2,9 +2,7 @@
 Test the otter Host class
 """
 
-import os
 from otter import Host
-from otter import Otter
 from astropy.coordinates import SkyCoord
 
 
@@ -55,14 +53,19 @@ def test_pcc():
     )
 
     # get the testing path
-    otterpath = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), ".otter-testing"
-    )
-    db = Otter(otterpath)
-    t = db.query(names=h.transient_name)[0]
-    pcc = h.pcc(t.get_skycoord())
+    coord = SkyCoord(192.06343875, 17.77402083, unit="deg")
+    pcc = h.pcc(coord)
 
     assert pcc < 0.001, "pcc seems suspiciously high for ASASSN-14li as a test case..."
 
     pcc2 = h.pcc(SkyCoord(0, 0, unit="deg"))
     assert pcc2 > 0.9, "pcc seems too small for this input coordinate"
+
+
+def test_query_blast():
+    """
+    Test the query of BLAST
+    """
+
+    host = Host.query_blast(tns_name="AT2024advm")
+    assert host.transient_name == "2024advm", "name incorrect!"

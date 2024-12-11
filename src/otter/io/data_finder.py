@@ -478,6 +478,11 @@ class DataFinder(object):
             An astropy Table of the multiepoch wise data for this host
         """
 
+        logger.warn(
+            "This method may not work if you are using a conda environment!\
+            This is a known issue in setuptools that is not resolved!"
+        )
+
         from astroquery.alma import Alma
 
         res = DataFinder._wrap_astroquery(
