@@ -47,6 +47,9 @@ dependencies = [
   "sparclclient",
   "astro-ghost",
 
+  # for the schema validation
+  "pydantic",
+
   # only for windows OS b/c it doesn't ship with readline by default
   'pyreadline3; platform_system == "Windows"'
 ]

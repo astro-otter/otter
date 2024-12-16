@@ -22,6 +22,7 @@ class NameSchema(BaseModel):
 
 
 class CoordinateSchema(BaseModel):
+    reference: Union[List[str], str]
     ra: Union[str, float] = None
     dec: Union[str, float] = None
     l: Union[str, float] = None  # noqa: E741
@@ -44,7 +45,6 @@ class CoordinateSchema(BaseModel):
     frame: str = "J2000"
     coord_type: str = None
     computed: bool = False
-    reference: Union[List[str], str]
     default: bool = False
 
     @model_validator(mode="after")
@@ -74,6 +74,8 @@ class CoordinateSchema(BaseModel):
         else:
             ValidationError("Must have RA/Dec, l/b, and/or lon/lat!")
 
+        return self
+
 
 class DistanceSchema(BaseModel):
     value: Union[str, float, int]
@@ -90,6 +92,8 @@ class DistanceSchema(BaseModel):
     def _has_units(self):
         if self.distance_type != "redshift" and self.unit is None:
             raise ValidationError("Need units if the distance_type is not redshift!")
+
+        return self
 
 
 class ClassificationSchema(BaseModel):
