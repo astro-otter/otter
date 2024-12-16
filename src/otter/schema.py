@@ -127,30 +127,30 @@ class PhotometrySchema(BaseModel):
     filter_key: Union[str, List[str]]
     obs_type: Union[str, List[str]]
     telescope_area: Optional[Union[float, List[float]]] = None
-    date: Union[str, List[str], float, List[float]]
+    date: Union[str, float, List[Union[str, float]]]
     date_format: Union[str, List[str]]
-    date_err: Optional[Union[str, List[str], float, List[float]]] = None
+    date_err: Optional[Union[str, float, List[Union[str, float]]]] = None
     ignore: Optional[Union[bool, List[bool]]] = None
     upperlimit: Optional[Union[bool, List[bool]]] = None
-    sigma: Optional[Union[str, List[str], float, List[float]]] = None
-    sky: Optional[Union[str, List[str], float, List[float]]] = None
+    sigma: Optional[Union[str, float, List[Union[str, float]]]] = None
+    sky: Optional[Union[str, float, List[Union[str, float]]]] = None
     telescope: Optional[Union[str, List[str]]] = None
     instrument: Optional[Union[str, List[str]]] = None
     phot_type: Optional[Union[str, List[str]]] = None
-    exptime: Optional[Union[str, List[str], int, List[int], float, List[float]]] = None
-    aperture: Optional[Union[str, List[str], int, List[int], float, List[float]]] = None
+    exptime: Optional[Union[str, int, float, List[Union[str, int, float]]]] = None
+    aperture: Optional[Union[str, int, float, List[Union[str, int, float]]]] = None
     observer: Optional[Union[str, List[str]]] = None
     reducer: Optional[Union[str, List[str]]] = None
     pipeline: Optional[Union[str, List[str]]] = None
-    corr_k: Optional[Union[bool, List[bool]]] = None
-    corr_av: Optional[Union[bool, List[bool]]] = None
-    corr_host: Optional[Union[bool, List[bool]]] = None
-    corr_hostav: Optional[Union[bool, List[bool]]] = None
-    val_k: Optional[Union[float, List[float], int, List[int]]] = None
-    val_s: Optional[Union[float, List[float], int, List[int]]] = None
-    val_av: Optional[Union[float, List[float], int, List[int]]] = None
-    val_host: Optional[Union[float, List[float], int, List[int]]] = None
-    val_hostav: Optional[Union[float, List[float], int, List[int]]] = None
+    corr_k: Optional[Union[bool, str, List[Union[bool, str]]]] = None
+    corr_av: Optional[Union[bool, str, List[Union[bool, str]]]] = None
+    corr_host: Optional[Union[bool, str, List[Union[bool, str]]]] = None
+    corr_hostav: Optional[Union[bool, str, List[Union[bool, str]]]] = None
+    val_k: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
+    val_s: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
+    val_av: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
+    val_host: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
+    val_hostav: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
 
     @field_validator(
         "raw_units",
@@ -185,12 +185,17 @@ class FilterSchema(BaseModel):
 
 
 class OtterSchema(BaseModel):
-    schema_version: VersionSchema
+    schema_version: Optional[VersionSchema] = None
     name: NameSchema
     coordinate: list[CoordinateSchema]
-    distance: list[DistanceSchema]
-    classification: list[ClassificationSchema]
+    distance: Optional[list[DistanceSchema]] = None
+    classification: Optional[list[ClassificationSchema]] = None
     reference_alias: list[ReferenceSchema]
-    date_reference: list[DateSchema]
-    photometry: list[PhotometrySchema]
-    filter_alias: list[FilterSchema]
+    date_reference: Optional[list[DateSchema]] = None
+    photometry: Optional[list[PhotometrySchema]] = None
+    filter_alias: Optional[list[FilterSchema]] = None
+
+    @model_validator(mode="after")
+    def _verify_filter_alias(self):
+        if self.photometry is not None and self.filter_alias is None:
+            raise ValidationError("filter_alias is needed if photometry is given!")

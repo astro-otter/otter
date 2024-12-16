@@ -73,3 +73,9 @@ python3 $FILEDIR/masterson24_to_otter.py --otterdir $OUTDIR --indir $INDIR/maste
 ###########################################################################
 echo "Pulling data from TNS"
 python3 $FILEDIR/tns_to_otter.py --otterdir $OUTDIR
+
+###########################################################################
+############### VALIDATE THE JSON FILES WITH PYDANTIC #####################
+###########################################################################
+echo "Validating the JSON files..."
+python3 $FILEDIR/validate.py --otterdir $OUTDIR
