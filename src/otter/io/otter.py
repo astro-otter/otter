@@ -104,6 +104,7 @@ class Otter(Database):
             "date_reference",
             "distance",
             "classification",
+            "reference_alias",
         ]
 
         return [t[metakeys] for t in self.query(**kwargs)]
