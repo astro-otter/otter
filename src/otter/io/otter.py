@@ -55,7 +55,7 @@ class Otter(Database):
         self,
         url: str = "http://127.0.0.1:8529",
         username: str = "user-guest",
-        password: str = os.environ.get("OTTERDB_PASS", ""),
+        password: str = "",
         gen_summary: bool = False,
         datadir: str = None,
         debug: bool = False,
@@ -789,7 +789,10 @@ class Otter(Database):
 
     @staticmethod
     def from_csvs(
-        metafile: str, photfile: str = None, local_outpath: str = "private_otter_data"
+        metafile: str,
+        photfile: str = None,
+        local_outpath: str = "private_otter_data",
+        db: Otter = None,
     ) -> Otter:
         """
         Converts private metadata and photometry csvs to an Otter object stored
@@ -800,7 +803,10 @@ class Otter(Database):
             metafile (str) : String filepath or string io csv object of the csv metadata
             photfile (str) : String filepath or string io csv object of the csv
                                           photometry
-            local_outpath (str) : The outpath to write the OTTER json files to\
+            local_outpath (str) : The outpath to write the OTTER json files to
+            db (Otter) : An Otter instance to add the local_outpath to for querying.
+                         This keyword can be useful if you have special permission for
+                         the otter database and want to upload your private data
 
         Returns:
             An Otter object where the json files are stored locally
@@ -1225,10 +1231,12 @@ class Otter(Database):
 
             all_jsons.append(Transient(json))
 
-        db = Otter(datadir=local_outpath)
+        if db is None:
+            db = Otter(datadir=local_outpath)
+        else:
+            db.datadir = local_outpath
 
         # always save this document as a new one
-        print(dict(all_jsons[0]))
         db.save(all_jsons)
         db.generate_summary_table(save=True)
         return db
