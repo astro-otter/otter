@@ -54,7 +54,7 @@ class Otter(Database):
     def __init__(
         self,
         url: str = "http://127.0.0.1:8529",
-        username: str = "root",
+        username: str = "user-guest",
         password: str = os.environ.get("OTTERDB_PASS", ""),
         gen_summary: bool = False,
         datadir: str = None,
