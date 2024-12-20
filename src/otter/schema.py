@@ -188,6 +188,46 @@ class FilterSchema(BaseModel):
     zp_system: Union[str, float, int] = None
 
 
+class HostSchema(BaseModel):
+    reference: Union[str, List[str]]
+    host_ra: Optional[Union[str, float]] = None
+    host_dec: Optional[Union[str, float]] = None
+    host_ra_units: Optional[str] = None
+    host_dec_units: Optional[str] = None
+    host_z: Optional[Union[str, int, float]] = None
+    host_type: Optional[str] = None
+    host_name: Optional[str] = None
+
+    @model_validator(mode="after")
+    def _has_coordinate_or_name(self):
+        has_coordinate = self.host_ra is not None and self.host_dec is not None
+        has_name = self.host_name is not None
+
+        # if it has the RA/Dec keys, make sure it also has ra_unit, dec_unit keys
+        if has_coordinate:
+            if self.host_ra_units is None:
+                raise ValidationError("Need RA unit if coordinates are provided!")
+            if self.host_dec_units is None:
+                raise ValidationError("Need Dec unit if coordinates are provided!")
+
+        # we need either the coordinate or name to identify this object
+        # Both are okay too (more info is always better)
+        if not has_coordinate and not has_name:
+            raise ValidationError(
+                "Need to provide a Host name and/or host coordinates!"
+            )
+
+        # Make sure that if one of RA/Dec is given then both are given
+        if (self.host_ra is None and self.host_dec is not None) or (
+            self.host_ra is not None and self.host_dec is None
+        ):
+            raise ValidationError(
+                "Please provide RA AND Dec, not just one or the other!"
+            )
+
+        return self
+
+
 class OtterSchema(BaseModel):
     schema_version: Optional[VersionSchema] = None
     name: NameSchema
@@ -198,6 +238,7 @@ class OtterSchema(BaseModel):
     date_reference: Optional[list[DateSchema]] = None
     photometry: Optional[list[PhotometrySchema]] = None
     filter_alias: Optional[list[FilterSchema]] = None
+    host: Optional[list[HostSchema]] = None
 
     @model_validator(mode="after")
     def _verify_filter_alias(self):
