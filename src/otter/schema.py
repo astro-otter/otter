@@ -16,6 +16,28 @@ class _AliasSchema(BaseModel):
     reference: Union[str, List[str]]
 
 
+class _XrayModelSchema(BaseModel):
+    # the following two lines are needed to prevent annoying warnings
+    model_config: dict = {}
+    model_config["protected_namespaces"] = ()
+
+    # required keywords
+    model_name: str
+    param_names: List[str]
+    param_values: List[Union[float, int, str]]
+    param_units: List[str]
+    min_energy: Union[float, int, str]
+    max_energy: Union[float, int, str]
+    energy_units: str
+
+    # optional keywords
+    param_value_err_upper: Optional[List[Union[float, int, str]]] = None
+    param_value_err_lower: Optional[List[Union[float, int, str]]] = None
+    param_upperlimit: Optional[List[Union[float, int, str]]] = None
+    param_descriptions: Optional[List[str]] = None
+    model_reference: Optional[Union[str, List[str]]] = None
+
+
 class NameSchema(BaseModel):
     default_name: str
     alias: list[_AliasSchema]
@@ -155,6 +177,7 @@ class PhotometrySchema(BaseModel):
     val_av: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     val_host: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     val_hostav: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
+    xray_model: Optional[List[_XrayModelSchema]] = None
 
     @field_validator(
         "raw_units",
@@ -171,6 +194,20 @@ class PhotometrySchema(BaseModel):
         if not isinstance(v, list):
             return [v]
         return v
+
+    @model_validator(mode="after")
+    def _ensure_xray_model(self):
+        """
+        This will eventually ensure the xray_model key is used if obs_type="xray"
+
+        It will be commented out until we get the data setup correctly
+        """
+        # if self.obs_type == "xray" and self.xray_model is None:
+        #     raise ValidationError(
+        #         "Need an xray_model for this xray data!"
+        #     )
+
+        return self
 
 
 class FilterSchema(BaseModel):
