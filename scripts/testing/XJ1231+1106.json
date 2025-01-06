@@ -71,7 +71,9 @@
         {
             "object_class": "TDE",
             "confidence": 0.1,
-            "reference": "2017ApJ...835...64G",
+            "reference": [
+                "2017ApJ...835...64G"
+            ],
             "default": true
         }
     ],

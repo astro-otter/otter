@@ -2,80 +2,76 @@
     "filter_alias": [
         {
             "filter_key": "4.5GHz",
+            "filter_name": "C",
             "freq_eff": 4.5,
             "freq_units": "GHz"
         },
         {
             "filter_key": "5.5GHz",
+            "filter_name": "C",
             "freq_eff": 5.5,
             "freq_units": "GHz"
         },
         {
             "filter_key": "0.3 - 2.0",
             "wave_eff": 0.7293188143129428,
-            "wave_units": "nm"
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         }
     ],
-    "classification": [
+    "reference_alias": [
         {
-            "object_class": "TDE",
-            "confidence": 1.0,
+            "name": "2012ApJ...753...77C",
+            "human_readable_name": "Cenko et al. (2012)"
+        },
+        {
+            "name": "2015ApJ...805...68P",
+            "human_readable_name": "Pasham et al. (2015)"
+        },
+        {
+            "name": "2017MNRAS.472.4469B",
+            "human_readable_name": "Brown et al. (2017)"
+        },
+        {
+            "name": "2017ApJ...838..149A",
+            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
+        },
+        {
+            "name": "2016A&A...594A..13P",
+            "human_readable_name": "Planck Collaboration et al. (2016)"
+        },
+        {
+            "name": "2017ApJ...835...64G",
+            "human_readable_name": "Guillochon et al. (2017)"
+        }
+    ],
+    "schema_version": {
+        "value": "0",
+        "comment": "Original Dataset;Copied from tde.space"
+    },
+    "date_reference": [
+        {
+            "value": "2011-05-27",
+            "date_format": "iso",
+            "date_type": "discovery",
+            "reference": [
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": false
+        },
+        {
+            "value": "55698.0",
+            "date_format": "mjd",
+            "date_type": "discovery",
             "reference": [
                 "2012ApJ...753...77C",
                 "2015ApJ...805...68P",
-                "2017ApJ...835...64G",
                 "2017MNRAS.472.4469B"
             ],
             "default": true
-        }
-    ],
-    "distance": [
-        {
-            "value": "1.1853",
-            "reference": [
-                "2012ApJ...753...77C",
-                "2015ApJ...805...68P",
-                "2017MNRAS.472.4469B"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "1.1853",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2012ApJ...753...77C"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "redshift"
-        },
-        {
-            "value": "8376.4",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...753...77C",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "luminosity",
-            "unit": "Mpc"
-        },
-        {
-            "value": "3833.1",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2016A&A...594A..13P",
-                "2012ApJ...753...77C",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "default": true,
-            "distance_type": "comoving",
-            "unit": "Mpc"
         }
     ],
     "photometry": [
@@ -116,20 +112,25 @@
             "upperlimit": [
                 false,
                 false
-            ]
+            ],
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": false,
+            "corr_hostav": false
         },
         {
             "raw": [
-                "0.000431662",
-                "0.000353764"
+                0.000431662,
+                0.000353764
             ],
             "raw_units": [
-                "s^-1",
-                "s^-1"
+                "ct",
+                "ct"
             ],
             "value": [
-                "5.48E-15",
-                "4.49E-15"
+                5.48e-15,
+                4.49e-15
             ],
             "value_units": [
                 "ergs/cm^2/s",
@@ -153,19 +154,62 @@
                 true
             ],
             "telescope": "Chandra",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0697"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0697"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "0.0282693"
+                0.0282693
             ],
             "raw_units": [
-                "s^-1"
+                "ct"
             ],
             "value": [
-                "4.22E-13"
+                4.22e-13
             ],
             "value_units": [
                 "ergs/cm^2/s"
@@ -184,38 +228,63 @@
                 true
             ],
             "telescope": "ROSAT",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0697"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "0.999299",
-                "0.02422",
-                "0.00725647",
-                "0.0026471",
-                "0.00225235"
+                0.999299,
+                0.02422,
+                0.00725647,
+                0.0026471,
+                0.00225235
             ],
             "raw_err": [
-                "0.0195121",
-                "0.00118726",
-                "0.000643452",
-                "0.00134011",
-                "0.000627106"
+                0.0195121,
+                0.00118726,
+                0.000643452,
+                0.00134011,
+                0.000627106
             ],
             "raw_units": [
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1"
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct"
             ],
             "value": [
-                "1.10E-11",
-                "2.96E-13",
-                "8.33E-14",
-                "3.09E-14",
-                "2.63E-14"
+                1.1e-11,
+                2.96e-13,
+                8.33e-14,
+                3.09e-14,
+                2.63e-14
             ],
             "value_units": [
                 "ergs/cm^2/s",
@@ -254,34 +323,116 @@
                 false
             ],
             "telescope": "Swift",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.3698"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.59"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.5"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.59745"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.6"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "1.29E+00",
-                "4.17E-02",
-                "0.546",
-                "0.0359805",
-                "1.67",
-                "0.893"
+                1.29,
+                0.0417,
+                0.546,
+                0.0359805,
+                1.67,
+                0.893
             ],
             "raw_units": [
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1"
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct"
             ],
             "value": [
-                "4.42E-12",
-                "4.15E-14",
-                "1.87E-12",
-                "4.16E-14",
-                "5.72E-12",
-                "3.06E-12"
+                4.42e-12,
+                4.15e-14,
+                1.87e-12,
+                4.16e-14,
+                5.72e-12,
+                3.06e-12
             ],
             "value_units": [
                 "ergs/cm^2/s",
@@ -325,56 +476,108 @@
                 false
             ],
             "telescope": "XMM",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.885"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.98"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.885"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.51"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.885"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Powerlaw",
+                    "param_names": [
+                        "photonindex"
+                    ],
+                    "param_values": [
+                        "1.885"
+                    ],
+                    "param_units": [
+                        "None"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         }
     ],
-    "reference_alias": [
-        {
-            "name": "2012ApJ...753...77C",
-            "human_readable_name": "Cenko et al. (2012)"
-        },
-        {
-            "name": "2015ApJ...805...68P",
-            "human_readable_name": "Pasham et al. (2015)"
-        },
-        {
-            "name": "2017MNRAS.472.4469B",
-            "human_readable_name": "Brown et al. (2017)"
-        },
-        {
-            "name": "2017ApJ...838..149A",
-            "human_readable_name": "Auchettl, Guillochon, & Ramirez-Ruiz (2017)"
-        },
-        {
-            "name": "2016A&A...594A..13P",
-            "human_readable_name": "Planck Collaboration et al. (2016)"
-        },
-        {
-            "name": "2017ApJ...835...64G",
-            "human_readable_name": "Guillochon et al. (2017)"
-        }
-    ],
-    "name": {
-        "default_name": "Sw J2058+05",
-        "alias": [
-            {
-                "value": "Sw J2058+05",
-                "reference": [
-                    "Swift"
-                ]
-            },
-            {
-                "value": "Swift J2058+05",
-                "reference": [
-                    [
-                        "2017ApJ...838..149A"
-                    ]
-                ]
-            }
-        ]
-    },
     "coordinate": [
         {
             "ra": "20 58 19.90",
@@ -383,63 +586,105 @@
             "system": "ICRS",
             "ra_units": "hourangle",
             "dec_units": "deg",
+            "computed": "False",
+            "default": true,
+            "uuid": "e8098c63-63bb-4e93-bebf-2d580eee9987",
+            "coordinate_type": "equitorial",
             "reference": [
                 "2012ApJ...753...77C",
                 "2015ApJ...805...68P",
                 "2017MNRAS.472.4469B"
-            ],
-            "computed": false,
-            "default": true,
-            "uuid": "d20ee07d-136b-42a7-a60f-d255b95a7a7e",
-            "coordinate_type": "equitorial"
-        },
-        {
-            "reference": "d20ee07d-136b-42a7-a60f-d255b95a7a7e",
-            "computed": true,
-            "coordinate_type": "galactic",
-            "l": 53.61702902648376,
-            "b": -25.11893929017656,
-            "l_units": "deg",
-            "b_units": "deg"
+            ]
         },
         {
             "ra": "20:58:19.85",
             "dec": "+05:13:33.00",
             "ra_units": "hour",
             "dec_units": "deg",
+            "default": false,
+            "coordinate_type": "equitorial",
             "reference": [
                 "2017ApJ...838..149A"
-            ],
-            "coordinate_type": "equitorial"
+            ]
+        },
+        {
+            "computed": "True",
+            "default": true,
+            "coordinate_type": "galactic",
+            "l": "53.61702902648376",
+            "b": "-25.11893929017656",
+            "l_units": "deg",
+            "b_units": "deg",
+            "reference": [
+                "e8098c63-63bb-4e93-bebf-2d580eee9987"
+            ]
         }
     ],
-    "schema_version": {
-        "value": "0",
-        "comment": "Copied from tde.space"
-    },
-    "date_reference": [
+    "classification": [
         {
-            "value": "55698.0",
-            "date_format": "mjd",
+            "object_class": "TDE",
+            "confidence": 1.0,
             "reference": [
                 "2012ApJ...753...77C",
                 "2015ApJ...805...68P",
+                "2017ApJ...835...64G",
                 "2017MNRAS.472.4469B"
             ],
-            "computed": false,
-            "date_type": "discovery"
-        },
-        {
-            "value": "2011-05-27",
-            "date_format": "iso",
-            "reference": [
-                "2017ApJ...838..149A",
-                "2017ApJ...835...64G"
-            ],
-            "computed": false,
-            "date_type": "discovery",
-            "measurement_type": "discovery",
             "default": true
         }
-    ]
+    ],
+    "distance": [
+        {
+            "value": "1.1853",
+            "distance_type": "redshift",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2015ApJ...805...68P",
+                "2017ApJ...838..149A",
+                "2017MNRAS.472.4469B"
+            ],
+            "default": true
+        },
+        {
+            "value": "3833.1",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        },
+        {
+            "value": "8376.4",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2012ApJ...753...77C",
+                "2016A&A...594A..13P",
+                "2017ApJ...835...64G",
+                "2017ApJ...838..149A"
+            ],
+            "default": true
+        }
+    ],
+    "name": {
+        "default_name": "Sw J2058+05",
+        "alias": [
+            {
+                "value": "Swift J2058+05",
+                "reference": [
+                    "2017ApJ...838..149A"
+                ]
+            },
+            {
+                "value": "Sw J2058+05",
+                "reference": [
+                    "Swift"
+                ]
+            }
+        ]
+    }
 }

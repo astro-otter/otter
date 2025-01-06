@@ -59,23 +59,22 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
         }
     ],
     "photometry": [
         {
             "raw": [
-                "17.3",
-                "17.2",
-                "17.2"
+                17.3,
+                17.2,
+                17.2
             ],
             "raw_err": [
-                "0.1",
-                "0.1",
-                "0.1"
+                0.1,
+                0.1,
+                0.1
             ],
-            "raw_units": "AB",
+            "raw_units": "mag(AB)",
             "filter_key": [
                 "UVM2",
                 "UVW1",
@@ -98,26 +97,34 @@
                 false
             ],
             "telescope": "Swift",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ATel10216....1K"
-            ]
+            ],
+            "corr_s": null
         }
     ],
     "filter_alias": [
         {
             "filter_key": "UVM2",
             "wave_eff": 225.47802478793594,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "UVM2"
         },
         {
             "filter_key": "UVW1",
             "wave_eff": 261.3713060531025,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "UVW1"
         },
         {
             "filter_key": "UVW2",
             "wave_eff": 207.98754332676123,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "UVW2"
         }
     ]
 }

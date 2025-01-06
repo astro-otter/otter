@@ -108,23 +108,22 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
         }
     ],
     "photometry": [
         {
             "raw": [
-                "0.0127558"
+                0.0127558
             ],
             "raw_err": [
-                "0.000854013"
+                0.000854013
             ],
             "raw_units": [
-                "s^-1"
+                "ct"
             ],
             "value": [
-                "3.78E-14"
+                3.78e-14
             ],
             "value_units": [
                 "ergs/cm^2/s"
@@ -143,19 +142,44 @@
                 false
             ],
             "telescope": "Chandra",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.58",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "0.0211339"
+                0.0211339
             ],
             "raw_units": [
-                "s^-1"
+                "ct"
             ],
             "value": [
-                "9.56E-14"
+                9.56e-14
             ],
             "value_units": [
                 "ergs/cm^2/s"
@@ -174,40 +198,65 @@
                 true
             ],
             "telescope": "ROSAT",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "0.00243606",
-                "0.00450002",
-                "0.00395385",
-                "0.00399806",
-                "0.00265152",
-                "0.0134029",
-                "0.00466648",
-                "0.00226545"
+                0.00243606,
+                0.00450002,
+                0.00395385,
+                0.00399806,
+                0.00265152,
+                0.0134029,
+                0.00466648,
+                0.00226545
             ],
             "raw_units": [
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1"
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct"
             ],
             "value": [
-                "5.86E-14",
-                "1.08E-13",
-                "9.49E-14",
-                "9.61E-14",
-                "6.36E-14",
-                "3.22E-13",
-                "1.12E-13",
-                "5.45E-14"
+                5.86e-14,
+                1.08e-13,
+                9.49e-14,
+                9.61e-14,
+                6.36e-14,
+                3.22e-13,
+                1.12e-13,
+                5.45e-14
             ],
             "value_units": [
                 "ergs/cm^2/s",
@@ -261,40 +310,191 @@
                 true
             ],
             "telescope": "Swift",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "8.77",
-                "7.84",
-                "1.9",
-                "0.0605615",
-                "1.49",
-                "0.0165572",
-                "0.797",
-                "0.709"
+                8.77,
+                7.84,
+                1.9,
+                0.0605615,
+                1.49,
+                0.0165572,
+                0.797,
+                0.709
             ],
             "raw_units": [
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1",
-                "s^-1"
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct",
+                "ct"
             ],
             "value": [
-                "3.94E-11",
-                "3.52E-11",
-                "8.54E-12",
-                "1.27E-13",
-                "6.70E-12",
-                "3.49E-14",
-                "3.58E-12",
-                "3.19E-12"
+                3.94e-11,
+                3.52e-11,
+                8.54e-12,
+                1.27e-13,
+                6.7e-12,
+                3.49e-14,
+                3.58e-12,
+                3.19e-12
             ],
             "value_units": [
                 "ergs/cm^2/s",
@@ -348,16 +548,170 @@
                 false
             ],
             "telescope": "XMM",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.57",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.57",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.57",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.71",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.57",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.43",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.57",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                },
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "2.57",
+                        "0.0141"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         }
     ],
     "filter_alias": [
         {
             "filter_key": "0.3 - 2.0",
             "wave_eff": 0.7293188143129428,
-            "wave_units": "nm"
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         }
     ]
 }

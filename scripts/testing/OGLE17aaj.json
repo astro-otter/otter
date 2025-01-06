@@ -18,6 +18,7 @@
             "dec": "-71:04:15.7",
             "ra_units": "hour",
             "dec_units": "deg",
+            "reference": [],
             "coordinate_type": "equitorial"
         }
     ],
@@ -49,7 +50,9 @@
         {
             "object_class": "TDE",
             "confidence": 0.1,
-            "reference": "2017ApJ...835...64G",
+            "reference": [
+                "2017ApJ...835...64G"
+            ],
             "default": true
         }
     ],
@@ -76,7 +79,6 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
         }
     ]

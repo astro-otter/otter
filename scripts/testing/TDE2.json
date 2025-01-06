@@ -68,7 +68,9 @@
         {
             "object_class": "TDE",
             "confidence": 0.1,
-            "reference": "2017ApJ...835...64G",
+            "reference": [
+                "2017ApJ...835...64G"
+            ],
             "default": true
         }
     ],
@@ -108,20 +110,19 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
         }
     ],
     "photometry": [
         {
             "raw": [
-                "0.024"
+                0.024
             ],
             "raw_units": [
-                "s^-1"
+                "ct"
             ],
             "value": [
-                "1.06E-13"
+                1.06e-13
             ],
             "value_units": [
                 "ergs/cm^2/s"
@@ -140,19 +141,44 @@
                 true
             ],
             "telescope": "ROSAT",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0423"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "0.563"
+                0.563
             ],
             "raw_units": [
-                "s^-1"
+                "ct"
             ],
             "value": [
-                "2.82E-12"
+                2.82e-12
             ],
             "value_units": [
                 "ergs/cm^2/s"
@@ -171,18 +197,43 @@
                 true
             ],
             "telescope": "XMM",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2017ApJ...838..149A"
-            ]
+            ],
+            "xray_model": [
+                {
+                    "model_name": "Absorbed Powerlaw",
+                    "param_names": [
+                        "photonindex",
+                        "nhmw"
+                    ],
+                    "param_values": [
+                        "4.5",
+                        "0.0423"
+                    ],
+                    "param_units": [
+                        "None",
+                        "10^22 cm^-2"
+                    ],
+                    "min_energy": 0.3,
+                    "max_energy": 2.0,
+                    "energy_units": "keV"
+                }
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "19.26"
+                19.26
             ],
             "raw_err": [
-                "0.3"
+                0.3
             ],
-            "raw_units": "AB",
+            "raw_units": "mag(AB)",
             "filter_key": [
                 "C"
             ],
@@ -197,22 +248,27 @@
                 false
             ],
             "telescope": "CSS",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2011ApJ...741...73V"
-            ]
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "21.1840",
-                "21.4025",
-                "21.099000"
+                21.184,
+                21.4025,
+                21.099
             ],
             "raw_err": [
-                "0.100000",
-                "0.160000",
-                "0.0960000"
+                0.1,
+                0.16,
+                0.096
             ],
-            "raw_units": "AB",
+            "raw_units": "mag(AB)",
             "filter_key": [
                 "NUV",
                 "FUV",
@@ -235,50 +291,55 @@
                 false
             ],
             "telescope": "GALEX",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2011ApJ...741...73V"
-            ]
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "21.9897",
-                "21.9897",
-                "21.9897",
-                "21.9897",
-                "21.9897",
-                "21.9897",
-                "20.0545",
-                "20.3680",
-                "19.9268",
-                "20.0966",
-                "20.4993",
-                "19.8738",
-                "20.2025",
-                "20.5820",
-                "20.2274",
-                "20.4859",
-                "20.2824",
-                "20.3985",
-                "20.4621",
-                "20.1077",
-                "20.5392",
-                "20.3892",
-                "20.4063",
-                "20.6483",
-                "20.1350",
-                "20.4910",
-                "20.8167",
-                "20.7446",
-                "20.4937",
-                "20.6341",
-                "20.5019",
-                "20.4172",
-                "20.7091",
-                "20.4613",
-                "20.7660",
-                "20.3943"
+                21.9897,
+                21.9897,
+                21.9897,
+                21.9897,
+                21.9897,
+                21.9897,
+                20.0545,
+                20.368,
+                19.9268,
+                20.0966,
+                20.4993,
+                19.8738,
+                20.2025,
+                20.582,
+                20.2274,
+                20.4859,
+                20.2824,
+                20.3985,
+                20.4621,
+                20.1077,
+                20.5392,
+                20.3892,
+                20.4063,
+                20.6483,
+                20.135,
+                20.491,
+                20.8167,
+                20.7446,
+                20.4937,
+                20.6341,
+                20.5019,
+                20.4172,
+                20.7091,
+                20.4613,
+                20.766,
+                20.3943
             ],
-            "raw_units": "AB",
+            "raw_units": "mag(AB)",
             "filter_key": [
                 "g",
                 "r",
@@ -433,46 +494,60 @@
                 false
             ],
             "telescope": "SDSS",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2011ApJ...741...73V"
-            ]
+            ],
+            "corr_s": null
         }
     ],
     "filter_alias": [
         {
             "filter_key": "0.3 - 2.0",
             "wave_eff": 0.7293188143129428,
-            "wave_units": "nm"
+            "wave_min": 0.6199209921660013,
+            "wave_max": 4.132806614440009,
+            "wave_units": "nm",
+            "filter_name": "0.3 - 2.0"
         },
         {
             "filter_key": "C",
             "wave_eff": 616.690135,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "C"
         },
         {
             "filter_key": "FUV",
             "wave_eff": 153.8620701901866,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "FUV"
         },
         {
             "filter_key": "NUV",
             "wave_eff": 231.56631043707714,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "NUV"
         },
         {
             "filter_key": "g",
             "wave_eff": 475.0,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "g"
         },
         {
             "filter_key": "r",
             "wave_eff": 622.0,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "r"
         },
         {
             "filter_key": "u",
             "wave_eff": 354.0,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "u"
         }
     ]
 }

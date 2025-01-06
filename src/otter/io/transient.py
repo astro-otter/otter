@@ -367,7 +367,11 @@ class Transient(MutableMapping):
             astropy.time.Time of the default discovery date
         """
         key = "date_reference"
-        date = self._get_default(key, filt='df["date_type"] == "discovery"')
+        try:
+            date = self._get_default(key, filt='df["date_type"] == "discovery"')
+        except KeyError:
+            return None
+
         if date is None:
             return date
 
@@ -460,6 +464,9 @@ class Transient(MutableMapping):
             raise KeyError(f"This transient does not have {key} associated with it!")
 
         df = pd.DataFrame(self[key])
+        if len(df) == 0:
+            raise KeyError(f"This transient does not have {key} associated with it!")
+
         if filt is not None:
             df = df[eval(filt)]  # apply the filters
 
@@ -473,6 +480,7 @@ class Transient(MutableMapping):
 
         if len(df_filtered) == 0:
             return None
+
         return df_filtered.iloc[0]
 
     def _reformat_coordinate(self, item):

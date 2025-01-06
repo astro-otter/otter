@@ -453,6 +453,7 @@ def main():
                         print(f"Skipping {group} because no units given so unreliable!")
                         badphot += len(group)
                         continue  # don't add this one
+
                     if "energy" in group:
                         sub["filter_key"] = [
                             " - ".join(e) if isinstance(e, list) else e
@@ -464,6 +465,62 @@ def main():
                             f"Skipping {group} because no filter given so unreliable!"
                         )
                         continue  # don't add this one
+
+                    # add the xray model, if information on it is given
+                    sub["xray_model"] = []
+
+                    has_abs_pl = "photonindex" in group and "nhmw" in group
+                    has_pl = "photonindex" in group and "nhmw" not in group
+                    for _, row in group.iterrows():
+                        if (
+                            has_abs_pl
+                            and not pd.isna(row.photonindex)
+                            and not pd.isna(row.nhmw)
+                        ):
+                            sub["xray_model"].append(
+                                dict(
+                                    model_name="Absorbed Powerlaw",
+                                    param_names=["photonindex", "nhmw"],
+                                    param_values=[row.photonindex, row.nhmw],
+                                    param_units=["None", "10^22 cm^-2"],
+                                    min_energy=float(row.energy[0]),
+                                    max_energy=float(row.energy[1]),
+                                    energy_units=row.u_energy,
+                                )
+                            )
+                        elif (
+                            has_abs_pl
+                            and not pd.isna(row.photonindex)
+                            and pd.isna(row.nhmw)
+                        ):
+                            sub["xray_model"].append(
+                                dict(
+                                    model_name="Powerlaw",
+                                    param_names=["photonindex"],
+                                    param_values=[row.photonindex],
+                                    param_units=["None"],
+                                    min_energy=float(row.energy[0]),
+                                    max_energy=float(row.energy[1]),
+                                    energy_units=row.u_energy,
+                                )
+                            )
+
+                        elif has_pl and not pd.isna(row.photonindex):
+                            sub["xray_model"].append(
+                                dict(
+                                    model_name="Powerlaw",
+                                    param_names=["photonindex"],
+                                    param_values=[row.photonindex],
+                                    param_units=["None"],
+                                    min_energy=float(row.energy[0]),
+                                    max_energy=float(row.energy[1]),
+                                    energy_units=row.u_energy,
+                                )
+                            )
+
+                        else:
+                            # the x-ray model is unknown :(
+                            sub["xray_model"].append("Unknown X-ray Model!")
 
                 elif (
                     "flux" in group and "u_flux" in group
@@ -486,10 +543,30 @@ def main():
                         )
                         raise ValueError()
                         continue  # don't add this one
+
+                elif (
+                    "fluxdensity" in group and "u_fluxdensity" in group
+                ):  # we will just use the flux for the raw data
+                    usedfluxforraw = True
+                    sub["raw"] = list(group.fluxdensity.astype(float))
+                    sub["raw_units"] = list(group.u_fluxdensity)
+                    if "e_fluxdensity" in group:
+                        sub["raw_err"] = list(group.e_fluxdensity.astype(float))
+                    if "frequency" in group and "u_frequency" in group:
+                        sub["filter_key"] = [
+                            freq + freq_unit
+                            for freq, freq_unit in zip(
+                                group.frequency, group.u_frequency
+                            )
+                        ]
+                    else:
+                        print(f"Skipping {group} because no frequency,  so unreliable!")
+                        raise ValueError(
+                            "Something didn't work with the tde.space radio data"
+                        )
+                        continue  # don't add this one
+
                 else:
-                    # for radio data, throw an error for now
-                    # print(group)
-                    # raise ValueError('Unknown type of photometry! Please Fix!')
                     print(
                         "Skipping this photometry point because "
                         + "it is an unknown type! Please fix!"
@@ -551,13 +628,24 @@ def main():
                 sub = deepcopy(otter_const.subschema["filter_alias"])
                 sub["filter_key"] = key
                 sub["filter_name"] = key
-                sub["wave_units"] = "nm"
                 if key in bandwavelengths:
                     sub["wave_eff"] = bandwavelengths[key]
+                    sub["wave_units"] = "nm"
+
                 elif key in otter_const.FILTER_MAP_WAVE:
+                    sub["wave_units"] = "nm"
                     sub["wave_eff"] = otter_const.FILTER_MAP_WAVE[key]
+
                 elif key in xraycodes:
                     sub["wave_min"], sub["wave_eff"], sub["wave_max"] = xraycodes[key]
+                    sub["wave_units"] = "nm"
+
+                elif "Hz" in key:
+                    freq = float("".join(filter(str.isdigit, key)))
+                    sub["freq_eff"] = freq
+                    sub["filter_name"] = otter_helper.freq_to_band(freq)
+                    sub["freq_units"] = key.replace(str(freq), "")
+
                 else:
                     raise ValueError(
                         "Can not add filter {key} because we dont know wave_eff"

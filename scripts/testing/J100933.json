@@ -65,7 +65,9 @@
         {
             "object_class": "TDE",
             "confidence": 0.1,
-            "reference": "2017ApJ...835...64G",
+            "reference": [
+                "2017ApJ...835...64G"
+            ],
             "default": true
         }
     ],
@@ -97,19 +99,18 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
         }
     ],
     "photometry": [
         {
             "raw": [
-                "17.431"
+                17.431
             ],
             "raw_err": [
-                "0.036"
+                0.036
             ],
-            "raw_units": "AB",
+            "raw_units": "mag(AB)",
             "filter_key": [
                 "V"
             ],
@@ -124,40 +125,45 @@
                 false
             ],
             "telescope": "CRTS",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2018arXiv180205105W"
-            ]
+            ],
+            "corr_s": null
         },
         {
             "raw": [
-                "13.382",
-                "12.207",
-                "13.842",
-                "12.704",
-                "14.167",
-                "13.539",
-                "14.175",
-                "13.606",
-                "14.152",
-                "13.637",
-                "14.162",
-                "13.625"
+                13.382,
+                12.207,
+                13.842,
+                12.704,
+                14.167,
+                13.539,
+                14.175,
+                13.606,
+                14.152,
+                13.637,
+                14.162,
+                13.625
             ],
             "raw_err": [
-                "0.024",
-                "0.017",
-                "0.034",
-                "0.030",
-                "0.025",
-                "0.048",
-                "0.025",
-                "0.056",
-                "0.033",
-                "0.059",
-                "0.044",
-                "0.050"
+                0.024,
+                0.017,
+                0.034,
+                0.03,
+                0.025,
+                0.048,
+                0.025,
+                0.056,
+                0.033,
+                0.059,
+                0.044,
+                0.05
             ],
-            "raw_units": "AB",
+            "raw_units": "mag(AB)",
             "filter_key": [
                 "W1",
                 "W2",
@@ -216,26 +222,34 @@
                 false
             ],
             "telescope": "WISE",
+            "corr_k": null,
+            "corr_av": null,
+            "corr_host": null,
+            "corr_hostav": null,
             "reference": [
                 "2018arXiv180205105W"
-            ]
+            ],
+            "corr_s": null
         }
     ],
     "filter_alias": [
         {
             "filter_key": "V",
             "wave_eff": 551.0,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "V"
         },
         {
             "filter_key": "W1",
             "wave_eff": 224.6,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "W1"
         },
         {
             "filter_key": "W2",
             "wave_eff": 192.8,
-            "wave_units": "nm"
+            "wave_units": "nm",
+            "filter_name": "W2"
         }
     ]
 }

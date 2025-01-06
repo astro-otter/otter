@@ -26,7 +26,7 @@
             ],
             "computed": false,
             "default": true,
-            "uuid": "58a6172c-dc89-4614-afe8-61041b1d3ea9",
+            "uuid": "b29eea31-d067-4aea-8967-99575afa0034",
             "coordinate_type": "equitorial"
         },
         {
@@ -34,7 +34,9 @@
             "b": -19.734536925050936,
             "l_units": "deg",
             "b_units": "deg",
-            "reference": "58a6172c-dc89-4614-afe8-61041b1d3ea9",
+            "reference": [
+                "b29eea31-d067-4aea-8967-99575afa0034"
+            ],
             "computed": true,
             "coordinate_type": "galactic"
         }
@@ -144,17 +146,24 @@
                 false,
                 false,
                 false
-            ]
+            ],
+            "corr_k": false,
+            "corr_s": false,
+            "corr_av": false,
+            "corr_host": false,
+            "corr_hostav": false
         }
     ],
     "filter_alias": [
         {
             "filter_key": "5.0GHz",
+            "filter_name": "C",
             "freq_eff": 5.0,
             "freq_units": "GHz"
         },
         {
             "filter_key": "6.0GHz",
+            "filter_name": "C",
             "freq_eff": 6.0,
             "freq_units": "GHz"
         }

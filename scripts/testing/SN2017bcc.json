@@ -28,6 +28,7 @@
             "dec": "+29:59:45.24",
             "ra_units": "hour",
             "dec_units": "deg",
+            "reference": [],
             "coordinate_type": "equitorial"
         }
     ],
@@ -87,7 +88,6 @@
                 "2017ApJ...835...64G"
             ],
             "computed": false,
-            "measurement_type": "discovery",
             "default": true
         }
     ]

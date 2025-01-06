@@ -20,6 +20,7 @@
             "dec": "-20:45:36",
             "ra_units": "hour",
             "dec_units": "deg",
+            "reference": [],
             "coordinate_type": "equitorial"
         }
     ],
