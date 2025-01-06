@@ -178,12 +178,12 @@ def tns_phot_to_otter_phot(photlist):
     for point in photlist:
         # first get flux and fluxerr
         flux, fluxerr = point["flux"], point["fluxerr"]
-        if fluxerr == "":
+        if fluxerr == "" or fluxerr is None:
             fluxerr = 0
 
         # now check if they are empty, if so we need to instead store
         # the limflux with upperlimit = True
-        if isinstance(flux, str) and len(flux) == 0:
+        if flux is None or (isinstance(flux, str) and len(flux) == 0):
             # upperlimit!
             upperlimit = True
             flux, fluxerr = point["limflux"], 0
@@ -198,7 +198,7 @@ def tns_phot_to_otter_phot(photlist):
             flux_unit = "vega"
 
         # fliters
-        filterused = point["filters"]["name"]
+        filterused = point["filters"]["name"].split("-")[0]
         if filterused in badfilternames:
             continue  # we don't trust these
 
@@ -400,7 +400,7 @@ def main():
             time.sleep(time_to_reset)
 
         outjson = response.json()
-        outdata = outjson["data"]["reply"]
+        outdata = outjson["data"]
         phot = outdata["photometry"]
 
         # now clean up the photometry

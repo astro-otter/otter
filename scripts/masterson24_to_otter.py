@@ -369,6 +369,50 @@ def main():
 
         # now x ray photometry
         xray_filters_used = []
+
+        xray_models = {
+            "eROSITA": dict(
+                model_name="Absorbed Powerlaw",
+                param_names=["Gamma", "N_H"],
+                param_values=[2.0, 3e20],
+                param_units=["None", "cm^-2"],
+                min_energy=0.2,
+                max_energy=2.3,
+                energy_units="keV",
+                model_reference="2024ApJ...961..211M",
+            ),
+            "Chandra": dict(
+                model_name="Powerlaw",
+                param_names=["Gamma"],
+                param_values=[2.0],
+                param_units=["None"],
+                min_energy=0.5,
+                max_energy=7,
+                energy_units="keV",
+                model_reference="2024ApJ...961..211M",
+            ),
+            "Swift": dict(
+                model_name="Powerlaw",
+                param_names=["Gamma"],
+                param_values=[2.0],
+                param_units=["None"],
+                min_energy=0.3,
+                max_energy=10,
+                energy_units="keV",
+                model_reference="2024ApJ...961..211M",
+            ),
+            "XMM-Slew": dict(
+                model_name="Powerlaw",
+                param_names=["Gamma"],
+                param_values=[2.0],
+                param_units=["None"],
+                min_energy=0.2,
+                max_energy=2,
+                energy_units="keV",
+                model_reference="2024ApJ...961..211M",
+            ),
+        }
+
         for keys, grp in xray[xray["name"] == wtp_name].groupby("telescope"):
             to_app = dict(
                 date=grp.date.tolist(),
@@ -385,6 +429,7 @@ def main():
                 corr_av=False,
                 corr_hostav=False,
                 obs_type="xray",
+                xray_model=[xray_models[keys]] * len(grp),
                 reference=["2024ApJ...961..211M"],
             )
 
