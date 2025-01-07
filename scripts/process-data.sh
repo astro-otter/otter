@@ -68,6 +68,9 @@ python3 $FILEDIR/csv_photometry_to_otter.py --otterdir $OUTDIR --indir $INDIR/op
 # then the data for the IR selected TDEs from Masterson et al. (2024)
 python3 $FILEDIR/masterson24_to_otter.py --otterdir $OUTDIR --indir $INDIR/masterson24_data
 
+# then the data for 2017bcc from Ridley et al. (2023)
+python3 $FILEDIR/ridley23_to_otter.py --otterdir $OUTDIR --indir $INDIR/ridley23
+
 ###########################################################################
 ############### NOW QUERY PUBLIC CATALOGS FOR MORE DATA ###################
 ###########################################################################

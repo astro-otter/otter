@@ -38,6 +38,15 @@ class _XrayModelSchema(BaseModel):
     model_reference: Optional[Union[str, List[str]]] = None
 
 
+class _ErrDetailSchema(BaseModel):
+    # all optional keywords!
+    upper: Optional[List[Union[float, int, str]]] = None
+    lower: Optional[List[Union[float, int, str]]] = None
+    systematic: Optional[List[Union[float, int, str]]] = None
+    statistical: Optional[List[Union[float, int, str]]] = None
+    iss: Optional[List[Union[float, int, str]]] = None
+
+
 class NameSchema(BaseModel):
     default_name: str
     alias: list[_AliasSchema]
@@ -169,6 +178,7 @@ class PhotometrySchema(BaseModel):
     reducer: Optional[Union[str, List[str]]] = None
     pipeline: Optional[Union[str, List[str]]] = None
     corr_k: Optional[Union[bool, str, List[Union[bool, str]]]] = None
+    corr_s: Optional[Union[bool, str, List[Union[bool, str]]]] = None
     corr_av: Optional[Union[bool, str, List[Union[bool, str]]]] = None
     corr_host: Optional[Union[bool, str, List[Union[bool, str]]]] = None
     corr_hostav: Optional[Union[bool, str, List[Union[bool, str]]]] = None
@@ -178,6 +188,8 @@ class PhotometrySchema(BaseModel):
     val_host: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     val_hostav: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     xray_model: Optional[List[_XrayModelSchema]] = None
+    raw_err_detail: Optional[_ErrDetailSchema] = None
+    value_err_detail: Optional[_ErrDetailSchema] = None
 
     @field_validator(
         "raw_units",
@@ -212,6 +224,7 @@ class PhotometrySchema(BaseModel):
 
 class FilterSchema(BaseModel):
     filter_key: str
+    filter_name: str
     wave_eff: Union[str, float, int] = None
     wave_min: Union[str, float, int] = None
     wave_max: Union[str, float, int] = None
