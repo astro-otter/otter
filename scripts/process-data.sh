@@ -71,6 +71,9 @@ python3 $FILEDIR/masterson24_to_otter.py --otterdir $OUTDIR --indir $INDIR/maste
 # then the data for 2017bcc from Ridley et al. (2023)
 python3 $FILEDIR/ridley23_to_otter.py --otterdir $OUTDIR --indir $INDIR/ridley23
 
+# then the data on ASASSN-15oi from Hajela et al. (2024)
+python3 $FILEDIR/hajela24_to_otter.py --otterdir $OUTDIR --indir $INDIR/hajela24
+
 ###########################################################################
 ############### NOW QUERY PUBLIC CATALOGS FOR MORE DATA ###################
 ###########################################################################
