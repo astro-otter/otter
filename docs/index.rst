@@ -12,6 +12,7 @@ Welcome to the OTTER API documentation!
    :hidden:
 
    introduction
+   schema
    examples
    source
    rest-api

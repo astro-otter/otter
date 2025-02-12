@@ -66,7 +66,8 @@ docs = [
   "sphinx-book-theme>=0.0.33",
   "sphinx_copybutton",
   "autodoc",
-  "ipykernel"
+  "ipykernel",
+  "autodoc_pydantic"
 ]
 
 # useful tools for developers

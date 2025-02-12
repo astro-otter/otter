@@ -49,6 +49,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
     "sphinx_copybutton",
+    "sphinxcontrib.autodoc_pydantic",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -106,3 +107,12 @@ html_static_path: List[str] = ["_static"]
 rst_epilog = f"""
 .. |version| replace:: v{version}
 """
+
+# show the collapsible JSON for the schema
+autodoc_pydantic_model_show_json = True
+
+# don't show validators
+autodoc_pydantic_model_show_validator_members = False
+
+# don't show details on every member variable
+autodoc_pydantic_model_members = False

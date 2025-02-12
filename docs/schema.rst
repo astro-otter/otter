@@ -1,4 +1,28 @@
 OTTER Data Schema
 -----------------
 
-This is done but will take a while to move over to rst format and I don't feel like doing it right now. So, it's coming soon!
+.. autopydantic_model:: otter.schema.OtterSchema
+
+.. autopydantic_model:: otter.schema.VersionSchema
+
+.. autopydantic_model:: otter.schema.NameSchema
+
+.. autopydantic_model:: otter.schema.CoordinateSchema
+
+.. autopydantic_model:: otter.schema.ClassificationSchema
+
+.. autopydantic_model:: otter.schema.ReferenceSchema
+
+.. autopydantic_model:: otter.schema.DateSchema
+
+.. autopydantic_model:: otter.schema.PhotometrySchema
+
+.. autopydantic_model:: otter.schema.FilterSchema
+
+.. autopydantic_model:: otter.schema.HostSchema
+
+.. autopydantic_model:: otter.schema._AliasSchema
+
+.. autopydantic_model:: otter.schema._XrayModelSchema
+
+.. autopydantic_model:: otter.schema._ErrDetailSchema
