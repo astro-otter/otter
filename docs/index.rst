@@ -14,3 +14,4 @@ Welcome to the OTTER API documentation!
    introduction
    examples
    source
+   rest-api
