@@ -8,6 +8,7 @@ import os
 from multiprocessing import Pool
 import ads
 from ads.exceptions import APIResponseError
+import json
 import astropy.units as u
 import numpy as np
 
@@ -68,7 +69,32 @@ def clean_schema(schema):
     return schema
 
 
-def bibcode_to_hrn(bibcode):
+def bibcode_to_hrn(bibcode, local_reference_map="reference_map_local.json"):
+    if isinstance(bibcode, str):
+        bibcode = [bibcode]
+
+    with open(local_reference_map, "r") as j:
+        local_map = json.load(j)
+
+    hrns = []
+    bibcodes = []
+    bibcodes_to_query = []
+    for b in bibcode:
+        if b in local_map:
+            hrns.append(local_map[b])
+            bibcodes.append(b)
+        else:
+            bibcodes_to_query.append(b)
+
+    if len(bibcodes_to_query) > 0:
+        queried_bibs, queried_hrns = _bibcode_to_hrn_with_query(bibcodes_to_query)
+        hrns += queried_hrns
+        bibcodes += queried_bibs
+
+    return bibcodes, hrns
+
+
+def _bibcode_to_hrn_with_query(bibcode):
     """
     Converts a bibcode to a human_readable_name (hrn) using ADSQuery
     """
@@ -105,11 +131,13 @@ def bibcode_to_hrn(bibcode):
         raise ValueError(f"Could not find {bibcode} on ADS!")
     except APIResponseError as exc:
         raise ValueError(
-            "Out of ADS queries! Run curl command to check like \
-        https://github.com/adsabs/adsabs-dev-api/blob/master/README.md"
+            f"""Failed on query {query}! \n Potentially out of ADS
+            queries! Run curl command to check like\n
+            https://github.com/adsabs/adsabs-dev-api/blob/master/README.md"""
         ) from exc
 
     hrns = []
+    bibcodes_to_return = []
     for res in adsquery:
         authors = res.author
         year = res.year
@@ -126,6 +154,7 @@ def bibcode_to_hrn(bibcode):
         # generate the human readable name
         hrn = author + " (" + year + ")"
         hrns.append(hrn)
+        bibcodes_to_return.append(res.bibcode)
 
     if len(hrns) == 0 and len(bibcodes) != 0:
         raise ValueError(f"Could not find any bibcodes associated with {bibcodes}!")
@@ -139,7 +168,7 @@ def bibcode_to_hrn(bibcode):
             {bibcode}"
         )
 
-    return bibcodes, hrns
+    return bibcodes_to_return, hrns
 
 
 def freq_to_band(freq: u.Quantity) -> str:

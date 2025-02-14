@@ -338,18 +338,16 @@ def tns_response_to_otter(row, photlist):
             ]
 
     # Deal with references
-    out["reference_alias"] = [
-        dict(
-            name=row.Discovery_ADS_bibcode_tns,
-            human_readable_name=bibcode_to_hrn(row.Discovery_ADS_bibcode_tns),
-        )
-    ]
+    bib, hrn = bibcode_to_hrn(row.Discovery_ADS_bibcode_tns)
+    out["reference_alias"] = [dict(name=bib[0], human_readable_name=hrn[0])]
 
     if not pd.isna(row.Class_ADS_bibcodes_tns):
         for bib in row.Class_ADS_bibcodes_tns.split(","):
             try:
-                toadd = dict(name=bib, human_readable_name=bibcode_to_hrn(bib))
-                out["reference_alias"].append(toadd)
+                bib, hrn = bibcode_to_hrn(bib)
+                out["reference_alias"].append(
+                    dict(name=bib[0], human_readable_name=hrn[0])
+                )
             except ValueError:
                 warnings.warn(f"Skipping the bibcode {bib}")
     return out

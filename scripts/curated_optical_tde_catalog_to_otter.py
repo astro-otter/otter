@@ -52,9 +52,6 @@ def main():
     catalog_hrn = "Mummery et al. (2023)"
 
     new_transients = []
-    failed_bibs = []
-    failed_bibs_names = []
-
     for path in injsons:
         # print(path)
         with open(path, "r") as f:
@@ -63,21 +60,11 @@ def main():
         otterjson = {}
 
         # handle references first
-        bibcodes = indata["paper_ref"].split(",")
-        hrn = []
-        for v in bibcodes:
-            try:
-                v = fix_old_bibcodes(v)
-                hrn.append(util.bibcode_to_hrn(v))
-            except ValueError:
-                print(f"ADS Query did not work for {path} with bibcode {v}!")
-                print("Skipping for now! Please figure this out for future versions!")
-                failed_bibs.append(v)
-                failed_bibs_names.append(path)
-                continue
+        bibcodes = [fix_old_bibcodes(b) for b in indata["paper_ref"].split(",")]
+        hrn, correct_bibcodes = util.bibcode_to_hrn(bibcodes)
 
         otterjson["reference_alias"] = [
-            dict(name=b, human_readable_name=h) for b, h in zip(bibcodes, hrn)
+            dict(name=b, human_readable_name=h) for b, h in zip(correct_bibcodes, hrn)
         ]
 
         # add a citation to Mummery et al. (2023)
@@ -92,7 +79,7 @@ def main():
             alias=[
                 dict(
                     value=indata["name"],
-                    reference=[indata["paper_ref"], catalog_bibcode],
+                    reference=indata["paper_ref"].split(",") + [catalog_bibcode],
                 )
             ],
         )
@@ -102,7 +89,7 @@ def main():
             dict(
                 object_class="TDE",
                 confidence=1,
-                reference=[indata["paper_ref"], catalog_bibcode],
+                reference=indata["paper_ref"].split(",") + [catalog_bibcode],
                 default=True,
             )
         ]
@@ -114,7 +101,7 @@ def main():
                 dec=indata["dec"],
                 ra_units="deg",
                 dec_units="deg",
-                reference=[indata["paper_ref"], catalog_bibcode],
+                reference=indata["paper_ref"].split(",") + [catalog_bibcode],
                 coordinate_type="equitorial",
             )
         ]
@@ -123,7 +110,7 @@ def main():
         otterjson["distance"] = [
             dict(
                 value=indata["z"],
-                reference=[indata["paper_ref"], catalog_bibcode],
+                reference=indata["paper_ref"].split(",") + [catalog_bibcode],
                 distance_type="redshift",
             )
         ]
@@ -133,12 +120,12 @@ def main():
             ref = indata["host"]["vel_disp_source"]
             ref = fix_old_bibcodes(ref)
 
-            hrn = util.bibcode_to_hrn(ref)
+            _, hrn = util.bibcode_to_hrn(ref)
 
             curr_bibcodes = {x["name"] for x in otterjson["reference_alias"]}
             if ref not in curr_bibcodes:
                 otterjson["reference_alias"].append(
-                    dict(name=ref, human_readable_name=hrn)
+                    dict(name=ref, human_readable_name=hrn[0])
                 )
 
             otterjson["distance"].append(
@@ -156,7 +143,7 @@ def main():
             dict(
                 value=indata["peak_mjd"],
                 date_format="mjd",
-                reference=[indata["paper_ref"], catalog_bibcode],
+                reference=indata["paper_ref"].split(",") + [catalog_bibcode],
                 computed=False,
                 date_type="peak",
             )
@@ -176,7 +163,7 @@ def main():
                 date_format="mjd",
                 filter_key=list(filter),
                 obs_type="uvoir",
-                reference=[catalog_bibcode, indata["paper_ref"]],
+                reference=indata["paper_ref"].split(",") + [catalog_bibcode],
                 corr_k=False,
                 corr_s=False,
                 corr_av=False,

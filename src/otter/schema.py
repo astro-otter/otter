@@ -25,7 +25,7 @@ class _XrayModelSchema(BaseModel):
     model_name: str
     param_names: List[str]
     param_values: List[Union[float, int, str]]
-    param_units: List[str]
+    param_units: List[Union[str, None]]
     min_energy: Union[float, int, str]
     max_energy: Union[float, int, str]
     energy_units: str
@@ -187,7 +187,7 @@ class PhotometrySchema(BaseModel):
     val_av: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     val_host: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     val_hostav: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
-    xray_model: Optional[List[_XrayModelSchema]] = None
+    xray_model: Optional[Union[List[_XrayModelSchema], List[None]]] = None
     raw_err_detail: Optional[_ErrDetailSchema] = None
     value_err_detail: Optional[_ErrDetailSchema] = None
 

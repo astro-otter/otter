@@ -74,6 +74,9 @@ python3 $FILEDIR/ridley23_to_otter.py --otterdir $OUTDIR --indir $INDIR/ridley23
 # then the data on ASASSN-15oi from Hajela et al. (2024)
 python3 $FILEDIR/hajela24_to_otter.py --otterdir $OUTDIR --indir $INDIR/hajela24
 
+# then the X-ray data from Muryel Guolo's paper
+python3 $FILEDIR/guolo24_to_otter.py --otterdir $OUTDIR --indir $INDIR/guolo23_data/
+
 ###########################################################################
 ############### NOW QUERY PUBLIC CATALOGS FOR MORE DATA ###################
 ###########################################################################
