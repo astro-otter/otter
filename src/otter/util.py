@@ -73,8 +73,11 @@ def bibcode_to_hrn(bibcode, local_reference_map="reference_map_local.json"):
     if isinstance(bibcode, str):
         bibcode = [bibcode]
 
-    with open(local_reference_map, "r") as j:
-        local_map = json.load(j)
+    if os.path.exists(local_reference_map):
+        with open(local_reference_map, "r") as j:
+            local_map = json.load(j)
+    else:
+        local_map = {}
 
     hrns = []
     bibcodes = []

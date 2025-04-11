@@ -541,9 +541,7 @@ class DataFinder(object):
         )
         return res
 
-    def query_heasarc(
-        self, radius: u.Quantity = 5 * u.arcsec, heasarc_table: str = "xray", **kwargs
-    ) -> Table:
+    def query_heasarc(self, radius: u.Quantity = 5 * u.arcsec, **kwargs) -> Table:
         """
         Query Heasarc by the argument "heasarc_key" for the ra/dec associated with this
         DataLoader object.
@@ -562,9 +560,7 @@ class DataFinder(object):
         """
         from astroquery.heasarc import Heasarc
 
-        res = DataFinder._wrap_astroquery(
-            Heasarc, self.coord, mission=heasarc_table, radius=radius, **kwargs
-        )
+        res = DataFinder._wrap_astroquery(Heasarc, self.coord, radius=radius, **kwargs)
 
         return res
 
