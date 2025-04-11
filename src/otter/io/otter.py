@@ -344,7 +344,9 @@ class Otter(Database):
 
         if names is not None:
             if isinstance(names, str):
-                query_filters += f"FILTER transient.name LIKE '%{names}%'\n"
+                query_filters += f"""
+            FILTER UPPER(transient.name) LIKE UPPER('%{names}%')\n
+                """
             elif isinstance(names, list):
                 namefilt = f"""
             FOR name IN {names}
