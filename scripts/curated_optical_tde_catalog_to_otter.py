@@ -29,6 +29,9 @@ def fix_old_bibcodes(ref):
         # updates to their velocity dispersion calculations
         ref = "2023ApJS..267...44A"
 
+    if ref == "arXiv:2405.11343":
+        ref = "2024ApJ...976...34Y"
+
     return ref
 
 

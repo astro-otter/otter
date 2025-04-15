@@ -21,6 +21,10 @@ from astropy.time import Time
 from otter.io.otter import Otter, Transient
 from otter.util import filter_to_obstype, FILTER_MAP_WAVE, bibcode_to_hrn
 
+# Global variables to tell the code if it should include the TNS photometry in the
+# otter JSON files
+USE_TNS_PHOT = False
+
 
 # helper functions
 def set_bot_tns_marker():
@@ -265,7 +269,9 @@ def tns_response_to_otter(row, photlist):
     out = deepcopy(Transient())
 
     # package the photometry
-    out["photometry"], out["filter_alias"] = tns_phot_to_otter_phot(photlist)
+    global USE_TNS_PHOT
+    if USE_TNS_PHOT:
+        out["photometry"], out["filter_alias"] = tns_phot_to_otter_phot(photlist)
 
     # get TNS coordinates and cite the discovery paper
     out["coordinate"] = [
