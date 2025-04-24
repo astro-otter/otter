@@ -280,7 +280,7 @@ class Otter(Database):
 
         WARNING! This does not do any conversions for you!
         This is how it differs from the `get_meta` method. Users should prefer to use
-        `get_meta`, `getPhot`, and `getSpec` independently because it is a better
+        `get_meta`, and `get_phot` independently because it is a better
         workflow and can return the data in an astropy table with everything in the
         same units.
 
@@ -816,8 +816,32 @@ class Otter(Database):
         # read in the metadata and photometry file
         meta = pd.read_csv(metafile)
         phot = None
+
+        required_phot_cols = [
+            "name",
+            "date",
+            "date_format",
+            "filter",
+            "filter_eff",
+            "filter_eff_units",
+            "flux",
+            "flux_err",
+            "flux_unit",
+        ]
+
         if photfile is not None:
-            phot = pd.read_csv(photfile)
+            phot_unclean = pd.read_csv(photfile)
+
+            phot = phot_unclean.dropna(subset=required_phot_cols)
+            if len(phot) != len(phot_unclean):
+                warn("""
+                Filtered out rows with nan in the photometry file! Make sure you
+                expect this behaviour!
+                """)
+
+            if "bibcode" not in phot:
+                phot["bibcode"] = "private"
+                warn("Setting the bibcode column to the special keyword 'private'!")
 
             # we need to generate columns of wave_eff and freq_eff
             wave_eff = []

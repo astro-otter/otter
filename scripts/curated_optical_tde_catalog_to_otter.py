@@ -157,6 +157,17 @@ def main():
         mjd, filter, flux, fluxerr = np.array(lc["data"]).T
         # filtermap = {filt:freq for filt,freq in zip(lc['filters'],lc['frequency_Hz'])}
 
+        flux = flux.astype(float)
+        fluxerr = fluxerr.astype(float)
+
+        # clean out NaN values from the flux/fluxerr arrays
+        notna = np.argwhere(~np.isnan(flux))
+        flux = flux[notna]
+        fluxerr = fluxerr[notna]
+        mjd = mjd[notna]
+        filter = filter[notna]
+
+        # package the data into the photometry array
         otterjson["photometry"] = [
             dict(
                 raw=list(flux),
@@ -167,6 +178,7 @@ def main():
                 filter_key=list(filter),
                 obs_type="uvoir",
                 reference=indata["paper_ref"].split(",") + [catalog_bibcode],
+                upperlimit=list(flux > 3 * fluxerr),
                 corr_k=False,
                 corr_s=False,
                 corr_av=False,

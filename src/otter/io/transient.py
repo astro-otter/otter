@@ -806,20 +806,19 @@ class Transient(MutableMapping):
             # magnitude upperlimits are independent of the actual measurement!)
             # sigma_m > (1/3) * (ln(10)/2.5)
             def is_upperlimit(row):
-                if pd.isna(row.upperlimit):
+                if "upperlimit" in row and pd.isna(row.upperlimit):
                     return row.converted_flux_err > np.log(10) / (3 * 2.5)
                 else:
                     return row.upperlimit
         else:
 
             def is_upperlimit(row):
-                if pd.isna(row.upperlimit):
+                if "upperlimit" in row and pd.isna(row.upperlimit):
                     return row.converted_flux < 3 * row.converted_flux_err
                 else:
                     return row.upperlimit
 
         outdata["upperlimit"] = outdata.apply(is_upperlimit, axis=1)
-
         return outdata
 
     def _merge_names(t1, t2, out):  # noqa: N805
