@@ -178,7 +178,7 @@ def main():
                 filter_key=list(filter),
                 obs_type="uvoir",
                 reference=indata["paper_ref"].split(",") + [catalog_bibcode],
-                upperlimit=list(flux > 3 * fluxerr),
+                upperlimit=list(flux < 3 * fluxerr),
                 corr_k=False,
                 corr_s=False,
                 corr_av=False,

@@ -662,6 +662,12 @@ class Transient(MutableMapping):
             try:
                 if isvegamag:
                     astropy_units = VEGAMAG
+                elif unit == "AB":
+                    # In astropy "AB" is a magnitude SYSTEM not unit and while
+                    # u.Unit("AB") will succeed without error, it will not produce
+                    # the expected result!
+                    # We can assume here that this unit really means astropy's "mag(AB)"
+                    astropy_units = u.Unit("mag(AB)")
                 else:
                     astropy_units = u.Unit(unit)
 
