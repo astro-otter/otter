@@ -9,7 +9,7 @@ readme = "README.md"
 license = {file = "LICENSE"}
 dynamic = ["version"]
 
-requires-python = ">=3.10,<3.12"
+requires-python = ">=3.9" #,<3.12"
 
 classifiers = [
   "License :: OSI Approved :: BSD License",
