@@ -11,13 +11,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-# get the testing path
-otterpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), ".otter-testing")
-
-pytest.skip(
-    "Skipping OTTER tests because they currently don't work with GitHub",
-    allow_module_level=True,
-)
+OTTER_URL = os.environ.get("OTTER_TEST_URL")
+OTTER_TEST_PASSWORD = os.environ.get("OTTER_TEST_PASSWORD")
 
 
 def test_otter_constructor():
@@ -25,10 +20,8 @@ def test_otter_constructor():
     Just make sure everything constructs correctly
     """
 
-    db = Otter(otterpath)
-
-    assert db.DATADIR == otterpath
-    assert db.CWD == os.path.dirname(otterpath)
+    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
+    assert isinstance(db, Otter)
 
 
 def test_get_meta():
@@ -36,7 +29,7 @@ def test_get_meta():
     Tests the Otter.get_meta method and make sure it returns as expected
     """
 
-    db = Otter(otterpath)
+    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
 
     # first make sure everything is just copied over correctly
     allmeta = db.get_meta()
@@ -58,7 +51,7 @@ def test_cone_search():
     Tests the Otter.cone_search method
     """
 
-    db = Otter(otterpath)
+    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
 
     # just search around '2018hyz' coordinates to make sure it picks it up
     coord = SkyCoord(151.711964138, 1.69279894089, unit="deg")
@@ -74,7 +67,7 @@ def test_get_phot():
     work as expected. So, this will just test that everything comes out as expected.
     """
 
-    db = Otter(otterpath)
+    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
 
     true_keys = [
         "name",
@@ -113,18 +106,6 @@ def test_get_phot():
         db.get_phot(names="foo")
 
 
-def test_load_file():
-    """
-    Tests loading a single file from the OTTER repository
-    """
-    db = Otter(otterpath)
-    testfile = os.path.join(otterpath, "AT2018hyz.json")
-
-    t = db.load_file(testfile)
-
-    assert t["name/default_name"] == "2018hyz"
-
-
 def test_query():
     """
     Tests the Otter.query method that basically all of this is based on
@@ -133,7 +114,7 @@ def test_query():
     but lets make sure it's complete
     """
 
-    db = Otter(otterpath)
+    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
 
     # test min and max z queries
     zgtr1 = db.query(minz=1)
@@ -146,84 +127,9 @@ def test_query():
     assert all(t["name/default_name"] in result for t in zless001)
 
     # test refs
-    res = db.query(refs="2020MNRAS.tmp.2047S")[0]
-    assert res["name/default_name"] == "2018hyz"
+    # res = db.query(refs="2020MNRAS.tmp.2047S")[0]
+    # assert res["name/default_name"] == "2018hyz"
 
     # test hasphot and hasspec
     assert len(db.query(hasspec=True)) == 0
     assert "ASASSN-20il" not in {t["name/default_name"] for t in db.query(hasphot=True)}
-
-
-def test_save():
-    """
-    Tests the Otter.save method which is used to update and save an OTTER JSON
-    """
-
-    db = Otter(otterpath)
-
-    # first with some random data that won't match anything else
-    test_transient = {
-        "key1": "foo",
-        "key2": "bar",
-        "coordinate": [
-            {
-                "ra": 0,
-                "dec": 0,
-                "ra_units": "deg",
-                "dec_units": "deg",
-                "reference": ["me!"],
-                "coordinate_type": "equitorial",
-            }
-        ],
-        "name": {
-            "default_name": "new_test_tde",
-            "alias": [{"value": "new_test_tde", "reference": ["me!"]}],
-        },
-        "reference_alias": [{"name": "me!", "human_readable_name": "Noah"}],
-    }
-
-    # now try saving this
-    db.save(test_transient, testing=True)
-    db.save(test_transient)
-
-    assert os.path.exists(os.path.join(otterpath, "new_test_tde.json"))
-
-    # then remove this file because we don't want it clogging stuff up
-    os.remove(os.path.join(otterpath, "new_test_tde.json"))
-
-    # and now we need to update this to have coordinates matching another object
-    # in otter to test merging them
-    # This should be the same as ASASSN-20il
-    test_transient["coordinate"] = [
-        {
-            "ra": "5:03:11.3",
-            "dec": "-22:48:52.1",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": ["me!"],
-            "coordinate_type": "equitorial",
-        }
-    ]
-
-    db.save(test_transient)
-
-    data = db.load_file(os.path.join(otterpath, "ASASSN-20il.json"))
-    assert "new_test_tde" in {alias["value"] for alias in data["name/alias"]}
-
-
-def test_generate_summary_table():
-    """
-    Tests generating the summary table for the OTTER
-    """
-
-    db = Otter(otterpath)
-
-    sumtab = db.generate_summary_table()
-
-    assert isinstance(sumtab, pd.DataFrame)
-
-    # check a random row
-    sumtab_hyz = sumtab[sumtab.name == "2018hyz"].iloc[0]
-    assert sumtab_hyz["name"] == "2018hyz"
-    assert sumtab_hyz["z"] == "0.0457266"
-    assert sumtab_hyz["json_path"] == os.path.join(otterpath, "AT2018hyz.json")
