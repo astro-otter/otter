@@ -61,6 +61,10 @@ class Otter(Database):
         debug: bool = False,
         **kwargs,
     ) -> None:
+        print("Attempting to login with the following credentials:")
+        print(f"username: {username}")
+        print(f"password: {password}")
+
         # save inputs
         if datadir is None:
             self.CWD = os.path.dirname(os.path.abspath("__FILE__"))
