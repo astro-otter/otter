@@ -13,3 +13,4 @@ examples will be added with time!
    examples/transient_objects
    examples/host_objects
    examples/plotting
+   examples/modeling
