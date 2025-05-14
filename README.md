@@ -45,6 +45,7 @@ python3 -m pip install astro-otter
    ```
    git clone https://github.com/astro-otter/otter.git $OTTER_ROOT/otter
    git clone https://github.com/astro-otter/otterdb.git $OTTER_ROOT/otterdb
+   git clone https://github.com/astro-otter/otter-web.git $OTTER_ROOT/otter-web
    ```
 3. Install the NASA ADS Python API by following the instructions at https://ads.readthedocs.io/en/latest/#getting-started
 4. Install otter, the API for this database. From
@@ -53,13 +54,7 @@ python3 -m pip install astro-otter
    cd $OTTER_ROOT/otter
    python -m pip install -e .
    ```
-5. Process the data to build the local "database" (although it is really just a directory).
-   Then, you can build the "database" by running the
-   following commands:
-   ```
-   cd $OTTER_ROOT/otter/scripts/
-   python3 gen_summary_table.py --otterroot $OTTER_ROOT
-   ```
+5. Process the data to build the local copy of the database. Follow the instructions in the otterdb repo README.
 6. Easily access the data using the Otter code! In python:
   ```
   import os
