@@ -70,17 +70,21 @@ If you don't know what any of the values should be, reach out to an existing dev
 
 
 6. Get the database up and running:
+
    a. First, make sure docker is running
+
    b. If you have an arm64 cpu (like a Mac Silicon chip), you will need to build the docker container on
       that cpu architecture. From the otterdb directory run:
 
       ::
+
 	 docker build -t otterdb:v0.3.6 .
 
    c. Then run the docker container from dockerhub (if you built it locally, make sure you change the
       name at the bottom of this command)
 
       ::
+
 	 docker run \
 	 -e ARANGO_ROOT_PASSWORD=$ARANGO_ROOT_PASSWORD \
 	 -e VETTING_PASSWORD=$VETTING_PASSWORD \
@@ -95,6 +99,7 @@ If you don't know what any of the values should be, reach out to an existing dev
       From the otterdb directory, run
 
       ::
+
 	 python3 import_from_sciserver.py
 
 7. Test that arangodb is running correctly and the data is imported by navigating to http://localhost:8529
@@ -103,12 +108,14 @@ If you don't know what any of the values should be, reach out to an existing dev
 8. Install the web application by running
 
    ::
+
       cd $OTTER_DIR/otter-web
       python3 -m pip install -e .
 
 9. Run the web application in developer mode. From the otter-web directory
 
    ::
+
       export ARANGO_URL="http://localhost:8529" && python3 start.py
 
 10. Test that the website is running by navigating to http://localhost:8080/otter
