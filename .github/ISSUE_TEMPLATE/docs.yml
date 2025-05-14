@@ -15,7 +15,7 @@ body:
   attributes:
     label: "Which documentation?"
     description: |
-      In the [documentation website](https://hepfile.readthedocs.io), the [GitHub README.md](https://github.com/mattbellis/hepfile/blob/main/README.md), or Python docstrings?
+      In the [documentation website](https://astro-otter.readthedocs.io), the [GitHub README.md](https://github.com/astro-otter/otter/blob/main/README.md), or Python docstrings?
     options:
       - Documentation website
       - GitHub README.md

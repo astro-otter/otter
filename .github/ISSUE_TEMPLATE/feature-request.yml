@@ -1,5 +1,5 @@
 name: Feature Request
-description: There is something I wish hepfile had
+description: There is something I wish astro-otter had
 title: "[Feature]: "
 labels: ["enhancement"]
 assignees: []
@@ -12,11 +12,11 @@ body:
 
 - type: input
   attributes:
-    label: "Version of `hepfile`"
+    label: "Version of `astro-otter`"
     placeholder: "XX.YY.ZZ"
   validations:
     required: true
-    
+
 - type: textarea
   id: description
   attributes:
