@@ -44,11 +44,18 @@ class Otter(Database):
     This is the primary class for users to access the otter backend database
 
     Args:
+        url (str): The url where the database api endpoints are located
+        username (str): The username to log into the database with
+        password (str): The password to log into the database with
+        gen_summary (bool): Generate a local summary table, this should generally be
+                            left as False!
         datadir (str): Path to the data directory with the otter data. If not provided
                        will default to a ".otter" directory in the CWD where you call
                        this class from.
         debug (bool): If we should just debug and not do anything serious.
 
+    Returns:
+        An Otter object that is connected to the otter database
     """
 
     def __init__(
@@ -97,7 +104,8 @@ class Otter(Database):
         Get the metadata of the objects matching the arguments
 
         Args:
-            **kwargs : Arguments to pass to Otter.query()
+            **kwargs : Arguments to pass to Otter.query(). See that documentation with
+                       `help(otter.Otter.query)`.
         Return:
            The metadata for the transients that match the arguments. Will be an astropy
            Table by default, if raw=True will be a dictionary.
@@ -150,9 +158,9 @@ class Otter(Database):
         unit conversion for you!
 
         Args:
-            flux_units (astropy.unit.Unit): Either a valid string to convert
+            flux_unit (astropy.unit.Unit): Either a valid string to convert
                                             or an astropy.unit.Unit
-            date_units (astropy.unit.Unit): Either a valid string to convert to a date
+            date_unit (astropy.unit.Unit): Either a valid string to convert to a date
                                             or an astropy.unit.Unit
             return_type (str): Either 'astropy' or 'pandas'. If astropy, returns an
                                astropy Table. If pandas, returns a pandas DataFrame.
@@ -163,6 +171,8 @@ class Otter(Database):
             keep_raw (bool): If True, keep the raw flux/date/freq/wave associated with
                              the dataset. Else, just keep the converted data. Default
                              is False.
+            wave_unit (str): The astropy wavelength unit to return with
+            freq_unit (str): The astropy frequency unit to return with`
             **kwargs : Arguments to pass to Otter.query(). Can be::
 
                        names (list[str]): A list of names to get the metadata for
@@ -256,6 +266,9 @@ class Otter(Database):
 
         Args:
             filename (str): The path to the OTTER JSON file to load
+
+        Returns:
+            dictionary with the otter JSON file contents
         """
 
         # read in files from summary
@@ -297,10 +310,12 @@ class Otter(Database):
             refs (list[str]): A list of ads bibcodes to match to. Will only return
                               metadata for transients that have this as a reference.
             hasphot (bool): if True, only returns transients which have photometry.
-            hasspec (bool): if True, only return transients that have spectra.
+            hasspec (bool): NOT IMPLEMENTED! Will return False for all targets!
             classification (str): A classification string to search for
             class_confidence_threshold (float): classification confidence cutoff for
                                                 query, between 0 and 1. Default is 0.
+            query_private (bool): Set to True if you would like to also query the
+                                  dataset located at whatever you set datadir to
 
         Return:
            Get all of the raw (unconverted!) data for objects that match the criteria.

@@ -421,7 +421,7 @@ class Transient(MutableMapping):
         The BLAST result will always be the last value in the returned list.
 
         Args:
-            max_hosts [int] : The maximum number of hosts to return
+            max_hosts [int] : The maximum number of hosts to return, default is 3
             **kwargs : keyword arguments to be passed to getGHOST
 
         Returns:
