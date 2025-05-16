@@ -28,6 +28,24 @@ t_disc_map = {
     "AT2020opy": 59038.23,
 }
 
+class_conf_map = {
+    "AT2022cmc": 3.3,
+    "AT2020vwl": 3.3,
+    "ASASSN-15oi": 3.3,
+    "XMMSL1 J0740-85": 3.3,
+    "AT2019azh": 3.3,
+    "Sw J1644+57": 3.3,
+    "AT2018hyz": 3.3,
+    "AT2019dsg": 3.3,
+    "IGR J12580+0134": 1,  # because no optical spectra, maybe override later?
+    "ASASSN-14li": 3.3,
+    "AT2020opy": 3.3,
+    "Sw J1112-82": 3.1,
+    "Sw J2058+05": 3.1,
+    "ARP 299-B AT1": 3.3,
+    "CNSS J0019+00": 3.3,
+}
+
 thisfile_dir = os.path.dirname(os.path.realpath(__file__))  # "scripts" directory
 otter_dir = os.path.join(
     thisfile_dir, ".otter"
@@ -142,7 +160,7 @@ def main():
             "classification": [
                 {
                     "object_class": "TDE",
-                    "confidence": 1.0,
+                    "confidence": class_conf_map[data["name"]],
                     "reference": sources,
                     "default": True,
                 }

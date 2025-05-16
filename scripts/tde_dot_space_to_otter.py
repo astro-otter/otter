@@ -362,13 +362,8 @@ def main():
                     )
                     continue
 
-                c = d["value"]
-                if c == "TDE":
-                    conf = 1.0  # we can trust this
-                elif c == "TDE?":
-                    conf = 0.5  # it's probably a TDE
-                else:
-                    conf = 0.1  # it's might be a TDE
+                # c = d["value"]
+                conf = 0  # It is unclear where this classification came from
 
                 sub = deepcopy(otter_const.subschema["classification"])
                 sub["object_class"] = "TDE"
@@ -684,7 +679,7 @@ def main():
             schema["classification"] = [
                 {
                     "object_class": "TDE",
-                    "confidence": 0.1,  # we don't trust this classification very much
+                    "confidence": 0,  # we don't trust this classification very much
                     "reference": ["2017ApJ...835...64G"],
                     "default": True,
                 }

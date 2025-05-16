@@ -135,6 +135,12 @@ class ClassificationSchema(BaseModel):
     class_type: str = None
 
 
+class ClassificationDictSchema(BaseModel):
+    spec_classed: Optional[bool] = None
+    unambiguous: Optional[bool] = None
+    value: list[ClassificationSchema]
+
+
 class ReferenceSchema(BaseModel):
     name: str
     human_readable_name: str
@@ -283,7 +289,7 @@ class OtterSchema(BaseModel):
     name: NameSchema
     coordinate: list[CoordinateSchema]
     distance: Optional[list[DistanceSchema]] = None
-    classification: Optional[list[ClassificationSchema]] = None
+    classification: Optional[ClassificationDictSchema] = None
     reference_alias: list[ReferenceSchema]
     date_reference: Optional[list[DateSchema]] = None
     photometry: Optional[list[PhotometrySchema]] = None

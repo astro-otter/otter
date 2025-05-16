@@ -336,7 +336,7 @@ def tns_response_to_otter(row, photlist):
             out["classification"] = [
                 dict(
                     object_class=row.type_tns,
-                    confidence=0.5,
+                    confidence=2,  # all TNS classifications get conf=2 by definition
                     reference=np.unique(
                         [b.strip() for b in row.Class_ADS_bibcodes_tns.split(",")]
                     ).tolist(),

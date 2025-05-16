@@ -11,6 +11,27 @@ import numpy as np
 from astropy import units as u
 from astropy import constants as const
 
+class_conf_map = {
+    "WTP 14abnpgk": 3.2,  # silver
+    "WTP 14acnjbu": 3.2,  # silver
+    "WTP 14adbjsh": 3.3,  # gold
+    "WTP 14adbwvs": 1,  # the spectrum in the paper is archival
+    "WTP 14adeqka": 3.3,  # gold
+    "WTP 15abymdq": 3.3,  # gold
+    "WTP 15acbgpn": 1,  # uses archival spectrum
+    "WTP 15acbuuv": 3.3,  # gold
+    "WTP 16aaqrcr": 3.3,  # gold
+    "WTP 16aatsnw": 1,  # archival spec
+    "WTP 17aaldjb": 1,  # archival spec
+    "WTP 17aalzpx": 3.3,  # gold
+    "WTP 17aamoxe": 3.3,  # gold
+    "WTP 17aamzew": 1,  # archival spec
+    "WTP 17aanbso": 1,  # archival spec
+    "WTP 18aajkmk": 3.3,  # gold
+    "WTP 18aamced": 1,  # arcihval spec
+    "WTP 18aampwj": 3.3,  # gold
+}
+
 
 # we need the minimum, maximum, and effective wavelengths
 def xray_to_wave(xraycode):
@@ -332,8 +353,14 @@ def main():
         ]
 
         # classification
+        # some of these have spectra post-tde, use the map at the top of this script
+        # to flag these classifications
         otter_json["classification"] = [
-            dict(object_class="TDE", confidence=1, reference=row.bibcode)
+            dict(
+                object_class="TDE",
+                confidence=class_conf_map[row["WTP Name"]],
+                reference=row.bibcode,
+            )
         ]
 
         # photometry

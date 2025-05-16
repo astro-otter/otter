@@ -75,10 +75,14 @@ def main():
                 )
             ]
 
+        class_flag = 0
+        if "classification_flag" in tde:
+            class_flag = tde.classification_flag[0]
+
         json["classification"] = [
             dict(
                 object_class="TDE",
-                confidence=1,  # we know this is at least an tde
+                confidence=class_flag,
                 reference=[tde.bibcode[0]],
             )
         ]

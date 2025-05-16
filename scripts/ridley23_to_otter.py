@@ -43,7 +43,7 @@ def main():
         classification=[
             dict(
                 object_class="ANT",
-                confidence=1,
+                confidence=3.3,  # they have a spectrum
                 default=True,
                 reference=ridley23_bibcode,
             )

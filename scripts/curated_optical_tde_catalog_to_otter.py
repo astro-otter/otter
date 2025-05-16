@@ -91,7 +91,7 @@ def main():
         otterjson["classification"] = [
             dict(
                 object_class="TDE",
-                confidence=1,
+                confidence=3.3,  # these are all spectroscopically confirmed
                 reference=indata["paper_ref"].split(",") + [catalog_bibcode],
                 default=True,
             )

@@ -331,7 +331,7 @@ class Otter(Database):
 
         if classification is not None:
             query_filters += f"""
-            FOR subdoc IN transient.classification
+            FOR subdoc IN transient.classification.value
                 FILTER subdoc.confidence > TO_NUMBER({class_confidence_threshold})
                 FILTER subdoc.object_class LIKE '%{classification}%'
             """
@@ -975,13 +975,16 @@ class Otter(Database):
             ### Classification information that is in the csvs
             # classification
             if "classification" in tde:
-                json["classification"] = [
-                    dict(
+                class_flag = 0
+                if "classification_flag" in tde:
+                    class_flag = tde.classification_flag[0]
+                json["classification"] = dict(
+                    value=dict(
                         object_class=tde.classification[0],
-                        confidence=1,  # we know this is at least an tde
+                        confidence=class_flag,
                         reference=[tde.classification_bibcode[0]],
                     )
-                ]
+                )
 
             # discovery date
             # print(tde)

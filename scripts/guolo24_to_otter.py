@@ -264,8 +264,8 @@ def main():
 
         # classification
         otter_json["classification"] = [
-            dict(object_class="TDE", confidence=1, reference=[guolo_bibcode])
-        ]
+            dict(object_class="TDE", confidence=3.3, reference=[guolo_bibcode])
+        ]  # These are "optically selected", therefore have spectroscopic classification
 
         # date peak
         otter_json["date_reference"] = [
