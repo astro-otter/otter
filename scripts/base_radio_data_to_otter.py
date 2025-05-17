@@ -157,14 +157,16 @@ def main():
                 }
                 for z, d in zip(zs, defaultz)
             ],
-            "classification": [
-                {
-                    "object_class": "TDE",
-                    "confidence": class_conf_map[data["name"]],
-                    "reference": sources,
-                    "default": True,
-                }
-            ],
+            "classification": {
+                "value": [
+                    {
+                        "object_class": "TDE",
+                        "confidence": class_conf_map[data["name"]],
+                        "reference": sources,
+                        "default": True,
+                    }
+                ]
+            },
             "reference_alias": [
                 {"name": src["bibcode"], "human_readable_name": src["name"]}
                 for src in data["sources"]

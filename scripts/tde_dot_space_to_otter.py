@@ -369,7 +369,7 @@ def main():
                 sub["object_class"] = "TDE"
                 sub["reference"] = mappedsrc(source_map, src)
                 sub["confidence"] = conf
-                schema["classification"].append(clean_schema(sub))
+                schema["classification"]["value"].append(clean_schema(sub))
             del j["claimedtype"]
 
         # copy photometry
@@ -676,14 +676,16 @@ def main():
 
         if len(schema["classification"]) == 0:
             # give it a low classification score
-            schema["classification"] = [
-                {
-                    "object_class": "TDE",
-                    "confidence": 0,  # we don't trust this classification very much
-                    "reference": ["2017ApJ...835...64G"],
-                    "default": True,
-                }
-            ]
+            schema["classification"] = {
+                "value": [
+                    {
+                        "object_class": "TDE",
+                        "confidence": 0,  # we don't trust this classification very much
+                        "reference": ["2017ApJ...835...64G"],
+                        "default": True,
+                    }
+                ]
+            }
 
         if len(schema["photometry"]) == 0:
             del schema["photometry"]

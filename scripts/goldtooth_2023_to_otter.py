@@ -140,13 +140,13 @@ def main():
                     "default_name": tde,
                     "alias": [{"value": tde, "reference": [goldtooth_bibcode]}],
                 },
-                "classification": [
-                    dict(
+                "classification": dict(
+                    value=dict(
                         object_class="TDE",
                         confidence=class_conf_map[tde],
                         reference=bibcodes,
                     )
-                ],
+                ),
             }
         )
 

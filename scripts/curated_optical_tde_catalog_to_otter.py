@@ -88,14 +88,14 @@ def main():
         )
 
         # and now the classification
-        otterjson["classification"] = [
-            dict(
+        otterjson["classification"] = dict(
+            value=dict(
                 object_class="TDE",
                 confidence=3.3,  # these are all spectroscopically confirmed
                 reference=indata["paper_ref"].split(",") + [catalog_bibcode],
                 default=True,
             )
-        ]
+        )
 
         # now the coordinate
         otterjson["coordinate"] = [

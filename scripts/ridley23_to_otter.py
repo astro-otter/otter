@@ -40,14 +40,14 @@ def main():
                 distance_type="redshift",
             )
         ],
-        classification=[
-            dict(
+        classification=dict(
+            value=dict(
                 object_class="ANT",
                 confidence=3.3,  # they have a spectrum
                 default=True,
                 reference=ridley23_bibcode,
             )
-        ],
+        ),
         date_reference=[
             dict(
                 value=2457802.9139931,

@@ -355,13 +355,13 @@ def main():
         # classification
         # some of these have spectra post-tde, use the map at the top of this script
         # to flag these classifications
-        otter_json["classification"] = [
-            dict(
+        otter_json["classification"] = dict(
+            value=dict(
                 object_class="TDE",
                 confidence=class_conf_map[row["WTP Name"]],
                 reference=row.bibcode,
             )
-        ]
+        )
 
         # photometry
         # uvoir first

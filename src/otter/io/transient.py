@@ -1003,41 +1003,47 @@ class Transient(MutableMapping):
         """
         Combine the classification attribute
         """
-        key = "classification/value"
+        key = "classification"
+        subkey = "value"
         out[key] = deepcopy(t1[key])
-        classes = np.array([item["object_class"] for item in out[key]])
-        for item in t2[key]:
+        classes = np.array([item["object_class"] for item in out[key][subkey]])
+        for item in t2[key][subkey]:
             if item["object_class"] in classes:
                 i = np.where(item["object_class"] == classes)[0][0]
-                if int(item["confidence"]) > int(out[key][i]["confidence"]):
-                    out[key][i]["confidence"] = item[
+                if int(item["confidence"]) > int(out[key][subkey][i]["confidence"]):
+                    out[key][subkey][i]["confidence"] = item[
                         "confidence"
                     ]  # we are now more confident
 
-                if not isinstance(out[key][i]["reference"], list):
-                    out[key][i]["reference"] = [out[key][i]["reference"]]
+                if not isinstance(out[key][subkey][i]["reference"], list):
+                    out[key][subkey][i]["reference"] = [
+                        out[key][subkey][i]["reference"]
+                    ]
 
                 if not isinstance(item["reference"], list):
                     item["reference"] = [item["reference"]]
 
-                newdata = list(np.unique(out[key][i]["reference"] + item["reference"]))
-                out[key][i]["reference"] = newdata
+                newdata = list(
+                    np.unique(out[key][subkey][i]["reference"] + item["reference"])
+                )
+                out[key][subkey][i]["reference"] = newdata
 
             else:
-                out[key].append(item)
+                out[key][subkey].append(item)
 
         # now that we have all of them we need to figure out which one is the default
-        maxconf = max(out[key], key=lambda d: d["confidence"])
-        for item in out[key]:
+        maxconf = max(out[key][subkey], key=lambda d: d["confidence"])
+        for item in out[key][subkey]:
             if item == maxconf:
                 item["default"] = True
             else:
                 item["default"] = False
 
         # then rederive the classification flags
-        out._derive_classification_flags()
+        out = Transient._derive_classification_flags(out)
 
-    def _derive_classification_flags(self):
+    @classmethod
+    def _derive_classification_flags(cls, out):
         """
         Derive the classification flags based on the confidence flags. This will find
         - spec_classed
@@ -1047,20 +1053,20 @@ class Transient(MutableMapping):
         choices
         """
 
-        if "classification" not in self or "value" not in self["classification"]:
+        if "classification" not in out or "value" not in out["classification"]:
             # this means that the transient doesn't have any classifications
             # just return itself without any changes
-            return self
+            return out
 
         # get the confidences of all of the classifications of this transient
         confs = np.array(
-            [item["confidence"] for item in self["classification"]["value"]]
+            [item["confidence"] for item in out["classification"]["value"]]
         ).astype(float)
 
         all_class_roots = np.array(
             [
                 _fuzzy_class_root(item["object_class"])
-                for item in self["classification"]["value"]
+                for item in out["classification"]["value"]
             ]
         )
 
@@ -1094,8 +1100,10 @@ class Transient(MutableMapping):
             unambiguous = False
 
         # finally, set these keys in the classification dict
-        self["classification"]["spec_classed"] = spec_classed
-        self["classification"]["unambiguous"] = unambiguous
+        out["classification"]["spec_classed"] = spec_classed
+        out["classification"]["unambiguous"] = unambiguous
+
+        return out
 
     @staticmethod
     def _merge_arbitrary(key, t1, t2, out, merge_subkeys=None, groupby_key=None):

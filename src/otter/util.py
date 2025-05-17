@@ -597,7 +597,7 @@ schema = {
     "name": {"default_name": None, "alias": []},
     "coordinate": [],
     "distance": [],
-    "classification": [],
+    "classification": {"value": []},
     "reference_alias": [],
     "date_reference": [],
     "photometry": [],

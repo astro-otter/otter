@@ -79,13 +79,13 @@ def main():
         if "classification_flag" in tde:
             class_flag = tde.classification_flag[0]
 
-        json["classification"] = [
-            dict(
+        json["classification"] = dict(
+            value=dict(
                 object_class="TDE",
                 confidence=class_flag,
                 reference=[tde.bibcode[0]],
             )
-        ]
+        )
 
         # discovery date
         # print(tde)
