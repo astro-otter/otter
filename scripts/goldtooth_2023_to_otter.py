@@ -53,7 +53,9 @@ def main():
     }
 
     # get the classification flags
-    flags = pd.read_csv(os.path.join(args.indir, "goldtooth_2023_class_conf_flags.csv"))
+    flags = pd.read_csv(
+        os.path.join(args.indir, "goldtooth_2023_class_conf_flags.csv"), sep="\t"
+    )
     class_conf_map = {name: flag for name, flag in zip(flags.name, flags.flag)}
 
     # connect to otter
@@ -141,11 +143,13 @@ def main():
                     "alias": [{"value": tde, "reference": [goldtooth_bibcode]}],
                 },
                 "classification": dict(
-                    value=dict(
-                        object_class="TDE",
-                        confidence=class_conf_map[tde],
-                        reference=bibcodes,
-                    )
+                    value=[
+                        dict(
+                            object_class="TDE",
+                            confidence=class_conf_map[tde],
+                            reference=bibcodes,
+                        )
+                    ]
                 ),
             }
         )

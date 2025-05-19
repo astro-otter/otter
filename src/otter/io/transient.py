@@ -1072,13 +1072,13 @@ class Transient(MutableMapping):
 
         if np.any(confs >= 3):
             unambiguous = len(np.unique(all_class_roots)) == 1
-            if confs == 3 or confs == 3.3:
+            if np.any(confs == 3) or np.any(confs == 3.3):
                 # this is a "gold spectrum"
                 spec_classed = 3
-            elif confs == 3.2:
+            elif np.any(confs == 3.2):
                 # this is a silver spectrum
                 spec_classed = 2
-            elif confs == 3.1:
+            elif np.any(confs == 3.1):
                 # this is a bronze spectrum
                 spec_classed = 1
             else:

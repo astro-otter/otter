@@ -674,7 +674,7 @@ def main():
 
         del schema["spectra"]
 
-        if len(schema["classification"]) == 0:
+        if len(schema["classification"]["value"]) == 0:
             # give it a low classification score
             schema["classification"] = {
                 "value": [
