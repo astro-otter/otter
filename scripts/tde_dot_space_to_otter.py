@@ -227,7 +227,7 @@ def main():
         sub["ra_units"] = ra_u
         sub["dec_units"] = dec_u
         sub["reference"] = mappedsrc(source_map, src)
-        sub["coordinate_type"] = "equitorial"
+        sub["coordinate_type"] = "equatorial"
         schema["coordinate"].append(clean_schema(sub))
 
         # copy over distance measurements

@@ -280,7 +280,7 @@ def tns_response_to_otter(row, photlist):
             dec=row.declination_tns,
             epoch="J2000",
             frame="ICRS",
-            coordinate_type="equitorial",
+            coordinate_type="equatorial",
             ra_units="deg",
             dec_units="deg",
             reference=np.unique(
@@ -334,13 +334,15 @@ def tns_response_to_otter(row, photlist):
 
         if not pd.isna(row.type_tns):
             out["classification"] = dict(
-                value=dict(
-                    object_class=row.type_tns,
-                    confidence=2,  # all TNS classifications get conf=2 by definition
-                    reference=np.unique(
-                        [b.strip() for b in row.Class_ADS_bibcodes_tns.split(",")]
-                    ).tolist(),
-                )
+                value=[
+                    dict(
+                        object_class=row.type_tns,
+                        confidence=2,  # all TNS classifications get conf=2
+                        reference=np.unique(
+                            [b.strip() for b in row.Class_ADS_bibcodes_tns.split(",")]
+                        ).tolist(),
+                    )
+                ]
             )
 
     # Deal with references

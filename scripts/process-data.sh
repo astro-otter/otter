@@ -84,6 +84,12 @@ echo "Pulling data from TNS"
 python3 $FILEDIR/tns_to_otter.py --otterdir $OUTDIR
 
 ###########################################################################
+############### UPDATE CLASS FLAGS BASED ON CONFIDENCES ###################
+###########################################################################
+echo "Updating the classification flags"
+python3 $FILEDIR/gen_class_flags.py --otterdir $OUTDIR
+
+###########################################################################
 ############### VALIDATE THE JSON FILES WITH PYDANTIC #####################
 ###########################################################################
 echo "Validating the JSON files..."

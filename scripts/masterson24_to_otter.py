@@ -327,7 +327,7 @@ def main():
                 ra_units="deg",
                 dec_units="deg",
                 reference=row.bibcode,
-                coordinate_type="equitorial",
+                coordinate_type="equatorial",
             )
         ]
 
@@ -356,11 +356,13 @@ def main():
         # some of these have spectra post-tde, use the map at the top of this script
         # to flag these classifications
         otter_json["classification"] = dict(
-            value=dict(
-                object_class="TDE",
-                confidence=class_conf_map[row["WTP Name"]],
-                reference=row.bibcode,
-            )
+            value=[
+                dict(
+                    object_class="TDE",
+                    confidence=class_conf_map[row["WTP Name"]],
+                    reference=row.bibcode,
+                )
+            ]
         )
 
         # photometry

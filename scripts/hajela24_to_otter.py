@@ -142,7 +142,7 @@ def main():
                 ra_units="hourangle",
                 dec_units="deg",
                 default=True,
-                coordinate_type="equitorial",
+                coordinate_type="equatorial",
             )
         ],
         reference_alias=[

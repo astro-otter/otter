@@ -136,7 +136,7 @@ class ClassificationSchema(BaseModel):
 
 
 class ClassificationDictSchema(BaseModel):
-    spec_classed: Optional[bool] = None
+    spec_classed: Optional[int] = None
     unambiguous: Optional[bool] = None
     value: list[ClassificationSchema]
 

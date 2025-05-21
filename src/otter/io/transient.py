@@ -24,26 +24,13 @@ from ..exceptions import (
     OtterLimitationError,
     TransientMergeError,
 )
-from ..util import XRAY_AREAS
+from ..util import XRAY_AREAS, _KNOWN_CLASS_ROOTS
 from .host import Host
 
 warnings.simplefilter("once", RuntimeWarning)
 warnings.simplefilter("once", UserWarning)
 np.seterr(divide="ignore")
 logger = logging.getLogger(__name__)
-
-_KNOWN_CLASS_ROOTS = [
-    "SN",
-    "SLSN",
-    "TDE",
-    "GRB",
-    "LGRB",
-    "SGRB",
-    "AGN",
-    "FRB",
-    "QSO",
-    "ANT",
-]
 
 
 class Transient(MutableMapping):
@@ -365,7 +352,7 @@ class Transient(MutableMapping):
         """
 
         # now we can generate the SkyCoord
-        f = "df['coordinate_type'] == 'equitorial'"
+        f = "df['coordinate_type'] == 'equatorial'"
         coord_dict = self._get_default("coordinate", filt=f)
         coordin = self._reformat_coordinate(coord_dict)
         coord = SkyCoord(**coordin).transform_to(coord_format)
@@ -502,7 +489,7 @@ class Transient(MutableMapping):
         """
         coordin = None
         if "ra" in item and "dec" in item:
-            # this is an equitorial coordinate
+            # this is an equatorial coordinate
             coordin = {
                 "ra": item["ra"],
                 "dec": item["dec"],
@@ -1007,6 +994,7 @@ class Transient(MutableMapping):
         subkey = "value"
         out[key] = deepcopy(t1[key])
         classes = np.array([item["object_class"] for item in out[key][subkey]])
+
         for item in t2[key][subkey]:
             if item["object_class"] in classes:
                 i = np.where(item["object_class"] == classes)[0][0]

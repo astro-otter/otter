@@ -580,6 +580,22 @@ VIZIER_LARGE_CATALOGS = [
 ViZier catalog names that we query for host information in the Host class
 """
 
+_KNOWN_CLASS_ROOTS = [
+    "SN",
+    "SLSN",
+    "TDE",
+    "GRB",
+    "LGRB",
+    "SGRB",
+    "AGN",
+    "FRB",
+    "QSO",
+    "ANT",
+]
+"""
+Classification root names
+"""
+
 DATADIR = os.path.join(BASEDIR, "data", "base")
 """
 Deprecated database directory that IS NOT always constant anymore

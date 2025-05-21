@@ -173,7 +173,7 @@ def main():
                     dec=host_coord.dec.value,
                     ra_units="deg",
                     dec_units="deg",
-                    coordinate_type="equitorial",
+                    coordinate_type="equatorial",
                     reference=bibcodes,
                     default=True,
                 )

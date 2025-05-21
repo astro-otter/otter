@@ -131,7 +131,7 @@ def main():
                     "computed": False,
                     "default": defa,
                     "uuid": str(uu),
-                    "coordinate_type": "equitorial",
+                    "coordinate_type": "equatorial",
                 }
                 for coord, unit, defa, uu in zip(coords, units, default, uuids)
             ]
