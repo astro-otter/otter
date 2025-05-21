@@ -52,6 +52,12 @@ def main():
         f'{row["name"]} {row.year}': row.bibcode for _, row in df.iterrows()
     }
 
+    # get the classification flags
+    flags = pd.read_csv(
+        os.path.join(args.indir, "goldtooth_2023_class_conf_flags.csv"), sep="\t"
+    )
+    class_conf_map = {name: flag for name, flag in zip(flags.name, flags.flag)}
+
     # connect to otter
     db = Otter(datadir=args.otterdir, gen_summary=True)
 
@@ -136,9 +142,15 @@ def main():
                     "default_name": tde,
                     "alias": [{"value": tde, "reference": [goldtooth_bibcode]}],
                 },
-                "classification": [
-                    dict(object_class="TDE", confidence=1, reference=bibcodes)
-                ],
+                "classification": dict(
+                    value=[
+                        dict(
+                            object_class="TDE",
+                            confidence=class_conf_map[tde],
+                            reference=bibcodes,
+                        )
+                    ]
+                ),
             }
         )
 
@@ -161,7 +173,7 @@ def main():
                     dec=host_coord.dec.value,
                     ra_units="deg",
                     dec_units="deg",
-                    coordinate_type="equitorial",
+                    coordinate_type="equatorial",
                     reference=bibcodes,
                     default=True,
                 )

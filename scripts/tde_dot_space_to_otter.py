@@ -227,7 +227,7 @@ def main():
         sub["ra_units"] = ra_u
         sub["dec_units"] = dec_u
         sub["reference"] = mappedsrc(source_map, src)
-        sub["coordinate_type"] = "equitorial"
+        sub["coordinate_type"] = "equatorial"
         schema["coordinate"].append(clean_schema(sub))
 
         # copy over distance measurements
@@ -362,19 +362,14 @@ def main():
                     )
                     continue
 
-                c = d["value"]
-                if c == "TDE":
-                    conf = 1.0  # we can trust this
-                elif c == "TDE?":
-                    conf = 0.5  # it's probably a TDE
-                else:
-                    conf = 0.1  # it's might be a TDE
+                # c = d["value"]
+                conf = 0  # It is unclear where this classification came from
 
                 sub = deepcopy(otter_const.subschema["classification"])
                 sub["object_class"] = "TDE"
                 sub["reference"] = mappedsrc(source_map, src)
                 sub["confidence"] = conf
-                schema["classification"].append(clean_schema(sub))
+                schema["classification"]["value"].append(clean_schema(sub))
             del j["claimedtype"]
 
         # copy photometry
@@ -679,16 +674,18 @@ def main():
 
         del schema["spectra"]
 
-        if len(schema["classification"]) == 0:
+        if len(schema["classification"]["value"]) == 0:
             # give it a low classification score
-            schema["classification"] = [
-                {
-                    "object_class": "TDE",
-                    "confidence": 0.1,  # we don't trust this classification very much
-                    "reference": ["2017ApJ...835...64G"],
-                    "default": True,
-                }
-            ]
+            schema["classification"] = {
+                "value": [
+                    {
+                        "object_class": "TDE",
+                        "confidence": 0,  # we don't trust this classification very much
+                        "reference": ["2017ApJ...835...64G"],
+                        "default": True,
+                    }
+                ]
+            }
 
         if len(schema["photometry"]) == 0:
             del schema["photometry"]

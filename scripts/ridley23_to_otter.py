@@ -30,7 +30,7 @@ def main():
                 ra_units="deg",
                 dec_units="deg",
                 default=True,
-                coordinate_type="equitorial",
+                coordinate_type="equatorial",
             )
         ],
         distance=[
@@ -40,14 +40,16 @@ def main():
                 distance_type="redshift",
             )
         ],
-        classification=[
-            dict(
-                object_class="ANT",
-                confidence=1,
-                default=True,
-                reference=ridley23_bibcode,
-            )
-        ],
+        classification=dict(
+            value=[
+                dict(
+                    object_class="ANT",
+                    confidence=3.3,  # they have a spectrum
+                    default=True,
+                    reference=ridley23_bibcode,
+                )
+            ]
+        ),
         date_reference=[
             dict(
                 value=2457802.9139931,

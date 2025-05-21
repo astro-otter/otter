@@ -1249,7 +1249,7 @@ def generate_test_json():
                 "computed": False,
                 "default": True,
                 "uuid": "b98cdbe9-fff7-415b-a6d6-78cbd88544b8",
-                "coordinate_type": "equitorial",
+                "coordinate_type": "equatorial",
             },
             {
                 "reference": "b98cdbe9-fff7-415b-a6d6-78cbd88544b8",

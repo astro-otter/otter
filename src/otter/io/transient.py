@@ -24,7 +24,7 @@ from ..exceptions import (
     OtterLimitationError,
     TransientMergeError,
 )
-from ..util import XRAY_AREAS
+from ..util import XRAY_AREAS, _KNOWN_CLASS_ROOTS
 from .host import Host
 
 warnings.simplefilter("once", RuntimeWarning)
@@ -352,7 +352,7 @@ class Transient(MutableMapping):
         """
 
         # now we can generate the SkyCoord
-        f = "df['coordinate_type'] == 'equitorial'"
+        f = "df['coordinate_type'] == 'equatorial'"
         coord_dict = self._get_default("coordinate", filt=f)
         coordin = self._reformat_coordinate(coord_dict)
         coord = SkyCoord(**coordin).transform_to(coord_format)
@@ -407,7 +407,7 @@ class Transient(MutableMapping):
             and a list of the bibcodes corresponding to that classification. Or, None
             if there is no classification.
         """
-        default = self._get_default("classification")
+        default = self._get_default("classification/value")
         if default is None:
             return default
         return default.object_class, default.confidence, default.reference
@@ -489,7 +489,7 @@ class Transient(MutableMapping):
         """
         coordin = None
         if "ra" in item and "dec" in item:
-            # this is an equitorial coordinate
+            # this is an equatorial coordinate
             coordin = {
                 "ra": item["ra"],
                 "dec": item["dec"],
@@ -991,35 +991,107 @@ class Transient(MutableMapping):
         Combine the classification attribute
         """
         key = "classification"
+        subkey = "value"
         out[key] = deepcopy(t1[key])
-        classes = np.array([item["object_class"] for item in out[key]])
-        for item in t2[key]:
+        classes = np.array([item["object_class"] for item in out[key][subkey]])
+
+        for item in t2[key][subkey]:
             if item["object_class"] in classes:
                 i = np.where(item["object_class"] == classes)[0][0]
-                if int(item["confidence"]) > int(out[key][i]["confidence"]):
-                    out[key][i]["confidence"] = item[
+                if int(item["confidence"]) > int(out[key][subkey][i]["confidence"]):
+                    out[key][subkey][i]["confidence"] = item[
                         "confidence"
                     ]  # we are now more confident
 
-                if not isinstance(out[key][i]["reference"], list):
-                    out[key][i]["reference"] = [out[key][i]["reference"]]
+                if not isinstance(out[key][subkey][i]["reference"], list):
+                    out[key][subkey][i]["reference"] = [
+                        out[key][subkey][i]["reference"]
+                    ]
 
                 if not isinstance(item["reference"], list):
                     item["reference"] = [item["reference"]]
 
-                newdata = list(np.unique(out[key][i]["reference"] + item["reference"]))
-                out[key][i]["reference"] = newdata
+                newdata = list(
+                    np.unique(out[key][subkey][i]["reference"] + item["reference"])
+                )
+                out[key][subkey][i]["reference"] = newdata
 
             else:
-                out[key].append(item)
+                out[key][subkey].append(item)
 
         # now that we have all of them we need to figure out which one is the default
-        maxconf = max(out[key], key=lambda d: d["confidence"])
-        for item in out[key]:
+        maxconf = max(out[key][subkey], key=lambda d: d["confidence"])
+        for item in out[key][subkey]:
             if item == maxconf:
                 item["default"] = True
             else:
                 item["default"] = False
+
+        # then rederive the classification flags
+        out = Transient._derive_classification_flags(out)
+
+    @classmethod
+    def _derive_classification_flags(cls, out):
+        """
+        Derive the classification flags based on the confidence flags. This will find
+        - spec_classed
+        - unambiguous
+
+        See the paper for a detailed description of how this algorithm makes its
+        choices
+        """
+
+        if "classification" not in out or "value" not in out["classification"]:
+            # this means that the transient doesn't have any classifications
+            # just return itself without any changes
+            return out
+
+        # get the confidences of all of the classifications of this transient
+        confs = np.array(
+            [item["confidence"] for item in out["classification"]["value"]]
+        ).astype(float)
+
+        all_class_roots = np.array(
+            [
+                _fuzzy_class_root(item["object_class"])
+                for item in out["classification"]["value"]
+            ]
+        )
+
+        if np.any(confs >= 3):
+            unambiguous = len(np.unique(all_class_roots)) == 1
+            if np.any(confs == 3) or np.any(confs == 3.3):
+                # this is a "gold spectrum"
+                spec_classed = 3
+            elif np.any(confs == 3.2):
+                # this is a silver spectrum
+                spec_classed = 2
+            elif np.any(confs == 3.1):
+                # this is a bronze spectrum
+                spec_classed = 1
+            else:
+                raise ValueError("Not prepared for this confidence flag!")
+
+        elif np.any(confs == 2):
+            # these always have spec_classed = True, by definition
+            # They also have unambiguous = False by definition because they don't
+            # have a peer reviewed citation for their classification
+            spec_classed = 1
+            unambiguous = False
+
+        elif np.any(confs == 1):
+            spec_classed = 0  # by definition
+            unambiguous = len(np.unique(all_class_roots)) == 1
+
+        else:
+            spec_classed = 0
+            unambiguous = False
+
+        # finally, set these keys in the classification dict
+        out["classification"]["spec_classed"] = spec_classed
+        out["classification"]["unambiguous"] = unambiguous
+
+        return out
 
     @staticmethod
     def _merge_arbitrary(key, t1, t2, out, merge_subkeys=None, groupby_key=None):
@@ -1108,3 +1180,21 @@ class Transient(MutableMapping):
             outdict_cleaned = [{**x[i]} for i, x in outdict.stack().groupby(level=0)]
 
             out[key] = outdict_cleaned
+
+
+def _fuzzy_class_root(s):
+    """
+    Extract the fuzzy classification root name from the string s
+    """
+    s = s.upper()
+    # first split the class s using regex
+    for root in _KNOWN_CLASS_ROOTS:
+        if s.startswith(root):
+            remaining = s[len(root) :]
+            if remaining and root == "SN":
+                # we want to be able to distinguish between SN Ia and SN II
+                # we will use SN Ia to indicate thoes and SN to indicate CCSN
+                if "IA" in remaining or "1A" in remaining:
+                    return "SN Ia"
+            return root
+    return s

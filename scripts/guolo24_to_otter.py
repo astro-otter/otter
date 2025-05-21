@@ -191,7 +191,7 @@ def main():
     db = otter.Otter(datadir=args.otterdir)
     meta_coord_data = {"name": [], "ra": [], "dec": [], "ref": []}
     for name in list(meta.name.unique()):
-        res = db.query(names=name)
+        res = db.query(names=name, query_private=True)
         if len(res) == 0:
             print(name, ", No coordinates found!")
 
@@ -251,7 +251,7 @@ def main():
                 ra_units="hour",
                 dec_units="deg",
                 reference=[grp.ref.iloc[0]],
-                coordinate_type="equitorial",
+                coordinate_type="equatorial",
             )
         ]
         refs.append(grp.ref.iloc[0])
@@ -263,9 +263,9 @@ def main():
         ]
 
         # classification
-        otter_json["classification"] = [
-            dict(object_class="TDE", confidence=1, reference=[guolo_bibcode])
-        ]
+        otter_json["classification"] = dict(
+            value=[dict(object_class="TDE", confidence=3.3, reference=[guolo_bibcode])]
+        )  # These are "optically selected", therefore have spectroscopic classification
 
         # date peak
         otter_json["date_reference"] = [

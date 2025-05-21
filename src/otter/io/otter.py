@@ -287,6 +287,8 @@ class Otter(Database):
         refs: list[str] = None,
         hasphot: bool = False,
         hasspec: bool = False,
+        spec_classed: bool = False,
+        unambiguous: bool = False,
         classification: str = None,
         class_confidence_threshold: float = 0,
         query_private=False,
@@ -311,6 +313,11 @@ class Otter(Database):
                               metadata for transients that have this as a reference.
             hasphot (bool): if True, only returns transients which have photometry.
             hasspec (bool): NOT IMPLEMENTED! Will return False for all targets!
+            spec_classed (bool): If True, only returns transients that have been
+                                 specotroscopically classified/confirmed
+            unambiguous (bool): If True, only returns transients that only have a single
+                                published classification in OTTER. If classifications
+                                disagree for a transient, it will be filtered out.
             classification (str): A classification string to search for
             class_confidence_threshold (float): classification confidence cutoff for
                                                 query, between 0 and 1. Default is 0.
@@ -329,9 +336,15 @@ class Otter(Database):
         if hasspec is True:
             query_filters += "FILTER 'spectra' IN ATTRIBUTES(transient)\n"
 
+        if spec_classed:
+            query_filters += "FILTER transient.classification.spec_classed >= 1"
+
+        if unambiguous:
+            query_filters += "FILTER transient.classification.unambiguous"
+
         if classification is not None:
             query_filters += f"""
-            FOR subdoc IN transient.classification
+            FOR subdoc IN transient.classification.value
                 FILTER subdoc.confidence > TO_NUMBER({class_confidence_threshold})
                 FILTER subdoc.object_class LIKE '%{classification}%'
             """
@@ -592,7 +605,7 @@ class Otter(Database):
 
     def upload(self, json_data, collection="vetting", testing=False) -> Document:
         """
-        Upload json_data to collection
+        Upload json_data to collection WITHOUT deduplication!
 
         Args:
             json_data [dict] : A dictionary of the json data to upload to Otter
@@ -926,7 +939,7 @@ class Otter(Database):
                     ra_units=tde.ra_unit[0],
                     dec_units=tde.dec_unit[0],
                     reference=[tde.coord_bibcode[0]],
-                    coordinate_type="equitorial",
+                    coordinate_type="equatorial",
                 )
             ]
 
@@ -975,13 +988,16 @@ class Otter(Database):
             ### Classification information that is in the csvs
             # classification
             if "classification" in tde:
-                json["classification"] = [
-                    dict(
+                class_flag = 0
+                if "classification_flag" in tde:
+                    class_flag = tde.classification_flag[0]
+                json["classification"] = dict(
+                    value=dict(
                         object_class=tde.classification[0],
-                        confidence=1,  # we know this is at least an tde
+                        confidence=class_flag,
                         reference=[tde.classification_bibcode[0]],
                     )
-                ]
+                )
 
             # discovery date
             # print(tde)

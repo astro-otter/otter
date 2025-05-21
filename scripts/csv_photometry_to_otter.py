@@ -60,7 +60,7 @@ def main():
                 ra_units=tde.ra_unit[0],
                 dec_units=tde.dec_unit[0],
                 reference=[tde.coord_bibcode[0]],
-                coordinate_type="equitorial",
+                coordinate_type="equatorial",
             )
         ]
 
@@ -75,13 +75,19 @@ def main():
                 )
             ]
 
-        json["classification"] = [
-            dict(
-                object_class="TDE",
-                confidence=1,  # we know this is at least an tde
-                reference=[tde.bibcode[0]],
-            )
-        ]
+        class_flag = 0
+        if "classification_flag" in tde:
+            class_flag = tde.classification_flag[0]
+
+        json["classification"] = dict(
+            value=[
+                dict(
+                    object_class="TDE",
+                    confidence=class_flag,
+                    reference=[tde.bibcode[0]],
+                )
+            ]
+        )
 
         # discovery date
         # print(tde)
