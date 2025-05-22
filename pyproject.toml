@@ -33,6 +33,7 @@ dependencies = [
   "synphot",
   "typing-extensions",
   "pyarango",
+  "tabulate",
 
   # for the plotting
   "matplotlib",
