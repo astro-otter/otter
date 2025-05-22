@@ -3,6 +3,7 @@ This is the primary class for user interaction with the catalog
 """
 
 from __future__ import annotations
+from typing import Optional
 import os
 import json
 import glob
@@ -825,7 +826,7 @@ class Otter(Database):
     def from_csvs(
         metafile: str,
         photfile: str = None,
-        local_outpath: str = "private_otter_data",
+        local_outpath: Optional[str] = None,
         db: Otter = None,
     ) -> Otter:
         """
@@ -898,7 +899,7 @@ class Otter(Database):
             phot["band_eff_freq_unit"] = str(freq_eff_unit)
 
         if not os.path.exists(local_outpath):
-            os.mkdir(local_outpath)
+            os.makedirs(local_outpath)
 
         # drop duplicated names in meta and keep the first
         meta = meta.drop_duplicates(subset="name", keep="first")
@@ -1295,7 +1296,7 @@ class Otter(Database):
         if db is None:
             db = Otter(datadir=local_outpath)
         else:
-            db.datadir = local_outpath
+            db.DATADIR = local_outpath
 
         # always save this document as a new one
         db.save(all_jsons)
