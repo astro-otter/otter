@@ -854,6 +854,7 @@ class Otter(Database):
         """
         # read in the metadata and photometry file
         meta = pd.read_csv(metafile)
+        meta.columns = meta.columns.str.strip()  # clean up the col names
         phot = None
 
         required_phot_cols = [
@@ -870,6 +871,7 @@ class Otter(Database):
 
         if photfile is not None:
             phot_unclean = pd.read_csv(photfile)
+            phot_unclean.columns = phot_unclean.columns.str.strip()  # cleanup colnames
 
             phot = phot_unclean.dropna(subset=required_phot_cols)
             if len(phot) != len(phot_unclean):
@@ -1001,11 +1003,13 @@ class Otter(Database):
                 if "classification_flag" in tde:
                     class_flag = tde.classification_flag[0]
                 json["classification"] = dict(
-                    value=dict(
-                        object_class=tde.classification[0],
-                        confidence=class_flag,
-                        reference=[tde.classification_bibcode[0]],
-                    )
+                    value=[
+                        dict(
+                            object_class=tde.classification[0],
+                            confidence=class_flag,
+                            reference=[tde.classification_bibcode[0]],
+                        )
+                    ]
                 )
 
             # discovery date
