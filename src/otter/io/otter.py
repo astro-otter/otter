@@ -7,8 +7,8 @@ from typing import Optional
 import os
 import json
 import glob
-from warnings import warn
 from copy import deepcopy
+import logging
 
 from pyArango.connection import Connection
 from pyArango.database import Database
@@ -23,13 +23,15 @@ from astropy import units as u
 
 from .transient import Transient
 from ..exceptions import FailedQueryError, OtterLimitationError, TransientMergeError
-from ..util import bibcode_to_hrn, freq_to_obstype, freq_to_band
+from ..util import bibcode_to_hrn, freq_to_obstype, freq_to_band, _DuplicateFilter
 
 import warnings
 
 warnings.simplefilter("once", RuntimeWarning)
 warnings.simplefilter("once", UserWarning)
 warnings.simplefilter("once", u.UnitsWarning)
+
+logger = logging.getLogger(__name__)
 
 
 def _np_encoder(object):
@@ -91,7 +93,7 @@ class Otter(Database):
             try:
                 os.makedirs(self.DATADIR)
             except FileExistsError:
-                warn(
+                logger.warning(
                     "Directory was created between the if statement and trying "
                     + "to create the directory!"
                 )
@@ -196,6 +198,9 @@ class Otter(Database):
             FailedQueryError: When the query returns no results
             IOError: if one of your inputs is incorrect
         """
+        warn_filt = _DuplicateFilter()
+        logger.addFilter(warn_filt)
+
         queryres = self.query(hasphot=True, **kwargs)
 
         dicts = []
@@ -254,6 +259,7 @@ class Otter(Database):
             else:
                 fullphot = fullphot[keys_to_keep]
 
+        logger.removeFilter(warn_filt)
         if return_type == "astropy":
             return Table.from_pandas(fullphot)
         elif return_type == "pandas":
@@ -867,14 +873,16 @@ class Otter(Database):
 
             phot = phot_unclean.dropna(subset=required_phot_cols)
             if len(phot) != len(phot_unclean):
-                warn("""
+                logger.warning("""
                 Filtered out rows with nan in the photometry file! Make sure you
                 expect this behaviour!
                 """)
 
             if "bibcode" not in phot:
                 phot["bibcode"] = "private"
-                warn("Setting the bibcode column to the special keyword 'private'!")
+                logger.warning("""
+                Setting the bibcode column to the special keyword 'private'!
+                """)
 
             # we need to generate columns of wave_eff and freq_eff
             wave_eff = []

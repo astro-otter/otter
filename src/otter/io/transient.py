@@ -24,11 +24,9 @@ from ..exceptions import (
     OtterLimitationError,
     TransientMergeError,
 )
-from ..util import XRAY_AREAS, _KNOWN_CLASS_ROOTS
+from ..util import XRAY_AREAS, _KNOWN_CLASS_ROOTS, _DuplicateFilter
 from .host import Host
 
-warnings.simplefilter("once", RuntimeWarning)
-warnings.simplefilter("once", UserWarning)
 np.seterr(divide="ignore")
 logger = logging.getLogger(__name__)
 
@@ -289,7 +287,7 @@ class Transient(MutableMapping):
                     raise TransientMergeError(f"{key} was not expected! Can not merge!")
                 else:
                     # Throw a warning and only keep the old stuff
-                    warnings.warn(
+                    logger.warning(
                         f"{key} was not expected! Only keeping the old information!"
                     )
                     out[key] = deepcopy(self[key])
@@ -323,17 +321,17 @@ class Transient(MutableMapping):
         else:
             # run some checks
             if "photometry" in keys:
-                warnings.warn("Not returing the photometry!")
+                logger.warning("Not returing the photometry!")
                 _ = keys.pop("photometry")
             if "spectra" in keys:
-                warnings.warn("Not returning the spectra!")
+                logger.warning("Not returning the spectra!")
                 _ = keys.pop("spectra")
 
             curr_keys = self.keys()
             for key in keys:
                 if key not in curr_keys:
                     keys.remove(key)
-                    warnings.warn(
+                    logger.warning(
                         f"Not returning {key} because it is not in this transient!"
                     )
 
@@ -437,7 +435,7 @@ class Transient(MutableMapping):
 
         # then try BLAST
         if search:
-            logger.warn(
+            logger.warning(
                 "Trying to find a host with BLAST/astro-ghost. Note\
                  that this won't work for older targets! See https://blast.scimma.org"
             )
@@ -535,10 +533,17 @@ class Transient(MutableMapping):
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
         """
+        warn_filt = _DuplicateFilter()
+        logger.addFilter(warn_filt)
+
         # these imports need to be here for some reason
         # otherwise the code breaks
         from synphot.units import VEGAMAG, convert_flux
         from synphot.spectrum import SourceSpectrum
+
+        # variable so this warning only displays a single time each time this
+        # function is called
+        source_map_warning = True
 
         # turn the photometry key into a pandas dataframe
         if "photometry" not in self:
@@ -592,36 +597,55 @@ class Transient(MutableMapping):
                 raise IOError("Please provide a valid obs_type")
             df = df[df.obs_type == obs_type]
 
+        # add some mockup columns if they don't exist
+        if "value" not in df:
+            df["value"] = np.nan
+            df["value_err"] = np.nan
+            df["value_units"] = "NaN"
+
         # fix some bad units that are old and no longer recognized by astropy
-        df.value_units = df.value_units.str.replace("ergs", "erg")
-        df.raw_units = df.raw_units.str.replace("ergs", "erg")
-        df.value_units = ["mag(AB)" if uu == "AB" else uu for uu in df.value_units]
-        df.raw_units = ["mag(AB)" if uu == "AB" else uu for uu in df.raw_units]
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore")
+            df.raw_units = df.raw_units.str.replace("ergs", "erg")
+            df.raw_units = ["mag(AB)" if uu == "AB" else uu for uu in df.raw_units]
+            df.value_units = df.value_units.str.replace("ergs", "erg")
+            df.value_units = ["mag(AB)" if uu == "AB" else uu for uu in df.value_units]
 
         # merge the raw and value keywords based on the requested flux_units
         # first take everything that just has `raw` and not `value`
         df_raw_only = df[df.value.isna()]
         remaining = df[df.value.notna()]
+        if len(remaining) == 0:
+            df_raw = df_raw_only
+            df_value = []  # this tricks the code later
+        else:
+            # then take the remaining rows and figure out if we want the raw or value
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore")
+                flux_unit_astropy = u.Unit(flux_unit)
 
-        # then take the remaining rows and figure out if we want the raw or value
-        flux_unit_astropy = u.Unit(flux_unit)
-        val_unit_filt = np.array(
-            [
-                u.Unit(uu).is_equivalent(flux_unit_astropy)
-                for uu in remaining.value_units
-            ]
-        )
-        df_value = remaining[val_unit_filt]
-        df_raw_and_value = remaining[~val_unit_filt]
+                val_unit_filt = np.array(
+                    [
+                        u.Unit(uu).is_equivalent(flux_unit_astropy)
+                        for uu in remaining.value_units
+                    ]
+                )
 
-        # then merge the raw dataframes
-        df_raw = pd.concat([df_raw_only, df_raw_and_value], axis=0)
+            df_value = remaining[val_unit_filt]
+            df_raw_and_value = remaining[~val_unit_filt]
+
+            # then merge the raw dataframes
+            df_raw = pd.concat([df_raw_only, df_raw_and_value], axis=0)
 
         # then add columns to these dataframes to convert stuff later
         df_raw = df_raw.assign(
             _flux=df_raw["raw"].values,
             _flux_units=df_raw["raw_units"].values,
-            _flux_err=df_raw["raw_err"].values,
+            _flux_err=(
+                df_raw["raw_err"].values
+                if "raw_err" in df_raw
+                else [np.nan] * len(df_raw)
+            ),
         )
 
         if len(df_value) == 0:
@@ -654,6 +678,22 @@ class Transient(MutableMapping):
         # the TDE lightcurves for this systematic effect. "
         df = df[df[by].astype(float) > 0]
 
+        # filter out anything that has _flux_units == "ct" because we can't convert that
+        try:
+            # this is a test case to see if we can convert ct -> flux_unit
+            convert_flux(
+                [1 * u.nm, 2 * u.nm], 1 * u.ct, u.Unit(flux_unit), area=1 * u.m**2
+            )
+        except u.UnitsError:
+            bad_units = df[df._flux_units == "ct"]
+            if len(bad_units) > 0:
+                logger.warning(
+                    f"""Removing {len(bad_units)} photometry points from
+                    {self.default_name} because we can't convert them from ct ->
+                    {flux_unit}"""
+                )
+            df = df[df._flux_units != "ct"]
+
         # convert the ads bibcodes to a string of human readable sources here
         def mappedrefs(row):
             if isinstance(row.reference, list):
@@ -664,7 +704,10 @@ class Transient(MutableMapping):
         try:
             df["human_readable_refs"] = df.apply(mappedrefs, axis=1)
         except Exception as exc:
-            warnings.warn(f"Unable to apply the source mapping because {exc}")
+            if source_map_warning:
+                source_map_warning = False
+                logger.warning(f"Unable to apply the source mapping because {exc}")
+
             df["human_readable_refs"] = df.reference
 
         # Figure out what columns are good to groupby in the photometry
@@ -704,7 +747,9 @@ class Transient(MutableMapping):
                     # We can assume here that this unit really means astropy's "mag(AB)"
                     astropy_units = u.Unit("mag(AB)")
                 else:
-                    astropy_units = u.Unit(unit)
+                    with warnings.catch_warnings():
+                        warnings.simplefilter("ignore")
+                        astropy_units = u.Unit(unit)
 
             except ValueError:
                 # this means there is something likely slightly off in the input unit
@@ -729,10 +774,12 @@ class Transient(MutableMapping):
                 indata_err = np.zeros(len(data))
 
             # convert to an astropy quantity
-            q = indata * u.Unit(astropy_units)
-            q_err = indata_err * u.Unit(
-                astropy_units
-            )  # assume error and values have the same unit
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore")
+                q = indata * u.Unit(astropy_units)
+                q_err = indata_err * u.Unit(
+                    astropy_units
+                )  # assume error and values have the same unit
 
             # get and save the effective wavelength
             # because of cleaning we did to the filter dataframe above wave_eff
@@ -741,8 +788,10 @@ class Transient(MutableMapping):
                 raise ValueError("Flushing out the effective wavelength array failed!")
 
             zz = zip(data["wave_eff"], data["wave_units"])
-            wave_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], wave_unit)
-            freq_eff = wave_eff.to(freq_unit, equivalencies=u.spectral())
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore")
+                wave_eff = u.Quantity([vv * u.Unit(uu) for vv, uu in zz], wave_unit)
+                freq_eff = wave_eff.to(freq_unit, equivalencies=u.spectral())
 
             data["converted_wave"] = wave_eff.value
             data["converted_wave_unit"] = wave_unit
@@ -768,10 +817,12 @@ class Transient(MutableMapping):
                 # we also need to make this wave_min and wave_max
                 # instead of just the effective wavelength like for radio and uvoir
                 zz = zip(data["wave_min"], data["wave_max"], data["wave_units"])
-                wave_eff = u.Quantity(
-                    [np.array([m, M]) * u.Unit(uu) for m, M, uu in zz],
-                    u.Unit(wave_unit),
-                )
+                with warnings.catch_warnings():
+                    warnings.filterwarnings("ignore")
+                    wave_eff = u.Quantity(
+                        [np.array([m, M]) * u.Unit(uu) for m, M, uu in zz],
+                        u.Unit(wave_unit),
+                    )
 
             else:
                 area = None
@@ -785,13 +836,15 @@ class Transient(MutableMapping):
 
                 flux, flux_err = [], []
                 for wave, xray_point, xray_point_err in zip(wave_eff, q, q_err):
-                    f_val = convert_flux(
-                        wave,
-                        xray_point,
-                        u.Unit(flux_unit),
-                        vegaspec=SourceSpectrum.from_vega(),
-                        area=area,
-                    ).value
+                    with warnings.catch_warnings():
+                        warnings.filterwarnings("ignore")
+                        f_val = convert_flux(
+                            wave,
+                            xray_point,
+                            u.Unit(flux_unit),
+                            vegaspec=SourceSpectrum.from_vega(),
+                            area=area,
+                        ).value
 
                     # approximate the uncertainty as dX = dY/Y * X
                     f_err = np.multiply(
@@ -805,7 +858,9 @@ class Transient(MutableMapping):
 
             else:
                 # this will be faster and cover most cases
-                flux = convert_flux(wave_eff, q, u.Unit(flux_unit)).value
+                with warnings.catch_warnings():
+                    warnings.filterwarnings("ignore")
+                    flux = convert_flux(wave_eff, q, u.Unit(flux_unit)).value
 
                 # since the error propagation is different between logarithmic units
                 # and linear units, unfortunately
@@ -860,6 +915,8 @@ class Transient(MutableMapping):
                     return row.upperlimit
 
         outdata["upperlimit"] = outdata.apply(is_upperlimit, axis=1)
+
+        logger.removeFilter(warn_filt)
         return outdata
 
     def _merge_names(t1, t2, out):  # noqa: N805
@@ -911,7 +968,7 @@ class Transient(MutableMapping):
             elif score2 > score1:
                 out[key]["default_name"] = t2[key]["default_name"]
             else:
-                warnings.warn(
+                logger.warning(
                     "Names have the same score! Just using the existing default_name"
                 )
                 out[key]["default_name"] = t1[key]["default_name"]
