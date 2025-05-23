@@ -42,17 +42,60 @@ bandwavelengths = {
     "J": 1220.0,
     "H": 1630.0,
     "K": 2190.0,
-    "M2": 260.0,
-    "W1": 224.6,
-    "W2": 192.8,
+    "UVM2": 260.0,
+    "UVW1": 224.6,
+    "UVW2": 192.8,
     "w": 622.0,
+    "W1": 3352.600,
+    "W2": 4602.800,
+    "W3": 11560.800,
+    "W4": 22088.300,
 }
 
-bandreps = {
-    "Ks": ["K_s"],
-    "M2": ["uvm2", "UVM2", "UVm2", "Um2", "m2", "um2"],
-    "W1": ["uvw1", "UVW1", "UVw1", "Uw1", "w1", "uw1"],
-    "W2": ["uvw2", "UVW2", "UVw2", "Uw2", "w2", "uw2"],
+AB_FILTERS = {
+    "u",
+    "g",
+    "r",
+    "i",
+    "z",
+    "u'",
+    "g'",
+    "r'",
+    "i'",
+    "z'",
+    "u_SDSS",
+    "g_SDSS",
+    "r_SDSS",
+    "i_SDSS",
+    "z_SDSS",
+    "UVM2",
+    "UVW1",
+    "UVW2",
+    "w",
+    "o",  # ATLAS Orange
+    "c",  # ATLAS Cyan
+    "FUV",  # https://iopscience.iop.org/article/10.1086/520512/fulltext/
+    "NUV",  # https://iopscience.iop.org/article/10.1086/520512/fulltext/
+    "F225W",
+    # the only time this is used is from 2011ApJ...741...73V, which says it uses AB
+    "C",  # CSS C filter,
+}
+
+VEGA_FILTERS = {
+    "U",
+    "B",
+    "V",
+    "R",
+    "I",
+    "Y",
+    "J",
+    "H",
+    "K",
+    "Ks",
+    "W1",
+    "W2",
+    "W3",
+    "W4",
 }
 
 
@@ -415,14 +458,7 @@ def main():
                 usedfluxforraw = False
                 if "magnitude" in group:
                     sub["raw"] = list(group.magnitude.astype(float))
-                    if "e_magnitude" in group:
-                        sub["raw_err"] = list(group.e_magnitude.astype(float))
-                    if "system" in group:
-                        sub["raw_units"] = list(group.system)
-                    else:
-                        sub["raw_units"] = (
-                            "mag(AB)"  # hopefully this assumption is okay!
-                        )
+
                     if "band" in group:
                         sub["filter_key"] = list(group.band)
                     else:
@@ -431,6 +467,41 @@ def main():
                         )
                         badphot += len(group)
                         continue  # don't add this one
+
+                    if (
+                        "W1" in sub["filter_key"]
+                        or "W2" in sub["filter_key"]
+                        or "M2" in sub["filter_key"]
+                    ) and telescope.lower() == "swift":
+                        # then these are Swift UVOT filters, not WISE!
+                        for ii, value in enumerate(sub["filter_key"]):
+                            if value == "W1":
+                                sub["filter_key"][ii] = "UVW1"
+                            elif value == "W2":
+                                sub["filter_key"][ii] = "UVW2"
+                            elif value == "M2":
+                                sub["filter_key"][ii] = "UVM2"
+
+                    if "e_magnitude" in group:
+                        sub["raw_err"] = list(group.e_magnitude.astype(float))
+                    if "system" in group:
+                        sub["raw_units"] = list(group.system)
+                    else:
+                        # assume the magnitude system based on the filter
+                        sub["raw_units"] = []
+                        for band in sub["filter_key"]:
+                            magsys = None
+                            if band in AB_FILTERS:
+                                magsys = "mag(AB)"
+                            elif band in VEGA_FILTERS:
+                                magsys = "vega"
+                            else:
+                                raise ValueError(f"{band} MISSING FROM AB AND VEGA!")
+
+                            sub["raw_units"].append(magsys)
+                        if len(np.unique(sub["raw_units"])) == 1:
+                            sub["raw_units"] = sub["raw_units"][0]
+
                 elif "countrate" in group:
                     sub["raw"] = list(group.countrate.astype(float))
                     if "e_countrate" in group:

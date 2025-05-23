@@ -511,7 +511,6 @@ class Transient(MutableMapping):
         date_unit: u.Unit = "MJD",
         freq_unit: u.Unit = "GHz",
         wave_unit: u.Unit = "nm",
-        by: str = "raw",
         obs_type: str = None,
     ) -> pd.DataFrame:
         """
@@ -529,10 +528,6 @@ class Transient(MutableMapping):
             wave_unit (astropy.unit.Unit): The astropy unit or string representation of
                                            an astropy unit to convert and return the
                                            wavelength as.
-            by (str): Either 'raw' or 'value'. 'raw' is the default and is highly
-                      recommended! If 'value' is used it may skip some photometry.
-                      See the schema definition to understand this keyword completely
-                      before using it.
             obs_type (str): "radio", "xray", or "uvoir". If provided, it only returns
                             data taken within that range of wavelengths/frequencies.
                             Default is None which will return all of the data.
@@ -544,10 +539,6 @@ class Transient(MutableMapping):
         # otherwise the code breaks
         from synphot.units import VEGAMAG, convert_flux
         from synphot.spectrum import SourceSpectrum
-
-        # check inputs
-        if by not in {"value", "raw"}:
-            raise IOError("Please choose either value or raw!")
 
         # turn the photometry key into a pandas dataframe
         if "photometry" not in self:
@@ -594,12 +585,63 @@ class Transient(MutableMapping):
         # merge the photometry with the filter information
         df = c.merge(filters, on="filter_key")
 
-        # make sure 'by' is in df
-        if by not in df:
-            if by == "value":
-                by = "raw"
-            else:
-                by = "value"
+        # drop irrelevant obs_types before continuing
+        if obs_type is not None:
+            valid_obs_types = {"radio", "uvoir", "xray"}
+            if obs_type not in valid_obs_types:
+                raise IOError("Please provide a valid obs_type")
+            df = df[df.obs_type == obs_type]
+
+        # fix some bad units that are old and no longer recognized by astropy
+        df.value_units = df.value_units.str.replace("ergs", "erg")
+        df.raw_units = df.raw_units.str.replace("ergs", "erg")
+        df.value_units = ["mag(AB)" if uu == "AB" else uu for uu in df.value_units]
+        df.raw_units = ["mag(AB)" if uu == "AB" else uu for uu in df.raw_units]
+
+        # merge the raw and value keywords based on the requested flux_units
+        # first take everything that just has `raw` and not `value`
+        df_raw_only = df[df.value.isna()]
+        remaining = df[df.value.notna()]
+
+        # then take the remaining rows and figure out if we want the raw or value
+        flux_unit_astropy = u.Unit(flux_unit)
+        val_unit_filt = np.array(
+            [
+                u.Unit(uu).is_equivalent(flux_unit_astropy)
+                for uu in remaining.value_units
+            ]
+        )
+        df_value = remaining[val_unit_filt]
+        df_raw_and_value = remaining[~val_unit_filt]
+
+        # then merge the raw dataframes
+        df_raw = pd.concat([df_raw_only, df_raw_and_value], axis=0)
+
+        # then add columns to these dataframes to convert stuff later
+        df_raw = df_raw.assign(
+            _flux=df_raw["raw"].values,
+            _flux_units=df_raw["raw_units"].values,
+            _flux_err=df_raw["raw_err"].values,
+        )
+
+        if len(df_value) == 0:
+            df = df_raw
+        else:
+            df_value = df_value.assign(
+                _flux=df_value["value"].values,
+                _flux_units=df_value["value_units"].values,
+                _flux_err=(
+                    df_value["value_err"].values
+                    if "value_err" in df_value
+                    else [np.nan] * len(df_value)
+                ),
+            )
+
+            # then merge df_value and df_raw back into one df
+            df = pd.concat([df_raw, df_value], axis=0)
+
+        # then, for the rest of the code to work, set the "by" variables to _flux
+        by = "_flux"
 
         # skip rows where 'by' is nan
         df = df[df[by].notna()]
@@ -611,13 +653,6 @@ class Transient(MutableMapping):
         # known (and under investigation), we have not attempted to correct
         # the TDE lightcurves for this systematic effect. "
         df = df[df[by].astype(float) > 0]
-
-        # drop irrelevant obs_types before continuing
-        if obs_type is not None:
-            valid_obs_types = {"radio", "uvoir", "xray"}
-            if obs_type not in valid_obs_types:
-                raise IOError("Please provide a valid obs_type")
-            df = df[df.obs_type == obs_type]
 
         # convert the ads bibcodes to a string of human readable sources here
         def mappedrefs(row):
