@@ -77,7 +77,7 @@ def main():
         reference=[ridley23_bibcode],
         raw=uvoir.mag.tolist(),
         raw_err=uvoir.magerr.tolist(),
-        raw_units="mag(AB)",
+        raw_units="mag(AB)",  # this is based on private communication with Evan Ridley
         corr_k=False,
         corr_s=False,
         corr_av=False,

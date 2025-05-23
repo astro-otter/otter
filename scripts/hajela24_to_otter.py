@@ -166,7 +166,7 @@ def main():
         reference=[hajela24_bibcode],
         raw=uvoir.Magnitude.tolist(),
         raw_err=uvoir.Magnitude_Error.tolist(),
-        raw_units="mag(AB)",
+        raw_units="mag(AB)",  # this is based on a table A1 note in the paper
         corr_k=False,
         corr_s=False,
         corr_av=True,
