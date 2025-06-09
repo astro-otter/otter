@@ -43,7 +43,7 @@ def test_get_meta():
     assert metahyz["name/default_name"] == "2018hyz"
     assert metahyz["date_reference"][0]["value"] == "2018-10-14"
     assert metahyz["date_reference"][0]["date_format"] == "iso"
-    assert metahyz["classification"][0]["object_class"] == "TDE"
+    assert metahyz["classification"]["value"][0]["object_class"] == "TDE"
 
 
 def test_cone_search():

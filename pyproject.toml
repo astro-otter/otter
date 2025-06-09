@@ -46,7 +46,6 @@ dependencies = [
   "fundamentals",
   "astro-datalab",
   "sparclclient",
-  "astro-ghost",
 
   # for the schema validation
   "pydantic",

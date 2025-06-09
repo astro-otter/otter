@@ -248,6 +248,7 @@ def test_query_sparcl():
         pass
 
 
+@pytest.mark.skip(reason="pyvo is rejecting our queries of the heasarc catalog")
 def test_query_heasarc():
     """
     Test querying the Heasarc x-ray catalog

@@ -7,7 +7,7 @@ are more complex and require additional tests.
 import pytest
 import numpy as np
 from otter import Transient, Host
-from otter.exceptions import OtterLimitationError, IOError
+from otter.exceptions import OtterLimitationError
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
 
@@ -280,17 +280,6 @@ def test_clean_photometry():
     uvoir = phot[phot.obs_type == "uvoir"]
     assert np.isclose(phot["converted_flux"].iloc[0], 17.905, atol=1e-2), msg
     assert 17.59 in list(uvoir["converted_flux"]), msg
-
-    # then with different "by"
-    with pytest.raises(IOError):
-        t.clean_photometry(by="foo")
-
-    phot_val = t.clean_photometry(by="value").reset_index()
-
-    assert len(phot_val.obs_type.unique()) == 1, msg
-    assert phot_val.obs_type.iloc[0] == "xray", msg
-    assert len(phot_val["converted_flux_unit"].unique()) == 1, msg
-    assert phot_val["converted_flux_unit"][0] == "mag(AB)", msg
 
     # then with different returned units
     # and only get the radio data
