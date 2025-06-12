@@ -624,7 +624,10 @@ class Otter(Database):
         """
 
         # now add the document
-        doc = self[collection].createDocument(json_data)
+        try:
+            doc = self[collection].createDocument(json_data)
+        except Exception as e:
+            print(e)
         if not testing:
             doc.save()
         return doc
