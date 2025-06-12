@@ -973,11 +973,13 @@ class Otter(Database):
                 pd.isna(tde["luminosity_distance"])
             ):
                 json["distance"].append(
-                    value=tde.luminosity_distance[0],
-                    reference=[tde.luminosity_distance_bibcode[0]],
-                    unit=tde.luminosity_distance_unit[0],
-                    computed=False,
-                    distance_type="luminosity",
+                    dict(
+                        value=tde.luminosity_distance[0],
+                        reference=[tde.luminosity_distance_bibcode[0]],
+                        unit=tde.luminosity_distance_unit[0],
+                        computed=False,
+                        distance_type="luminosity",
+                    )
                 )
 
             # comoving distance
@@ -985,11 +987,13 @@ class Otter(Database):
                 pd.isna(tde["comoving_distance"])
             ):
                 json["distance"].append(
-                    value=tde.comoving_distance[0],
-                    reference=[tde.comoving_distance_bibcode[0]],
-                    unit=tde.comoving_distance_unit[0],
-                    computed=False,
-                    distance_type="comoving",
+                    dict(
+                        value=tde.comoving_distance[0],
+                        reference=[tde.comoving_distance_bibcode[0]],
+                        unit=tde.comoving_distance_unit[0],
+                        computed=False,
+                        distance_type="comoving",
+                    )
                 )
 
             # remove the distance list if it is empty still
