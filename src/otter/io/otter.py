@@ -625,7 +625,6 @@ class Otter(Database):
 
         # now add the document
         doc = self[collection].createDocument(json_data)
-        print(doc)
         if not testing:
             doc.save()
         return doc
@@ -666,7 +665,10 @@ class Otter(Database):
             if len(res) > 1:
                 raise OtterLimitationError("Some objects in Otter are too close!")
 
-            elif len(res) == 1:
+            elif len(res) == 1 and collection != "vetting":
+                # if the collection is the vetting collection we don't want to do the
+                # merging yet, even if the object already exists in OTTER
+
                 # this object exists in otter already, let's grab the transient data and
                 # merge the files
                 merged = t + res[0]
@@ -674,13 +676,6 @@ class Otter(Database):
                 # copy over the special arangodb keys
                 merged["_key"] = res[0]["_key"]
                 merged["_id"] = res[0]["_id"]
-
-                # we also have to delete the document from the OTTER database
-                doc = self.fetchDocument(merged["_id"])
-                if not testing:
-                    doc.delete()
-                else:
-                    print(f"Would delete\n{doc}")
 
             else:
                 # this means the object doesn't exist in otter already
