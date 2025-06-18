@@ -828,7 +828,7 @@ class Otter(Database):
     def from_csvs(
         metafile: str,
         photfile: str = None,
-        local_outpath: Optional[str] = None,
+        local_outpath: Optional[str] = os.path.join(os.getcwd(), "private-data"),
         db: Otter = None,
     ) -> Otter:
         """
@@ -1081,11 +1081,6 @@ class Otter(Database):
                     if src not in phot_sources:
                         phot_sources.append(src)
 
-                    if len(np.unique(p.flux_unit)) == 1:
-                        raw_units = p.flux_unit.tolist()[0]
-                    else:
-                        raw_units = p.flux_unit.tolist()
-
                     # add a column to phot with the unique filter key
                     if obstype == "radio":
                         filter_uq_key = (
@@ -1105,17 +1100,73 @@ class Otter(Database):
                     if "upperlimit" not in p:
                         p["upperlimit"] = False
 
-                    json_phot = dict(
-                        reference=src,
-                        raw=p.flux.astype(float).tolist(),
-                        raw_err=p.flux_err.astype(float).tolist(),
-                        raw_units=raw_units,
-                        date=p.date.tolist(),
-                        date_format=p.date_format.tolist(),
-                        upperlimit=p.upperlimit.tolist(),
-                        filter_key=filter_uq_key,
-                        obs_type=obstype,
-                    )
+                    if "raw" in p.columns and "flux" in p.columns:
+                        if len(np.unique(p.raw_unit)) == 1:
+                            raw_units = p.raw_unit.tolist()[0]
+                        else:
+                            raw_units = p.raw_unit.tolist()
+
+                        if len(np.unique(p.flux_unit)) == 1:
+                            val_units = p.flux_unit.tolist()[0]
+                        else:
+                            val_units = p.flux_unit.tolist()
+
+                        # treat "raw" as the "raw" keyword and "flux" as the "value"
+                        json_phot = dict(
+                            reference=src,
+                            raw=p.raw.astype(float).tolist(),
+                            raw_err=p.raw_err.astype(float).tolist(),
+                            raw_units=raw_units,
+                            value=p.flux.astype(float).tolist(),
+                            value_err=p.flux_err.astype(float).tolist(),
+                            value_units=val_units,
+                            date=p.date.tolist(),
+                            date_format=p.date_format.tolist(),
+                            upperlimit=p.upperlimit.tolist(),
+                            filter_key=filter_uq_key,
+                            obs_type=obstype,
+                        )
+
+                    elif "flux" in p.columns and "raw" not in p.columns:
+                        if len(np.unique(p.flux_unit)) == 1:
+                            raw_units = p.flux_unit.tolist()[0]
+                        else:
+                            raw_units = p.flux_unit.tolist()
+
+                        # treat "flux" as the "raw" keyword
+                        json_phot = dict(
+                            reference=src,
+                            raw=p.flux.astype(float).tolist(),
+                            raw_err=p.flux_err.astype(float).tolist(),
+                            raw_units=raw_units,
+                            date=p.date.tolist(),
+                            date_format=p.date_format.tolist(),
+                            upperlimit=p.upperlimit.tolist(),
+                            filter_key=filter_uq_key,
+                            obs_type=obstype,
+                        )
+
+                    elif "raw" in p.columns and "flux" not in p.columns:
+                        if len(np.unique(p.raw_unit)) == 1:
+                            raw_units = p.raw_unit.tolist()[0]
+                        else:
+                            raw_units = p.raw_unit.tolist()
+
+                        # treat "raw" as the "raw" keyword
+                        json_phot = dict(
+                            reference=src,
+                            raw=p.raw.astype(float).tolist(),
+                            raw_err=p.raw_err.astype(float).tolist(),
+                            raw_units=raw_units,
+                            date=p.date.tolist(),
+                            date_format=p.date_format.tolist(),
+                            upperlimit=p.upperlimit.tolist(),
+                            filter_key=filter_uq_key,
+                            obs_type=obstype,
+                        )
+
+                    else:
+                        raise ValueError("`raw` and/or `flux` key(s) must be provided!")
 
                     if not pd.isna(tele):
                         json_phot["telescope"] = tele
@@ -1183,6 +1234,126 @@ class Otter(Database):
                             json_phot[c] = p[c].tolist()
                             json_phot[bool_v_key] = [v != "null" for v in json_phot[c]]
 
+                    # deal with the xray model
+                    if "xray_model_name" not in p and obstype == "xray":
+                        raise ValueError(
+                            "You must provide the xray model for xray data!"
+                        )
+                    if "xray_model_name" in p:
+                        # get various sets of keywords
+                        model_val_cols = list(
+                            p.columns[p.columns.str.contains("xray_model_param_value")]
+                        )
+                        model_up_err_cols = list(
+                            p.columns[p.columns.str.contains("xray_model_param_up_err")]
+                        )
+                        model_lo_err_cols = list(
+                            p.columns[p.columns.str.contains("xray_model_param_lo_err")]
+                        )
+                        model_val_units_cols = list(
+                            p.columns[p.columns.str.contains("xray_model_param_unit")]
+                        )
+                        model_uplim_cols = list(
+                            p.columns[
+                                p.columns.str.contains("xray_model_param_upperlimit")
+                            ]
+                        )
+
+                        param_names = [v.split("::")[-1] for v in model_val_cols]
+
+                        xray_model_info = p[
+                            model_val_cols
+                            + model_up_err_cols
+                            + model_lo_err_cols
+                            + model_val_units_cols
+                            + model_uplim_cols
+                            + [
+                                "xray_model_name",
+                                "xray_model_reference",
+                                "filter_min",
+                                "filter_max",
+                                "filter_eff_units",
+                            ]
+                        ]
+
+                        if len(model_uplim_cols) == 0:
+                            # assume they are all false
+                            for param_name in param_names:
+                                colname = f"xray_model_param_upperlimit::{param_name}"
+                                xray_model_info[colname] = False
+                                model_uplim_cols.append(colname)
+
+                        if not all(
+                            len(model_val_cols) == len(p)
+                            for p in [
+                                model_up_err_cols,
+                                model_lo_err_cols,
+                                model_val_units_cols,
+                                model_uplim_cols,
+                            ]
+                        ):
+                            raise ValueError(
+                                "Missing a column for one of the X-ray parameters!"
+                            )
+
+                        xray_models = []
+                        for _, row in xray_model_info.iterrows():
+                            energy1 = (
+                                (row["filter_min"] * u.Unit(row["filter_eff_units"]))
+                                .to("keV", equivalencies=u.spectral())
+                                .value
+                            )
+                            energy2 = (
+                                (row["filter_max"] * u.Unit(row["filter_eff_units"]))
+                                .to("keV", equivalencies=u.spectral())
+                                .value
+                            )
+
+                            if energy1 > energy2:
+                                min_energy = energy2
+                                max_energy = energy1
+                            else:
+                                min_energy = energy1
+                                max_energy = energy2
+
+                            param_names_not_na = []
+                            for n in param_names:
+                                if not pd.isna(row[f"xray_model_param_value::{n}"]):
+                                    param_names_not_na.append(n)
+
+                            xray_models.append(
+                                {
+                                    "model_name": row.xray_model_name,
+                                    "param_names": [n for n in param_names_not_na],
+                                    "param_values": [
+                                        row[f"xray_model_param_value::{n}"]
+                                        for n in param_names_not_na
+                                    ],
+                                    "param_value_upper_err": [
+                                        row[f"xray_model_param_up_err::{n}"]
+                                        for n in param_names_not_na
+                                    ],
+                                    "param_value_lower_err": [
+                                        row[f"xray_model_param_lo_err::{n}"]
+                                        for n in param_names_not_na
+                                    ],
+                                    "param_upperlimit": [
+                                        row[f"xray_model_param_upperlimit::{n}"]
+                                        for n in param_names_not_na
+                                    ],
+                                    "param_units": [
+                                        row[f"xray_model_param_unit::{n}"]
+                                        for n in param_names_not_na
+                                    ],
+                                    "model_reference": row["xray_model_reference"],
+                                    "min_energy": min_energy,
+                                    "max_energy": max_energy,
+                                    "energy_units": "keV",
+                                }
+                            )
+
+                        json_phot["xray_model"] = xray_models
+
                     json["photometry"].append(json_phot)
 
                 tde["filter_uq_key"] = pd.Series(
@@ -1191,7 +1362,12 @@ class Otter(Database):
 
                 # filter alias
                 # radio filters first
-                filter_keys1 = ["filter_uq_key", "band_eff_wave", "band_eff_wave_unit"]
+                filter_keys1 = [
+                    "filter_uq_key",
+                    "band_eff_wave",
+                    "band_eff_wave_unit",
+                    "filter_eff_units",
+                ]
                 if "filter_min" in tde:
                     filter_keys1.append("filter_min")
                 if "filter_max" in tde:
@@ -1231,20 +1407,22 @@ class Otter(Database):
 
                     if "filter_min" in val:
                         filter_alias_dict["wave_min"] = (
-                            val["filter_min"] * u.Unit(phot.filter_eff_units)
-                        ).to(
-                            u.Unit(
-                                val["band_eff_wave_unit"], equivalencies=u.spectral()
+                            (val["filter_min"] * u.Unit(val["filter_eff_units"]))
+                            .to(
+                                u.Unit(val["band_eff_wave_unit"]),
+                                equivalencies=u.spectral(),
                             )
+                            .value
                         )
 
                     if "filter_max" in val:
                         filter_alias_dict["wave_max"] = (
-                            val["filter_max"] * u.Unit(phot.filter_eff_units)
-                        ).to(
-                            u.Unit(
-                                val["band_eff_wave_unit"], equivalencies=u.spectral()
+                            (val["filter_max"] * u.Unit(val["filter_eff_units"]))
+                            .to(
+                                u.Unit(val["band_eff_wave_unit"]),
+                                equivalencies=u.spectral(),
                             )
+                            .value
                         )
 
                     json["filter_alias"].append(filter_alias_dict)
