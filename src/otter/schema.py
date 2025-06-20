@@ -2,7 +2,7 @@
 Pydantic Schema Model of our JSON schema
 """
 
-from pydantic import BaseModel, model_validator, field_validator, ValidationError
+from pydantic import BaseModel, model_validator, field_validator
 from typing import Optional, Union, List
 
 
@@ -86,24 +86,24 @@ class CoordinateSchema(BaseModel):
 
         if uses_ra_dec:
             if self.ra_units is None:
-                raise ValidationError("ra_units must be provided for RA!")
+                raise ValueError("ra_units must be provided for RA!")
             if self.dec_units is None:
-                raise ValidationError("dec_units must be provided for Dec!")
+                raise ValueError("dec_units must be provided for Dec!")
 
         elif uses_galactic:
             if self.l_units is None:
-                raise ValidationError("l_units must be provided for RA!")
+                raise ValueError("l_units must be provided for RA!")
             if self.b_units is None:
-                raise ValidationError("b_units must be provided for Dec!")
+                raise ValueError("b_units must be provided for Dec!")
 
         elif uses_lon_lat:
             if self.lon_units is None:
-                raise ValidationError("lon_units must be provided for RA!")
+                raise ValueError("lon_units must be provided for RA!")
             if self.lat_units is None:
-                raise ValidationError("lat_units must be provided for Dec!")
+                raise ValueError("lat_units must be provided for Dec!")
 
         else:
-            ValidationError("Must have RA/Dec, l/b, and/or lon/lat!")
+            raise ValueError("Must have RA/Dec, l/b, and/or lon/lat!")
 
         return self
 
@@ -122,7 +122,7 @@ class DistanceSchema(BaseModel):
     @model_validator(mode="after")
     def _has_units(self):
         if self.distance_type != "redshift" and self.unit is None:
-            raise ValidationError("Need units if the distance_type is not redshift!")
+            raise ValueError("Need units if the distance_type is not redshift!")
 
         return self
 
@@ -221,7 +221,7 @@ class PhotometrySchema(BaseModel):
         It will be commented out until we get the data setup correctly
         """
         # if self.obs_type == "xray" and self.xray_model is None:
-        #     raise ValidationError(
+        #     raise ValueError(
         #         "Need an xray_model for this xray data!"
         #     )
 
@@ -262,24 +262,20 @@ class HostSchema(BaseModel):
         # if it has the RA/Dec keys, make sure it also has ra_unit, dec_unit keys
         if has_coordinate:
             if self.host_ra_units is None:
-                raise ValidationError("Need RA unit if coordinates are provided!")
+                raise ValueError("Need RA unit if coordinates are provided!")
             if self.host_dec_units is None:
-                raise ValidationError("Need Dec unit if coordinates are provided!")
+                raise ValueError("Need Dec unit if coordinates are provided!")
 
         # we need either the coordinate or name to identify this object
         # Both are okay too (more info is always better)
         if not has_coordinate and not has_name:
-            raise ValidationError(
-                "Need to provide a Host name and/or host coordinates!"
-            )
+            raise ValueError("Need to provide a Host name and/or host coordinates!")
 
         # Make sure that if one of RA/Dec is given then both are given
         if (self.host_ra is None and self.host_dec is not None) or (
             self.host_ra is not None and self.host_dec is None
         ):
-            raise ValidationError(
-                "Please provide RA AND Dec, not just one or the other!"
-            )
+            raise ValueError("Please provide RA AND Dec, not just one or the other!")
 
         return self
 
@@ -299,4 +295,4 @@ class OtterSchema(BaseModel):
     @model_validator(mode="after")
     def _verify_filter_alias(self):
         if self.photometry is not None and self.filter_alias is None:
-            raise ValidationError("filter_alias is needed if photometry is given!")
+            raise ValueError("filter_alias is needed if photometry is given!")

@@ -15,8 +15,7 @@ from ..io.otter import Transient, Otter
 
 
 def query_quick_view(
-    db: Otter = None,
-    otter_path: str = None,
+    db: Otter,
     ptype: str = "both",
     sed_dim: str = "freq",
     dt_over_t: float = 0,
@@ -31,7 +30,6 @@ def query_quick_view(
 
     Args:
         db (otter.Otter) : The otter object to query
-        otter_path (str) : The path to construct an otter path from
         ptype (str) : The plot type to generate. Valid options are
                       - both -> Plot both light curve and sed (default)
                       - sed -> Plot just the sed
@@ -55,12 +53,6 @@ def query_quick_view(
         A list of matplotlib pyplot Figure objects that we plotted
 
     """
-    if db is None:
-        if otter_path is not None:
-            db = Otter(otter_path)
-        else:
-            raise ValueError("Either the db or otter_path arguments must be provided!")
-
     res = db.query(**kwargs)
 
     if len(res) > result_length_tol:

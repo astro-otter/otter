@@ -23,7 +23,7 @@ class OtterPlotter:
     def __init__(self, backend):
         if backend == "matplotlib.pyplot":
             self.backend = backend
-        elif backend == "pyplot.graph_objects":
+        elif backend == "plotly.graph_objects":
             self.backend = backend
         elif "plotly" in backend and "graph_objects" not in backend:
             self.backend = "plotly.graph_objects"

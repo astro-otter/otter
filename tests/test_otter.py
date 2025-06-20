@@ -33,13 +33,15 @@ def test_get_meta():
 
     # first make sure everything is just copied over correctly
     allmeta = db.get_meta()
-    true_keys = ["name", "coordinate", "date_reference", "distance", "classification"]
+    req_keys = ["name", "coordinate"]
 
-    assert all(k in d for d in allmeta for k in true_keys)
+    assert all(k in d for d in allmeta for k in req_keys)
 
     # now we can try real queries
+    true_keys = ["name", "coordinate", "date_reference", "distance", "classification"]
     metahyz = db.get_meta(names="2018hyz")[0]
     assert isinstance(metahyz, Transient)
+    assert all(k in metahyz for k in true_keys)
     assert metahyz["name/default_name"] == "2018hyz"
     assert metahyz["date_reference"][0]["value"] == "2018-10-14"
     assert metahyz["date_reference"][0]["date_format"] == "iso"
