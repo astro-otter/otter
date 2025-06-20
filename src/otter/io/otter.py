@@ -1239,7 +1239,7 @@ class Otter(Database):
                         raise ValueError(
                             "You must provide the xray model for xray data!"
                         )
-                    if "xray_model_name" in p:
+                    if obstype == "xray" and "xray_model_name" in p:
                         # get various sets of keywords
                         model_val_cols = list(
                             p.columns[p.columns.str.contains("xray_model_param_value")]
@@ -1373,8 +1373,9 @@ class Otter(Database):
                 if "filter_max" in tde:
                     filter_keys1.append("filter_max")
 
-                filter_map = (
-                    tde[filter_keys1].drop_duplicates().set_index("filter_uq_key")
+                filt_info = tde[filter_keys1]
+                filter_map = filt_info.drop_duplicates().set_index(
+                    "filter_uq_key"
                 )  # .to_dict(orient='index')
                 try:
                     filter_map_radio = filter_map.to_dict(orient="index")
@@ -1405,7 +1406,7 @@ class Otter(Database):
                         wave_units=val["band_eff_wave_unit"],
                     )
 
-                    if "filter_min" in val:
+                    if "filter_min" in val and not pd.isna(val["filter_min"]):
                         filter_alias_dict["wave_min"] = (
                             (val["filter_min"] * u.Unit(val["filter_eff_units"]))
                             .to(
@@ -1415,7 +1416,7 @@ class Otter(Database):
                             .value
                         )
 
-                    if "filter_max" in val:
+                    if "filter_max" in val and not pd.isna(val["filter_max"]):
                         filter_alias_dict["wave_max"] = (
                             (val["filter_max"] * u.Unit(val["filter_eff_units"]))
                             .to(
