@@ -154,6 +154,7 @@ class Otter(Database):
         keep_raw=False,
         wave_unit="nm",
         freq_unit="GHz",
+        deduplicate=None,
         **kwargs,
     ) -> Table:
         """
@@ -176,6 +177,11 @@ class Otter(Database):
                              is False.
             wave_unit (str): The astropy wavelength unit to return with
             freq_unit (str): The astropy frequency unit to return with`
+            deduplicate (Callable|None|False): if we should deduplicate the dataset
+                                               using the deduplicate Callable. Set to
+                                               False if you don't want this to happen.
+                                               None defaults to
+                                               Transient.deduplicate_photometry
             **kwargs : Arguments to pass to Otter.query(). Can be::
 
                        names (list[str]): A list of names to get the metadata for
@@ -215,6 +221,7 @@ class Otter(Database):
                     wave_unit=wave_unit,
                     freq_unit=freq_unit,
                     obs_type=obs_type,
+                    deduplicate=deduplicate,
                 )
 
                 phot["name"] = [default_name] * len(phot)

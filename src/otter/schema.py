@@ -171,6 +171,8 @@ class PhotometrySchema(BaseModel):
     date: Union[str, float, List[Union[str, float]]]
     date_format: Union[str, List[str]]
     date_err: Optional[Union[str, float, List[Union[str, float]]]] = None
+    date_min: Optional[Union[str, float, List[Union[str, float]]]] = None
+    date_max: Optional[Union[str, float, List[Union[str, float]]]] = None
     ignore: Optional[Union[bool, List[bool]]] = None
     upperlimit: Optional[Union[bool, List[bool]]] = None
     sigma: Optional[Union[str, float, List[Union[str, float]]]] = None
@@ -212,6 +214,18 @@ class PhotometrySchema(BaseModel):
         if not isinstance(v, list):
             return [v]
         return v
+
+    @model_validator(mode="after")
+    def _ensure_min_and_max_date(self):
+        """
+        This will make sure that if date_min is provided so is date_max
+        """
+        if (self.date_min is not None and self.date_max is None) or (
+            self.date_min is None and self.date_max is not None
+        ):
+            raise ValueError(
+                "If you provide date_min or date_max you must provide the other!"
+            )
 
     @model_validator(mode="after")
     def _ensure_xray_model(self):

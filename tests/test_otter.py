@@ -121,7 +121,7 @@ def test_query():
     # test min and max z queries
     zgtr1 = db.query(minz=1)
     assert len(zgtr1) >= 2
-    true_result = ["Sw J2058+05", "2022cmc", "CXOU J0332"]
+    true_result = ["Swift J2058.4+0516", "2022cmc", "CXOU J0332"]
     assert all(t["name/default_name"] in true_result for t in zgtr1)
 
     zless001 = db.query(maxz=0.001)

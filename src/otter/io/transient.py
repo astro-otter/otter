@@ -8,6 +8,7 @@ import warnings
 from copy import deepcopy
 import re
 from collections.abc import MutableMapping
+from typing import Callable
 from typing_extensions import Self
 import logging
 
@@ -510,6 +511,7 @@ class Transient(MutableMapping):
         freq_unit: u.Unit = "GHz",
         wave_unit: u.Unit = "nm",
         obs_type: str = None,
+        deduplicate: Callable | None = None,
     ) -> pd.DataFrame:
         """
         Ensure the photometry associated with this transient is all in the same
@@ -529,10 +531,20 @@ class Transient(MutableMapping):
             obs_type (str): "radio", "xray", or "uvoir". If provided, it only returns
                             data taken within that range of wavelengths/frequencies.
                             Default is None which will return all of the data.
-
+            deduplicate (Callable|None): A function to be used to remove duplicate
+                                         reductions of the same data that produces
+                                         different flux values. The default is the
+                                         otter.deduplicate_photometry  method,
+                                         but you can pass
+                                         any callable that takes the output pandas
+                                         dataframe as input. Set this to False if you
+                                         don't want deduplication to occur.
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
         """
+        if deduplicate is None:
+            deduplicate = self.deduplicate_photometry
+
         warn_filt = _DuplicateFilter()
         logger.addFilter(warn_filt)
 
@@ -916,8 +928,187 @@ class Transient(MutableMapping):
 
         outdata["upperlimit"] = outdata.apply(is_upperlimit, axis=1)
 
+        # perform some more complex deduplication of the dataset
+        if deduplicate:
+            outdata = deduplicate(outdata)
+
         logger.removeFilter(warn_filt)
         return outdata
+
+    @classmethod
+    def deduplicate_photometry(cls, phot: pd.DataFrame, date_tol: int | float = 1):
+        """
+        This deduplicates a pandas dataframe of photometry that could potentially
+        have rows/datasets that are the result of different reductions of the same
+        data. This is especially relevant for X-ray and UV observations where different
+        reductions can produce different flux values from the same observation.
+
+        The algorithm used here first finds duplicates by normalizing the telescope
+        names, then  grouping the dataframe by transient name, norm telescope name,
+        filter_key, and the obs_type. It then assumes that data from the same
+        reference will not produce duplicated data. Finally, it finds the overlapping
+        regions within date +/- date_tol (or between date_min and date_max for binned
+        data), and uses any data within that region as duplicated. From there, it
+        first tries to choose the reduction that is host subtracted (if only one is
+        host subtracted), then if neither or more than one of the datasets are host
+        subtracted then it just takes the most recent reduction.
+
+        Args:
+            phot (pd.DataFrame): A pandas dataframe of the photometry with keys defined
+                                 by the OTTER schema
+            date_tol (int|float): The default tolerance (or "uncertainty") to use on the
+                                  dates in the "date" column of phot. In days. Defaults
+                                  to 1 day.
+        """
+        # we need to reset the index to keep track of things appropriately
+        phot = phot.reset_index(drop=True)
+
+        # we first have to standardize some columns given some basic assumptions
+        phot["_ref_str"] = phot.reference.astype(str)
+
+        # normalize the telescope name so we can group by it
+        phot["_norm_tele_name"] = phot.telescope.apply(cls._normalize_tele_name)
+
+        # now find the duplicated data
+        dups = []
+        phot_grpby = phot.groupby(
+            ["_norm_tele_name", "filter_key", "obs_type"], dropna=False
+        )
+        for (tele, filter_key, obs_type), grp in phot_grpby:
+            # by definition, there can only be dups if the name, telescope, and filter
+            # are the same
+
+            # if there is only one reference in this group of data, there's no way
+            # there are duplicate reductions of the same dataset
+            if len(grp._ref_str.unique()) <= 1:
+                continue
+
+            # the next trick is that the dates don't need to be the same, but need to
+            # fall inside the same range
+            grp["_mean_dates"] = grp.apply(cls._convert_dates, axis=1)
+
+            if "date_min" in grp and not np.all(pd.isna(grp.date_min)):
+                grp["min_dates"] = grp.apply(
+                    lambda row: cls._convert_dates(row, date_key="date_min"), axis=1
+                ).astype(float)
+                grp["max_dates"] = grp.apply(
+                    lambda row: cls._convert_dates(row, date_key="date_max"), axis=1
+                ).astype(float)
+
+                # in case any of the min_date and max_date in the grp are nan
+                grp.fillna(
+                    {
+                        "min_dates": grp._mean_dates - date_tol,
+                        "max_dates": grp._mean_dates + date_tol,
+                    },
+                    inplace=True,
+                )
+
+            elif "date_err" in grp and not np.any(pd.isna(grp.date_err)):
+                grp["min_dates"] = (grp._mean_dates - grp.date_err).astype(float)
+                grp["max_dates"] = (grp._mean_dates + grp.date_err).astype(float)
+            else:
+                # then assume some uncertainty on the date
+                grp["min_dates"] = (grp._mean_dates - date_tol).astype(float)
+                grp["max_dates"] = (grp._mean_dates + date_tol).astype(float)
+
+            ref_ranges = [
+                (subgrp.min_dates.min(), subgrp.max_dates.max())
+                for _, subgrp in grp.groupby("_ref_str")
+            ]
+
+            overlaps = cls._find_overlapping_regions(ref_ranges)
+
+            if len(overlaps) == 0:
+                continue  # then there are no dups
+
+            for min_overlap, max_overlap in overlaps:
+                dup_data = grp[
+                    (grp.min_dates >= min_overlap) * (grp.max_dates <= max_overlap)
+                ]
+
+                if len(dup_data) == 0:
+                    continue  # no data falls in this range!
+
+                dups.append(dup_data)
+
+        # now that we've found the duplicated datasets, we can iterate through them
+        # and choose the "default"
+        phot_res = deepcopy(phot)
+        undupd = []
+        for dup in dups:
+            try:
+                phot_res = phot_res.drop(dup.index)  # we'll append back in the non dup
+            except KeyError:
+                continue  # we already deleted these ones
+
+            # first, check if only one of the dup reductions host subtracted
+            if "corr_host" in dup:
+                dup_host_corr = dup[dup.corr_host.astype(bool)]
+                host_corr_refs = dup_host_corr.human_readable_refs.unique()
+                if len(host_corr_refs) == 1:
+                    # then one of the reductions is host corrected and the other isn't!
+                    undupd.append(dup[dup.human_readable_refs == host_corr_refs[0]])
+                    continue
+
+            bibcodes_sorted_by_year = sorted(dup._ref_str.unique(), key=cls._find_year)
+            dataset_to_use = dup[dup._ref_str == bibcodes_sorted_by_year[0]]
+            undupd.append(dataset_to_use)
+
+        # then return the full photometry dataset but with the dups removed!
+        return pd.concat([phot_res] + undupd).reset_index()
+
+    @staticmethod
+    def _normalize_tele_name(tele_name):
+        if pd.isna(tele_name):
+            return tele_name
+
+        common_delims = ["-", "/", " ", "."]
+        for delim in common_delims:
+            tele_name = tele_name.replace(delim, ":*:")
+
+        # this assumes that the telescope name will almost always be first,
+        # before other delimiters
+        return tele_name.split(":*:")[0].lower()
+
+    @staticmethod
+    def _convert_dates(row, date_key="date"):
+        """Make sure the dates are in MJD"""
+        if pd.isna(row[date_key]):
+            return row[date_key]
+
+        return Time(row[date_key], format=row.date_format.lower()).mjd
+
+    @staticmethod
+    def _find_overlapping_regions(intervals):
+        """Find the overlaps in a list of tuples of mins and maxs. This is relatively
+        inefficient but the len(intervals) should be < 10 so it should be fine"""
+        overlap_ranges = []
+        for ii, (start_ii, end_ii) in enumerate(intervals):
+            for jj, (start_jj, end_jj) in enumerate(intervals):
+                if ii <= jj:
+                    continue
+
+                if start_ii > start_jj:
+                    start = start_ii
+                else:
+                    start = start_jj
+
+                if end_ii > end_jj:
+                    end = end_jj
+                else:
+                    end = end_ii
+
+                if start < end:
+                    # then there is an overlap!
+                    overlap_ranges.append((start, end))
+
+        return overlap_ranges
+
+    @staticmethod
+    def _find_year(s):
+        match = re.search(r"\d{4}", s)
+        return int(match.group()) if match else float("inf")
 
     def _merge_names(t1, t2, out):  # noqa: N805
         """
