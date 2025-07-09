@@ -963,6 +963,9 @@ class Transient(MutableMapping):
         # we need to reset the index to keep track of things appropriately
         phot = phot.reset_index(drop=True)
 
+        if "telescope" not in phot:
+            phot["telescope"] = np.nan
+
         # we first have to standardize some columns given some basic assumptions
         phot["_ref_str"] = phot.reference.astype(str)
 
