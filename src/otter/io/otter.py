@@ -1189,6 +1189,13 @@ class Otter(Database):
                             "Minimum and maximum filters required for X-ray data!"
                         )
 
+                    if ("date_min" in p and "date_max" not in p) or (
+                        "date_min" not in p and "date_max" in p
+                    ):
+                        raise ValueError(
+                            "If date_min/date_max is provided, the other must be too!"
+                        )
+
                     # check optional keys
                     optional_keys = [
                         "date_err",
@@ -1200,6 +1207,8 @@ class Otter(Database):
                         "observer",
                         "reducer",
                         "pipeline",
+                        "date_min",
+                        "date_max",
                     ]
                     for k in optional_keys:
                         if k in p and not np.all(pd.isna(p[k])):
@@ -1212,7 +1221,13 @@ class Otter(Database):
 
                     # handle more detailed uncertainty information
                     raw_err_detail = {}
-                    for key in ["statistical_err", "systematic_err", "iss_err"]:
+                    for key in [
+                        "statistical_err",
+                        "systematic_err",
+                        "iss_err",
+                        "upper_err",
+                        "lower_err",
+                    ]:
                         if key in p and not np.all(pd.isna(p[key])):
                             k = key.split("_")[0]
 

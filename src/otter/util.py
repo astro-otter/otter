@@ -121,6 +121,10 @@ def _bibcode_to_hrn_with_query(bibcode):
         if val in bibcodes:
             bibcodes.pop(bibcodes.index(val))
 
+    if len(bibcodes) == 0:
+        # then all of the bibcodes were "private"
+        return bibcodes, bibcodes
+
     query = f"bibcode:{bibcodes[0]}"
     if len(bibcodes) > 1:
         for b in bibcodes[1:]:
@@ -469,6 +473,7 @@ Mapping for the effective frequencies in THz for all the filters used in OTTER
 XRAY_AREAS = {
     # https://swift.gsfc.nasa.gov/about_swift/Sci_Fact_Sheet.pdf
     "swift": 135 * u.cm**2,
+    "swift-xrt": 135 * u.cm**2,
     # https://heasarc.gsfc.nasa.gov/docs/rosat/ruh/handbook/node39.html#SECTION00634000000000000000
     "rosat": 400 * u.cm**2,
     # https://www.cosmos.esa.int/web/xmm-newton/technical-details-mirrors
@@ -481,6 +486,15 @@ XRAY_AREAS = {
     "chandra": 600 * u.cm**2,
     # https://www.cosmos.esa.int/documents/332006/954765/Brunner_TopicK.pdf
     "erosita": 1500 * u.cm**2,
+    # https://en.wikipedia.org/wiki/NuSTAR
+    "nustar": 847 * u.cm**2,
+    # https://iss.jaxa.jp/en/kiboexp/ef/maxi/
+    "maxi": 200 * u.cm**2,
+    # https://iopscience.iop.org/article/10.3847/1538-4357/abd569
+    "konus-wind": 120 * u.cm**2,
+    # https://www.cosmos.esa.int/web/einstein-probe/mission
+    "ep": 600 * u.cm**2,
+    "ep-fxt": 600 * u.cm**2,
 }
 """
 X-Ray telescope areas that are used for converting from counts to other units.
