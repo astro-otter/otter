@@ -298,8 +298,13 @@ class Otter(Database):
         radius: float = 5,
         minz: float = None,
         maxz: float = None,
+        mindec: float = -90,
+        maxdec: float = 90,
         refs: list[str] = None,
         hasphot: bool = False,
+        has_radio_phot: bool = False,
+        has_uvoir_phot: bool = False,
+        has_xray_phot: bool = False,
         hasspec: bool = False,
         spec_classed: bool = False,
         unambiguous: bool = False,
@@ -323,9 +328,14 @@ class Otter(Database):
             radius (float): The radius in arcseconds for a cone search, default is 0.05"
             minz (float): The minimum redshift to search for
             maxz (float): The maximum redshift to search for
+            mindec (float): The minimum declination in degrees
+            maxdec (float): Tje maximum declination in degrees
             refs (list[str]): A list of ads bibcodes to match to. Will only return
                               metadata for transients that have this as a reference.
             hasphot (bool): if True, only returns transients which have photometry.
+            has_radio_phot (bool): if True, only returns transients with radio phot.
+            has_uvoir_phot (bool): if True, only returns transients with uvoir phot.
+            has_xray_phot (bool): if True, only returns transients with X-ray phot.
             hasspec (bool): NOT IMPLEMENTED! Will return False for all targets!
             spec_classed (bool): If True, only returns transients that have been
                                  specotroscopically classified/confirmed
@@ -344,8 +354,17 @@ class Otter(Database):
         # write some AQL filters based on the inputs
         query_filters = ""
 
-        if hasphot is True:
+        if hasphot or has_radio_phot or has_xray_phot or has_uvoir_phot:
             query_filters += "FILTER 'photometry' IN ATTRIBUTES(transient)\n"
+
+        if has_radio_phot:
+            query_filters += "FILTER 'radio' IN transient.photometry[*].obs_type\n"
+
+        if has_uvoir_phot:
+            query_filters += "FILTER 'uvoir' IN transient.photometry[*].obs_type\n"
+
+        if has_xray_phot:
+            query_filters += "FILTER 'xray' IN transient.photometry[*].obs_type\n"
 
         if hasspec is True:
             query_filters += "FILTER 'spectra' IN ATTRIBUTES(transient)\n"
@@ -457,6 +476,11 @@ class Otter(Database):
 
         else:
             arango_query_results = [Transient(res) for res in result.result]
+
+        # filter based on the min and max declination query options
+        decs = np.array([t.get_skycoord().dec.deg for t in arango_query_results])
+        where_dec = np.where((decs > mindec) * (decs < maxdec))[0]
+        arango_query_results = [arango_query_results[i] for i in where_dec]
 
         if not query_private:
             return arango_query_results
