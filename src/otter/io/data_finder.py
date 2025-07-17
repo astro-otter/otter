@@ -602,8 +602,11 @@ class DataFinder(object):
         cone_search_res = qc.query(adql=adql, fmt="pandas")
 
         # then retrieve all of the spectra corresponding to those sparcl_ids
-        sparcl_ids = cone_search_res.sparcl_id.tolist()
-        res = client.retrieve(uuid_list=sparcl_ids, include=include)
+        spec_ids = cone_search_res.specid.tolist()
+        res = client.retrieve_by_specid(spec_ids, include=include)
+        if res.count == 0:
+            logger.warn("No Spectra available in sparcl!")
+            return
         all_spec = pd.concat([pd.DataFrame([record]) for record in res.records])
         return Table.from_pandas(all_spec)
 
