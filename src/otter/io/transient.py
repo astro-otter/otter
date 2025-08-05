@@ -932,6 +932,18 @@ class Transient(MutableMapping):
         if deduplicate:
             outdata = deduplicate(outdata)
 
+        # throw a warning if the output dataframe has UV/Optical/IR or Radio data
+        # where we don't know if the dataset has been host corrected or not
+        if ("corr_host" not in outdata) or (
+            len(outdata[pd.isna(outdata.corr_host) * (outdata.obs_type != "xray")]) >= 0
+        ):
+            logger.warning(
+                f"{self.default_name} has at least one photometry point where it is "
+                + "unclear if a host subtraction was performed. This can be especially "
+                + "detrimental for UV data. Please consider filtering out UV/Optical/IR"
+                + " or radio rows where the corr_host column is null/None/NaN."
+            )
+
         logger.removeFilter(warn_filt)
         return outdata
 

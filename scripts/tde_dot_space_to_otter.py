@@ -176,6 +176,7 @@ def main():
     badsrcs = 0
     allphot = 0
     badphot = 0
+    n_swift_phot_with_assumption = 0
 
     for file in glob.glob(os.path.join(args.indir, "*.json")):
         # theres this one bugged file from tde.space called AT.json
@@ -492,6 +493,8 @@ def main():
                         for band in sub["filter_key"]:
                             magsys = None
                             if band in AB_FILTERS:
+                                if band in {"UVW1", "UVW2", "UVM2"}:
+                                    n_swift_phot_with_assumption += 1
                                 magsys = "mag(AB)"
                             elif band in VEGA_FILTERS:
                                 magsys = "vega"
@@ -784,6 +787,11 @@ def main():
     print(
         f"Skipped {badphot/allphot * 100 : .2f}% "
         + "of photometry points because we did not trust them"
+    )
+    print(
+        f"{n_swift_phot_with_assumption} "
+        + f"(or {n_swift_phot_with_assumption/allphot*100:.2f}%) of the photometry"
+        + "was from Swift and we had to assume was in the AB magnitude system"
     )
     print("#######################################################################")
     print()
