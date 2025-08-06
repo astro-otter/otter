@@ -943,7 +943,7 @@ class Otter(Database):
 
         # merge the meta and phot data
         if phot is not None:
-            data = pd.merge(phot, meta, on="name", how="inner")
+            data = pd.merge(phot, meta, on="name", how="outer")
         else:
             data = meta
 
@@ -951,11 +951,11 @@ class Otter(Database):
         assert (
             len(data[pd.isna(data.ra)].name.unique()) == 0
         ), "Missing some RA and Decs, please check the input files!"
-        if phot is not None:
-            for name in meta.name:
-                assert len(data[data.name == name]) == len(
-                    phot[phot.name == name]
-                ), f"failed on {name}"
+        # if phot is not None:
+        #    for name in meta.name:
+        #        assert len(data[data.name == name]) == len(
+        #            phot[phot.name == name]
+        #        ), f"failed on {name}"
 
         # actually do the data conversion to OTTER
         all_jsons = []
@@ -1084,7 +1084,7 @@ class Otter(Database):
             # skip the photometry code if there is no photometry file
             # if there is a photometry file then we want to convert it below
             phot_sources = []
-            if phot is not None:
+            if phot is not None and not np.all(pd.isna(tde["flux"])):
                 tde["obs_type"] = [
                     freq_to_obstype(vv * u.Unit(uu))
                     for vv, uu in zip(
