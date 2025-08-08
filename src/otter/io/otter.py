@@ -63,15 +63,15 @@ class Otter(Database):
 
     def __init__(
         self,
-        url: str = "http://127.0.0.1:8529",
+        url: str = "https://otter.idies.jhu.edu/api",
         username: str = os.environ.get("ARANGO_USER_USERNAME", "user-guest"),
-        password: str = os.environ.get("ARANGO_USER_PASSWORD", ""),
+        password: str = os.environ.get("ARANGO_USER_PASSWORD", "test"),
         gen_summary: bool = False,
         datadir: str = None,
         debug: bool = False,
         **kwargs,
     ) -> None:
-        print("Attempting to login with the following credentials:")
+        print(f"Attempting to login to {url} with the following credentials:")
         print(f"username: {username}")
         print(f"password: {password}")
 

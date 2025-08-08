@@ -98,7 +98,7 @@ def test_query_simbad():
     df1 = construct_data_finder()
     res = df1.query_simbad()
 
-    assert len(res) == 3
+    assert len(res) == 1
 
 
 def test_query_vizier():
