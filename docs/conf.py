@@ -79,7 +79,7 @@ html_logo = "imgs/current_logo_small.jpg"
 html_favicon = html_logo  # set the favicon and logo to be the same
 html_title = f"OTTER API {version}"
 html_theme_options = {
-    "show_toc_level": 2,
+    "show_toc_level": 3,
     "repository_url": "https://github.com/astro-otter/otter",
     "use_repository_button": True,
     "use_issues_button": True,

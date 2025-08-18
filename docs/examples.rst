@@ -14,3 +14,4 @@ examples will be added with time!
    examples/host_objects
    examples/plotting
    examples/modeling
+   examples/private_data
