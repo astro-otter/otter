@@ -15,3 +15,4 @@ examples will be added with time!
    examples/plotting
    examples/modeling
    examples/private_data
+   examples/otter_paper
