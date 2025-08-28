@@ -1,0 +1,2 @@
+,name,alias,ra,dec,refs,discovery_date,z,hasPhot,hasSpec,json_path
+0,2018hyz,['2018hyz'],151d42m43.05s,1d41m34.08s,"['2018TNSCR1764....1A', '2018TNSTR1708....1B']",2018-11-06 15:21:36.000,0.04573,True,False,/home/nfranz/research/astro-otter/otter/tests/private_otter_data/2018hyz.json

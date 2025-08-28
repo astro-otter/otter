@@ -31,6 +31,13 @@ def test_transient_constructor():
     assert t.srcmap["2012MNRAS.421.1942W"] == "Wiersema et al. (2012)", srcmap_msg
     assert t.srcmap["2011ApJ...737..103S"] == "Schlafly & Finkbeiner (2011)", srcmap_msg
 
+    with pytest.raises(AttributeError):
+        Transient(d={"name": {"default": "foo"}})
+
+    del test_json["name"]
+    t = Transient(test_json, name="SwJ1644+57")
+    assert t.default_name == "SwJ1644+57", "default_name is incorrect!"
+
 
 def test_getitem():
     """
@@ -131,6 +138,10 @@ def test_iter():
     """
     Test that my __iter__ overwrite works
     """
+    t = Transient({"test1": {"mytest": "nothing to see here", "other": 1}})
+
+    assert list(iter(t)) == list(iter(t.data))
+
     true_vals = [
         {"value": "Sw J1644+57", "reference": ["Swift"]},
         {"value": "GRB 110328A", "reference": [["2011Sci...333..203B"]]},

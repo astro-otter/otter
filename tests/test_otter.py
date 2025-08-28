@@ -151,3 +151,47 @@ def test_query():
     # test hasphot and hasspec
     assert len(db.query(hasspec=True)) == 0
     assert "ASASSN-20il" not in {t["name/default_name"] for t in db.query(hasphot=True)}
+
+    # test has_*_phot
+    assert len(db.query(has_radio_phot=True)) >= 92
+    assert len(db.query(has_xray_phot=True)) >= 35
+    assert len(db.query(has_uvoir_phot=True)) >= 120
+    assert len(db.query(has_radio_phot=True, has_xray_phot=True)) < len(
+        db.query(has_radio_phot=True)
+    )
+
+    # test classification related queries
+    assert len(db.query(spec_classed=True)) > 140
+    assert len(db.query(unambiguous=True)) > 190
+    assert len(db.query(classification="SLSN")) >= 1
+
+    # check that querying based on references works
+    fake_test_bibcodes = ["'tasdfasdf...lkjsfd'", "'asfd...kjasdf...lkjs'"]
+    assert len(db.query(refs=fake_test_bibcodes)) == 0
+    assert len(db.query(refs=fake_test_bibcodes[0])) == 0
+
+    # try querying with the fake "private" data
+    db2 = Otter(
+        url=OTTER_URL,
+        password=OTTER_TEST_PASSWORD,
+        datadir=os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "private_otter_data"
+        ),
+        gen_summary=True,
+    )
+    res = db2.query(names="2018hyz", query_private=True)
+    assert res[0].default_name == "2018hyz"
+
+    # check that some errors are thrown when appropriate
+    with pytest.raises(Exception):
+        db.query(names=10)
+        db.query(refs=10)
+
+
+def test_from_csvs():
+    """
+    This tests the "from_csvs" method which allows for interaction with locally
+    stored datasets
+    """
+
+    pass
