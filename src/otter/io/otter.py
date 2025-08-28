@@ -85,9 +85,6 @@ class Otter(Database):
 
         self.debug = debug
 
-        if gen_summary:
-            self.generate_summary_table(save=True)
-
         # make sure the data directory exists
         if not os.path.exists(self.DATADIR):
             try:
@@ -98,6 +95,9 @@ class Otter(Database):
                     + "to create the directory!"
                 )
                 pass
+
+        if gen_summary:
+            self.generate_summary_table(save=True)
 
         connection = Connection(username=username, password=password, arangoURL=url)
         super().__init__(connection, "otter", **kwargs)

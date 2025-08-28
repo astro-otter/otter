@@ -23,6 +23,18 @@ def test_otter_constructor():
     db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
     assert isinstance(db, Otter)
 
+    # and using a custom local directory
+    otter_test_dir = os.path.join(os.getcwd(), "otter-test")
+    db = Otter(
+        url=OTTER_URL,
+        password=OTTER_TEST_PASSWORD,
+        datadir=otter_test_dir,
+        gen_summary=True,
+    )
+
+    assert os.path.exists(otter_test_dir)  # make sure it was created
+    assert isinstance(db, Otter)
+
 
 def test_get_meta():
     """
@@ -87,7 +99,7 @@ def test_get_phot():
         "reference",
     ]
 
-    names = ["2018hyz", "2018zr", "ASASSN-14li"]
+    names = ["2018hyz", "2018zr", "ASASSN-14li", "2016fnl", "J123715"]
 
     # first with returning an astropy table (the default)
     allphot = db.get_phot(names=names)
@@ -106,6 +118,10 @@ def test_get_phot():
     # then make sure it throws the FailedQueryError
     with pytest.raises(FailedQueryError):
         db.get_phot(names="foo")
+
+    # some other random tests
+    with pytest.raises(OSError):
+        db.get_phot(names="ASASSN-14li", return_type="foobar")
 
 
 def test_query():
