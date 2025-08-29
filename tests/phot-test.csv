@@ -1,0 +1,3 @@
+name, flux, flux_unit, flux_err, date, date_format, filter,filter_eff,filter_eff_units
+2018hyz,1,mJy,0.01,2025-05-20,iso,L,1.5,GHz
+2018hyz,10,mJy,0.01,2025-05-23,iso,L,1.5,GHz

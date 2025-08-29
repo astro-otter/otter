@@ -194,4 +194,10 @@ def test_from_csvs():
     stored datasets
     """
 
-    pass
+    metapath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "meta-test.csv")
+    photpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "phot-test.csv")
+    outpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "from-csvs-out")
+
+    db = Otter.from_csvs(metafile=metapath, photfile=photpath, local_outpath=outpath)
+
+    assert isinstance(db, Otter)
