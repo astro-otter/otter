@@ -1531,7 +1531,7 @@ class Otter(Database):
             all_jsons.append(Transient(json))
 
         if db is None:
-            db = Otter(datadir=local_outpath)
+            db = Otter(datadir=local_outpath, gen_summary=True)
         else:
             db.DATADIR = local_outpath
 
