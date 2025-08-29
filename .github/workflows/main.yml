@@ -46,6 +46,7 @@ jobs:
         env:
           OTTER_TEST_URL: ${{ secrets.OTTER_TEST_URL }}
           OTTER_TEST_PASSWORD: ${{ secrets.OTTER_TEST_PASSWORD }}
+          ADS_DEV_KEY: ${{ secrets.ADS_DEV_KEY }}
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
