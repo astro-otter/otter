@@ -432,6 +432,16 @@ class Transient(MutableMapping):
         if "host" in self:
             max_hosts = min([max_hosts, len(self["host"])])
             for h in self["host"][:max_hosts]:
+                # only return hosts with their ra and dec stored
+                if (
+                    "host_ra" not in h
+                    or "host_dec" not in h
+                    or "host_ra_units" not in h
+                    or "host_dec_units" not in h
+                ):
+                    continue
+
+                # now we can construct a host object from this
                 host.append(Host(transient_name=self.default_name, **dict(h)))
 
         # then try BLAST

@@ -1,22 +1,37 @@
 {
-    "filter_alias": [
+    "reference_alias": [
         {
-            "filter_key": "1.5GHz",
-            "filter_name": "L",
-            "wave_eff": 199861638.66666666,
-            "wave_units": "nm"
+            "name": "2018TNSCR1764....1A",
+            "human_readable_name": "Arcavi, I. (2018)"
+        },
+        {
+            "name": "2018TNSTR1708....1B",
+            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
         }
     ],
-    "distance": [
+    "coordinate": [
         {
-            "value": 0.04573,
+            "ra": "10:06:50.87",
+            "dec": "01:41:34.08",
+            "ra_units": "hour",
+            "dec_units": "deg",
             "reference": [
-                "2018TNSCR1764....1A"
+                "2018TNSTR1708....1B"
             ],
-            "computed": false,
-            "distance_type": "redshift"
+            "coordinate_type": "equatorial"
         }
     ],
+    "name": {
+        "default_name": "2018hyz",
+        "alias": [
+            {
+                "value": "2018hyz",
+                "reference": [
+                    "2018TNSTR1708....1B"
+                ]
+            }
+        ]
+    },
     "photometry": [
         {
             "reference": "private",
@@ -53,18 +68,17 @@
             "val_hostav": false
         }
     ],
-    "coordinate": [
-        {
-            "ra": "10:06:50.87",
-            "dec": "01:41:34.08",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSTR1708....1B"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ],
+    "classification": {
+        "value": [
+            {
+                "object_class": "TDE",
+                "confidence": 0,
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
+    },
     "date_reference": [
         {
             "value": "2018-11-06 15:21:36.000",
@@ -77,36 +91,22 @@
             "date_type": "discovery"
         }
     ],
-    "classification": {
-        "value": [
-            {
-                "object_class": "TDE",
-                "confidence": 0,
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    },
-    "reference_alias": [
+    "filter_alias": [
         {
-            "name": "2018TNSCR1764....1A",
-            "human_readable_name": "Arcavi, I. (2018)"
-        },
-        {
-            "name": "2018TNSTR1708....1B",
-            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
+            "filter_key": "1.5GHz",
+            "filter_name": "L",
+            "wave_eff": 199861638.66666666,
+            "wave_units": "nm"
         }
     ],
-    "name": {
-        "default_name": "2018hyz",
-        "alias": [
-            {
-                "value": "2018hyz",
-                "reference": [
-                    "2018TNSTR1708....1B"
-                ]
-            }
-        ]
-    }
+    "distance": [
+        {
+            "value": 0.04573,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "computed": false,
+            "distance_type": "redshift"
+        }
+    ]
 }
