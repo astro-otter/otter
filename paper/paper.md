@@ -29,5 +29,10 @@ units; 2) Helper methods for querying additional astronomy database servicesl an
 Methods for quickly plotting the photometry stored in OTTER.
 
 # Statement of need
+Transient astrophysical events provide a unique view of high energy phenomena evolving
+on human timescales. Examples include supernovae, gamma ray bursts, tidal disruption
+events, and many more weird ones! However, understanding the many astrophysical transients observed
+is not that easy and typically requires detailed multiwavelength observations and
+analyses of the events.
 
 # Citations
