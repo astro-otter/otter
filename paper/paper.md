@@ -25,21 +25,21 @@ aas-journal: Astrophysical Journal
 
 # Summary
 The Open mulTiwavelength Transient Event Repository (or "OTTER") is a new catalog of
-published transient metadata and photometry. Here we present a Python wrapper on the
+published transient metadata and photometry. Here we present a thick Python wrapper on the
 RESTful application programming interface (API) built-in to the OTTER backend database
 (hereafter the "OTTER API"). Since the OTTER backend is built on the document database
 ArangoDB, using the RESTful API directly requires learning the Arango Query Language
 (AQL). For python-savvy astronomers this may be a roadblock to programmatic access to
-OTTER. Therefore, the primary goal of the OTTER API is to make programmatic access easy
+OTTER. Therefore, we created the OTTER API to make programmatic access easy
 and fast for astronomers. In addition to wrapping the RESTful API, the OTTER Python API
 also provides additional methods for 1) Converting the stored photometry in standard
 units; 2) Helper methods for querying additional astronomy database servicesl and 3)
 Methods for quickly plotting the photometry stored in OTTER.
 
 # Statement of need
-Transient astrophysical events provide a unique view of high energy phenomena evolving
+Transient astrophysical events provide a unique high energy laboratory that evolves
 on human timescales. Examples include supernovae, gamma ray bursts, tidal disruption
-events, and many more weird ones that do not fit into these typical classifications
+events, and many other eccentric transients
 [@{1966ApJ...143..626C}; @{1995ApJS..101..181W}; @smartt_progenitors_2009;
  @maoz_observational_2014; @kouveliotou_identification_1993;
 @norris_frequency_1984; @{2003ApJ...591..288H}; @eichler_nucleosynthesis_1989;
@@ -52,24 +52,24 @@ population of events [@costa_discovery_1997; @olivares_e_multiwavelength_2015;
 @margutti_luminous_2023; @gomez_type_2024; @christy_peculiar_2024;
 @hajela_eight_2024; @guolo_systematic_2024; @masterson_new_2024;
 @alexander_multi-wavelength_2025]. However, it can take years to gather the multiwavelength datasets
-from the literature.
+from the literature, necessitating publicly available transient event data archives.
 
 Furthermore, transient classification is a non-trivial process that typically requires
-detailed spectroscopic and multiwavelength follow-up observations [e.g., @arcavi_continuum_2014; @charalampopoulos_detailed_2022]. However, with the
+detailed spectroscopic and multiwavelength follow-up observations [e.g., @arcavi_continuum_2014; @charalampopoulos_detailed_2022],
+a method that is only feasible with the current transient discovery rates. With the
 advent of Rubin Observatory's Legacy Survey of Space and Time [@ivezic_lsst_2019] the number of known
-transients will increase by at least an order of magnitude [@van_velzen_optical_2011;@bricman_prospects_2020] necessitating additional
-methods for classifying transients, such as machine learning [@villar_supernova_2019;
+transients will increase by at least an order of magnitude [@van_velzen_optical_2011;@bricman_prospects_2020]
+Therefore, additional methods for classifying transients, such as machine learning, are required [@villar_supernova_2019;
 @villar_superraenn_2020;@villar_deep-learning_2021;@gomez_fleet_2020;@gomez_identifying_2023;
 @stein_texttttdescore_2023; @de_soto_superphot_2024; @boesky_splash_2025]. However, machine learning
-classifiers require large training datasets that can, similar to above, take years to
-gather and clean into a coherent training set. This makes services for archiving and
-cataloging transient metadata and photometry necessary to maximize the scientific output of
-the Rubin Observatory time domain survey.
+classifiers require large training datasets that can be laborious to
+curate. This further motivates archival services for cataloging transient metadata and photometry, and
+will be necessary to maximize the scientific output of the Rubin time domain survey.
 
 For both of these reasons we created the Open mulTiwavelength Transient Event Repository
-[@franz_otter_2025; OTTER], a scalable catalog of transient event metadata and photometry. OTTER is a
-successor to the Open Astronomy Catalogs [@guillochon_open_2017; @auchettl_new_2017; OAC] [^1],
-but, unlike the OAC, designed and optimized for multiwavelength datasets.
+[OTTER, @franz_otter_2025], a scalable catalog of transient event metadata and photometry. OTTER is a
+successor to the Open Astronomy Catalogs [OAC, @auchettl_new_2017; @guillochon_open_2017] [^1],
+but designed and optimized for multiwavelength datasets.
 To store the various nuances of multiwavelength photometry (e.g., the model used to reduce and extract
 a flux from an X-ray observation), we chose to use a flexible document database as our
 backend, called ArangoDB. This also enables us to store multiple values of a single measurement
@@ -77,30 +77,30 @@ when multiple sources disagree.
 
 One of our primary goals of OTTER is ease of access to the dataset, including a way to
 programmatically access it to make the curation of large transient samples easier.
-ArangoDB has built in RESTful API endpoints for progrommatic access to the
+ArangoDB has a built-in RESTful API for progrommatic access to the
 data. However, the API endpoints expect queries in the syntax of the "Arango Query
-Language" (AQL). This would provide a barrier to use of the detailed dataset available
-for busy astronomers who do not have the time to learn yet another query language (on
-top of the existing SQL and Astronomy Data Query Language, or ADQL).
+Language" (AQL). Learning a new query language creates a barrier for user programmatic
+access to the indispensable dataset available in the OTTER catalog.
 
 To help overcome this barrier, we present an object-oriented Python API for access to
-the OTTER dataset. This API acts as a "wrapper" on the RESTful API with many additions
+the OTTER dataset. This API acts as a thick wrapper on the AQL-based API, with many additions
 that make it easier to access and analyze the dataset. Some of the more notable
-components include the following.
+components include the following:
 
 * In OTTER we store photometry as close to the actual
   published value as possible. This makes the data more reproducible since it does
   not rely on complex processing scripts that may have unknown bugs. However, this also
   means that the data is not stored in consistent units (but the units of the photometry
-  point is stored). In the OTTER API we automatically convert the photometry for the
-  user into requested units. Specifically, this is done in the
+  point is stored). In the OTTER API we automatically convert the photometry into the user-requested units.
+  Specifically, this is done in the
   `Otter.get_phot` and `Transient.clean_photometry` methods. This
-  conversion is done using the python package synphot [@stsci_development_team_synphot_2018].
+  conversion is done using astropy [@astropy_collaboration_astropy_2013; @astropy_collaboration_astropy_2018;
+  @astropy_collaboration_astropy_2022] and synphot [@stsci_development_team_synphot_2018].
 * The raw data from some astronomical observations is made public and reduced[^2] by
   multiple astronomers. Depending on the differences in the reduction methodology this may
-  produce slightly different flux measurements. If this is the case, we store both flux
+  produce different flux measurements. If this is the case, we store both flux
   measurements in the OTTER database to allow the user to choose their preferred reduction.
-  However, to help users de-duplicate these datasets while curating large datasets  we provide
+  However, to help users de-duplicate these datasets while curating large samples, we provide
   an automated algorithm method for finding duplicates and choosing only one of the multiple
   reductions. This is done in the `Transient.deduplicate_photometry` method.
 * Sometimes users want to quickly view the photometry for a specific transient
@@ -110,37 +110,41 @@ components include the following.
   most powerful of these methods (albeit, the least flexible) is the `query_quick_view`
   method which allows the user to query the database for e.g., the name of a specific transient,
   and then returns both a light curve and SED of the associated photometry [@hunter_matplotlib_2007; @plotly].
-* Identifying the host galaxy of a transient event is not necessarily trivialcan be difficult and it is
-  important to store identifying information (e.g., name and coordinates) for a host galaxy if it is known.
+* Identifying the host galaxy of a transient event can be difficult and it is
+  important to store identifying information (e.g., name and coordinates) for a host galaxy, if it is known.
   However, there are numerous existing astronomical databases that store galaxy properties and
   we do not want to duplicate their efforts. We therefore provide methods as part of
   the `Host` object to query other public services for e.g., host photometry or spectra.
   These other services include Simbad [@{2000A&AS..143....9W}], ATLAS [@ATLAS], ZTF
-  [@ZTF], iPTF [@iPTF], ASAS-SN [@ASASSN,@{2017PASP..129j4502K},@{2023arXiv230403791H}],
-  Vizier [@vizier2000], WISE [@WISE,@NEOWISE,@NEOWISE_Reactivation,@2020MNRAS.493.2271H],
+  [@ZTF], iPTF [@iPTF], ASAS-SN [@ASASSN;@{2017PASP..129j4502K};@2023arXiv230403791H],
+  Vizier [@vizier2000], WISE [@WISE;@NEOWISE;@NEOWISE_Reactivation;@2020MNRAS.493.2271H],
   FIRST [@{1997ApJ...475..479W}], NVSS [@{1998AJ....115.1693C}], HEASARC, and Sparcl
-  [@juneau_sparcl_2024] --- most of which are available through astroquery [@ginsburg_astroquery_2019].
+  [@juneau_sparcl_2024] --- most of which are queried using astroquery [@ginsburg_astroquery_2019].
 * As mentioned previously, we allow for the storage of different measurements
-  associated with the same property of the transient. For example, we allow multiple, disagreeing redshift measurements
+  associated with the same property of the transient. For example, we allow multiple redshift measurements
   for a single transient. The OTTER API will automatically choose a default value if
   multiple values are present for a single property.
 
 [^1]: The OAC was an indispensable resource but has not been maintained since 2022, further necessitating a successor like OTTER.
 [^2]: By "reduced" we mean that the proper calibrations are applied and a flux, flux density, or magnitude is extracted from the raw data.
 
-# Conclusions and other considerations
+# Conclusions
 
-Finally, it should be noted that we also developed a front end web application for
-access to the database. This web application uses the API described here for interfacing
+Finally, in addition to the API, we also developed a front end web application for
+a graphical view of the dataset (available in the [otter-web repository](https://github.com/astro-otter/otter-web)).
+This web application uses the API described here for interfacing
 with the database. In addition to providing a GUI for interaction with the dataset,
-the web application adds other useful functionality like an upload form for uesrs to
-contribute their data after publishing. The upload functionality is solely in the web
+the web application adds other useful functionality like an upload form for users to
+contribute their data after publication. The upload functionality is solely in the web
 application to allow for additional vetting of the uploaded datasets.
 
 Moving forward, OTTER, in its entirety, will be a useful infrastructure tool for
 time domain science. Even more, the OTTER API described here will
-make access to that dataset easier for users by avoiding the afformentioned roadblocks. We welcome
-GitHub issues with comments and feedback (or even pull requests!) from the community on our
-[GitHub repository](https://github.com/astro-otter/otter).
+make access to that dataset easier for users by lowering the API learning curve.
+There are already multiple astronomers using the software for their research, spanning
+from undergraduate students to faculty. While there currently are no papers citing the
+software, the beta version has already been used for writing successful telescope proposals.
+We welcome GitHub issues with comments and feedback (or even pull requests!) from
+the community on our [GitHub repository](https://github.com/astro-otter/otter).
 
 # Citations
