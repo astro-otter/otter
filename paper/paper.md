@@ -120,6 +120,13 @@ components include the following:
   Vizier [@vizier2000], WISE [@WISE;@NEOWISE;@NEOWISE_Reactivation;@2020MNRAS.493.2271H],
   FIRST [@{1997ApJ...475..479W}], NVSS [@{1998AJ....115.1693C}], HEASARC, and Sparcl
   [@juneau_sparcl_2024] --- most of which are queried using astroquery [@ginsburg_astroquery_2019].
+* Users may want to compare new observations they have stored locally with the OTTER catalog.
+  As part of the OTTER API we make this very easy as long as their data is stored in a well-documented
+  CSV file format (see the OTTER web application upload form or the example jupyter notebook titled
+  "Interfacing with Private Data"). When the data is stored like this
+  a user is able to use the `Otter.from_csvs` method to construct an `Otter` object that will pass
+  their queries to both the public OTTER dataset and the one locally stored and return all relevant
+  information in a consistent format.
 * As mentioned previously, we allow for the storage of different measurements
   associated with the same property of the transient. For example, we allow multiple redshift measurements
   for a single transient. The OTTER API will automatically choose a default value if
