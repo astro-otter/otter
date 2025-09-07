@@ -166,3 +166,8 @@ scripts/tns*.csv*
 # not the testing stuff
 ipac
 otter-test
+
+# some artifacts from testing the JOSS paper compilation
+paper/auto/
+paper/jats/
+paper/paper.pdf
