@@ -271,6 +271,11 @@ def test_get_host():
     assert isinstance(host, list)
     assert isinstance(host[0], Host)
 
+    # also check that the search feature works
+    host2 = t.get_host(search=True)
+    assert isinstance(host2, list)
+    assert isinstance(host2[0], Host)
+
 
 def test_clean_photometry():
     """

@@ -400,7 +400,7 @@ class Transient(MutableMapping):
 
             # default_name should always be the TNS name if we have one
             print(self.default_name)
-            blast_host = Host.query_blast(self.default_name)
+            blast_host = Host.query_blast(self.default_name.replace(" ", ""))
             print(blast_host)
             if blast_host is not None:
                 host.append(blast_host)
