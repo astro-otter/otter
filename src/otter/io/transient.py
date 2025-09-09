@@ -114,61 +114,8 @@ class Transient(MutableMapping):
     def __len__(self):
         return len(self.data)
 
-    def __repr__(self, html=False):
-        if not html:
-            return f"Transient(\n\tName: {self.default_name},\n\tKeys: {self.keys()}\n)"
-        else:
-            html = ""
-
-            coord = self.get_skycoord()
-
-            # add the ra and dec
-            # These are required so no need to check if they are there
-            html += f"""
-            <tr>
-            <td style="text-align:left">RA [hrs]:</td>
-            <td style="text-align:left">{coord.ra}
-            </tr>
-            <tr>
-            <td style="text-align:left">DEC [deg]:</td>
-            <td style="text-align:left">{coord.dec}
-            </tr>
-            """
-
-            if "date_reference" in self:
-                discovery = self.getDiscoveryDate().to_value("datetime")
-                if discovery is not None:
-                    # add the discovery date
-                    html += f"""
-                    <tr>
-                    <td style="text-align:left">Discovery Date [MJD]:</td>
-                    <td style="text-align:left">{discovery}
-                    </tr>
-                    """
-
-            if "distance" in self:
-                # add the redshift
-                html += f"""
-                <tr>
-                <td style="text-align:left">Redshift:</td>
-                <td style="text-align:left">{self['distance']['redshift'][0]['value']}
-                </tr>
-                """
-
-            if "reference_alias" in self:
-                srcs = ""
-                for bibcode, src in self.srcmap.items():
-                    srcs += f"<a href='https://ui.adsabs.harvard.edu/abs/{bibcode}'"
-                    srcs += f"target='_blank'>{src}</a><br>"
-
-                html += f"""
-                <tr>
-                <td style="text-align:left">Sources:</td>
-                <td style="text-align:left">{srcs}
-                </tr>
-                """
-
-            return html
+    def __repr__(self):
+        return f"Transient(\n\tName: {self.default_name},\n\tKeys: {self.keys()}\n)"
 
     def keys(self):
         return self.data.keys()
