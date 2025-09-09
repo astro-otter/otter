@@ -1,4 +1,39 @@
 {
+    "coordinate": [
+        {
+            "ra": "10:06:50.87",
+            "dec": "01:41:34.08",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSTR1708....1B"
+            ],
+            "coordinate_type": "equatorial"
+        }
+    ],
+    "classification": {
+        "value": [
+            {
+                "object_class": "TDE",
+                "confidence": 0,
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
+        {
+            "value": "2018-11-06 15:21:36.000",
+            "date_format": "iso",
+            "reference": [
+                "2018TNSTR1708....1B",
+                "2018TNSTR1708....1B"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
     "filter_alias": [
         {
             "filter_key": "1.5GHz",
@@ -17,6 +52,17 @@
             "distance_type": "redshift"
         }
     ],
+    "name": {
+        "default_name": "2018hyz",
+        "alias": [
+            {
+                "value": "2018hyz",
+                "reference": [
+                    "2018TNSTR1708....1B"
+                ]
+            }
+        ]
+    },
     "photometry": [
         {
             "reference": "private",
@@ -53,41 +99,6 @@
             "val_hostav": false
         }
     ],
-    "coordinate": [
-        {
-            "ra": "10:06:50.87",
-            "dec": "01:41:34.08",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSTR1708....1B"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ],
-    "date_reference": [
-        {
-            "value": "2018-11-06 15:21:36.000",
-            "date_format": "iso",
-            "reference": [
-                "2018TNSTR1708....1B",
-                "2018TNSTR1708....1B"
-            ],
-            "computed": false,
-            "date_type": "discovery"
-        }
-    ],
-    "classification": {
-        "value": [
-            {
-                "object_class": "TDE",
-                "confidence": 0,
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    },
     "reference_alias": [
         {
             "name": "2018TNSCR1764....1A",
@@ -97,16 +108,5 @@
             "name": "2018TNSTR1708....1B",
             "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
         }
-    ],
-    "name": {
-        "default_name": "2018hyz",
-        "alias": [
-            {
-                "value": "2018hyz",
-                "reference": [
-                    "2018TNSTR1708....1B"
-                ]
-            }
-        ]
-    }
+    ]
 }
