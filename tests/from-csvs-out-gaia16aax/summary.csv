@@ -1,0 +1,2 @@
+,name,alias,ra,dec,refs,hasPhot,hasSpec,json_path
+0,Gaia 16aax,['Gaia 16aax'],1d00m00s,1d00m00s,"['2020MNRAS.493..477C', '2018TNSCR1764....1A']",True,False,/home/nfranz/research/astro-otter/otter/tests/from-csvs-out-gaia16aax/Gaia-16aax.json
