@@ -187,6 +187,50 @@ def test_query():
         db.query(names=10)
         db.query(refs=10)
 
+    # try just retrieving all of the private data
+    all_res = db2._query_datadir()
+    assert len(all_res) == 1
+
+    # check some other basic queries agains the private data
+    res = db2.query(names=["2018hyz", "2022cmc"])
+    assert len(res) == 2
+
+    with pytest.raises(AttributeError):
+        res = db2.query(names="2018hyz", hasspec=True, query_private=True)
+
+    res = db2.query(names="2018hyz", hasphot=True, query_private=True)
+    assert len(res) == 1
+
+    res = db2.query(names="2018hyz", maxz=1, query_private=True)
+    assert len(res) == 1
+
+    res = db2.query(minz=1, query_private=True)
+    assert len(res) >= 3
+    assert "2018hyz" not in [t.default_name for t in res]
+
+    res = db2._query_datadir(refs="2018TNSCR1764....1A")
+    assert len(res) == 1
+
+    res = db2._query_datadir(refs=["2018TNSCR1764....1A", "2018TNSTR1708....1B"])
+    assert len(res) == 1
+
+    # THESE ALL MUST HAPPEN AT THE END OF THE QUERYING
+    # they are testing what happens if we mess with the summary table in the
+    # private data directory
+    summary_table_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "private_otter_data", "summary.csv"
+    )
+    summary_table = pd.read_csv(summary_table_path)
+    summary_table.head(0).to_csv(summary_table_path)
+    res = db2._query_datadir(names="2018hyz")
+    assert isinstance(res, list)
+    assert len(res) == 0
+
+    # now delete the summary file because it should auto regenerate
+    os.remove(summary_table_path)
+    res = db2._query_datadir(names="2018hyz")
+    assert len(res) == 1
+
 
 def test_from_csvs():
     """
@@ -197,6 +241,20 @@ def test_from_csvs():
     metapath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "meta-test.csv")
     photpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "phot-test.csv")
     outpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "from-csvs-out")
+
+    db = Otter.from_csvs(metafile=metapath, photfile=photpath, local_outpath=outpath)
+
+    assert isinstance(db, Otter)
+
+    metapath = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "gaia16aax-meta.csv"
+    )
+    photpath = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "gaia16aax-phot.csv"
+    )
+    outpath = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "from-csvs-out-gaia16aax"
+    )
 
     db = Otter.from_csvs(metafile=metapath, photfile=photpath, local_outpath=outpath)
 
