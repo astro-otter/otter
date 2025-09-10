@@ -26,12 +26,12 @@ aas-journal: Astrophysical Journal
 # Summary
 The Open mulTiwavelength Transient Event Repository (or "OTTER") is a new catalog of
 published transient metadata and photometry. Here we present a thick Python wrapper on the
-RESTful application programming interface (API) built-in to the OTTER backend database
+REpresentational State Transfer (REST) application programming interface (API) built-in to the OTTER backend database
 (hereafter the "OTTER API"). Since the OTTER backend is built on the document database
-ArangoDB, using the RESTful API directly requires learning the Arango Query Language
+ArangoDB, using the REST API directly requires learning the Arango Query Language
 (AQL). Since AQL has a niche user base, OTTER users unfamiliar with it may face a roadblock to programmatic access to
 OTTER. To overcome this barrier, we created the OTTER Python API to make programmatic access easy
-and fast. In addition to wrapping the RESTful API, the OTTER Python API
+and fast. In addition to wrapping the REST API, the OTTER Python API
 also provides additional methods for 1) Converting the stored photometry in standard
 units; 2) Helper methods for querying additional astronomy database services; and 3)
 Methods for quickly plotting the photometry stored in OTTER.
@@ -71,13 +71,13 @@ For both of these reasons we created the Open mulTiwavelength Transient Event Re
 successor to the Open Astronomy Catalogs [OAC, @auchettl_new_2017; @guillochon_open_2017] [^1],
 but designed and optimized for multiwavelength datasets.
 To store the various nuances of multiwavelength photometry (e.g., the model used to reduce and extract
-a flux from an X-ray observation), we chose to use a flexible document database as our
-backend, called ArangoDB. This also enables us to store multiple values of a single measurement
-when different sources disagree.
+a flux from an X-ray observation), we chose to use a flexible document database management system as our
+backend: ArangoDB. The nested structure of the document database files also provides an intuitive way to
+store multiple values of a single measurement when different sources disagree.
 
 One of our primary goals of OTTER is ease of access to the dataset, including a way to
 programmatically access it to make the curation of large transient samples easier.
-ArangoDB has a built-in RESTful API for progrommatic access to the
+ArangoDB has a built-in REST API for progrommatic access to the
 data. However, the API endpoints expect queries in the syntax of the "Arango Query
 Language" (AQL). Learning a new query language creates a barrier for user programmatic
 access to the indispensable dataset available in the OTTER catalog.
@@ -92,9 +92,9 @@ components include the following:
   not rely on complex processing scripts that may have unknown bugs. However, this also
   means that the data is not stored in consistent units (but the unit of the photometry
   point is stored). In the OTTER API we automatically convert the photometry into the user-requested units.
-  Specifically, this is done in the
-  `Otter.get_phot` and `Transient.clean_photometry` methods. This
-  conversion is done using astropy [@astropy_collaboration_astropy_2013; @astropy_collaboration_astropy_2018;
+  Specifically, the conversion is done in the
+  `Otter.get_phot` and `Transient.clean_photometry` methods. whic use
+  astropy [@astropy_collaboration_astropy_2013; @astropy_collaboration_astropy_2018;
   @astropy_collaboration_astropy_2022] and synphot [@stsci_development_team_synphot_2018].
 * The raw data from some astronomical observations is made public and reduced[^2] by
   multiple astronomers. Depending on the differences in the reduction methodology this may
@@ -119,7 +119,7 @@ components include the following:
   [@ZTF], iPTF [@iPTF], ASAS-SN [@ASASSN;@{2017PASP..129j4502K};@2023arXiv230403791H],
   Vizier [@vizier2000], WISE [@WISE;@NEOWISE;@NEOWISE_Reactivation;@2020MNRAS.493.2271H],
   FIRST [@{1997ApJ...475..479W}], NVSS [@{1998AJ....115.1693C}], HEASARC, and Sparcl
-  [@juneau_sparcl_2024] --- most of which are queried using `astroquery` [@ginsburg_astroquery_2019].
+  [@juneau_sparcl_2024] --- most of which are queried using the astrop-affiliasted `astroquery` package [@ginsburg_astroquery_2019].
 * Users may want to compare new observations they have stored locally with the publicly available data in OTTER.
   As part of the OTTER API we make this very easy as long as their data is stored in a well-documented
   CSV file format (see the OTTER web application upload form or the example jupyter notebook titled
