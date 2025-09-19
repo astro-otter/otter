@@ -153,9 +153,9 @@ evidence for this is the impact of the Open Astronomy Catalogs, which has $>500$
 [@guillochon_open_2017] and is still being used today, despite being deprecated.
 
 There are already multiple astronomers using the software for their research, spanning
-from undergraduate students to faculty. There is currently at least one paper citing
-OTTER [@alexander_multi-wavelength_2025] with other papers using OTTER in preparation
-(Christy et al., in prep.; Farley et al., in prep.). Additionally, our immediate research
+from undergraduate students to faculty. There are currently two papers citing
+OTTER [@alexander_multi-wavelength_2025; @{2025arXiv250914317C}] with at least one other using OTTER in preparation
+(Farley et al., in prep.). Additionally, our immediate research
 group has already used OTTER for writing successful telescope proposals. We have presented
 this work at the Kavli Institute for Theoretical Physics: Towards a Physical Understanding of
 Tidal Disruption Events session, Astronomical Data Analysis Software and Systems: 2025 Monsoon
