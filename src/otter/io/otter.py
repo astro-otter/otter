@@ -310,6 +310,7 @@ class Otter(Database):
         unambiguous: bool = False,
         classification: str = None,
         class_confidence_threshold: float = 0,
+        has_det: bool = False,
         query_private=False,
         **kwargs,
     ) -> dict:
@@ -345,6 +346,10 @@ class Otter(Database):
             classification (str): A classification string to search for
             class_confidence_threshold (float): classification confidence cutoff for
                                                 query, between 0 and 1. Default is 0.
+            has_det (bool): This can be set to true to only search for transients that
+                            have a detection in their photometry. It can be used in
+                            conjunction with e.g., `has_radio_phot=True` to search for
+                            transients that have a radio detection. Default is False.
             query_private (bool): Set to True if you would like to also query the
                                   dataset located at whatever you set datadir to
 
@@ -365,6 +370,11 @@ class Otter(Database):
 
         if has_xray_phot:
             query_filters += "FILTER 'xray' IN transient.photometry[*].obs_type\n"
+
+        if has_det:
+            query_filters += """
+            FILTER FLATTEN(transient.photometry[*].upperlimit) ANY == true\n
+            """
 
         if hasspec is True:
             query_filters += "FILTER 'spectra' IN ATTRIBUTES(transient)\n"
