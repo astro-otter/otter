@@ -48,7 +48,7 @@ dependencies = [
   "sparclclient",
 
   # for the schema validation
-  "pydantic",
+  "pydantic>=2",
 
   # only for windows OS b/c it doesn't ship with readline by default
   'pyreadline3; platform_system == "Windows"'
