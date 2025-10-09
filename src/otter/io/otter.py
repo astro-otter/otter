@@ -373,7 +373,7 @@ class Otter(Database):
 
         if has_det:
             query_filters += """
-            FILTER FLATTEN(transient.photometry[*].upperlimit) ANY == true\n
+            FILTER FLATTEN(transient.photometry[*].upperlimit) ANY == false\n
             """
 
         if hasspec is True:
