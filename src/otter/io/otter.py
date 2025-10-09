@@ -311,6 +311,7 @@ class Otter(Database):
         classification: str = None,
         class_confidence_threshold: float = 0,
         has_det: bool = False,
+        wave_det: str = None,
         query_private=False,
         **kwargs,
     ) -> dict:
@@ -350,6 +351,10 @@ class Otter(Database):
                             have a detection in their photometry. It can be used in
                             conjunction with e.g., `has_radio_phot=True` to search for
                             transients that have a radio detection. Default is False.
+            wave_det (str): Set this to the wavelength regime that you want to check for
+                            detections in. Either "uvoir", "radio", "xray". Default is
+                            None, which doesn't filter on the wavelength regime before
+                            checking for detections.
             query_private (bool): Set to True if you would like to also query the
                                   dataset located at whatever you set datadir to
 
@@ -372,9 +377,20 @@ class Otter(Database):
             query_filters += "FILTER 'xray' IN transient.photometry[*].obs_type\n"
 
         if has_det:
-            query_filters += """
-            FILTER FLATTEN(transient.photometry[*].upperlimit) ANY == false\n
-            """
+            if wave_det is None:
+                query_filters += """
+                FILTER FLATTEN(transient.photometry[*].upperlimit) ANY == false\n
+                """
+            else:
+                query_filters += f"""
+                FILTER "photometry" IN ATTRIBUTES(transient)
+                LET phot = (
+                  FOR p IN transient.photometry
+                  FILTER p.obs_type == "{wave_det}"
+                  RETURN p
+                )
+                FILTER FLATTEN(phot[*].upperlimit) ANY == false
+                """
 
         if hasspec is True:
             query_filters += "FILTER 'spectra' IN ATTRIBUTES(transient)\n"
