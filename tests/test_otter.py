@@ -11,23 +11,18 @@ import numpy as np
 import pandas as pd
 import pytest
 
-OTTER_URL = os.environ.get("OTTER_TEST_URL")
-OTTER_TEST_PASSWORD = os.environ.get("OTTER_TEST_PASSWORD")
-
 
 def test_otter_constructor():
     """
     Just make sure everything constructs correctly
     """
 
-    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
+    db = Otter()
     assert isinstance(db, Otter)
 
     # and using a custom local directory
     otter_test_dir = os.path.join(os.getcwd(), "otter-test")
     db = Otter(
-        url=OTTER_URL,
-        password=OTTER_TEST_PASSWORD,
         datadir=otter_test_dir,
         gen_summary=True,
     )
@@ -41,7 +36,7 @@ def test_get_meta():
     Tests the Otter.get_meta method and make sure it returns as expected
     """
 
-    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
+    db = Otter()
 
     # first make sure everything is just copied over correctly
     allmeta = db.get_meta()
@@ -65,7 +60,7 @@ def test_cone_search():
     Tests the Otter.cone_search method
     """
 
-    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
+    db = Otter()
 
     # just search around '2018hyz' coordinates to make sure it picks it up
     coord = SkyCoord(151.711964138, 1.69279894089, unit="deg")
@@ -81,7 +76,7 @@ def test_get_phot():
     work as expected. So, this will just test that everything comes out as expected.
     """
 
-    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
+    db = Otter()
 
     true_keys = [
         "name",
@@ -132,7 +127,7 @@ def test_query():
     but lets make sure it's complete
     """
 
-    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
+    db = Otter()
 
     # test min and max z queries
     zgtr1 = db.query(minz=1)
@@ -172,8 +167,6 @@ def test_query():
 
     # try querying with the fake "private" data
     db2 = Otter(
-        url=OTTER_URL,
-        password=OTTER_TEST_PASSWORD,
         datadir=os.path.join(
             os.path.dirname(os.path.abspath(__file__)), "private_otter_data"
         ),

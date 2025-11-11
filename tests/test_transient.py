@@ -5,6 +5,7 @@ are more complex and require additional tests.
 """
 
 import pytest
+from urllib.error import HTTPError
 import numpy as np
 from otter import Transient, Host
 from otter.exceptions import OtterLimitationError
@@ -272,9 +273,14 @@ def test_get_host():
     assert isinstance(host[0], Host)
 
     # also check that the search feature works
-    host2 = t.get_host(search=True)
-    assert isinstance(host2, list)
-    assert isinstance(host2[0], Host)
+    try:
+        host2 = t.get_host(search=True)
+        assert isinstance(host2, list)
+        assert isinstance(host2[0], Host)
+    except HTTPError:
+        # this means that the UIUC host search service is down
+        # and OTTER unit tests shouldn't be punished for that :)
+        pass
 
 
 def test_clean_photometry():

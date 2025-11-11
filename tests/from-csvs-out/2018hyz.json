@@ -1,15 +1,16 @@
 {
-    "name": {
-        "default_name": "2018hyz",
-        "alias": [
-            {
-                "value": "2018hyz",
-                "reference": [
-                    "2018TNSTR1708....1B"
-                ]
-            }
-        ]
-    },
+    "coordinate": [
+        {
+            "ra": "10:06:50.87",
+            "dec": "01:41:34.08",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSTR1708....1B"
+            ],
+            "coordinate_type": "equatorial"
+        }
+    ],
     "host": [
         {
             "host_name": "testhost",
@@ -21,6 +22,16 @@
                 "2018TNSCR1764....1A"
             ],
             "host_z": 0.12
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2018TNSCR1764....1A",
+            "human_readable_name": "Arcavi, I. (2018)"
+        },
+        {
+            "name": "2018TNSTR1708....1B",
+            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
         }
     ],
     "classification": {
@@ -45,14 +56,44 @@
             "wave_units": "nm"
         }
     ],
-    "reference_alias": [
+    "date_reference": [
         {
-            "name": "2018TNSCR1764....1A",
-            "human_readable_name": "Arcavi, I. (2018)"
+            "value": "2018-11-06 15:21:36.000",
+            "date_format": "iso",
+            "reference": [
+                "2018TNSTR1708....1B",
+                "2018TNSTR1708....1B"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "distance": [
+        {
+            "value": "0.04573",
+            "distance_type": "redshift",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "default": true
         },
         {
-            "name": "2018TNSTR1708....1B",
-            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
+            "value": "1.0",
+            "distance_type": "comoving",
+            "unit": "Mpc",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "default": true
+        },
+        {
+            "value": "1.0",
+            "distance_type": "luminosity",
+            "unit": "Mpc",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "default": true
         }
     ],
     "photometry": [
@@ -91,59 +132,18 @@
             "val_hostav": false
         }
     ],
-    "coordinate": [
-        {
-            "ra": "10:06:50.87",
-            "dec": "01:41:34.08",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSTR1708....1B"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ],
-    "distance": [
-        {
-            "value": "0.04573",
-            "distance_type": "redshift",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "default": true
-        },
-        {
-            "value": "1.0",
-            "distance_type": "comoving",
-            "unit": "Mpc",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "default": true
-        },
-        {
-            "value": "1.0",
-            "distance_type": "luminosity",
-            "unit": "Mpc",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "default": true
-        }
-    ],
+    "name": {
+        "default_name": "2018hyz",
+        "alias": [
+            {
+                "value": "2018hyz",
+                "reference": [
+                    "2018TNSTR1708....1B"
+                ]
+            }
+        ]
+    },
     "schema_version": {
         "comment": "test by noah"
-    },
-    "date_reference": [
-        {
-            "value": "2018-11-06 15:21:36.000",
-            "date_format": "iso",
-            "reference": [
-                "2018TNSTR1708....1B",
-                "2018TNSTR1708....1B"
-            ],
-            "computed": false,
-            "date_type": "discovery"
-        }
-    ]
+    }
 }
