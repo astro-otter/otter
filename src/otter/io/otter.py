@@ -1393,31 +1393,36 @@ class Otter(Database):
                                 if not pd.isna(row[f"xray_model_param_value::{n}"]):
                                     param_names_not_na.append(n)
 
+                            _fillna = lambda val: "null" if pd.isna(val) else val  # noqa
                             xray_models.append(
                                 {
                                     "model_name": row.xray_model_name,
                                     "param_names": [n for n in param_names_not_na],
                                     "param_values": [
-                                        row[f"xray_model_param_value::{n}"]
+                                        _fillna(row[f"xray_model_param_value::{n}"])
                                         for n in param_names_not_na
                                     ],
                                     "param_value_upper_err": [
-                                        row[f"xray_model_param_up_err::{n}"]
+                                        _fillna(row[f"xray_model_param_up_err::{n}"])
                                         for n in param_names_not_na
                                     ],
                                     "param_value_lower_err": [
-                                        row[f"xray_model_param_lo_err::{n}"]
+                                        _fillna(row[f"xray_model_param_lo_err::{n}"])
                                         for n in param_names_not_na
                                     ],
                                     "param_upperlimit": [
-                                        row[f"xray_model_param_upperlimit::{n}"]
+                                        _fillna(
+                                            row[f"xray_model_param_upperlimit::{n}"]
+                                        )
                                         for n in param_names_not_na
                                     ],
                                     "param_units": [
-                                        row[f"xray_model_param_unit::{n}"]
+                                        _fillna(row[f"xray_model_param_unit::{n}"])
                                         for n in param_names_not_na
                                     ],
-                                    "model_reference": row["xray_model_reference"],
+                                    "model_reference": _fillna(
+                                        row["xray_model_reference"]
+                                    ),
                                     "min_energy": min_energy,
                                     "max_energy": max_energy,
                                     "energy_units": "keV",
