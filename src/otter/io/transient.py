@@ -639,14 +639,6 @@ class Transient(MutableMapping):
         # skip rows where 'by' is nan
         df = df[df[by].notna()]
 
-        # remove rows where the flux is less than zero since this is nonphysical
-        # See Mummery et al. (2023) Section 5.2 for why we need to do this when using
-        # ZTF data:
-        # "Because the origin of the negative late-time flux is currently un-
-        # known (and under investigation), we have not attempted to correct
-        # the TDE lightcurves for this systematic effect. "
-        df = df[df[by].astype(float) > 0]
-
         # filter out anything that has _flux_units == "ct" because we can't convert that
         try:
             # this is a test case to see if we can convert ct -> flux_unit
