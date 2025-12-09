@@ -37,60 +37,6 @@
         "spec_classed": 1,
         "unambiguous": false
     },
-    "filter_alias": [
-        {
-            "filter_key": "1.5GHz",
-            "filter_name": "L",
-            "wave_eff": 199861638.66666666,
-            "wave_units": "nm"
-        }
-    ],
-    "reference_alias": [
-        {
-            "name": "2018TNSCR1764....1A",
-            "human_readable_name": "Arcavi, I. (2018)"
-        },
-        {
-            "name": "2018TNSTR1708....1B",
-            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
-        }
-    ],
-    "photometry": [
-        {
-            "reference": "private",
-            "raw": [
-                1.0,
-                10.0
-            ],
-            "raw_err": [
-                0.01,
-                0.01
-            ],
-            "raw_units": "mJy",
-            "date": [
-                "2025-05-20",
-                "2025-05-23"
-            ],
-            "date_format": [
-                "iso",
-                "iso"
-            ],
-            "upperlimit": [
-                false,
-                false
-            ],
-            "filter_key": [
-                "1.5GHz",
-                "1.5GHz"
-            ],
-            "obs_type": "radio",
-            "val_k": false,
-            "val_s": false,
-            "val_host": false,
-            "val_av": false,
-            "val_hostav": false
-        }
-    ],
     "coordinate": [
         {
             "ra": "10:06:50.87",
@@ -131,9 +77,42 @@
             "default": true
         }
     ],
-    "schema_version": {
-        "comment": "test by noah"
-    },
+    "photometry": [
+        {
+            "reference": "private",
+            "raw": [
+                1.0,
+                10.0
+            ],
+            "raw_err": [
+                0.01,
+                0.01
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2025-05-20",
+                "2025-05-23"
+            ],
+            "date_format": [
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                false,
+                false
+            ],
+            "filter_key": [
+                "1.5GHz",
+                "1.5GHz"
+            ],
+            "obs_type": "radio",
+            "val_k": false,
+            "val_s": false,
+            "val_host": false,
+            "val_av": false,
+            "val_hostav": false
+        }
+    ],
     "date_reference": [
         {
             "value": "2018-11-06 15:21:36.000",
@@ -144,6 +123,27 @@
             ],
             "computed": false,
             "date_type": "discovery"
+        }
+    ],
+    "schema_version": {
+        "comment": "test by noah"
+    },
+    "filter_alias": [
+        {
+            "filter_key": "1.5GHz",
+            "filter_name": "L",
+            "wave_eff": 199861638.66666666,
+            "wave_units": "nm"
+        }
+    ],
+    "reference_alias": [
+        {
+            "name": "2018TNSCR1764....1A",
+            "human_readable_name": "Arcavi, I. (2018)"
+        },
+        {
+            "name": "2018TNSTR1708....1B",
+            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
         }
     ]
 }
