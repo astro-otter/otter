@@ -74,6 +74,7 @@ docs = [
 dev = [
   "ruff", # linter
   "pre-commit", # enable pre-commit hooks
+  "pytest-timeout", # ignores tests that take to long
 ]
 
 [tool.setuptools.packages.find]

@@ -2,6 +2,7 @@
 Test the otter Host class
 """
 
+import pytest
 from otter import Host
 from astropy.coordinates import SkyCoord
 from urllib.error import URLError
@@ -63,6 +64,7 @@ def test_pcc():
     assert pcc2 > 0.9, "pcc seems too small for this input coordinate"
 
 
+@pytest.mark.skip_on_timeout(10)
 def test_query_blast():
     """
     Test the query of BLAST

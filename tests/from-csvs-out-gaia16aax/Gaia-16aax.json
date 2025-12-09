@@ -1,16 +1,15 @@
 {
-    "coordinate": [
-        {
-            "ra": 1,
-            "dec": 1,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ],
+    "name": {
+        "default_name": "Gaia 16aax",
+        "alias": [
+            {
+                "value": "Gaia 16aax",
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
+    },
     "reference_alias": [
         {
             "name": "2020MNRAS.493..477C",
@@ -19,100 +18,6 @@
         {
             "name": "2018TNSCR1764....1A",
             "human_readable_name": "Arcavi, I. (2018)"
-        }
-    ],
-    "filter_alias": [
-        {
-            "filter_key": "u",
-            "filter_name": "u",
-            "wave_eff": 356.17887353001856,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "B",
-            "filter_name": "B",
-            "wave_eff": 443.0539845758355,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "V",
-            "filter_name": "V",
-            "wave_eff": 553.7155963302753,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "g",
-            "filter_name": "g",
-            "wave_eff": 471.8872246248687,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "r",
-            "filter_name": "r",
-            "wave_eff": 618.5194476741524,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "i",
-            "filter_name": "i",
-            "wave_eff": 749.9704174464691,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "z",
-            "filter_name": "z",
-            "wave_eff": 896.1488333992431,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "J",
-            "filter_name": "J",
-            "wave_eff": 1255.0918319447906,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "H",
-            "filter_name": "H",
-            "wave_eff": 1630.5155019191195,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "Ks",
-            "filter_name": "Ks",
-            "wave_eff": 2157.3600605745955,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "UVW1",
-            "filter_name": "UVW1",
-            "wave_eff": 261.371306053102,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "UVM2",
-            "filter_name": "UVM2",
-            "wave_eff": 225.478024787936,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "UVW2",
-            "filter_name": "UVW2",
-            "wave_eff": 207.987543326761,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "U",
-            "filter_name": "U",
-            "wave_eff": 353.10502283105,
-            "wave_units": "nm"
-        },
-        {
-            "filter_key": "0.3-10",
-            "filter_name": "0.3-10",
-            "wave_eff": 0.12781876127134,
-            "wave_units": "nm",
-            "wave_min": 0.1239841984332002,
-            "wave_max": 4.132806614440009
         }
     ],
     "photometry": [
@@ -806,15 +711,110 @@
             "val_hostav": false
         }
     ],
-    "name": {
-        "default_name": "Gaia 16aax",
-        "alias": [
-            {
-                "value": "Gaia 16aax",
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    }
+    "coordinate": [
+        {
+            "ra": 1,
+            "dec": 1,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "coordinate_type": "equatorial"
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "u",
+            "filter_name": "u",
+            "wave_eff": 356.17887353001856,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "B",
+            "filter_name": "B",
+            "wave_eff": 443.0539845758355,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "V",
+            "filter_name": "V",
+            "wave_eff": 553.7155963302753,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "g",
+            "filter_name": "g",
+            "wave_eff": 471.8872246248687,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "r",
+            "filter_name": "r",
+            "wave_eff": 618.5194476741524,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "i",
+            "filter_name": "i",
+            "wave_eff": 749.9704174464691,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "z",
+            "filter_name": "z",
+            "wave_eff": 896.1488333992431,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "J",
+            "filter_name": "J",
+            "wave_eff": 1255.0918319447906,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "H",
+            "filter_name": "H",
+            "wave_eff": 1630.5155019191195,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "Ks",
+            "filter_name": "Ks",
+            "wave_eff": 2157.3600605745955,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "UVW1",
+            "filter_name": "UVW1",
+            "wave_eff": 261.371306053102,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "UVM2",
+            "filter_name": "UVM2",
+            "wave_eff": 225.478024787936,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "UVW2",
+            "filter_name": "UVW2",
+            "wave_eff": 207.987543326761,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "U",
+            "filter_name": "U",
+            "wave_eff": 353.10502283105,
+            "wave_units": "nm"
+        },
+        {
+            "filter_key": "0.3-10",
+            "filter_name": "0.3-10",
+            "wave_eff": 0.12781876127134,
+            "wave_units": "nm",
+            "wave_min": 0.1239841984332002,
+            "wave_max": 4.132806614440009
+        }
+    ]
 }

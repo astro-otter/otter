@@ -259,6 +259,7 @@ def test_get_redshift():
     assert float(z) == 0.354, "get_redshift did not return the correct value!"
 
 
+@pytest.mark.skip_on_timeout(10)
 def test_get_host():
     """
     Test the get host method

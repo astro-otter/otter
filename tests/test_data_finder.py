@@ -142,6 +142,7 @@ def test_query_ptf():
     assert len(res) >= 32, "Missing some PTF data!"
 
 
+@pytest.mark.skip_on_timeout(10)
 def test_query_ztf():
     """
     Test the method that queries the zwicky transient facility
@@ -156,13 +157,13 @@ def test_query_ztf():
     assert len(res) >= 1296, "Missing some ZTF data!"
 
 
+@pytest.mark.skip_on_timeout(10)
 def test_query_asassn():
     """
     Test the method that queries the ASASSN survey
     """
     df1 = construct_data_finder()
     res = df1.query_asassn()
-
     assert isinstance(res, pd.DataFrame)
     assert "asas_sn_id" in res.columns
     assert "jd" in res.columns
@@ -228,8 +229,7 @@ def test_query_nvss():
 
 
 @pytest.mark.skip(
-    reason="""This has a tendancy to timeout, not sure why but it sounds like its
-    not on us (hopefully)..."""
+    reason="DataLab & Sparcl have a tendency to timeout, which isn't on us!"
 )
 def test_query_sparcl():
     """
