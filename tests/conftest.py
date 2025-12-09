@@ -9,10 +9,10 @@ def pytest_configure(config):
     )
 
 
-def _run_test_in_process(test_func, args, kwargs, result_queue):
+def _run_test_in_process(item, result_queue):
     try:
-        test_func(*args, **kwargs)
-        result_queue.put(None)  # no exception = success
+        item.runtest()  # runs setup + test + teardown
+        result_queue.put(None)
     except Exception as e:
         result_queue.put(e)
 
@@ -38,13 +38,7 @@ def pytest_runtest_call(item):
     # Prepare a queue to get test exceptions from the subprocess
     result_queue = multiprocessing.Queue()
 
-    # Wrap test function to run in subprocess
-    def test_func_wrapper():
-        item.runtest()  # runs setup + test + teardown
-
-    p = multiprocessing.Process(
-        target=_run_test_in_process, args=(test_func_wrapper, (), {}, result_queue)
-    )
+    p = multiprocessing.Process(target=_run_test_in_process, args=(item, result_queue))
     p.start()
     p.join(timeout_seconds)
 
