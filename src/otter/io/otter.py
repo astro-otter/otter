@@ -351,7 +351,22 @@ class Otter(Database):
                                 disagree for a transient, it will be filtered out.
             classification (str): A classification string to search for
             class_confidence_threshold (float): classification confidence cutoff for
-                                                query, between 0 and 1. Default is 0.
+                                                query. Any classifications with a
+                                                confiedence less than
+                                                this value will be ignored. In general,
+                                                (1) C = 0 means this classification is
+                                                unverified, (2) C = 1 means this
+                                                classification is based only on
+                                                photometry, (3) C = 2 means this
+                                                classification is based on a TNS (not
+                                                peer-reviewed) spectrum, (4) C >= 3
+                                                means this classification is based on
+                                                at least one peer-reviewed optical
+                                                spectrum. Setting this flag to 3 should
+                                                produce the most pure sample, but might
+                                                miss some events that are very
+                                                confidently classified based on
+                                                photometry (e.g., X-ray observations).
             query_private (bool): Set to True if you would like to also query the
                                   dataset located at whatever you set datadir to
 
