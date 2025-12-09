@@ -8,6 +8,7 @@ Currently supported backends are:
 
 from __future__ import annotations
 import importlib
+import numpy as np
 
 
 class OtterPlotter:
@@ -50,6 +51,8 @@ class OtterPlotter:
         if ax is None:
             _, ax = self.plotter.subplots()
 
+        if yerr is not None:
+            yerr = np.abs(np.array(yerr))
         ax.errorbar(x, y, xerr=xerr, yerr=yerr, **kwargs)
         return ax
 
@@ -64,6 +67,8 @@ class OtterPlotter:
         else:
             go = ax
 
+        if yerr is not None:
+            yerr = np.abs(np.array(yerr))
         fig = go.add_scatter(
             x=x, y=y, error_x=dict(array=xerr), error_y=dict(array=yerr), **kwargs
         )
