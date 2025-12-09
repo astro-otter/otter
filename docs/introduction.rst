@@ -11,3 +11,5 @@ API which allows users to easily access and visualize the complex
 multiwavelength datasets hosted in OTTER.
 
 .. include:: introduction_installation.rst
+
+.. include:: contributing.rst
