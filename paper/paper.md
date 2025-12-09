@@ -77,7 +77,7 @@ store multiple values of a single measurement when different sources disagree.
 
 One of our primary goals of OTTER is ease of access to the dataset, including a way to
 programmatically access it to make the curation of large transient samples easier.
-ArangoDB has a built-in REST API for progrommatic access to the
+ArangoDB has a built-in REST API for programmatic access to the
 data. However, the API endpoints expect queries in the syntax of the "Arango Query
 Language" (AQL). Learning a new query language creates a barrier for user programmatic
 access to the indispensable dataset available in the OTTER catalog.
@@ -109,12 +109,12 @@ that make it easier to access and analyze the dataset. Some of these features in
   important to store identifying information (e.g., name and coordinates) for a host galaxy, if it is known.
   However, there are numerous existing astronomical databases that store galaxy properties and
   we do not want to duplicate their efforts. We therefore provide methods as part of
-  the `Host` object to query other public services for e.g., host photometry or spectra.
+  the `Host` object to query other public services for host photometry or spectra.
   These other services include Simbad [@{2000A&AS..143....9W}], ATLAS [@ATLAS], ZTF
   [@ZTF], iPTF [@iPTF], ASAS-SN [@ASASSN;@{2017PASP..129j4502K};@2023arXiv230403791H],
   Vizier [@vizier2000], WISE [@WISE;@NEOWISE;@NEOWISE_Reactivation;@2020MNRAS.493.2271H],
   FIRST [@{1997ApJ...475..479W}], NVSS [@{1998AJ....115.1693C}], HEASARC, and Sparcl
-  [@juneau_sparcl_2024] --- most of which are queried using the astropy-affiliasted `astroquery` package [@ginsburg_astroquery_2019].
+  [@juneau_sparcl_2024] --- most of which are queried using the astropy-affiliated `astroquery` package [@ginsburg_astroquery_2019].
 * Users may want to compare new observations stored locally with the publicly available data in OTTER.
   As part of the OTTER API we make this very easy as long as their data is stored in a well-documented
   CSV file format (see the OTTER web application upload form or the example jupyter notebook titled
