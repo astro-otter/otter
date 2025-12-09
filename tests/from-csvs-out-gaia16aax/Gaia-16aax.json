@@ -10,6 +10,7 @@
             }
         ]
     },
+<<<<<<< HEAD
     "reference_alias": [
         {
             "name": "2020MNRAS.493..477C",
@@ -18,6 +19,18 @@
         {
             "name": "2018TNSCR1764....1A",
             "human_readable_name": "Arcavi, I. (2018)"
+=======
+    "coordinate": [
+        {
+            "ra": 1,
+            "dec": 1,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "coordinate_type": "equatorial"
+>>>>>>> 53d76b7 (add more details about appropriate units in get_phot and clean_photometry (#33))
         }
     ],
     "photometry": [
@@ -711,6 +724,7 @@
             "val_hostav": false
         }
     ],
+<<<<<<< HEAD
     "coordinate": [
         {
             "ra": 1,
@@ -723,6 +737,8 @@
             "coordinate_type": "equatorial"
         }
     ],
+=======
+>>>>>>> 53d76b7 (add more details about appropriate units in get_phot and clean_photometry (#33))
     "filter_alias": [
         {
             "filter_key": "u",
@@ -816,5 +832,18 @@
             "wave_min": 0.1239841984332002,
             "wave_max": 4.132806614440009
         }
+<<<<<<< HEAD
+=======
+    ],
+    "reference_alias": [
+        {
+            "name": "2020MNRAS.493..477C",
+            "human_readable_name": "Cannizzaro, G. et al. (2020)"
+        },
+        {
+            "name": "2018TNSCR1764....1A",
+            "human_readable_name": "Arcavi, I. (2018)"
+        }
+>>>>>>> 53d76b7 (add more details about appropriate units in get_phot and clean_photometry (#33))
     ]
 }

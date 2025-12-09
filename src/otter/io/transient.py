@@ -475,16 +475,22 @@ class Transient(MutableMapping):
         units/system/etc
 
         Args:
-            flux_unit (astropy.unit.Unit): The astropy unit or string representation of
-                                           an astropy unit to convert and return the
-                                           flux as.
-            date_unit (str): Valid astropy date format string.
+            flux_unit (astropy.unit.Unit): Either a valid string to convert
+                                           or an astropy.unit.Unit, this can be either
+                                           flux, flux density, or magnitude unit. This
+                                           supports any base units supported by
+                                           synphot
+                                           (https://synphot.readthedocs.io/en/latest/synphot/units.html#flux-units).
+            date_unit (str): Valid astropy date format string. See
+                             https://docs.astropy.org/en/stable/time/index.html#time-format
             freq_unit (astropy.unit.Unit): The astropy unit or string representation of
                                            an astropy unit to convert and return the
-                                           frequency as.
+                                           frequency as. Must have a base unit of
+                                           1/time (Hz).
             wave_unit (astropy.unit.Unit): The astropy unit or string representation of
                                            an astropy unit to convert and return the
-                                           wavelength as.
+                                           wavelength as. Must have a base unit of
+                                           length.
             obs_type (str): "radio", "xray", or "uvoir". If provided, it only returns
                             data taken within that range of wavelengths/frequencies.
                             Default is None which will return all of the data.

@@ -163,9 +163,14 @@ class Otter(Database):
 
         Args:
             flux_unit (astropy.unit.Unit): Either a valid string to convert
-                                            or an astropy.unit.Unit
+                                           or an astropy.unit.Unit, this can be either
+                                           flux, flux density, or magnitude unit. This
+                                           supports any base units supported by
+                                           synphot (https://synphot.readthedocs.io/en/latest/synphot/units.html#flux-units).
             date_unit (astropy.unit.Unit): Either a valid string to convert to a date
-                                            or an astropy.unit.Unit
+                                            or an astropy.unit.Unit. For supported
+                                            formats see
+                                            https://docs.astropy.org/en/stable/time/index.html#time-format
             return_type (str): Either 'astropy' or 'pandas'. If astropy, returns an
                                astropy Table. If pandas, returns a pandas DataFrame.
                                Default is 'astropy'.
@@ -175,8 +180,10 @@ class Otter(Database):
             keep_raw (bool): If True, keep the raw flux/date/freq/wave associated with
                              the dataset. Else, just keep the converted data. Default
                              is False.
-            wave_unit (str): The astropy wavelength unit to return with
-            freq_unit (str): The astropy frequency unit to return with`
+            wave_unit (str): The astropy wavelength unit to return with. Must have
+                             base units of length.
+            freq_unit (str): The astropy frequency unit to return with. Must have base
+                             units of 1/time.
             deduplicate (Callable|None|False): if we should deduplicate the dataset
                                                using the deduplicate Callable. Set to
                                                False if you don't want this to happen.
