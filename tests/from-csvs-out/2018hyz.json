@@ -1,30 +1,4 @@
 {
-    "classification": {
-        "value": [
-            {
-                "object_class": "TDE",
-                "confidence": 2,
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ],
-                "default": true
-            }
-        ],
-        "spec_classed": 1,
-        "unambiguous": false
-    },
-<<<<<<< HEAD
-    "name": {
-        "default_name": "2018hyz",
-        "alias": [
-            {
-                "value": "2018hyz",
-                "reference": [
-                    "2018TNSTR1708....1B"
-                ]
-            }
-        ]
-    },
     "reference_alias": [
         {
             "name": "2018TNSCR1764....1A",
@@ -33,56 +7,6 @@
         {
             "name": "2018TNSTR1708....1B",
             "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
-        }
-    ],
-    "photometry": [
-        {
-            "reference": "private",
-            "raw": [
-                1.0,
-                10.0
-            ],
-            "raw_err": [
-                0.01,
-                0.01
-            ],
-            "raw_units": "mJy",
-            "date": [
-                "2025-05-20",
-                "2025-05-23"
-            ],
-            "date_format": [
-                "iso",
-                "iso"
-            ],
-            "upperlimit": [
-                false,
-                false
-            ],
-            "filter_key": [
-                "1.5GHz",
-                "1.5GHz"
-            ],
-            "obs_type": "radio",
-            "val_k": false,
-            "val_s": false,
-            "val_host": false,
-            "val_av": false,
-            "val_hostav": false
-        }
-    ],
-=======
->>>>>>> 53d76b7 (add more details about appropriate units in get_phot and clean_photometry (#33))
-    "coordinate": [
-        {
-            "ra": "10:06:50.87",
-            "dec": "01:41:34.08",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSTR1708....1B"
-            ],
-            "coordinate_type": "equatorial"
         }
     ],
     "date_reference": [
@@ -97,9 +21,6 @@
             "date_type": "discovery"
         }
     ],
-    "schema_version": {
-        "comment": "test by noah"
-    },
     "host": [
         {
             "host_name": "testhost",
@@ -113,37 +34,29 @@
             "host_z": 0.12
         }
     ],
-    "distance": [
+    "name": {
+        "default_name": "2018hyz",
+        "alias": [
+            {
+                "value": "2018hyz",
+                "reference": [
+                    "2018TNSTR1708....1B"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
         {
-            "value": "0.04573",
-            "distance_type": "redshift",
+            "ra": "10:06:50.87",
+            "dec": "01:41:34.08",
+            "ra_units": "hour",
+            "dec_units": "deg",
             "reference": [
-                "2018TNSCR1764....1A"
+                "2018TNSTR1708....1B"
             ],
-            "default": true
-        },
-        {
-            "value": "1.0",
-            "distance_type": "comoving",
-            "unit": "Mpc",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "default": true
-        },
-        {
-            "value": "1.0",
-            "distance_type": "luminosity",
-            "unit": "Mpc",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "default": true
+            "coordinate_type": "equatorial"
         }
     ],
-<<<<<<< HEAD
-    "filter_alias": [
-=======
     "photometry": [
         {
             "reference": "private",
@@ -180,17 +93,47 @@
             "val_hostav": false
         }
     ],
-    "date_reference": [
->>>>>>> 53d76b7 (add more details about appropriate units in get_phot and clean_photometry (#33))
-        {
-            "filter_key": "1.5GHz",
-            "filter_name": "L",
-            "wave_eff": 199861638.66666666,
-            "wave_units": "nm"
-        }
-    ],
     "schema_version": {
         "comment": "test by noah"
+    },
+    "distance": [
+        {
+            "value": 0.04573,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "computed": false,
+            "distance_type": "redshift"
+        },
+        {
+            "value": 1,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "unit": "Mpc",
+            "computed": false,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": 1,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "unit": "Mpc",
+            "computed": false,
+            "distance_type": "comoving"
+        }
+    ],
+    "classification": {
+        "value": [
+            {
+                "object_class": "TDE",
+                "confidence": 2,
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
     },
     "filter_alias": [
         {
@@ -198,16 +141,6 @@
             "filter_name": "L",
             "wave_eff": 199861638.66666666,
             "wave_units": "nm"
-        }
-    ],
-    "reference_alias": [
-        {
-            "name": "2018TNSCR1764....1A",
-            "human_readable_name": "Arcavi, I. (2018)"
-        },
-        {
-            "name": "2018TNSTR1708....1B",
-            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
         }
     ]
 }
