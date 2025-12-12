@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.6.1 (2025-12-12)
+
+### Bug Fixes
+
+- Ensure we don't run the semver workflow in an infinite loop
+  ([`ec32d65`](https://github.com/astro-otter/otter/commit/ec32d6563ad5def4204892a92f5e3ac1a53d0f6b))
+
+
 ## v0.6.0 (2025-12-12)
 
 ### Bug Fixes
