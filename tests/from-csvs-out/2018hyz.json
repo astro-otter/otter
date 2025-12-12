@@ -1,44 +1,7 @@
 {
-    "coordinate": [
-        {
-            "ra": "10:06:50.87",
-            "dec": "01:41:34.08",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSTR1708....1B"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ],
-    "distance": [
-        {
-            "value": 0.04573,
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "computed": false,
-            "distance_type": "redshift"
-        },
-        {
-            "value": 1,
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "unit": "Mpc",
-            "computed": false,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": 1,
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "unit": "Mpc",
-            "computed": false,
-            "distance_type": "comoving"
-        }
-    ],
+    "schema_version": {
+        "comment": "test by noah"
+    },
     "photometry": [
         {
             "reference": "private",
@@ -75,17 +38,16 @@
             "val_hostav": false
         }
     ],
-    "name": {
-        "default_name": "2018hyz",
-        "alias": [
-            {
-                "value": "2018hyz",
-                "reference": [
-                    "2018TNSTR1708....1B"
-                ]
-            }
-        ]
-    },
+    "reference_alias": [
+        {
+            "name": "2018TNSCR1764....1A",
+            "human_readable_name": "Arcavi, I. (2018)"
+        },
+        {
+            "name": "2018TNSTR1708....1B",
+            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
+        }
+    ],
     "date_reference": [
         {
             "value": "2018-11-06 15:21:36.000",
@@ -98,6 +60,64 @@
             "date_type": "discovery"
         }
     ],
+    "classification": {
+        "value": [
+            {
+                "object_class": "TDE",
+                "confidence": 2,
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
+    },
+    "distance": [
+        {
+            "value": 0.04573,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "computed": false,
+            "distance_type": "redshift"
+        },
+        {
+            "value": 1,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "unit": "Mpc",
+            "computed": false,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": 1,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "unit": "Mpc",
+            "computed": false,
+            "distance_type": "comoving"
+        }
+    ],
+    "filter_alias": [
+        {
+            "filter_key": "1.5GHz",
+            "filter_name": "L",
+            "wave_eff": 199861638.66666666,
+            "wave_units": "nm"
+        }
+    ],
+    "name": {
+        "default_name": "2018hyz",
+        "alias": [
+            {
+                "value": "2018hyz",
+                "reference": [
+                    "2018TNSTR1708....1B"
+                ]
+            }
+        ]
+    },
     "host": [
         {
             "host_name": "testhost",
@@ -111,36 +131,16 @@
             "host_z": 0.12
         }
     ],
-    "reference_alias": [
+    "coordinate": [
         {
-            "name": "2018TNSCR1764....1A",
-            "human_readable_name": "Arcavi, I. (2018)"
-        },
-        {
-            "name": "2018TNSTR1708....1B",
-            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
+            "ra": "10:06:50.87",
+            "dec": "01:41:34.08",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSTR1708....1B"
+            ],
+            "coordinate_type": "equatorial"
         }
-    ],
-    "schema_version": {
-        "comment": "test by noah"
-    },
-    "filter_alias": [
-        {
-            "filter_key": "1.5GHz",
-            "filter_name": "L",
-            "wave_eff": 199861638.66666666,
-            "wave_units": "nm"
-        }
-    ],
-    "classification": {
-        "value": [
-            {
-                "object_class": "TDE",
-                "confidence": 2,
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    }
+    ]
 }

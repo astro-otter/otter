@@ -380,6 +380,10 @@ class Otter(Database):
         Return:
            Get all of the raw (unconverted!) data for objects that match the criteria.
         """
+        # catch a numpy array and convert to a list if it is passed in
+        if isinstance(names, np.ndarray):
+            names = list(names)
+
         # write some AQL filters based on the inputs
         query_filters = ""
 
