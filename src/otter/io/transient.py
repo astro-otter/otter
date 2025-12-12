@@ -883,6 +883,11 @@ class Transient(MutableMapping):
 
         outdata["upperlimit"] = outdata.apply(is_upperlimit, axis=1)
 
+        # clean up filter names
+        outdata.loc[outdata.obs_type == "uvoir", "filter_name"] = outdata.loc[
+            outdata.obs_type == "uvoir", "filter_name"
+        ].apply(self._standardize_filter_names)
+
         # perform some more complex deduplication of the dataset
         if deduplicate:
             outdata = deduplicate(outdata)
@@ -901,6 +906,38 @@ class Transient(MutableMapping):
 
         logger.removeFilter(warn_filt)
         return outdata
+
+    def _standardize_filter_names(
+        self, filt: str, delimiters: list[str] = [".", "-", " "]
+    ) -> list[str]:
+        """
+        This (private) method is used to clean up the filter names. As an example,
+        we want "r.ztf" = "r.ZTF" = "r" but NOT EQUAL to "R" (since capital
+        filter names mean something different!). But here's another fun one,
+        we want "UVM2.uvot" = "uvm2.uvot" = "uvm2.UVOT" = "UVM2". That one is tricky
+        since the sdss and johnson-counsins filters *are* different capitalizations
+        but these aren't.
+        """
+        uppercase_filters = {
+            "uvw1",
+            "uvw2",
+            "uvm2",
+            "w1",
+            "w2",
+            "w3",
+            "w4",
+        }  # these lowercase filters should be converted to upper case
+
+        newfilt = filt
+        for delim in delimiters:
+            newfilt = newfilt.split(delim)[0]
+
+        # some additional cleaning
+        newfilt = newfilt.strip()
+        if newfilt in uppercase_filters:
+            newfilt = newfilt.upper()
+
+        return newfilt
 
     @classmethod
     def deduplicate_photometry(cls, phot: pd.DataFrame, date_tol: int | float = 1):
