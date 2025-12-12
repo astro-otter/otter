@@ -29,6 +29,7 @@ jobs:
       - name: Setup | Checkout Repository on Release Branch
         uses: actions/checkout@v6
         with:
+          repository: ${{ github.repository }}
           ref: ${{ github.ref_name }}
           token: ${{ secrets.SEMVAR_PAT_TOKEN }}
           fetch-depth: 0
