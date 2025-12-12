@@ -224,6 +224,13 @@ def test_query():
     res = db2._query_datadir(names="2018hyz")
     assert len(res) == 1
 
+    # test passing in lists and arrays of names
+    res = db.query(names=["2018hyz", "2019azh"])
+    assert len(res) == 2
+
+    res = db.query(names=np.array(["2018hyz", "2019azh"]))
+    assert len(res) == 2
+
 
 def test_from_csvs():
     """

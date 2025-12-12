@@ -4,19 +4,15 @@ Some testing for the mini plotting module that's part of this api
 Author: Noah Franz
 """
 
-import os
 import matplotlib.pyplot as plt
 import plotly
 from otter import Otter
 from otter.plotter import plotter
 import pytest
 
-OTTER_URL = os.environ.get("OTTER_TEST_URL")
-OTTER_TEST_PASSWORD = os.environ.get("OTTER_TEST_PASSWORD")
-
 
 def _get_test_data():
-    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
+    db = Otter()
     t = db.query(names="ASASSN-14li")
     return t[0]
 
@@ -134,7 +130,7 @@ def test_quick_view():
 
 
 def test_query_quick_view():
-    db = Otter(url=OTTER_URL, password=OTTER_TEST_PASSWORD)
+    db = Otter()
 
     fig = plotter.query_quick_view(
         db,

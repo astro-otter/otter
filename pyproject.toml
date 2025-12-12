@@ -50,6 +50,10 @@ dependencies = [
   # for the schema validation
   "pydantic>=2",
 
+  # for MW dust extinction corrections
+  "dustmaps",
+  "dust_extinction",
+
   # only for windows OS b/c it doesn't ship with readline by default
   'pyreadline3; platform_system == "Windows"'
 ]

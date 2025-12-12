@@ -1,37 +1,4 @@
 {
-    "reference_alias": [
-        {
-            "name": "2020MNRAS.493..477C",
-            "human_readable_name": "Cannizzaro, G. et al. (2020)"
-        },
-        {
-            "name": "2018TNSCR1764....1A",
-            "human_readable_name": "Arcavi, I. (2018)"
-        }
-    ],
-    "name": {
-        "default_name": "Gaia 16aax",
-        "alias": [
-            {
-                "value": "Gaia 16aax",
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    },
-    "coordinate": [
-        {
-            "ra": 1,
-            "dec": 1,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ],
     "photometry": [
         {
             "reference": "2020MNRAS.493..477C",
@@ -723,6 +690,16 @@
             "val_hostav": false
         }
     ],
+    "reference_alias": [
+        {
+            "name": "2020MNRAS.493..477C",
+            "human_readable_name": "Cannizzaro, G. et al. (2020)"
+        },
+        {
+            "name": "2018TNSCR1764....1A",
+            "human_readable_name": "Arcavi, I. (2018)"
+        }
+    ],
     "filter_alias": [
         {
             "filter_key": "u",
@@ -815,6 +792,29 @@
             "wave_units": "nm",
             "wave_min": 0.1239841984332002,
             "wave_max": 4.132806614440009
+        }
+    ],
+    "name": {
+        "default_name": "Gaia 16aax",
+        "alias": [
+            {
+                "value": "Gaia 16aax",
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
+    },
+    "coordinate": [
+        {
+            "ra": 1,
+            "dec": 1,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "coordinate_type": "equatorial"
         }
     ]
 }
