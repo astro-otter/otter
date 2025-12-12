@@ -27,9 +27,10 @@ jobs:
       # while the workflow was running, which prevents accidentally releasing un-evaluated
       # changes.
       - name: Setup | Checkout Repository on Release Branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref_name }}
+          fetch-depth: 0
 
       - name: Setup | Force release branch to be at workflow sha
         run: |
@@ -52,7 +53,7 @@ jobs:
           tag: ${{ steps.release.outputs.tag }}
 
       - name: Upload | Distribution Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: distribution-artifacts
           path: dist
