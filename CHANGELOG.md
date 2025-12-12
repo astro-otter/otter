@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.6.2 (2025-12-12)
+
+### Bug Fixes
+
+- Add specific paths to only run CI unit tests when those files are edited
+  ([`3b263ab`](https://github.com/astro-otter/otter/commit/3b263abe9167998614a84d8347a14b09c0aec32e))
+
+
 ## v0.6.1 (2025-12-12)
 
 ### Bug Fixes
