@@ -949,14 +949,17 @@ class Transient(MutableMapping):
         # first we need to redden any previously corrected values
         # to make sure things are done consistently
         subset = outdata.loc[df_idx]
-        for val_av, grp in subset[outdata.corr_av == True].groupby("val_av"):
-            corr = extmod.extinguish(grp.converted_wave.values * wave_unit, Av=val_av)
-            if is_log_flux_unit:
-                outdata.loc[grp.index, "converted_flux"] = grp.converted_flux + corr
-            else:
-                outdata.loc[grp.index, "converted_flux"] = grp.converted_flux * corr
+        if "val_av" in subset:  # if it isn't we can assume that corrections are needed
+            for val_av, grp in subset[outdata.corr_av == True].groupby("val_av"):
+                corr = extmod.extinguish(
+                    grp.converted_wave.values * wave_unit, Av=val_av
+                )
+                if is_log_flux_unit:
+                    outdata.loc[grp.index, "converted_flux"] = grp.converted_flux + corr
+                else:
+                    outdata.loc[grp.index, "converted_flux"] = grp.converted_flux * corr
 
-        # then we need to de-redden the convert flux column
+        # then we need to de-redden the converted flux column
         corr = extmod.extinguish(waves[where_wav], Ebv=ebv)
         if is_log_flux_unit:
             outdata.loc[df_idx, "converted_flux"] = (
