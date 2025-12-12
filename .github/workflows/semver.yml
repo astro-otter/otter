@@ -31,7 +31,7 @@ jobs:
         with:
           repository: ${{ github.repository }}
           ref: ${{ github.ref_name }}
-          token: ${{ secrets.SEMVAR_PAT_TOKEN }}
+          token: ${{ secrets.SEMVER_PAT_TOKEN }}
           fetch-depth: 0
 
       - name: Setup | Force release branch to be at workflow sha
