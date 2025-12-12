@@ -342,7 +342,7 @@ class Transient(MutableMapping):
         if default is None:
             return default
         else:
-            return default["value"]
+            return float(default["value"])  # cast the redshift to a float
 
     def get_classification(self) -> tuple(str, float, list):
         """
