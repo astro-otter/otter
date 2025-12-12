@@ -8,39 +8,9 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-
-      # 1. Setup SSH Agent and Load Deploy Key
-      # This makes the private key available for subsequent Git operations (via SSH).
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0 # Use a current version of this helper action
-        with:
-          ssh-private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-
-      # 2. Checkout using SSH
-      # We must use the SSH URL and fetch-depth 0 for semantic-release to work properly.
-      - name: Checkout Repository (using SSH)
+      - name: Checkout
         uses: actions/checkout@v5
-        with:
-          # Use the SSH URL format for Git operations
-          repository: ${{ github.repository }}
-          token: none # Do not use the default token for checkout
-          ssh-key: ${{ secrets.DEPLOY_PRIVATE_KEY }} # Provide the key directly to checkout
-          fetch-depth: 0 # Required for analyzing all commits for semantic release
-
-      # 3. Configure Git User
-      # This ensures the new commit has the correct author/committer identity.
-      - name: Configure Git User
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email ""
-
-      # 4. Semantic Release
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v6
         env:
-          # Pass the SSH URL, NOT the token, to the semantic-release action.
-          # The action will use the globally configured Git environment (which now uses SSH).
-          GITHUB_TOKEN: none
-          # The GITHUB_TOKEN variable is usually what semantic-release uses to push and tag.
-          # By setting it to 'none' or omitting it, the action falls back to standard
-          # Git CLI commands which use the SSH connection established above.
+          GITHUB_TOKEN: ${{ secrets.SEMVER_PAT_TOKEN }}
