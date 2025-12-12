@@ -18,6 +18,8 @@ import pandas as pd
 import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord
+from dust_extinction.parameter_averages import BaseExtRvModel, G23
+from dustmaps.sfd import SFDWebQuery
 
 from ..exceptions import (
     FailedQueryError,
@@ -469,6 +471,7 @@ class Transient(MutableMapping):
         wave_unit: u.Unit = "nm",
         obs_type: str = None,
         deduplicate: Callable | None = None,
+        correct_for_mw_dust: bool = True,
     ) -> pd.DataFrame:
         """
         Ensure the photometry associated with this transient is all in the same
@@ -502,6 +505,11 @@ class Transient(MutableMapping):
                                          any callable that takes the output pandas
                                          dataframe as input. Set this to False if you
                                          don't want deduplication to occur.
+            correct_for_mw_dust (bool): If True we will automatically correct photometry
+                                        for MW dust extinction using the SFD dustmaps
+                                        and the Gordon+23 extinction curve assuming
+                                        R_V=3.1. Note that this will only correct
+                                        photometry in the range 0.0912 - 32 um!
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
         """
@@ -892,6 +900,10 @@ class Transient(MutableMapping):
         if deduplicate:
             outdata = deduplicate(outdata)
 
+        # perform MW dust extinction correction
+        if correct_for_mw_dust:
+            outdata = self._correct_for_mw_dust(outdata)
+
         # throw a warning if the output dataframe has UV/Optical/IR or Radio data
         # where we don't know if the dataset has been host corrected or not
         if ("corr_host" not in outdata) or (
@@ -905,6 +917,58 @@ class Transient(MutableMapping):
             )
 
         logger.removeFilter(warn_filt)
+        return outdata
+
+    def get_ebv(self):
+        """
+        Get the E(B-V) for this transient from SFD.
+
+        Returns:
+            The SFD E(B-V) for the MW along this line of sight to the transient.
+        """
+        skycoord = self.get_skycoord()
+        sfd = SFDWebQuery()
+        return sfd(skycoord)
+
+    def _correct_for_mw_dust(
+        self, outdata: pd.DataFrame, dust_model: BaseExtRvModel = G23, rv: float = 3.1
+    ) -> pd.DataFrame:
+        extmod = dust_model(Rv=rv)
+        ebv = self.get_ebv()
+        wave_unit = u.Unit(outdata.converted_wave_unit.values[0])
+        waves = outdata.converted_wave.values * wave_unit
+        is_log_flux_unit = isinstance(
+            u.Unit(outdata.converted_flux_unit.values[0]), u.LogUnit
+        )
+
+        minwav = 1 / max(dust_model.x_range) * u.um
+        maxwav = 1 / min(dust_model.x_range) * u.um
+        where_wav = np.where((waves > minwav) * (waves < maxwav))[0]
+        df_idx = outdata.iloc[where_wav].index
+
+        # first we need to redden any previously corrected values
+        # to make sure things are done consistently
+        subset = outdata.loc[df_idx]
+        for val_av, grp in subset[outdata.corr_av == True].groupby("val_av"):
+            corr = extmod.extinguish(grp.converted_wave.values * wave_unit, Av=val_av)
+            if is_log_flux_unit:
+                outdata.loc[grp.index, "converted_flux"] = grp.converted_flux + corr
+            else:
+                outdata.loc[grp.index, "converted_flux"] = grp.converted_flux * corr
+
+        # then we need to de-redden the convert flux column
+        corr = extmod.extinguish(waves[where_wav], Ebv=ebv)
+        if is_log_flux_unit:
+            outdata.loc[df_idx, "converted_flux"] = (
+                outdata.loc[df_idx, "converted_flux"] - corr
+            )
+        else:
+            outdata.loc[df_idx, "converted_flux"] = (
+                outdata.loc[df_idx, "converted_flux"] / corr
+            )
+
+        outdata.loc[df_idx, "corr_av"] = True
+
         return outdata
 
     def _standardize_filter_names(
