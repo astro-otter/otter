@@ -264,9 +264,6 @@ class Otter(Database):
             "human_readable_refs",
         ]
 
-        if "upperlimit" not in fullphot:
-            fullphot["upperlimit"] = False
-
         if not keep_raw:
             if "telescope" in fullphot:
                 fullphot = fullphot[keys_to_keep + ["telescope"]]

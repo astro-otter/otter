@@ -916,8 +916,32 @@ class Transient(MutableMapping):
                 + " or radio rows where the corr_host column is null/None/NaN."
             )
 
+        # rearrange the columns so it's more clear
+        firstcols = [
+            "converted_flux",
+            "converted_flux_err",
+            "converted_date",
+            "converted_wave",
+            "converted_freq",
+            "converted_flux_unit",
+            "converted_date_unit",
+            "converted_wave_unit",
+            "converted_freq_unit",
+            "reference",
+            "human_readable_refs",
+            "filter_name",
+            "obs_type",
+            "upperlimit",
+        ]
+
+        if "upperlimit" not in outdata:
+            outdata["upperlimit"] = False
+
+        othercols = set(outdata.columns) - set(firstcols)
+        cols_in_order = firstcols + list(othercols)
+
         logger.removeFilter(warn_filt)
-        return outdata
+        return outdata[cols_in_order]
 
     def get_ebv(self):
         """

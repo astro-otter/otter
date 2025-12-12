@@ -1,4 +1,51 @@
 {
+    "classification": {
+        "value": [
+            {
+                "object_class": "TDE",
+                "confidence": 2,
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
+    },
+    "photometry": [
+        {
+            "reference": "private",
+            "raw": [
+                1.0,
+                10.0
+            ],
+            "raw_err": [
+                0.01,
+                0.01
+            ],
+            "raw_units": "mJy",
+            "date": [
+                "2025-05-20",
+                "2025-05-23"
+            ],
+            "date_format": [
+                "iso",
+                "iso"
+            ],
+            "upperlimit": [
+                false,
+                false
+            ],
+            "filter_key": [
+                "1.5GHz",
+                "1.5GHz"
+            ],
+            "obs_type": "radio",
+            "val_k": false,
+            "val_s": false,
+            "val_host": false,
+            "val_av": false,
+            "val_hostav": false
+        }
+    ],
     "date_reference": [
         {
             "value": "2018-11-06 15:21:36.000",
@@ -11,34 +58,17 @@
             "date_type": "discovery"
         }
     ],
-    "coordinate": [
-        {
-            "ra": "10:06:50.87",
-            "dec": "01:41:34.08",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSTR1708....1B"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ],
-    "host": [
-        {
-            "host_name": "testhost",
-            "host_ra": 1,
-            "host_dec": 1,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "host_z": 0.12
-        }
-    ],
     "schema_version": {
         "comment": "test by noah"
     },
+    "filter_alias": [
+        {
+            "filter_key": "1.5GHz",
+            "filter_name": "L",
+            "wave_eff": 199861638.66666666,
+            "wave_units": "nm"
+        }
+    ],
     "distance": [
         {
             "value": 0.04573,
@@ -77,61 +107,6 @@
             "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
         }
     ],
-    "filter_alias": [
-        {
-            "filter_key": "1.5GHz",
-            "filter_name": "L",
-            "wave_eff": 199861638.66666666,
-            "wave_units": "nm"
-        }
-    ],
-    "photometry": [
-        {
-            "reference": "private",
-            "raw": [
-                1.0,
-                10.0
-            ],
-            "raw_err": [
-                0.01,
-                0.01
-            ],
-            "raw_units": "mJy",
-            "date": [
-                "2025-05-20",
-                "2025-05-23"
-            ],
-            "date_format": [
-                "iso",
-                "iso"
-            ],
-            "upperlimit": [
-                false,
-                false
-            ],
-            "filter_key": [
-                "1.5GHz",
-                "1.5GHz"
-            ],
-            "obs_type": "radio",
-            "val_k": false,
-            "val_s": false,
-            "val_host": false,
-            "val_av": false,
-            "val_hostav": false
-        }
-    ],
-    "classification": {
-        "value": [
-            {
-                "object_class": "TDE",
-                "confidence": 2,
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    },
     "name": {
         "default_name": "2018hyz",
         "alias": [
@@ -142,5 +117,30 @@
                 ]
             }
         ]
-    }
+    },
+    "host": [
+        {
+            "host_name": "testhost",
+            "host_ra": 1,
+            "host_dec": 1,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "host_z": 0.12
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "10:06:50.87",
+            "dec": "01:41:34.08",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSTR1708....1B"
+            ],
+            "coordinate_type": "equatorial"
+        }
+    ]
 }
