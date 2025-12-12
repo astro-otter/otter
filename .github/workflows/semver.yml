@@ -7,8 +7,6 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
-    # Recommended: Define high-level permissions for the default GITHUB_TOKEN
-    # The PAT will override this for the semantic-release step
     permissions:
       contents: write # Needed for creating tags and pushing changes
 
@@ -16,17 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          # 1. Use the PAT for checking out the repository
           token: ${{ secrets.SEMVER_PAT_TOKEN }}
-          # 2. Fetch full history for semantic-release
           fetch-depth: 0
-
-      # 3. Configure Git user to use an identity tied to the PAT/Admin
-      - name: Configure Git User
-        run: |
-          # Use a clean identity that won't conflict with the PAT's privileges
-          git config user.name "github-actions[bot]"
-          git config user.email ""
 
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v6
