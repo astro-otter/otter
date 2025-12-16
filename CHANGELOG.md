@@ -2,6 +2,37 @@
 
 <!-- version list -->
 
+## v0.7.0 (2025-12-16)
+
+### Bug Fixes
+
+- Allow users to pass numpy arrays of names to Otter.query/Otter.get_meta (Issue #19)
+  ([`ce89ccc`](https://github.com/astro-otter/otter/commit/ce89ccc3e13e6a9eb720199720b1998dfbd12b99))
+
+- Fully address issue #32
+  ([`63b7d0d`](https://github.com/astro-otter/otter/commit/63b7d0d2cf359b08040d59a879f021c2f2ba6421))
+
+- Minor bug in photometry de-reddening
+  ([`c6e5e33`](https://github.com/astro-otter/otter/commit/c6e5e33aa4718d158d32b9adf7a7320319bec0ec))
+
+- Modernize test_transient unit tests
+  ([`81e87e2`](https://github.com/astro-otter/otter/commit/81e87e25b1440f9d2e76f73516c71a6cad81b503))
+
+- Plotter to use the prod db rather than dev
+  ([`03351ce`](https://github.com/astro-otter/otter/commit/03351cec09ee8d09e71968d3fa30ef681a28052d))
+
+- Redshift is now cast as a float (Issue #20)
+  ([`7fba7a6`](https://github.com/astro-otter/otter/commit/7fba7a695e43d4fcf062cd914e385f94a0211e62))
+
+### Features
+
+- Add automatic MW dust extinction correction to Transient.clean_photometry
+  ([`341fd2c`](https://github.com/astro-otter/otter/commit/341fd2c28e4b00d70b280d564a03f1aa7d2954d6))
+
+- Standardize UVOIR filter names (Issue #21)
+  ([`d798bbd`](https://github.com/astro-otter/otter/commit/d798bbde316316018cc6dbeade86f0dfe349cf0d))
+
+
 ## v0.6.2 (2025-12-12)
 
 ### Bug Fixes
