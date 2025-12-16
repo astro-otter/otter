@@ -17,6 +17,7 @@ dustmaps_datapath = os.path.join(
     "SFD_dust_4096_sgp.fits"
 )
 if not os.path.exists(dustmaps_datapath):
+    import dustmaps.sfd
     dustmaps.sfd.fetch()
 
 # import important stuff
