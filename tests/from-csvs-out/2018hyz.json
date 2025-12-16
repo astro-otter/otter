@@ -1,62 +1,7 @@
 {
-    "reference_alias": [
-        {
-            "name": "2018TNSCR1764....1A",
-            "human_readable_name": "Arcavi, I. (2018)"
-        },
-        {
-            "name": "2018TNSTR1708....1B",
-            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
-        }
-    ],
-    "date_reference": [
-        {
-            "value": "2018-11-06 15:21:36.000",
-            "date_format": "iso",
-            "reference": [
-                "2018TNSTR1708....1B",
-                "2018TNSTR1708....1B"
-            ],
-            "computed": false,
-            "date_type": "discovery"
-        }
-    ],
-    "host": [
-        {
-            "host_name": "testhost",
-            "host_ra": 1,
-            "host_dec": 1,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "host_z": 0.12
-        }
-    ],
-    "name": {
-        "default_name": "2018hyz",
-        "alias": [
-            {
-                "value": "2018hyz",
-                "reference": [
-                    "2018TNSTR1708....1B"
-                ]
-            }
-        ]
+    "schema_version": {
+        "comment": "test by noah"
     },
-    "coordinate": [
-        {
-            "ra": "10:06:50.87",
-            "dec": "01:41:34.08",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSTR1708....1B"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ],
     "photometry": [
         {
             "reference": "private",
@@ -93,8 +38,38 @@
             "val_hostav": false
         }
     ],
-    "schema_version": {
-        "comment": "test by noah"
+    "reference_alias": [
+        {
+            "name": "2018TNSCR1764....1A",
+            "human_readable_name": "Arcavi, I. (2018)"
+        },
+        {
+            "name": "2018TNSTR1708....1B",
+            "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
+        }
+    ],
+    "date_reference": [
+        {
+            "value": "2018-11-06 15:21:36.000",
+            "date_format": "iso",
+            "reference": [
+                "2018TNSTR1708....1B",
+                "2018TNSTR1708....1B"
+            ],
+            "computed": false,
+            "date_type": "discovery"
+        }
+    ],
+    "classification": {
+        "value": [
+            {
+                "object_class": "TDE",
+                "confidence": 2,
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
     },
     "distance": [
         {
@@ -124,23 +99,48 @@
             "distance_type": "comoving"
         }
     ],
-    "classification": {
-        "value": [
-            {
-                "object_class": "TDE",
-                "confidence": 2,
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    },
     "filter_alias": [
         {
             "filter_key": "1.5GHz",
             "filter_name": "L",
             "wave_eff": 199861638.66666666,
             "wave_units": "nm"
+        }
+    ],
+    "name": {
+        "default_name": "2018hyz",
+        "alias": [
+            {
+                "value": "2018hyz",
+                "reference": [
+                    "2018TNSTR1708....1B"
+                ]
+            }
+        ]
+    },
+    "host": [
+        {
+            "host_name": "testhost",
+            "host_ra": 1,
+            "host_dec": 1,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "host_z": 0.12
+        }
+    ],
+    "coordinate": [
+        {
+            "ra": "10:06:50.87",
+            "dec": "01:41:34.08",
+            "ra_units": "hour",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSTR1708....1B"
+            ],
+            "coordinate_type": "equatorial"
         }
     ]
 }

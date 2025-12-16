@@ -264,9 +264,6 @@ class Otter(Database):
             "human_readable_refs",
         ]
 
-        if "upperlimit" not in fullphot:
-            fullphot["upperlimit"] = False
-
         if not keep_raw:
             if "telescope" in fullphot:
                 fullphot = fullphot[keys_to_keep + ["telescope"]]
@@ -383,6 +380,10 @@ class Otter(Database):
         Return:
            Get all of the raw (unconverted!) data for objects that match the criteria.
         """
+        # catch a numpy array and convert to a list if it is passed in
+        if isinstance(names, np.ndarray):
+            names = list(names)
+
         # write some AQL filters based on the inputs
         query_filters = ""
 
