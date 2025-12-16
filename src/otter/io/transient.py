@@ -19,7 +19,7 @@ import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord
 from dust_extinction.parameter_averages import BaseExtRvModel, G23
-from dustmaps.sfd import SFDWebQuery
+from dustmaps.sfd import SFDQuery
 
 from ..exceptions import (
     FailedQueryError,
@@ -951,7 +951,7 @@ class Transient(MutableMapping):
             The SFD E(B-V) for the MW along this line of sight to the transient.
         """
         skycoord = self.get_skycoord()
-        sfd = SFDWebQuery()
+        sfd = SFDQuery()
         return sfd(skycoord)
 
     def _correct_for_mw_dust(
@@ -973,7 +973,8 @@ class Transient(MutableMapping):
         # first we need to redden any previously corrected values
         # to make sure things are done consistently
         subset = outdata.loc[df_idx]
-        if "val_av" in subset:  # if it isn't we can assume that corrections are needed
+        if "val_av" in subset and "corr_av" in subset:
+            # if it isn't we can assume that corrections are needed
             for val_av, grp in subset[outdata.corr_av == True].groupby("val_av"):
                 corr = extmod.extinguish(
                     grp.converted_wave.values * wave_unit, Av=val_av

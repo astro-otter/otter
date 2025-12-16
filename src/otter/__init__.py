@@ -7,6 +7,18 @@ from ._version import __version__
 # explicitly set the package variable to ensure relative import work
 __package__ = "otter"
 
+# lazy load the SFD dust map, if needed
+import os
+import dustmaps
+dustmaps_datapath = os.path.join(
+    os.path.dirname(dustmaps.__file__),
+    "data",
+    "sfd",
+    "SFD_dust_4096_sgp.fits"
+)
+if not os.path.exists(dustmaps_datapath):
+    dustmaps.sfd.fetch()
+
 # import important stuff
 from .io.otter import Otter
 from .io.transient import Transient
