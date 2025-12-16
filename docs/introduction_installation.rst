@@ -1,8 +1,10 @@
 Installation Quickstart
 -----------------------
 
-User Installation
-^^^^^^^^^^^^^^^^^
+.. _linux-installation:
+
+MacOS & Linux User Installation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For non-developers, the :code:`astro-otter` API can be installed using :code:`pip`:
 
@@ -17,6 +19,20 @@ Then, from a python terminal you can do things like
    import otter
    db = otter.Otter()
    db.query(names="18hyz")
+
+Note, we do not natively support Windows OS installation but do support WSL2 installation
+(see below). This is a change as of v0.7.0 and is because of the new :code:`dustmaps`
+package requirement. The :code:`dustmaps` code relies on healpy which does not support
+Windows.
+
+Windows Installation
+^^^^^^^^^^^^^^^^^^^^
+Since we do not natively support Windows, we suggest installing and running Windows
+Subsystem for Linux (WSL2). You can follow the instructions on the
+`Microsoft docs page <https://learn.microsoft.com/en-us/windows/wsl/install>`_
+to install WSL2. Once it is installed
+you can start a WSL2 terminal by running the :code:`wsl` command in a powershell terminal.
+After running this command and entering the WSL2 terminal, you can return to :ref:`linux-installation`.
 
 Developer Installation
 ^^^^^^^^^^^^^^^^^^^^^^
