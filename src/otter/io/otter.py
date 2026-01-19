@@ -155,6 +155,7 @@ class Otter(Database):
         wave_unit="nm",
         freq_unit="GHz",
         deduplicate=None,
+        clean_photometry_kwargs={},
         **kwargs,
     ) -> Table:
         """
@@ -189,6 +190,8 @@ class Otter(Database):
                                                False if you don't want this to happen.
                                                None defaults to
                                                Transient.deduplicate_photometry
+            clean_photometry_kwargs (dict) : Other keyword arguments to be passed to
+                                             Transient.clean_photometry
             **kwargs : Arguments to pass to Otter.query(). Can be::
 
                        names (list[str]): A list of names to get the metadata for
@@ -229,6 +232,7 @@ class Otter(Database):
                     freq_unit=freq_unit,
                     obs_type=obs_type,
                     deduplicate=deduplicate,
+                    **clean_photometry_kwargs,
                 )
 
                 phot["name"] = [default_name] * len(phot)
