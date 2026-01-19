@@ -1042,8 +1042,9 @@ class Transient(MutableMapping):
 
         return outdata
 
+    @classmethod
     def _standardize_filter_names(
-        self, filt: str, delimiters: list[str] = [".", "-", " "]
+        cls, filt: str, delimiters: list[str] = [".", "-", " "]
     ) -> list[str]:
         """
         This (private) method is used to clean up the filter names. As an example,
@@ -1130,8 +1131,18 @@ class Transient(MutableMapping):
 
         # now find the duplicated data
         dups = []
+        phot["_standard_filter_name"] = phot.filter_key
+        if "uvoir" in phot.obs_type.unique():
+            mask = phot.obs_type == "uvoir"
+            _standard_filter_names = phot.loc[mask, "filter_key"].apply(
+                cls._standardize_filter_names
+            )
+            phot.loc[mask, "_standard_filter_name"] = list(
+                zip(*_standard_filter_names)
+            )[0]
+
         phot_grpby = phot.groupby(
-            ["_norm_tele_name", "filter_key", "obs_type"], dropna=False
+            ["_norm_tele_name", "_standard_filter_name", "obs_type"], dropna=False
         )
         for (tele, filter_key, obs_type), grp in phot_grpby:
             # by definition, there can only be dups if the name, telescope, and filter
@@ -1204,10 +1215,10 @@ class Transient(MutableMapping):
             # first, check if only one of the dup reductions host subtracted
             if "corr_host" in dup:
                 dup_host_corr = dup[dup.corr_host.astype(bool)]
-                host_corr_refs = dup_host_corr.human_readable_refs.unique()
+                host_corr_refs = dup_host_corr._ref_str.unique()
                 if len(host_corr_refs) == 1:
                     # then one of the reductions is host corrected and the other isn't!
-                    undupd.append(dup[dup.human_readable_refs == host_corr_refs[0]])
+                    undupd.append(dup[dup._ref_str == host_corr_refs[0]])
                     continue
 
             bibcodes_sorted_by_year = sorted(dup._ref_str.unique(), key=cls._find_year)
