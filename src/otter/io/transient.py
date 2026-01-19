@@ -917,14 +917,18 @@ class Transient(MutableMapping):
                 zip(*new_filter_names_telescopes.tolist())
             )
             outdata.loc[mask, "filter_name"] = new_filter_names
-            outdata.loc[mask, _temp_tele_col] = telescopes
-            outdata.loc[mask, "telescope"] = outdata.loc[mask].apply(
-                lambda row: (
-                    row[_temp_tele_col] if pd.isna(row.telescope) else row.telescope
-                ),
-                axis=1,
-            )
-            outdata.drop(labels=_temp_tele_col, inplace=True, axis=1)
+
+            if "telescope" in outdata:
+                outdata.loc[mask, _temp_tele_col] = telescopes
+                outdata.loc[mask, "telescope"] = outdata.loc[mask].apply(
+                    lambda row: (
+                        row[_temp_tele_col] if pd.isna(row.telescope) else row.telescope
+                    ),
+                    axis=1,
+                )
+                outdata.drop(labels=_temp_tele_col, inplace=True, axis=1)
+            else:
+                outdata.loc[mask, "telescope"] = telescopes
 
         # perform some more complex deduplication of the dataset
         if deduplicate:
