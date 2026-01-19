@@ -2,6 +2,29 @@
 
 <!-- version list -->
 
+## v1.0.1 (2026-01-19)
+
+### Bug Fixes
+
+- A bug in the photometry deduplication code
+  ([`0227fb0`](https://github.com/astro-otter/otter/commit/0227fb060b8b9a99292505ef5d4becc3669dfa9d))
+
+- Add argument to clean photometry that allows users to drop not host subtracted data
+  ([`ea1fe31`](https://github.com/astro-otter/otter/commit/ea1fe314f00284516f05d42f7f5b7ea6b0aaea38))
+
+- Allow users to pass additional kwargs to Transient.clean_photometry from Otter.get_phot
+  ([`3ef876c`](https://github.com/astro-otter/otter/commit/3ef876cd8caab95716fda37ada0e647b24c0e0c6))
+
+- Bug in filter name cleanup
+  ([`6066926`](https://github.com/astro-otter/otter/commit/606692606090c3577d9046ba616caea697552580))
+
+- Ensure the date_min/date_max cols are in the photometry df before filtering on them
+  ([`dfc7229`](https://github.com/astro-otter/otter/commit/dfc7229b7ff7fea2756b55b4c4108f3f41b2690d))
+
+- This is a patch for when date_min and date_max are null rather than NaN
+  ([`83ec951`](https://github.com/astro-otter/otter/commit/83ec95134be32049158bc228b2e87366543d523d))
+
+
 ## v0.7.0 (2025-12-16)
 
 ### Bug Fixes
