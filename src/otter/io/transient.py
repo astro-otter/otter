@@ -473,6 +473,8 @@ class Transient(MutableMapping):
         deduplicate: Callable | None = None,
         correct_for_mw_dust: bool = True,
         cleanup_uvoir_filternames: bool = True,
+        drop_no_host_subtract: bool = False,
+        drop_unclear_host_subtract: bool = False,
     ) -> pd.DataFrame:
         """
         Ensure the photometry associated with this transient is all in the same
@@ -514,6 +516,14 @@ class Transient(MutableMapping):
             cleanup_uvoir_filternames (bool): If True (the default) we will try to
                                               cleanup the UV/Optical/IR filter names to
                                               make them more standard.
+            drop_no_host_subtract (bool): If True this will remove rows in the cleaned
+                                          up photometry dataframe that have corr_host
+                                          set to False. Default is
+                                          drop_no_host_subtract = False.
+            drop_unclear_host_subtract (bool): Same as drop_no_host_subtract, but for
+                                               when corr_host is NaN (which is set for
+                                               unclear host subtraction). Default is
+                                               drop_unclear_host_subtract = False.
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
         """
@@ -923,6 +933,19 @@ class Transient(MutableMapping):
         # perform MW dust extinction correction
         if correct_for_mw_dust:
             outdata = self._correct_for_mw_dust(outdata)
+
+        # get rid of unsubtracted or unclear subtraction data
+        if "corr_host" in outdata and drop_no_host_subtract:
+            outdata = outdata[outdata.corr_host.fillna(True)]
+        elif "corr_host" not in outdata and drop_no_host_subtract:
+            logger.warning("Can't drop no host subtract because no corr_host column!")
+
+        if "corr_host" in outdata and drop_unclear_host_subtract:
+            outdata = outdata[~pd.isna(outdata.corr_host)]
+        elif "corr_host" not in outdata and drop_unclear_host_subtract:
+            logger.warning(
+                "Can't drop unclear host subtract because no corr_host column"
+            )
 
         # throw a warning if the output dataframe has UV/Optical/IR or Radio data
         # where we don't know if the dataset has been host corrected or not
