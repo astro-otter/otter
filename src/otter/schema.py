@@ -193,7 +193,9 @@ class PhotometrySchema(BaseModel):
     val_k: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     val_s: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     val_av: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
-    val_host: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
+    val_host: Optional[
+        Union[float, int, str, None, List[Union[float, int, str, None]]]
+    ] = None
     val_hostav: Optional[Union[float, int, str, List[Union[float, int, str]]]] = None
     xray_model: Optional[Union[List[_XrayModelSchema], List[None]]] = None
     raw_err_detail: Optional[_ErrDetailSchema] = None

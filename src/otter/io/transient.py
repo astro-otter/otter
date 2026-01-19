@@ -472,6 +472,9 @@ class Transient(MutableMapping):
         obs_type: str = None,
         deduplicate: Callable | None = None,
         correct_for_mw_dust: bool = True,
+        cleanup_uvoir_filternames: bool = True,
+        drop_no_host_subtract: bool = False,
+        drop_unclear_host_subtract: bool = False,
     ) -> pd.DataFrame:
         """
         Ensure the photometry associated with this transient is all in the same
@@ -510,6 +513,17 @@ class Transient(MutableMapping):
                                         and the Gordon+23 extinction curve assuming
                                         R_V=3.1. Note that this will only correct
                                         photometry in the range 0.0912 - 32 um!
+            cleanup_uvoir_filternames (bool): If True (the default) we will try to
+                                              cleanup the UV/Optical/IR filter names to
+                                              make them more standard.
+            drop_no_host_subtract (bool): If True this will remove rows in the cleaned
+                                          up photometry dataframe that have corr_host
+                                          set to False. Default is
+                                          drop_no_host_subtract = False.
+            drop_unclear_host_subtract (bool): Same as drop_no_host_subtract, but for
+                                               when corr_host is NaN (which is set for
+                                               unclear host subtraction). Default is
+                                               drop_unclear_host_subtract = False.
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
         """
@@ -891,10 +905,26 @@ class Transient(MutableMapping):
 
         outdata["upperlimit"] = outdata.apply(is_upperlimit, axis=1)
 
-        # clean up filter names
-        outdata.loc[outdata.obs_type == "uvoir", "filter_name"] = outdata.loc[
-            outdata.obs_type == "uvoir", "filter_name"
-        ].apply(self._standardize_filter_names)
+        # clean up the UV/Optical/IR filter names
+        if "uvoir" in outdata.obs_type.unique() and cleanup_uvoir_filternames:
+            mask = outdata.obs_type == "uvoir"
+            new_filter_names_telescopes = outdata.loc[mask, "filter_name"].apply(
+                self._standardize_filter_names
+            )
+
+            _temp_tele_col = "_temp_new_telescope_name"
+            new_filter_names, telescopes = list(
+                zip(*new_filter_names_telescopes.tolist())
+            )
+            outdata.loc[mask, "filter_name"] = new_filter_names
+            outdata.loc[mask, _temp_tele_col] = telescopes
+            outdata.loc[mask, "telescope"] = outdata.loc[mask].apply(
+                lambda row: (
+                    row[_temp_tele_col] if pd.isna(row.telescope) else row.telescope
+                ),
+                axis=1,
+            )
+            outdata.drop(labels=_temp_tele_col, inplace=True, axis=1)
 
         # perform some more complex deduplication of the dataset
         if deduplicate:
@@ -903,6 +933,19 @@ class Transient(MutableMapping):
         # perform MW dust extinction correction
         if correct_for_mw_dust:
             outdata = self._correct_for_mw_dust(outdata)
+
+        # get rid of unsubtracted or unclear subtraction data
+        if "corr_host" in outdata and drop_no_host_subtract:
+            outdata = outdata[outdata.corr_host.fillna(True)]
+        elif "corr_host" not in outdata and drop_no_host_subtract:
+            logger.warning("Can't drop no host subtract because no corr_host column!")
+
+        if "corr_host" in outdata and drop_unclear_host_subtract:
+            outdata = outdata[~pd.isna(outdata.corr_host)]
+        elif "corr_host" not in outdata and drop_unclear_host_subtract:
+            logger.warning(
+                "Can't drop unclear host subtract because no corr_host column"
+            )
 
         # throw a warning if the output dataframe has UV/Optical/IR or Radio data
         # where we don't know if the dataset has been host corrected or not
@@ -999,12 +1042,13 @@ class Transient(MutableMapping):
 
         return outdata
 
+    @classmethod
     def _standardize_filter_names(
-        self, filt: str, delimiters: list[str] = [".", "-", " "]
+        cls, filt: str, delimiters: list[str] = [".", "-", " "]
     ) -> list[str]:
         """
         This (private) method is used to clean up the filter names. As an example,
-        we want "r.ztf" = "r.ZTF" = "r" but NOT EQUAL to "R" (since capital
+        we want "r.ztf" = "r.ZTF" = "ztf.r" = "r" but NOT EQUAL to "R" (since capital
         filter names mean something different!). But here's another fun one,
         we want "UVM2.uvot" = "uvm2.uvot" = "uvm2.UVOT" = "UVM2". That one is tricky
         since the sdss and johnson-counsins filters *are* different capitalizations
@@ -1020,16 +1064,33 @@ class Transient(MutableMapping):
             "w4",
         }  # these lowercase filters should be converted to upper case
 
+        _telescope_names = {
+            "ztf",
+            "ps",
+        }  # these are some telescope names that may be in the filter names
+
         newfilt = filt
+        tele = None
         for delim in delimiters:
-            newfilt = newfilt.split(delim)[0]
+            newfilt_test = newfilt.split(delim)
+            if len(newfilt_test) != 2:
+                continue  # this delimiter was not found, so we don't do anything
+
+            newfilt_option1, newfilt_option2 = newfilt_test
+            if newfilt_option1.lower() in _telescope_names:
+                newfilt = newfilt_option2
+                tele = newfilt_option1
+            else:
+                newfilt = newfilt_option1
+                if newfilt_option2 in _telescope_names:
+                    tele = newfilt_option2
 
         # some additional cleaning
         newfilt = newfilt.strip()
         if newfilt in uppercase_filters:
             newfilt = newfilt.upper()
 
-        return newfilt
+        return newfilt, tele
 
     @classmethod
     def deduplicate_photometry(cls, phot: pd.DataFrame, date_tol: int | float = 1):
@@ -1070,8 +1131,18 @@ class Transient(MutableMapping):
 
         # now find the duplicated data
         dups = []
+        phot["_standard_filter_name"] = phot.filter_key
+        if "uvoir" in phot.obs_type.unique():
+            mask = phot.obs_type == "uvoir"
+            _standard_filter_names = phot.loc[mask, "filter_key"].apply(
+                cls._standardize_filter_names
+            )
+            phot.loc[mask, "_standard_filter_name"] = list(
+                zip(*_standard_filter_names)
+            )[0]
+
         phot_grpby = phot.groupby(
-            ["_norm_tele_name", "filter_key", "obs_type"], dropna=False
+            ["_norm_tele_name", "_standard_filter_name", "obs_type"], dropna=False
         )
         for (tele, filter_key, obs_type), grp in phot_grpby:
             # by definition, there can only be dups if the name, telescope, and filter
@@ -1086,7 +1157,12 @@ class Transient(MutableMapping):
             # fall inside the same range
             grp["_mean_dates"] = grp.apply(cls._convert_dates, axis=1)
 
+            if "date_min" in grp:
+                grp.date_min = grp.date_min.replace("null", np.nan)
+                grp.date_max = grp.date_max.replace("null", np.nan)
+
             if "date_min" in grp and not np.all(pd.isna(grp.date_min)):
+                # then do the conversion
                 grp["min_dates"] = grp.apply(
                     lambda row: cls._convert_dates(row, date_key="date_min"), axis=1
                 ).astype(float)
@@ -1144,10 +1220,10 @@ class Transient(MutableMapping):
             # first, check if only one of the dup reductions host subtracted
             if "corr_host" in dup:
                 dup_host_corr = dup[dup.corr_host.astype(bool)]
-                host_corr_refs = dup_host_corr.human_readable_refs.unique()
+                host_corr_refs = dup_host_corr._ref_str.unique()
                 if len(host_corr_refs) == 1:
                     # then one of the reductions is host corrected and the other isn't!
-                    undupd.append(dup[dup.human_readable_refs == host_corr_refs[0]])
+                    undupd.append(dup[dup._ref_str == host_corr_refs[0]])
                     continue
 
             bibcodes_sorted_by_year = sorted(dup._ref_str.unique(), key=cls._find_year)
