@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.0.2 (2026-01-19)
+
+### Bug Fixes
+
+- Catch and handle documents that don't have the telescope column when cleaning the phot
+  ([`11a9475`](https://github.com/astro-otter/otter/commit/11a947532df5e251f4b96ae4727790a9ccdb4bde))
+
+
 ## v1.0.1 (2026-01-19)
 
 ### Bug Fixes
