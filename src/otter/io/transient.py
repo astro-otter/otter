@@ -1157,7 +1157,11 @@ class Transient(MutableMapping):
             # fall inside the same range
             grp["_mean_dates"] = grp.apply(cls._convert_dates, axis=1)
 
+            grp.date_min = grp.date_min.replace("null", np.nan)
+            grp.date_max = grp.date_max.replace("null", np.nan)
+
             if "date_min" in grp and not np.all(pd.isna(grp.date_min)):
+                # then do the conversion
                 grp["min_dates"] = grp.apply(
                     lambda row: cls._convert_dates(row, date_key="date_min"), axis=1
                 ).astype(float)
