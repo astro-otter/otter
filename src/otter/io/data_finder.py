@@ -613,12 +613,12 @@ class DataFinder(object):
         logger.info(f"Downloading spectra for {iau_name} to {download_basepath}")
         try:
             download_target_spectra(iau_name=iau_name, **kwargs)
-        except Exception:
+        except Exception as exc:
             raise ValueError(
                 "Your WISeREP query did not return any results with "
                 + f"iau_name={iau_name}! Consider passing in iau_name "
                 + f"directly! And check that {iau_name} exists on WISeREP"
-            )
+            ) from exc
 
         # unpack the spectra and try to standardize them
         infofile = os.path.join(download_basepath, "downloaded_spectra_info.csv")
