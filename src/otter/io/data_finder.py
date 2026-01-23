@@ -574,7 +574,6 @@ class DataFinder(object):
     def query_wiserep(
         self,
         iau_name: str = None,
-        tmp_dir: str = os.path.join(os.getcwd(), "tmp"),
         rm_tmp_dir: bool = True,
         **kwargs,
     ) -> dict:
@@ -612,7 +611,14 @@ class DataFinder(object):
         download_basepath = os.path.join(os.getcwd(), "spectra", iau_name)
 
         logger.info(f"Downloading spectra for {iau_name} to {download_basepath}")
-        download_target_spectra(iau_name=iau_name, **kwargs)
+        try:
+            download_target_spectra(iau_name=iau_name, **kwargs)
+        except Exception:
+            raise ValueError(
+                "Your WISeREP query did not return any results with "
+                + f"iau_name={iau_name}! Consider passing in iau_name "
+                + f"directly! And check that {iau_name} exists on WISeREP"
+            )
 
         # unpack the spectra and try to standardize them
         infofile = os.path.join(download_basepath, "downloaded_spectra_info.csv")

@@ -2,7 +2,9 @@
 Test the OTTER DataFinder class
 """
 
+import os
 import pytest
+import shutil
 import pandas as pd
 from otter import DataFinder
 from astropy.coordinates import SkyCoord
@@ -266,3 +268,31 @@ def test_query_heasarc():
     res2 = df1.query_heasarc(catalog="radio")
     assert isinstance(res2, Table)
     assert len(res2) >= 2, "Missing some HEASARC data"
+
+
+def test_query_wiserep():
+    """
+    Test querying WISeREP for spectra
+    """
+
+    df = construct_data_finder()
+    with pytest.raises(ValueError):
+        df.query_wiserep(iau_name="ASASSN-14li")
+
+    df1 = DataFinder(ra=0, dec=0, ra_units="deg", dec_units="deg", name="2022cmc")
+
+    # then test with 22cmc since we know that works well
+    meta, res = df1.query_wiserep()
+    assert isinstance(meta, pd.DataFrame)
+    assert isinstance(res, dict)
+    assert isinstance(res[0], pd.DataFrame)
+    assert not os.path.exists("spectra")
+
+    meta, res = df1.query_wiserep(iau_name="AT2022cmc", rm_tmp_dir=False)
+    assert isinstance(meta, pd.DataFrame)
+    assert isinstance(res, dict)
+    assert isinstance(res[0], pd.DataFrame)
+    assert os.path.exists("spectra")
+
+    # then cleanup
+    shutil.rmtree("spectra")
