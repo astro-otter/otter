@@ -10,6 +10,7 @@ import io
 import re
 import time
 import math
+import shutil
 from urllib.request import urlopen
 import requests
 
@@ -26,6 +27,8 @@ import logging
 
 from fundamentals.stats import rolling_window_sigma_clip
 from operator import itemgetter
+
+from wiserep_api import download_target_spectra
 
 from ..util import VIZIER_LARGE_CATALOGS
 from ..exceptions import MissingEnvVarError
@@ -568,6 +571,80 @@ class DataFinder(object):
     ######### CONVENIENCE METHODS FOR QUERYING HOST SPECTR  ###########################
     ###################################################################################
 
+    def query_wiserep(
+        self,
+        iau_name: str = None,
+        tmp_dir: str = os.path.join(os.getcwd(), "tmp"),
+        rm_tmp_dir: bool = True,
+        **kwargs,
+    ) -> dict:
+        """
+        Check WISeREP for spectra of this transient, using the default_name
+        (which should be the IAU name, if stored). Note that this method will only work
+        if the transient has an IAU name!
+
+        Args:
+            iau_name (str): The IAU name to query WISeREP for. We will default to this
+                            if it is not None. If it is None, we try to use self.name.
+                            If both are None, an exception is thrown.
+            rm_tmp_dir (bool): If True, remove the temporary directory with the
+                               downloaded spectra. Default is True.
+            **kwargs: Other keyword arguments to pass to
+                      wiserep_api.download_target_spectra
+
+        Returns:
+            A dictionary of pandas dataframes with the spectra. Keys of the dictionary
+            are the MJD observation date of the spectra.
+        """
+
+        if iau_name is None:
+            iau_name = self.name
+
+        if iau_name is None:
+            raise Exception("Please provide the IAU name to search WISeREP for!")
+
+        # cleanup the iau_name a bit
+        for prefix in ["AT", "SN", "TDE", "GRB"]:
+            iau_name = iau_name.replace(prefix, "").strip()
+
+        # download the spectra
+        # the wiserep API downloads spectra at the following path
+        download_basepath = os.path.join(os.getcwd(), "spectra", iau_name)
+
+        logger.info(f"Downloading spectra for {iau_name} to {download_basepath}")
+        download_target_spectra(iau_name=iau_name, **kwargs)
+
+        # unpack the spectra and try to standardize them
+        infofile = os.path.join(download_basepath, "downloaded_spectra_info.csv")
+        infodf = pd.read_csv(infofile)
+        outdict = {}
+        for key, row in infodf.iterrows():
+            ascii_file = os.path.join(download_basepath, row["Spectrum ascii File"])
+            self._cleanup_wiserep_file(ascii_file)
+
+            try:
+                tab = pd.read_csv(ascii_file, index_col=False)
+            except Exception as exc:
+                logger.warn(f"Skipping {ascii_file} because it threw {exc}")
+                continue
+
+            # standardize the column names
+            wavecolname = self._wiserep_wave_name_match(tab)
+            fluxcolname = self._wiserep_flux_name_match(tab)
+
+            tab["wave"] = tab[wavecolname]
+            tab["flux"] = tab[fluxcolname]
+
+            # save this to outdict
+            outdict[key] = tab[["wave", "flux"]]
+
+        if rm_tmp_dir:
+            specdir = os.path.join(os.getcwd(), "spectra")
+            logger.info(f"Removing temporary {specdir}")
+            shutil.rmtree(specdir)
+
+        return infodf, outdict
+
     def query_sparcl(
         self, radius: u.Quantity = 5 * u.arcsec, include: str | list = "DEFAULT"
     ) -> Table:
@@ -618,6 +695,40 @@ class DataFinder(object):
     ###################################################################################
     ######### PRIVATE HELPER METHODS FOR THE QUERYING #################################
     ###################################################################################
+    def _wiserep_wave_name_match(self, table):
+        # iterate over the column names and see if any of them start with test_str
+        for colname in table.columns:
+            if colname[:3] == "wav":
+                return colname
+
+        # if not, assume that it is the first column
+        return table.colnames[0]
+
+    def _wiserep_flux_name_match(self, table):
+        for colname in table.columns:
+            if colname[:4] == "flux":
+                return colname
+        return table.colnames[1]
+
+    def _cleanup_wiserep_file(self, infile):
+        # first check for extraneous quotes
+        lines = []
+        with open(infile, "r") as f:
+            for line in f.readlines():
+                if '"' in line:
+                    line = line.replace('"', "")
+                lines.append(line)
+
+        # then check for multiple header rows
+        newlines = [lines[0]]
+        for line in lines[1:]:
+            if not line.replace(",", "").strip().isalpha():
+                # only append the line if it doesn't
+                newlines.append(line)
+
+        with open(infile, "w") as f:
+            f.write("".join(newlines))
+
     @staticmethod
     def _atlas_stack(filecontent, clipping_sigma, log=logger):
         """

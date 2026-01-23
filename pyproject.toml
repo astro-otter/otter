@@ -46,6 +46,7 @@ dependencies = [
   "fundamentals",
   "astro-datalab",
   "sparclclient",
+  "wiserep_api",
 
   # for the schema validation
   "pydantic>=2",

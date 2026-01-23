@@ -29,6 +29,7 @@ from ..exceptions import (
 )
 from ..util import XRAY_AREAS, _KNOWN_CLASS_ROOTS, _DuplicateFilter
 from .host import Host
+from .data_finder import DataFinder
 
 np.seterr(divide="ignore")
 logger = logging.getLogger(__name__)
@@ -408,6 +409,28 @@ class Transient(MutableMapping):
                 host.append(blast_host)
 
         return host
+
+    def get_wiserep_spec(self, **kwargs) -> dict:
+        """
+        Check WISeREP for spectra of this object. Note that this object must have a
+        matching IAU name stored in OTTER!
+
+        Args:
+            **kwargs: Keyword arguments to be passed to DataFinder.query_wiserep.
+
+        Returns:
+            a tuple. First output is a metadata dataframe for the spectra. the second is
+            a dictionary of pandas dataframes. The keys are the indices of the metadata
+            dataframe. The dataframes will have a wave column and a flux column.
+        """
+        datafinder = self.get_data_finder()
+        return datafinder.query_wiserep()
+
+    def get_data_finder(self):
+        coord = self.get_skycoord()
+        return DataFinder(
+            coord.ra.deg, coord.dec.deg, "deg", "deg", name=self.default_name
+        )
 
     def _get_default(self, key, filt=None):
         """
