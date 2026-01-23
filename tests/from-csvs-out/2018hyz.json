@@ -1,7 +1,53 @@
 {
-    "schema_version": {
-        "comment": "test by noah"
-    },
+    "filter_alias": [
+        {
+            "filter_key": "1.5GHz",
+            "filter_name": "L",
+            "wave_eff": 199861638.66666666,
+            "wave_units": "nm"
+        }
+    ],
+    "distance": [
+        {
+            "value": 0.04573,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "computed": false,
+            "distance_type": "redshift"
+        },
+        {
+            "value": 1,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "unit": "Mpc",
+            "computed": false,
+            "distance_type": "luminosity"
+        },
+        {
+            "value": 1,
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "unit": "Mpc",
+            "computed": false,
+            "distance_type": "comoving"
+        }
+    ],
+    "host": [
+        {
+            "host_name": "testhost",
+            "host_ra": 1,
+            "host_dec": 1,
+            "host_ra_units": "deg",
+            "host_dec_units": "deg",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "host_z": 0.12
+        }
+    ],
     "photometry": [
         {
             "reference": "private",
@@ -48,63 +94,16 @@
             "human_readable_name": "Brimacombe, J. & Stanek, K. Z. (2018)"
         }
     ],
-    "date_reference": [
+    "coordinate": [
         {
-            "value": "2018-11-06 15:21:36.000",
-            "date_format": "iso",
+            "ra": "10:06:50.87",
+            "dec": "01:41:34.08",
+            "ra_units": "hour",
+            "dec_units": "deg",
             "reference": [
-                "2018TNSTR1708....1B",
                 "2018TNSTR1708....1B"
             ],
-            "computed": false,
-            "date_type": "discovery"
-        }
-    ],
-    "classification": {
-        "value": [
-            {
-                "object_class": "TDE",
-                "confidence": 2,
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    },
-    "distance": [
-        {
-            "value": 0.04573,
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "computed": false,
-            "distance_type": "redshift"
-        },
-        {
-            "value": 1,
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "unit": "Mpc",
-            "computed": false,
-            "distance_type": "luminosity"
-        },
-        {
-            "value": 1,
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "unit": "Mpc",
-            "computed": false,
-            "distance_type": "comoving"
-        }
-    ],
-    "filter_alias": [
-        {
-            "filter_key": "1.5GHz",
-            "filter_name": "L",
-            "wave_eff": 199861638.66666666,
-            "wave_units": "nm"
+            "coordinate_type": "equatorial"
         }
     ],
     "name": {
@@ -118,29 +117,30 @@
             }
         ]
     },
-    "host": [
+    "schema_version": {
+        "comment": "test by noah"
+    },
+    "classification": {
+        "value": [
+            {
+                "object_class": "TDE",
+                "confidence": 2,
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
+    },
+    "date_reference": [
         {
-            "host_name": "testhost",
-            "host_ra": 1,
-            "host_dec": 1,
-            "host_ra_units": "deg",
-            "host_dec_units": "deg",
+            "value": "2018-11-06 15:21:36.000",
+            "date_format": "iso",
             "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "host_z": 0.12
-        }
-    ],
-    "coordinate": [
-        {
-            "ra": "10:06:50.87",
-            "dec": "01:41:34.08",
-            "ra_units": "hour",
-            "dec_units": "deg",
-            "reference": [
+                "2018TNSTR1708....1B",
                 "2018TNSTR1708....1B"
             ],
-            "coordinate_type": "equatorial"
+            "computed": false,
+            "date_type": "discovery"
         }
     ]
 }

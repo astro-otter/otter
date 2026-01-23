@@ -270,6 +270,7 @@ def test_query_heasarc():
     assert len(res2) >= 2, "Missing some HEASARC data"
 
 
+@pytest.skip("this test crashes wiserep because too many queries back to back")
 def test_query_wiserep():
     """
     Test querying WISeREP for spectra
