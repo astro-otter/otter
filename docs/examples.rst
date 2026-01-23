@@ -13,6 +13,7 @@ examples will be added with time!
    examples/transient_objects
    examples/host_objects
    examples/plotting
+   examples/accessing_wiserep_spec
    examples/modeling
    examples/private_data
    examples/otter_paper
