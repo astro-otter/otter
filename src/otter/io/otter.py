@@ -973,12 +973,12 @@ class Otter(Database):
             freq_eff_unit = u.GHz
             for val, unit in zip(phot.filter_eff, phot.filter_eff_units):
                 wave_eff.append(
-                    (val * u.Unit(unit))
+                    (u.Quantity(val, u.Unit(unit)))
                     .to(wave_eff_unit, equivalencies=u.spectral())
                     .value
                 )
                 freq_eff.append(
-                    (val * u.Unit(unit))
+                    u.Quantity(val, u.Unit(unit))
                     .to(freq_eff_unit, equivalencies=u.spectral())
                     .value
                 )
