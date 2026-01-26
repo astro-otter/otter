@@ -1,4 +1,15 @@
 {
+    "name": {
+        "default_name": "Gaia 16aax",
+        "alias": [
+            {
+                "value": "Gaia 16aax",
+                "reference": [
+                    "2018TNSCR1764....1A"
+                ]
+            }
+        ]
+    },
     "reference_alias": [
         {
             "name": "2020MNRAS.493..477C",
@@ -21,17 +32,6 @@
             "coordinate_type": "equatorial"
         }
     ],
-    "name": {
-        "default_name": "Gaia 16aax",
-        "alias": [
-            {
-                "value": "Gaia 16aax",
-                "reference": [
-                    "2018TNSCR1764....1A"
-                ]
-            }
-        ]
-    },
     "filter_alias": [
         {
             "filter_key": "u",

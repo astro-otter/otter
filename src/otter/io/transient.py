@@ -1620,7 +1620,7 @@ class Transient(MutableMapping):
 
             merged = (
                 merged_with_dups.astype(str)
-                .groupby(merge_subkeys)["reference"]
+                .groupby(merge_subkeys, dropna=False)["reference"]
                 .apply(lambda x: x.sum())
                 .reset_index()
             )
