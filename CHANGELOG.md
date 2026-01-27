@@ -2,6 +2,28 @@
 
 <!-- version list -->
 
+## v1.1.0 (2026-01-27)
+
+### Bug Fixes
+
+- A NaN bug in _merge_arbitrary
+  ([`b74436e`](https://github.com/astro-otter/otter/commit/b74436e00c1274524e89a69344a98025c312d20b))
+
+- Edit pandas version requirement for wiserep_api
+  ([`52ad10f`](https://github.com/astro-otter/otter/commit/52ad10f7364176548222bc56fe2695152de5d17d))
+
+- Minor issue with pytest decorator
+  ([`1b1dbe2`](https://github.com/astro-otter/otter/commit/1b1dbe23f56e66b04f452364ed6c2a39b840d2d8))
+
+- Raising the query wiserep exception to keep track of the full traceback
+  ([`4259496`](https://github.com/astro-otter/otter/commit/4259496e04b625d5f58c3b1746bc3e0988941b6e))
+
+### Features
+
+- Acatch an re-raise a better error if the object is not on wiserep
+  ([`2036c21`](https://github.com/astro-otter/otter/commit/2036c2119f6c9cd0c5a3c0e942c09deb1518112c))
+
+
 ## v1.0.2 (2026-01-19)
 
 ### Bug Fixes
