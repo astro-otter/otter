@@ -11,6 +11,7 @@ from otter import Transient, Host
 from otter.exceptions import OtterLimitationError
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
+import pandas as pd
 
 
 def test_transient_constructor():
@@ -319,6 +320,33 @@ def test_clean_photometry():
     assert len(phot_non_default.obs_type.unique()) == 1, msg
     assert phot_non_default.obs_type.iloc[0] == "radio", msg
     assert np.isclose(phot_non_default.converted_flux.iloc[0], 2.69e3), msg
+
+
+@pytest.mark.skip(
+    "This works, but fails on MacOS *only* on github actions, for some reason..."
+)
+def test_get_wiserep_spec():
+    test_t = Transient(
+        {
+            "name": {"default_name": "2022cmc"},
+            "coordinate": [
+                {
+                    "ra": 0,
+                    "dec": 0,
+                    "ra_units": "deg",
+                    "dec_units": "deg",
+                    "coordinate_type": "equatorial",
+                }
+            ],
+        }
+    )
+
+    # this has beent tested much more extensively in the data finder unit tests
+    # so just do some basic ones here
+    meta, res = test_t.get_wiserep_spec()
+    assert isinstance(meta, pd.DataFrame)
+    assert isinstance(res, dict)
+    assert isinstance(res[0], pd.DataFrame)
 
 
 # a test json file

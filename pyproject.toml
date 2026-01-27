@@ -29,7 +29,7 @@ dependencies = [
   # necessary dependencies for the src code
   "numpy>=1.20,<2",
   "astropy>=6",
-  "pandas",
+  "pandas<3", # for now, this is because of a bug in wiserep_api due to an unexpected breaking change in pandas
   "synphot",
   "typing-extensions",
   "pyarango",
@@ -46,6 +46,7 @@ dependencies = [
   "fundamentals",
   "astro-datalab",
   "sparclclient",
+  "wiserep_api",
 
   # for the schema validation
   "pydantic>=2",

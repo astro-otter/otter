@@ -690,14 +690,16 @@
             "val_hostav": false
         }
     ],
-    "reference_alias": [
+    "coordinate": [
         {
-            "name": "2020MNRAS.493..477C",
-            "human_readable_name": "Cannizzaro, G. et al. (2020)"
-        },
-        {
-            "name": "2018TNSCR1764....1A",
-            "human_readable_name": "Arcavi, I. (2018)"
+            "ra": 1,
+            "dec": 1,
+            "ra_units": "deg",
+            "dec_units": "deg",
+            "reference": [
+                "2018TNSCR1764....1A"
+            ],
+            "coordinate_type": "equatorial"
         }
     ],
     "filter_alias": [
@@ -794,6 +796,16 @@
             "wave_max": 4.132806614440009
         }
     ],
+    "reference_alias": [
+        {
+            "name": "2020MNRAS.493..477C",
+            "human_readable_name": "Cannizzaro, G. et al. (2020)"
+        },
+        {
+            "name": "2018TNSCR1764....1A",
+            "human_readable_name": "Arcavi, I. (2018)"
+        }
+    ],
     "name": {
         "default_name": "Gaia 16aax",
         "alias": [
@@ -804,17 +816,5 @@
                 ]
             }
         ]
-    },
-    "coordinate": [
-        {
-            "ra": 1,
-            "dec": 1,
-            "ra_units": "deg",
-            "dec_units": "deg",
-            "reference": [
-                "2018TNSCR1764....1A"
-            ],
-            "coordinate_type": "equatorial"
-        }
-    ]
+    }
 }
