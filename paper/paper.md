@@ -19,7 +19,7 @@ affiliations:
 date: 06 September 2025
 bibliography: paper.bib
 
-aas-doi: update this with the DOI from AAS once you know it.
+aas-doi: 10.3847/1538-4357/ae346e
 aas-journal: Astrophysical Journal
 ---
 
