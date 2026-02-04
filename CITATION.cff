@@ -1,0 +1,39 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Franz
+  given-names: Noah
+  orcid: "https://orcid.org/0000-0003-4537-3575"
+- family-names: Alexander
+  given-names: Kate D.
+  orcid: "https://orcid.org/0000-0002-8297-2473"
+- family-names: Gomez
+  given-names: Sebastian
+  orcid: "https://orcid.org/0000-0001-6395-6702"
+doi: 10.5281/zenodo.18155961
+message: If you use this software, please cite (1) our ApJ paper:
+  https://ui.adsabs.harvard.edu/abs/2025arXiv250905405F and (2)
+  our article in the Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Franz
+    given-names: Noah
+    orcid: "https://orcid.org/0000-0003-4537-3575"
+  - family-names: Alexander
+    given-names: Kate D.
+    orcid: "https://orcid.org/0000-0002-8297-2473"
+  - family-names: Gomez
+    given-names: Sebastian
+    orcid: "https://orcid.org/0000-0001-6395-6702"
+  date-published: 2026-02-03
+  doi: 10.21105/joss.09516
+  issn: 2475-9066
+  issue: 118
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 9516
+  title: A Python API for OTTER
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.09516"
+  volume: 11
+title: A Python API for OTTER

@@ -29,6 +29,7 @@ A Python API for the OTTER.
 [![PyPI version][pypi-version]][pypi-link]
 [![Linting: Ruff][ruff-badge]][ruff-link]
 [![codecov][codecov-badge]][codecov-link]
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.09516/status.svg)](https://doi.org/10.21105/joss.09516)
 
 ## Installation
 To install the OTTER API use
