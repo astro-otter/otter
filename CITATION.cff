@@ -10,9 +10,7 @@ authors:
   given-names: Sebastian
   orcid: "https://orcid.org/0000-0001-6395-6702"
 doi: 10.5281/zenodo.18155961
-message: If you use this software, please cite (1) our ApJ paper:
-  https://ui.adsabs.harvard.edu/abs/2025arXiv250905405F and (2)
-  our article in the Journal of Open Source Software.
+message: "If you use this software, please cite (1) our ApJ paper: https://ui.adsabs.harvard.edu/abs/2025arXiv250905405F and (2) our article in the Journal of Open Source Software."
 preferred-citation:
   authors:
   - family-names: Franz
