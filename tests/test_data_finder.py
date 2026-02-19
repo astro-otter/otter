@@ -115,6 +115,7 @@ def test_query_vizier():
     assert "II/294/sdss7" in res.keys()
 
 
+@pytest.mark.skip_on_timeout(10)
 def test_query_atlas():
     """
     Test the query_atlas method
