@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.1 (2026-02-19)
+
+### Bug Fixes
+
+- Upperlimit flagging issue
+  ([`c91a709`](https://github.com/astro-otter/otter/commit/c91a709a780586ec157ae5470a164b92e90a1b5b))
+
+
 ## v1.1.0 (2026-01-27)
 
 ### Bug Fixes
