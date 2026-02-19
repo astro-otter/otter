@@ -498,6 +498,7 @@ class Transient(MutableMapping):
         cleanup_uvoir_filternames: bool = True,
         drop_no_host_subtract: bool = False,
         drop_unclear_host_subtract: bool = False,
+        snr_threshold: float = 3,
     ) -> pd.DataFrame:
         """
         Ensure the photometry associated with this transient is all in the same
@@ -547,6 +548,15 @@ class Transient(MutableMapping):
                                                when corr_host is NaN (which is set for
                                                unclear host subtraction). Default is
                                                drop_unclear_host_subtract = False.
+            snr_threshold (float): The signal-to-noise ratio to consider for
+                                   upperlimits. Any flux measurement below (or above
+                                   for magnitudes) this SNR will be flagged as an
+                                   upperlimit. IMPORTANT: This does not re-compute
+                                   the upperlimit boolean for literature values that
+                                   were flagged as limits (because we trust the people
+                                   that published the data to make a proper
+                                   determination if this is a detection or not).
+
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
         """
@@ -915,14 +925,14 @@ class Transient(MutableMapping):
             # sigma_m > (1/3) * (ln(10)/2.5)
             def is_upperlimit(row):
                 if "upperlimit" in row and pd.isna(row.upperlimit):
-                    return row.converted_flux_err > np.log(10) / (3 * 2.5)
+                    return row.converted_flux_err > 2.5 / (snr_threshold * np.log(10))
                 else:
                     return row.upperlimit
         else:
 
             def is_upperlimit(row):
                 if "upperlimit" in row and pd.isna(row.upperlimit):
-                    return row.converted_flux < 3 * row.converted_flux_err
+                    return row.converted_flux < snr_threshold * row.converted_flux_err
                 else:
                     return row.upperlimit
 
