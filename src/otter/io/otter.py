@@ -380,7 +380,12 @@ class Otter(Database):
                             checking for detections.
             query_private (bool): Set to True if you would like to also query the
                                   dataset located at whatever you set datadir to
-
+            **kwargs : Other keyword arguments passed to self.AQLQuery. Note that the
+                       default batch size it 5000 transients, if your query returns
+                       anything more than that it will take significantly longer and
+                       you should consider additional passing additional filters. If you
+                       really need all of the data, a batch size of 5000 should allow
+                       you to get all of it, just slightly slower.
         Return:
            Get all of the raw (unconverted!) data for objects that match the criteria.
         """
@@ -430,6 +435,7 @@ class Otter(Database):
 
         if classification is not None:
             query_filters += f"""
+            FILTER HAS(transient, 'classification')
             FOR subdoc IN transient.classification.value
                 FILTER subdoc.confidence > TO_NUMBER({class_confidence_threshold})
                 FILTER subdoc.object_class LIKE '%{classification}%'
@@ -493,7 +499,22 @@ class Otter(Database):
         """
 
         # set batch size to 100 million (for now at least)
-        result = self.AQLQuery(query, rawResults=True, batchSize=100_000_000)
+
+        raw_results = True
+        if "rawResults" in kwargs:
+            raw_results = kwargs.pop("rawResults")
+
+        batch_size = 5_000
+        if "batchSize" in kwargs:
+            batch_size = kwargs.pop("batchSize")
+
+        ttl = 60  # one minute for the cursor's time to live
+        if "ttl" in kwargs:
+            ttl = kwargs.pop("ttl")
+
+        result = self.AQLQuery(
+            query, rawResults=raw_results, batchSize=batch_size, ttl=ttl, **kwargs
+        )
 
         # now that we have the query results do the RA and Dec queries if they exist
         if coords is not None:
@@ -528,7 +549,7 @@ class Otter(Database):
             arango_query_results = [Transient(t) for t in good_tdes]
 
         else:
-            arango_query_results = [Transient(res) for res in result.result]
+            arango_query_results = [Transient(res) for res in result]
 
         # filter based on the min and max declination query options
         decs = np.array([t.get_skycoord().dec.deg for t in arango_query_results])
