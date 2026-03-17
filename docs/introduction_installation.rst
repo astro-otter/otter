@@ -10,6 +10,13 @@ For non-developers, the :code:`astro-otter` API can be installed using :code:`pi
 
 ::
 
+   python3 -m pip install astro-otter[standard]
+
+Or, for a more minimal installation without the dependencies for the :code:`DataFinder`
+or :code:`plotter` modules:
+
+::
+
    python3 -m pip install astro-otter
 
 Then, from a python terminal you can do things like

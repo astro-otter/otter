@@ -33,6 +33,19 @@ dependencies = [
   "synphot",
   "typing-extensions",
   "pyarango",
+  "dustmaps",
+  "dust_extinction",
+
+  # only for windows OS b/c it doesn't ship with readline by default
+  'pyreadline3; platform_system == "Windows"'
+]
+
+[project.urls]
+Home = "https://github.com/astro-otter"
+
+[project.optional-dependencies]
+# other standard dependencies, that are technically optional
+standard = [
   "tabulate",
 
   # for the plotting
@@ -50,19 +63,8 @@ dependencies = [
 
   # for the schema validation
   "pydantic>=2",
-
-  # for MW dust extinction corrections
-  "dustmaps",
-  "dust_extinction",
-
-  # only for windows OS b/c it doesn't ship with readline by default
-  'pyreadline3; platform_system == "Windows"'
 ]
 
-[project.urls]
-Home = "https://github.com/astro-otter"
-
-[project.optional-dependencies]
 # tools for building the readthedocs page
 docs = [
   "Sphinx>=3.0.0",

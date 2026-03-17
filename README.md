@@ -34,7 +34,7 @@ A Python API for the OTTER.
 ## Installation
 To install the OTTER API use
 ```
-python3 -m pip install astro-otter
+python3 -m pip install astro-otter[standard]
 ```
 
 ## Developer Instructions
