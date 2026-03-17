@@ -712,10 +712,14 @@ class Otter(Database):
         Returns:
             The pyArango document that was uplaoded
         """
+        # add/update some special keys to make cone searching fast
+        if not isinstance(json_data, Transient):
+            json_data = Transient(json_data)
+        coord = json_data.get_skycoord()
+        json_data["_ra"] = coord.ra.deg
+        json_data["_dec"] = coord.dec.deg
 
         # now add the document
-        # if "_ra" not in json_data or "_dec" not in json_data:
-
         doc = self[collection].createDocument(json_data)
         if not testing:
             doc.save()
