@@ -339,7 +339,7 @@ class Otter(Database):
             minz (float): The minimum redshift to search for
             maxz (float): The maximum redshift to search for
             mindec (float): The minimum declination in degrees
-            maxdec (float): Tje maximum declination in degrees
+            maxdec (float): The maximum declination in degrees
             refs (list[str]): A list of ads bibcodes to match to. Will only return
                               metadata for transients that have this as a reference.
             hasphot (bool): if True, only returns transients which have photometry.
@@ -407,6 +407,30 @@ class Otter(Database):
 
         if has_xray_phot:
             query_filters += "FILTER 'xray' IN transient.photometry[*].obs_type\n"
+
+        if coords is not None:
+            ra = coords.ra.deg
+            dec = coords.dec.deg
+            sep = radius / 3600  # convert to degrees
+            query_filters += f"""
+            FILTER (
+              transient._ra >= {ra} - {sep} AND
+              transient._ra <= {ra} + {sep} AND
+              transient._dec >= {dec} - {sep} AND
+              transient._dec <= {dec} + {sep}
+            )
+            FILTER ASTRO::CONE_SEARCH(transient._ra, transient._dec, {ra}, {dec}, {sep})
+            """
+
+        if mindec > -90:
+            query_filters += f"""
+            FILTER transient._dec >= {mindec}
+            """
+
+        if maxdec < 90:
+            query_filters += f"""
+            FILTER transient._dec <= {maxdec}
+            """
 
         if has_det:
             if wave_det is None:
@@ -515,46 +539,7 @@ class Otter(Database):
         result = self.AQLQuery(
             query, rawResults=raw_results, batchSize=batch_size, ttl=ttl, **kwargs
         )
-
-        # now that we have the query results do the RA and Dec queries if they exist
-        if coords is not None:
-            # get the catalog RAs and Decs to compare against
-            query_coords = coords
-            good_tdes = []
-
-            for tde in result:
-                for coordinfo in tde["coordinate"]:
-                    if "ra" in coordinfo and "dec" in coordinfo:
-                        coord = SkyCoord(
-                            coordinfo["ra"],
-                            coordinfo["dec"],
-                            unit=(coordinfo["ra_units"], coordinfo["dec_units"]),
-                        )
-                    elif "l" in coordinfo and "b" in coordinfo:
-                        # this is galactic
-                        coord = SkyCoord(
-                            coordinfo["l"],
-                            coordinfo["b"],
-                            unit=(coordinfo["l_units"], coordinfo["b_units"]),
-                            frame="galactic",
-                        )
-                    else:
-                        raise ValueError(
-                            "Either needs to have ra and dec or l and b as keys!"
-                        )
-                    if query_coords.separation(coord) < radius * u.arcsec:
-                        good_tdes.append(tde)
-                        break  # we've confirmed this tde is in the cone!
-
-            arango_query_results = [Transient(t) for t in good_tdes]
-
-        else:
-            arango_query_results = [Transient(res) for res in result]
-
-        # filter based on the min and max declination query options
-        decs = np.array([t.get_skycoord().dec.deg for t in arango_query_results])
-        where_dec = np.where((decs > mindec) * (decs < maxdec))[0]
-        arango_query_results = [arango_query_results[i] for i in where_dec]
+        arango_query_results = [Transient(res) for res in result]
 
         if not query_private:
             return arango_query_results
@@ -729,6 +714,8 @@ class Otter(Database):
         """
 
         # now add the document
+        # if "_ra" not in json_data or "_dec" not in json_data:
+
         doc = self[collection].createDocument(json_data)
         if not testing:
             doc.save()
