@@ -2,6 +2,25 @@
 
 <!-- version list -->
 
+## v1.2.0 (2026-03-18)
+
+### Bug Fixes
+
+- Add more info to the API docs. partially Addresses Issue #45
+  ([`008f2f2`](https://github.com/astro-otter/otter/commit/008f2f2860b753bec0f5c1a52512441c4d6133a5))
+
+- Make installation more minimal, with additional optional dependencies (see Issue #45)
+  ([`46720a6`](https://github.com/astro-otter/otter/commit/46720a636ba39022fba525ca2a4af1f5dfcbe234))
+
+- Uapdate Otter.upload to add the new _ra and _dec keys that are needed for fast cone searching
+  ([`436f728`](https://github.com/astro-otter/otter/commit/436f728d7dc421b049f6398b96626844c0f283df))
+
+### Features
+
+- Handle queries that return larger datasets using the batch size argument
+  ([`0a8d455`](https://github.com/astro-otter/otter/commit/0a8d4553025e8253e061c7b3990e832e3ab0eed3))
+
+
 ## v1.1.1 (2026-02-19)
 
 ### Bug Fixes
