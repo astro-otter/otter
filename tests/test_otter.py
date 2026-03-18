@@ -133,11 +133,13 @@ def test_query():
     zgtr1 = db.query(minz=1)
     assert len(zgtr1) >= 2
     true_result = ["Swift J2058.4+0516", "2022cmc", "CXOU J0332"]
-    assert all(t["name/default_name"] in true_result for t in zgtr1)
+    names = {t.default_name for t in zgtr1}
+    assert all(r in names for r in true_result)
 
     zless001 = db.query(maxz=0.001)
+    names = {t.default_name for t in zless001}
     result = ["NGC 247", "IGR J17361-4441"]
-    assert all(t["name/default_name"] in result for t in zless001)
+    assert all(r in names for r in result)
 
     # test refs
     # res = db.query(refs="2020MNRAS.tmp.2047S")[0]
