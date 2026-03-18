@@ -339,7 +339,7 @@ class Otter(Database):
             minz (float): The minimum redshift to search for
             maxz (float): The maximum redshift to search for
             mindec (float): The minimum declination in degrees
-            maxdec (float): Tje maximum declination in degrees
+            maxdec (float): The maximum declination in degrees
             refs (list[str]): A list of ads bibcodes to match to. Will only return
                               metadata for transients that have this as a reference.
             hasphot (bool): if True, only returns transients which have photometry.
@@ -380,7 +380,12 @@ class Otter(Database):
                             checking for detections.
             query_private (bool): Set to True if you would like to also query the
                                   dataset located at whatever you set datadir to
-
+            **kwargs : Other keyword arguments passed to self.AQLQuery. Note that the
+                       default batch size it 5000 transients, if your query returns
+                       anything more than that it will take significantly longer and
+                       you should consider additional passing additional filters. If you
+                       really need all of the data, a batch size of 5000 should allow
+                       you to get all of it, just slightly slower.
         Return:
            Get all of the raw (unconverted!) data for objects that match the criteria.
         """
@@ -402,6 +407,30 @@ class Otter(Database):
 
         if has_xray_phot:
             query_filters += "FILTER 'xray' IN transient.photometry[*].obs_type\n"
+
+        if coords is not None:
+            ra = coords.ra.deg
+            dec = coords.dec.deg
+            sep = radius / 3600  # convert to degrees
+            query_filters += f"""
+            FILTER (
+              transient._ra >= {ra} - {sep} AND
+              transient._ra <= {ra} + {sep} AND
+              transient._dec >= {dec} - {sep} AND
+              transient._dec <= {dec} + {sep}
+            )
+            FILTER ASTRO::CONE_SEARCH(transient._ra, transient._dec, {ra}, {dec}, {sep})
+            """
+
+        if mindec > -90:
+            query_filters += f"""
+            FILTER transient._dec >= {mindec}
+            """
+
+        if maxdec < 90:
+            query_filters += f"""
+            FILTER transient._dec <= {maxdec}
+            """
 
         if has_det:
             if wave_det is None:
@@ -430,6 +459,7 @@ class Otter(Database):
 
         if classification is not None:
             query_filters += f"""
+            FILTER HAS(transient, 'classification')
             FOR subdoc IN transient.classification.value
                 FILTER subdoc.confidence > TO_NUMBER({class_confidence_threshold})
                 FILTER subdoc.object_class LIKE '%{classification}%'
@@ -493,47 +523,23 @@ class Otter(Database):
         """
 
         # set batch size to 100 million (for now at least)
-        result = self.AQLQuery(query, rawResults=True, batchSize=100_000_000)
 
-        # now that we have the query results do the RA and Dec queries if they exist
-        if coords is not None:
-            # get the catalog RAs and Decs to compare against
-            query_coords = coords
-            good_tdes = []
+        raw_results = True
+        if "rawResults" in kwargs:
+            raw_results = kwargs.pop("rawResults")
 
-            for tde in result:
-                for coordinfo in tde["coordinate"]:
-                    if "ra" in coordinfo and "dec" in coordinfo:
-                        coord = SkyCoord(
-                            coordinfo["ra"],
-                            coordinfo["dec"],
-                            unit=(coordinfo["ra_units"], coordinfo["dec_units"]),
-                        )
-                    elif "l" in coordinfo and "b" in coordinfo:
-                        # this is galactic
-                        coord = SkyCoord(
-                            coordinfo["l"],
-                            coordinfo["b"],
-                            unit=(coordinfo["l_units"], coordinfo["b_units"]),
-                            frame="galactic",
-                        )
-                    else:
-                        raise ValueError(
-                            "Either needs to have ra and dec or l and b as keys!"
-                        )
-                    if query_coords.separation(coord) < radius * u.arcsec:
-                        good_tdes.append(tde)
-                        break  # we've confirmed this tde is in the cone!
+        batch_size = 5_000
+        if "batchSize" in kwargs:
+            batch_size = kwargs.pop("batchSize")
 
-            arango_query_results = [Transient(t) for t in good_tdes]
+        ttl = 60  # one minute for the cursor's time to live
+        if "ttl" in kwargs:
+            ttl = kwargs.pop("ttl")
 
-        else:
-            arango_query_results = [Transient(res) for res in result.result]
-
-        # filter based on the min and max declination query options
-        decs = np.array([t.get_skycoord().dec.deg for t in arango_query_results])
-        where_dec = np.where((decs > mindec) * (decs < maxdec))[0]
-        arango_query_results = [arango_query_results[i] for i in where_dec]
+        result = self.AQLQuery(
+            query, rawResults=raw_results, batchSize=batch_size, ttl=ttl, **kwargs
+        )
+        arango_query_results = [Transient(res) for res in result]
 
         if not query_private:
             return arango_query_results
@@ -706,6 +712,12 @@ class Otter(Database):
         Returns:
             The pyArango document that was uplaoded
         """
+        # add/update some special keys to make cone searching fast
+        if not isinstance(json_data, Transient):
+            json_data = Transient(json_data)
+        coord = json_data.get_skycoord()
+        json_data["_ra"] = coord.ra.deg
+        json_data["_dec"] = coord.dec.deg
 
         # now add the document
         doc = self[collection].createDocument(json_data)
