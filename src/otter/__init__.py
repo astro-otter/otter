@@ -1,4 +1,6 @@
 from __future__ import annotations
+import logging
+logger = logging.getLogger(__name__)
 
 # get the version
 from ._version import __version__
@@ -23,10 +25,17 @@ if not os.path.exists(dustmaps_datapath):
 # import important stuff
 from .io.otter import Otter
 from .io.transient import Transient
-from .io.host import Host
-from .io.data_finder import DataFinder
-from .plotter.otter_plotter import OtterPlotter
-from .plotter.plotter import plot_light_curve, plot_sed, quick_view, query_quick_view
 from . import util
 from . import schema
 from . import exceptions
+
+# other, optional modules
+try:
+    from .io.host import Host
+    from .io.data_finder import DataFinder
+    from .plotter.otter_plotter import OtterPlotter
+    from .plotter.plotter import plot_light_curve, plot_sed, quick_view, query_quick_view
+except ModuleNotFoundError:
+    logger.warning(
+        "Not loading DataFinder, Host, and plotter modules for a minimal installation"
+    )

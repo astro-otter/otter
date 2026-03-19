@@ -28,8 +28,6 @@ from ..exceptions import (
     TransientMergeError,
 )
 from ..util import XRAY_AREAS, _KNOWN_CLASS_ROOTS, _DuplicateFilter
-from .host import Host
-from .data_finder import DataFinder
 
 np.seterr(divide="ignore")
 logger = logging.getLogger(__name__)
@@ -361,7 +359,7 @@ class Transient(MutableMapping):
             return default
         return default.object_class, default.confidence, default.reference
 
-    def get_host(self, max_hosts=3, search=False, **kwargs) -> list[Host]:
+    def get_host(self, max_hosts=3, search=False, **kwargs) -> list:
         """
         Gets the default host information of this Transient. This returns an otter.Host
         object. If search=True, it will also check the BLAST host association database
@@ -377,6 +375,14 @@ class Transient(MutableMapping):
             A list of otter.Host objects. This is useful becuase the Host objects have
             useful methods for querying public catalogs for data of the host.
         """
+        # lazy load the host module since it includes optional dependencies
+        try:
+            from .host import Host
+        except ModuleNotFoundError as exc:
+            raise OtterLimitationError(
+                "Please re-install OTTER with all dependencies to use the Host module!"
+            ) from exc
+
         # first try to get the host information from our local database
         host = []
         if "host" in self:
@@ -427,6 +433,14 @@ class Transient(MutableMapping):
         return datafinder.query_wiserep()
 
     def get_data_finder(self):
+        try:
+            from .data_finder import DataFinder
+        except ModuleNotFoundError as exc:
+            raise OtterLimitationError(
+                "Please re-install OTTER with all dependencies to use the \
+                DataFinder module!"
+            ) from exc
+
         coord = self.get_skycoord()
         return DataFinder(
             coord.ra.deg, coord.dec.deg, "deg", "deg", name=self.default_name
