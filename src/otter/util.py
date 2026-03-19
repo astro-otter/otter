@@ -6,11 +6,12 @@ from __future__ import annotations
 from itertools import chain
 import os
 from multiprocessing import Pool
-import ads
-from ads.exceptions import APIResponseError
 import json
 import astropy.units as u
 import numpy as np
+import logging
+
+logger = logging.getLogger(__name__)
 
 """
 Helper functions first that just don't belong anywhere else
@@ -90,9 +91,17 @@ def bibcode_to_hrn(bibcode, local_reference_map="reference_map_local.json"):
             bibcodes_to_query.append(b)
 
     if len(bibcodes_to_query) > 0:
-        queried_bibs, queried_hrns = _bibcode_to_hrn_with_query(bibcodes_to_query)
-        hrns += queried_hrns
-        bibcodes += queried_bibs
+        try:
+            queried_bibs, queried_hrns = _bibcode_to_hrn_with_query(bibcodes_to_query)
+            hrns += queried_hrns
+            bibcodes += queried_bibs
+        except ModuleNotFoundError:
+            logger.warning(
+                "The ADS package is not installed, skipping querying for \
+                human readable names"
+            )
+            hrns += bibcodes_to_query
+            bibcode += bibcodes_to_query
 
     return bibcodes, hrns
 
@@ -101,6 +110,10 @@ def _bibcode_to_hrn_with_query(bibcode):
     """
     Converts a bibcode to a human_readable_name (hrn) using ADSQuery
     """
+    # lazy load the ads module since it is not a minimal requirement
+    import ads
+    from ads.exceptions import APIResponseError
+
     if isinstance(bibcode, str):
         bibcode = bibcode.strip()
         query = f"bibcode:{bibcode}"

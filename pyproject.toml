@@ -35,6 +35,7 @@ dependencies = [
   "pyarango",
   "dustmaps",
   "dust_extinction",
+  "pydantic>=2",
 
   # only for windows OS b/c it doesn't ship with readline by default
   'pyreadline3; platform_system == "Windows"'
@@ -60,9 +61,6 @@ standard = [
   "astro-datalab",
   "sparclclient",
   "wiserep_api",
-
-  # for the schema validation
-  "pydantic>=2",
 ]
 
 # tools for building the readthedocs page
