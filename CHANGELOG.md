@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.2.1 (2026-03-19)
+
+### Bug Fixes
+
+- Minimal installation to not use non-existent dependencies
+  ([`aa15a0b`](https://github.com/astro-otter/otter/commit/aa15a0b7e177bb0c131f19f463ae9ff4624946d7))
+
+
 ## v1.2.0 (2026-03-18)
 
 ### Bug Fixes
