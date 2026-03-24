@@ -27,7 +27,7 @@ classifiers = [
 
 dependencies = [
   # necessary dependencies for the src code
-  "numpy>=1.20,<2",
+  "numpy>=1.20",
   "astropy>=6",
   "pandas<3", # for now, this is because of a bug in wiserep_api due to an unexpected breaking change in pandas
   "synphot",
@@ -36,6 +36,8 @@ dependencies = [
   "dustmaps",
   "dust_extinction",
   "pydantic>=2",
+  "healpy>=1.18.0",  # healpy 1.18+ supports numpy 2.x
+  "scipy>=1.14.0",  # scipy 1.14+ is compatible with numpy 2.x
 
   # only for windows OS b/c it doesn't ship with readline by default
   'pyreadline3; platform_system == "Windows"'
