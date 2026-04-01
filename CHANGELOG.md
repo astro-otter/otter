@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.2.2 (2026-04-01)
+
+### Bug Fixes
+
+- Missed versioning update from PR 49
+  ([`6cd404d`](https://github.com/astro-otter/otter/commit/6cd404de464ccc3e2e66714ad4acc2723c70e0be))
+
+
 ## v1.2.1 (2026-03-19)
 
 ### Bug Fixes
