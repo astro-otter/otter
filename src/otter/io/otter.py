@@ -24,6 +24,7 @@ from astropy import units as u
 from .transient import Transient
 from ..exceptions import FailedQueryError, OtterLimitationError, TransientMergeError
 from ..util import bibcode_to_hrn, freq_to_obstype, freq_to_band, _DuplicateFilter
+from ..schema import OtterSchema
 
 import warnings
 
@@ -414,10 +415,9 @@ class Otter(Database):
             sep = radius / 3600  # convert to degrees
             query_filters += f"""
             FILTER (
-              transient._ra >= {ra} - {sep} AND
-              transient._ra <= {ra} + {sep} AND
-              transient._dec >= {dec} - {sep} AND
-              transient._dec <= {dec} + {sep}
+              ABS(((transient._ra - {ra} + 180) % 360) - 180) *
+              COS(RADIANS({dec})) <= {sep} AND
+              ABS(transient._dec - {dec}) <= {sep}
             )
             FILTER ASTRO::CONE_SEARCH(transient._ra, transient._dec, {ra}, {dec}, {sep})
             """
@@ -718,6 +718,9 @@ class Otter(Database):
         coord = json_data.get_skycoord()
         json_data["_ra"] = coord.ra.deg
         json_data["_dec"] = coord.dec.deg
+
+        # validate the input data
+        OtterSchema.model_validate(json_data, extra="ignore")
 
         # now add the document
         doc = self[collection].createDocument(json_data)
