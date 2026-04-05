@@ -2,6 +2,20 @@
 
 <!-- version list -->
 
+## v1.2.3 (2026-04-05)
+
+### Bug Fixes
+
+- Cone search bug highlighted in issue #45
+  ([`bc0cbe6`](https://github.com/astro-otter/otter/commit/bc0cbe69d24b211056908c07856555ce7c3b65ec))
+
+- REST API cone search example
+  ([`7289008`](https://github.com/astro-otter/otter/commit/7289008a4b1ec96c353f731eb5d94273bae59c65))
+
+- Update rest api docs
+  ([`35f3ad8`](https://github.com/astro-otter/otter/commit/35f3ad898eb64ef68e816563cd73b9377eb5edce))
+
+
 ## v1.2.2 (2026-04-01)
 
 ### Bug Fixes
