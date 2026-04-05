@@ -24,6 +24,7 @@ from astropy import units as u
 from .transient import Transient
 from ..exceptions import FailedQueryError, OtterLimitationError, TransientMergeError
 from ..util import bibcode_to_hrn, freq_to_obstype, freq_to_band, _DuplicateFilter
+from ..schema import OtterSchema
 
 import warnings
 
@@ -718,6 +719,9 @@ class Otter(Database):
         coord = json_data.get_skycoord()
         json_data["_ra"] = coord.ra.deg
         json_data["_dec"] = coord.dec.deg
+
+        # validate the input data
+        OtterSchema.model_validate(json_data, extra="ignore")
 
         # now add the document
         doc = self[collection].createDocument(json_data)
