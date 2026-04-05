@@ -415,10 +415,9 @@ class Otter(Database):
             sep = radius / 3600  # convert to degrees
             query_filters += f"""
             FILTER (
-              transient._ra >= {ra} - {sep} AND
-              transient._ra <= {ra} + {sep} AND
-              transient._dec >= {dec} - {sep} AND
-              transient._dec <= {dec} + {sep}
+              ABS(((transient._ra - {ra} + 180) % 360) - 180) *
+              COS(RADIANS({dec})) <= {sep} AND
+              ABS(transient._dec - {dec}) <= {sep}
             )
             FILTER ASTRO::CONE_SEARCH(transient._ra, transient._dec, {ra}, {dec}, {sep})
             """
