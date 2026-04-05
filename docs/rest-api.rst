@@ -21,7 +21,7 @@ the OTTER database and then get out their results. If, instead, you want to do a
         -X POST \
         --header 'accept: application/json' \
 	--header 'Content-Type: application/json' \
-	--data '{"query": "FOR t IN transients FILTER (t._ra >= @ra - @sep AND t._ra <= @ra + @sep AND t._dec >= @dec - @sep AND t._dec <= @dec + @sep) FILTER ASTRO::CONE_SEARCH(t._ra, t._dec, @ra, @dec, @sep) RETURN t", "count": true, "batchSize": 2, "bindVars": {"ra": 185.0, "dec": 12.0, "sep": 1.0}}' \
+	--data '{"query": "FOR t IN transients FILTER (ABS(((t._ra - @ra + 180) % 360) - 180) * COS(RADIANS(t._dec)) <= @sep AND ABS(t._dec - @dec) <= @sep) FILTER ASTRO::CONE_SEARCH(t._ra, t._dec, @ra, @dec, @sep) RETURN [t._ra, t._dec]", "count": true, "batchSize": 2, "bindVars": {"ra": 185.0, "dec": 12.0, "sep": 1.0}}' \
 	'https://otter.idies.jhu.edu/api/_db/otter/_api/cursor'
 
 For more details on AQL see https://docs.arangodb.com/3.12/aql/ and for more details on the Arangodb HTTP REST API see
