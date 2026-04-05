@@ -392,7 +392,7 @@ class Otter(Database):
         """
         # catch a numpy array and convert to a list if it is passed in
         if isinstance(names, np.ndarray):
-            names = list(names)
+            names = names.tolist()
 
         # write some AQL filters based on the inputs
         query_filters = ""

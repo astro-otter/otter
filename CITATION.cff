@@ -1,37 +1,59 @@
-cff-version: "1.2.0"
+cff-version: 1.2.0
+message: Please cite the following works when using this software.
+type: software
 authors:
-- family-names: Franz
-  given-names: Noah
-  orcid: "https://orcid.org/0000-0003-4537-3575"
-- family-names: Alexander
-  given-names: Kate D.
-  orcid: "https://orcid.org/0000-0002-8297-2473"
-- family-names: Gomez
-  given-names: Sebastian
-  orcid: "https://orcid.org/0000-0001-6395-6702"
-doi: 10.5281/zenodo.18155961
-message: "If you use this software, please cite (1) our ApJ paper: https://ui.adsabs.harvard.edu/abs/2025arXiv250905405F and (2) our article in the Journal of Open Source Software."
-preferred-citation:
-  authors:
   - family-names: Franz
     given-names: Noah
-    orcid: "https://orcid.org/0000-0003-4537-3575"
   - family-names: Alexander
     given-names: Kate D.
-    orcid: "https://orcid.org/0000-0002-8297-2473"
   - family-names: Gomez
     given-names: Sebastian
-    orcid: "https://orcid.org/0000-0001-6395-6702"
-  date-published: 2026-02-03
-  doi: 10.21105/joss.09516
-  issn: 2475-9066
-  issue: 118
-  journal: Journal of Open Source Software
-  publisher:
-    name: Open Journals
-  start: 9516
-  title: A Python API for OTTER
-  type: article
-  url: "https://joss.theoj.org/papers/10.21105/joss.09516"
-  volume: 11
+doi: 10.21105/joss.09516
+identifiers:
+  - type: doi
+    value: 10.21105/joss.09516
+  - type: url
+    value: https://doi.org/10.21105/joss.09516
 title: A Python API for OTTER
+url: https://doi.org/10.21105/joss.09516
+preferred-citation:
+  authors:
+    - family-names: Franz
+      given-names: Noah
+    - family-names: Alexander
+      given-names: Kate D
+    - family-names: Gomez
+      given-names: Sebastian
+    - family-names: Christy
+      given-names: Collin T
+    - family-names: Laskar
+      given-names: Tanmoy
+    - family-names: van Velzen
+      given-names: Sjoert
+    - family-names: Earl
+      given-names: Nicholas
+    - family-names: Gezari
+      given-names: Suvi
+    - family-names: Karmen
+      given-names: Mitchell
+    - family-names: Margutti
+      given-names: Raffaella
+    - family-names: Pearson
+      given-names: Jeniveve
+    - family-names: Villar
+      given-names: V. Ashley
+    - family-names: Zabludoff
+      given-names: Ann I
+  keywords:
+    - High Energy Astrophysical Phenomena
+    - Instrumentation and Methods for Astrophysics
+  title: >-
+    The Open mulTiwavelength Transient Event Repository (OTTER): Infrastructure
+    Release and Tidal Disruption Event Catalog
+  date-published: 2025-09-01
+  year: 2025
+  month: 9
+  journal: arXiv e-prints
+  number: arXiv:2509.05405
+  start: arXiv:2509.05405
+  type: article
