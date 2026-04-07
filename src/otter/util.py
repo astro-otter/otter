@@ -138,11 +138,11 @@ def _bibcode_to_hrn_with_query(bibcode):
         # then all of the bibcodes were "private"
         return bibcodes, bibcodes
 
-    query = f"bibcode:{bibcodes[0]}"
+    query = f"identifier:({bibcodes[0]}"
     if len(bibcodes) > 1:
         for b in bibcodes[1:]:
             query += f" OR {b}"
-
+    query += ") AND NOT bibstem:yCat"  # this excludes vizier data sources
     try:
         qobj = ads.SearchQuery(q=query)
         qobj.execute()  # do the query
