@@ -521,7 +521,7 @@ class Otter(Database):
             {query_filters}
             RETURN transient
         """
-
+        logger.info(f"Executing\n{query}")
         # set batch size to 100 million (for now at least)
 
         raw_results = True
@@ -544,6 +544,7 @@ class Otter(Database):
         if not query_private:
             return arango_query_results
 
+        logger.info("Now checking local data, as requested...")
         private_results = self._query_datadir(
             names=names,
             coords=coords,
@@ -555,6 +556,7 @@ class Otter(Database):
             hasspec=hasspec,
         )
 
+        logger.info("Merging local and remote datasets, this can be time consuming...")
         partially_merged = deepcopy(arango_query_results)
         new_transients = []
         for jj, t_private in enumerate(private_results):
