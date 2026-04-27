@@ -144,6 +144,11 @@ def _bibcode_to_hrn_with_query(bibcode):
             query += f" OR {b}"
     query += ") AND NOT bibstem:yCat"  # this excludes vizier data sources
     try:
+        ads.SearchQuery.HTTP_ENDPOINT = (
+            ads.SearchQuery.HTTP_ENDPOINT[:-1]
+            if ads.SearchQuery.HTTP_ENDPOINT.endswith("/")
+            else ads.SearchQuery.HTTP_ENDPOINT
+        )
         qobj = ads.SearchQuery(q=query)
         qobj.execute()  # do the query
         adsquery = list(qobj)
