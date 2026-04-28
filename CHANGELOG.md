@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v1.2.5 (2026-04-28)
+
+### Bug Fixes
+
+- Improved logging when merging with local datasets
+  ([`a51e1fc`](https://github.com/astro-otter/otter/commit/a51e1fca67c0a6818488d626391bab01cdacbd32))
+
+- Make the ads bibcode search more robust to e.g., arxiv identifiers
+  ([`cd0ae26`](https://github.com/astro-otter/otter/commit/cd0ae26e4ee40f887f32f44623830d4cc2f06e5e))
+
+
 ## v1.2.3 (2026-04-05)
 
 ### Bug Fixes
