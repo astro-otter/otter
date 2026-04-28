@@ -92,7 +92,31 @@ If you don't know what any of the values should be, reach out to an existing dev
    pre-commit install
 
 
-6. Get the database up and running:
+6. Install the web application by running
+
+   ::
+
+      cd $OTTER_DIR/otter-web
+      python3 -m pip install -e .
+
+7. Run the web application in developer mode. Note that this will connect to the database at the
+   environment variable :code:`ARANGO_URL`. From the otter-web directory
+
+   ::
+
+      python3 start.py
+
+8. Test that the website is running by navigating to http://localhost:8080/otter
+
+9. Assuming everything is working as expected, you are now able to change things as you wish!
+
+Setting up a local copy of the database
+"""""""""""""""""""""""""""""""""""""""
+Hopefully, a developer should never need to setup a local copy of the database and can instead connect
+to the production database when modifying the web applications and API. In the unlikely scenario that
+a developer does need to setup a local copy of the database, they can follow these steps.
+
+1. Get the database up and running:
 
    a. First, make sure docker is running
 
@@ -125,22 +149,11 @@ If you don't know what any of the values should be, reach out to an existing dev
 
 	 python3 import_from_sciserver.py
 
-7. Test that arangodb is running correctly and the data is imported by navigating to http://localhost:8529
+2. Test that arangodb is running correctly and the data is imported by navigating to http://localhost:8529
    in a browser and logging in as user "root" and the password set by $ARANGO_ROOT_PASSWORD
 
-8. Install the web application by running
-
-   ::
-
-      cd $OTTER_DIR/otter-web
-      python3 -m pip install -e .
-
-9. Run the web application in developer mode. From the otter-web directory
+3. Start the web application locally, connected to your local database, with
 
    ::
 
       export ARANGO_URL="http://localhost:8529" && python3 start.py
-
-10. Test that the website is running by navigating to http://localhost:8080/otter
-
-11. Assuming everything is working as expected, you are now able to change things as you wish!
