@@ -1305,11 +1305,11 @@ class Otter(Database):
                         "date_max",
                     ]
                     for k in optional_keys:
-                        if k in p and not np.all(pd.isna(p[k])):
+                        if k in p:
                             # fill the nan values
                             # this is to match with the official json format
                             # and works with arangodb document structure
-                            p[k].fillna("null", inplace=True)
+                            p[k] = p[k].fillna("null")
 
                             json_phot[k] = p[k].tolist()
 
@@ -1345,8 +1345,7 @@ class Otter(Database):
                             # fill the nan values
                             # this is to match with the official json format
                             # and works with arangodb document structure
-                            p[c].fillna("null", inplace=True)
-
+                            p[c] = p[c].fillna("null")
                             json_phot[c] = p[c].tolist()
                             json_phot[bool_v_key] = [v != "null" for v in json_phot[c]]
 
