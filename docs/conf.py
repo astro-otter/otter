@@ -84,8 +84,7 @@ html_theme_options = {
     "use_repository_button": True,
     "use_issues_button": True,
     "use_edit_page_button": True,
-    "announcement": f"⚠️The newest version is astro-otter>={version}, "
-    + "which includes new features and bug fixes.⚠️",
+    "announcement": f"⚠️The newest version is astro-otter={version}⚠️",
 }
 
 html_baseurl = "https://astro-otter.readthedocs.io/en/latest/"
