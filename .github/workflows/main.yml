@@ -26,19 +26,23 @@ jobs:
     name: OS ${{ matrix.os }} with Python ${{ matrix.python-version }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Only needed if using setuptools-scm
+          fetch-depth: 0
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
-      - name: Install dependences
+      - name: Upgrade pip and build tools
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install pytest-cov
+          python -m pip install --upgrade pip setuptools wheel
+
+      - name: Install dependencies
+        run: |
+          python -m pip install pytest-cov numpy pandas
 
       - name: Build otter
         run: pip install --no-cache-dir .[standard]
@@ -52,6 +56,7 @@ jobs:
           ATLAS_UNAME: ${{ secrets.ATLAS_UNAME }}
           ATLAS_PWORD: ${{ secrets.ATLAS_PWORD }}
           ATLAS_API_TOKEN: ${{ secrets.ATLAS_API_TOKEN }}
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
