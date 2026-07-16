@@ -2,6 +2,26 @@
 
 <!-- version list -->
 
+## v1.2.6 (2026-07-16)
+
+### Bug Fixes
+
+- Add restriction to numpy version for older python versions
+  ([`b820853`](https://github.com/astro-otter/otter/commit/b820853e5aac4deba494ae28947e2ec71bcc692d))
+
+- Soften pandas dependency issue
+  ([`ba2e803`](https://github.com/astro-otter/otter/commit/ba2e8037b584b89c3371fa7c272d6e616a939013))
+
+- Some bugs in from_csvs
+  ([`4665d44`](https://github.com/astro-otter/otter/commit/4665d4469a960d560854acd3c987b1f39d0186a1))
+
+- Update documentation and API examples
+  ([`66df49e`](https://github.com/astro-otter/otter/commit/66df49e51de04f937fca223aa3a3a137c005cff4))
+
+- Workflow file for automated testing
+  ([`35a3a66`](https://github.com/astro-otter/otter/commit/35a3a663c54189a83681e12a5f2ae4e9e430917e))
+
+
 ## v1.2.5 (2026-04-28)
 
 ### Bug Fixes
