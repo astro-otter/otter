@@ -10,17 +10,25 @@ from ._version import __version__
 __package__ = "otter"
 
 # lazy load the SFD dust map, if needed
-import os
-import dustmaps
-dustmaps_datapath = os.path.join(
-    os.path.dirname(dustmaps.__file__),
-    "data",
-    "sfd",
-    "SFD_dust_4096_sgp.fits"
-)
-if not os.path.exists(dustmaps_datapath):
-    import dustmaps.sfd
-    dustmaps.sfd.fetch()
+try:
+    import os
+    import dustmaps
+    dustmaps_datapath = os.path.join(
+        os.path.dirname(dustmaps.__file__),
+        "data",
+        "sfd",
+        "SFD_dust_4096_sgp.fits"
+    )
+    if not os.path.exists(dustmaps_datapath):
+        import dustmaps.sfd
+        dustmaps.sfd.fetch()
+except ModuleNotFoundError:
+    logger.warning(
+        "Not loading dustmaps module! This means the photometry may or may not be \
+        MW extinction corrected. We suggest installing dustmaps and/or checking the \
+        photometry"
+    )
+
 
 # import important stuff
 from .io.otter import Otter
