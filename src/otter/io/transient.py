@@ -18,8 +18,6 @@ import pandas as pd
 import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord
-from dust_extinction.parameter_averages import BaseExtRvModel, G23
-from dustmaps.sfd import SFDQuery
 
 from ..exceptions import (
     FailedQueryError,
@@ -983,7 +981,16 @@ class Transient(MutableMapping):
 
         # perform MW dust extinction correction
         if correct_for_mw_dust:
-            outdata = self._correct_for_mw_dust(outdata)
+            try:
+                outdata = self._correct_for_mw_dust(outdata)
+            except ModuleNotFoundError:
+                logger.warning(
+                    "MW Dust correction was requested but can not be"
+                    + "performed because dustmaps is not installed. "
+                    + "The requested photometry MAY OR MAY NOT be extinction "
+                    + "corrected. We suggest checking the photometry or "
+                    + "installing dustmaps."
+                )
 
         # get rid of unsubtracted or unclear subtraction data
         if "corr_host" in outdata and drop_no_host_subtract:
@@ -1044,13 +1051,25 @@ class Transient(MutableMapping):
         Returns:
             The SFD E(B-V) for the MW along this line of sight to the transient.
         """
+        try:
+            from dustmaps.sfd import SFDQuery
+        except ModuleNotFoundError as exc:
+            raise ModuleNotFoundError(
+                "Please install dustmaps to use this method!"
+            ) from exc
+
         skycoord = self.get_skycoord()
         sfd = SFDQuery()
         return sfd(skycoord)
 
     def _correct_for_mw_dust(
-        self, outdata: pd.DataFrame, dust_model: BaseExtRvModel = G23, rv: float = 3.1
+        self, outdata: pd.DataFrame, dust_model=None, rv: float = 3.1
     ) -> pd.DataFrame:
+        if dust_model is None:
+            from dust_extinction.parameter_averages import G23
+
+            dust_model = G23
+
         extmod = dust_model(Rv=rv)
         ebv = self.get_ebv()
         wave_unit = u.Unit(outdata.converted_wave_unit.values[0])
