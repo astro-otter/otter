@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.3.0 (2026-07-31)
+
+### Features
+
+- Lazy import dustmaps to enable it as an optional requirement
+  ([`0a5d19c`](https://github.com/astro-otter/otter/commit/0a5d19c89dadf4e0abeaf1354b4b39b6c8f3bb0e))
+
+
 ## v1.2.6 (2026-07-16)
 
 ### Bug Fixes
