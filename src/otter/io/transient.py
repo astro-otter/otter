@@ -511,6 +511,7 @@ class Transient(MutableMapping):
         drop_no_host_subtract: bool = False,
         drop_unclear_host_subtract: bool = False,
         snr_threshold: float = 3,
+        use_ignore_flag: bool = True,
     ) -> pd.DataFrame:
         """
         Ensure the photometry associated with this transient is all in the same
@@ -568,6 +569,10 @@ class Transient(MutableMapping):
                                    were flagged as limits (because we trust the people
                                    that published the data to make a proper
                                    determination if this is a detection or not).
+            use_ignore_flag (bool): If true (the default) it will ignore photometry
+                                    tagged with "ignore=true" in the database. If false
+                                    it will include photometry tagged as "ignored"
+                                    in the output table.
 
         Returns:
             A pandas DataFrame of the cleaned up photometry in the requested units
@@ -1004,6 +1009,14 @@ class Transient(MutableMapping):
             logger.warning(
                 "Can't drop unclear host subtract because no corr_host column"
             )
+
+        # remove photometry tagged as "ignored"
+        if "ignore" not in outdata:
+            outdata["ignore"] = False
+        outdata["ignore"] = outdata.ignore.fillna(False).astype(bool)
+
+        if use_ignore_flag:
+            outdata = outdata[~outdata.ignore]
 
         # throw a warning if the output dataframe has UV/Optical/IR or Radio data
         # where we don't know if the dataset has been host corrected or not
