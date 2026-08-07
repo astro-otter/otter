@@ -2,6 +2,20 @@
 
 <!-- version list -->
 
+## v1.4.0 (2026-08-07)
+
+### Bug Fixes
+
+- Stop tracking various testing artifacts ([#67](https://github.com/astro-otter/otter/pull/67),
+  [`fa3ba72`](https://github.com/astro-otter/otter/commit/fa3ba729ff0c380e1f49191ce1f47588449da3af))
+
+### Features
+
+- Handle the ignore flag in the photometry parsing
+  ([#67](https://github.com/astro-otter/otter/pull/67),
+  [`fa3ba72`](https://github.com/astro-otter/otter/commit/fa3ba729ff0c380e1f49191ce1f47588449da3af))
+
+
 ## v1.3.0 (2026-07-31)
 
 ### Features
