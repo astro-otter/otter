@@ -1106,16 +1106,18 @@ class Transient(MutableMapping):
                     grp.converted_wave.values * wave_unit, Av=val_av
                 )
                 if is_log_flux_unit:
-                    outdata.loc[grp.index, "converted_flux"] = grp.converted_flux + corr
+                    outdata.loc[grp.index, "converted_flux"] = (
+                        grp.converted_flux - 2.5 * np.log10(corr)
+                    )
                 else:
                     outdata.loc[grp.index, "converted_flux"] = grp.converted_flux * corr
 
         # then we need to de-redden the converted flux column
         corr = extmod.extinguish(waves[where_wav], Ebv=ebv)
         if is_log_flux_unit:
-            outdata.loc[df_idx, "converted_flux"] = (
-                outdata.loc[df_idx, "converted_flux"] - corr
-            )
+            outdata.loc[df_idx, "converted_flux"] = outdata.loc[
+                df_idx, "converted_flux"
+            ] + 2.5 * np.log10(corr)
         else:
             outdata.loc[df_idx, "converted_flux"] = (
                 outdata.loc[df_idx, "converted_flux"] / corr
