@@ -2,6 +2,36 @@
 
 <!-- version list -->
 
+## v1.5.0 (2026-09-06)
+
+### Bug Fixes
+
+- Issue with mw ext correction in magnitude space
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+- Make sure we aren't double MW extinction correctinggit add .
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+- Query_blast host queries to align with their new api output
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+- Stop tracking various testing artifacts ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+- Try to fix issue with dustmaps fetch headers not be properly parsed when sent to dataverse
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+### Features
+
+- Handle the ignore flag in the photometry parsing
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+
 ## v1.4.0 (2026-08-07)
 
 ### Bug Fixes
