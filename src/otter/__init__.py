@@ -11,6 +11,14 @@ __package__ = "otter"
 
 # lazy load the SFD dust map, if needed
 try:
+
+    # this is a hacky fix for some header cleaning in dataverse
+    # see https://github.com/gregreen/dustmaps/issues/72
+    # TODO: This code block should be removed once that issue is figured out
+    import requests.utils
+    requests.utils.default_user_agent = lambda: "Mozilla/5.0"
+
+    # now on with the normal dustmaps downloads :)
     import os
     import dustmaps
     dustmaps_datapath = os.path.join(
