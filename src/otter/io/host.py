@@ -163,10 +163,14 @@ class Host(DataFinder):
             # prefer spec-z over phot-z
             z = blast_host["redshift"]
             z_type = "spec"
-        else:
+        elif "photometric_redshift" in blast_host:
             # well I guess we need to use phot-z
             z = blast_host["photometric_redshift"]
             z_type = "phot"
+        else:
+            # no redshift known
+            z = None
+            z_type = None
 
         refs = [
             "2021ApJ...908..170G",  # GHOST citation
@@ -178,7 +182,7 @@ class Host(DataFinder):
             host_dec=blast_host["dec_deg"],
             host_ra_units="deg",
             host_dec_units="deg",
-            host_name=blast_host["id"],
+            host_name=blast_host["name"],
             host_redshift=z,
             redshift_type=z_type,
             reference=refs,
