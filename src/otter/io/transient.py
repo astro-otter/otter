@@ -1091,39 +1091,113 @@ class Transient(MutableMapping):
             u.Unit(outdata.converted_flux_unit.values[0]), u.LogUnit
         )
 
+        # compute the wavelength range where the dust model is valid
         minwav = 1 / max(dust_model.x_range) * u.um
         maxwav = 1 / min(dust_model.x_range) * u.um
         where_wav = np.where((waves > minwav) * (waves < maxwav))[0]
         df_idx = outdata.iloc[where_wav].index
 
-        # first we need to redden any previously corrected values
-        # to make sure things are done consistently
+        # assign a "subset" variable to only the part of the dataframe where
+        # the dust model is valid
         subset = outdata.loc[df_idx]
-        if "val_av" in subset and "corr_av" in subset:
-            # if it isn't we can assume that corrections are needed
-            for val_av, grp in subset[outdata.corr_av == True].groupby("val_av"):
-                corr = extmod.extinguish(
-                    grp.converted_wave.values * wave_unit, Av=val_av
-                )
-                if is_log_flux_unit:
-                    outdata.loc[grp.index, "converted_flux"] = (
-                        grp.converted_flux - 2.5 * np.log10(corr)
-                    )
-                else:
-                    outdata.loc[grp.index, "converted_flux"] = grp.converted_flux * corr
 
-        # then we need to de-redden the converted flux column
-        corr = extmod.extinguish(waves[where_wav], Ebv=ebv)
-        if is_log_flux_unit:
-            outdata.loc[df_idx, "converted_flux"] = outdata.loc[
-                df_idx, "converted_flux"
-            ] + 2.5 * np.log10(corr)
-        else:
-            outdata.loc[df_idx, "converted_flux"] = (
-                outdata.loc[df_idx, "converted_flux"] / corr
+        # first we need to redden any previously corrected photometry values
+        # to make sure things are done consistently
+        where_corr_prev = outdata.corr_av == True
+        if (
+            "val_av" in subset
+            and "corr_av" in subset
+            and np.all(~pd.isna(subset.val_av))
+        ):
+            # if the val_av column is provided and the data is corrected, we should
+            # redden it before proceeding
+            for val_av, grp in subset[where_corr_prev].groupby("val_av"):
+                outdata = self._redden(
+                    extmod, grp, outdata, wave_unit, is_log_flux_unit, av=val_av
+                )
+
+        elif "corr_av" in subset:
+            # if the Av value is not provided but the data *is already extinction
+            # corrected* then we can assume the ebv that we will later apply
+            outdata = self._redden(
+                extmod,
+                subset[where_corr_prev],
+                outdata,
+                wave_unit,
+                is_log_flux_unit,
+                ebv=ebv,
             )
 
-        outdata.loc[df_idx, "corr_av"] = True
+        # recompute the subset variable in case we have made changes to the outdata
+        # dataframe flux column in the if/elif block above
+        subset = outdata.loc[df_idx]
+
+        # then we need to de-redden all of the data (in the correct wavelength range,
+        # which is why we pass in the "subset" dataframe here)
+        outdata = self._deredden(
+            extmod, subset, outdata, wave_unit, is_log_flux_unit, ebv=ebv
+        )
+
+        return outdata
+
+    @classmethod
+    def _compute_mw_dust_corr(cls, extmod, inwav, ebv=None, av=None):
+        if ebv:
+            return extmod.extinguish(inwav, Ebv=ebv)
+        elif av:
+            return extmod.extinguish(inwav, Av=av)
+        else:
+            raise ValueError("Must pass either ebv or av value!")
+
+    @classmethod
+    def _redden(
+        cls,
+        extmod,
+        indf: u.Quantity,
+        outdata: pd.DataFrame,
+        wave_unit: u.Unit,
+        is_log_flux_unit: bool,
+        **kwargs,
+    ):
+        corr = cls._compute_mw_dust_corr(
+            extmod,
+            indf.converted_wave.values * wave_unit,
+            **kwargs,  # this should be either ebv or av
+        )
+        if is_log_flux_unit:
+            outdata.loc[indf.index, "converted_flux"] = (
+                indf.converted_flux - 2.5 * np.log10(corr)
+            )
+        else:
+            outdata.loc[indf.index, "converted_flux"] = indf.converted_flux * corr
+
+        outdata.loc[indf.index, "corr_av"] = False
+
+        return outdata
+
+    @classmethod
+    def _deredden(
+        cls,
+        extmod,
+        indf: pd.DataFrame,
+        outdata: pd.DataFrame,
+        wave_unit: u.Unit,
+        is_log_flux_unit: bool,
+        **kwargs,
+    ):
+        corr = cls._compute_mw_dust_corr(
+            extmod,
+            indf.converted_wave.values * wave_unit,
+            **kwargs,  # this should be either ebv or av
+        )
+        if is_log_flux_unit:
+            outdata.loc[indf.index, "converted_flux"] = (
+                indf.converted_flux + 2.5 * np.log10(corr)
+            )
+        else:
+            outdata.loc[indf.index, "converted_flux"] = indf.converted_flux / corr
+
+        outdata.loc[indf.index, "corr_av"] = True
 
         return outdata
 
