@@ -1103,7 +1103,6 @@ class Transient(MutableMapping):
 
         # first we need to redden any previously corrected photometry values
         # to make sure things are done consistently
-        where_corr_prev = outdata.corr_av == True
         if (
             "val_av" in subset
             and "corr_av" in subset
@@ -1111,7 +1110,7 @@ class Transient(MutableMapping):
         ):
             # if the val_av column is provided and the data is corrected, we should
             # redden it before proceeding
-            for val_av, grp in subset[where_corr_prev].groupby("val_av"):
+            for val_av, grp in subset[subset.corr_av == True].groupby("val_av"):
                 outdata = self._redden(
                     extmod, grp, outdata, wave_unit, is_log_flux_unit, av=val_av
                 )
@@ -1121,7 +1120,7 @@ class Transient(MutableMapping):
             # corrected* then we can assume the ebv that we will later apply
             outdata = self._redden(
                 extmod,
-                subset[where_corr_prev],
+                subset[subset.corr_av == True],
                 outdata,
                 wave_unit,
                 is_log_flux_unit,
