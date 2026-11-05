@@ -5,7 +5,6 @@ are more complex and require additional tests.
 """
 
 import pytest
-from urllib.error import HTTPError
 import numpy as np
 from otter import Transient, Host
 from otter.exceptions import OtterLimitationError
@@ -268,10 +267,9 @@ def test_get_redshift():
     assert float(z) == 0.354, "get_redshift did not return the correct value!"
 
 
-@pytest.mark.skip_on_timeout(10)
-def test_get_host():
+def test_get_host(fake_blast):
     """
-    Test the get host method
+    Test the get host method (the BLAST search is mocked)
 
     This is pretty bare bones because the rest of the output is tested with test_host
     """
@@ -283,14 +281,11 @@ def test_get_host():
     assert isinstance(host[0], Host)
 
     # also check that the search feature works
-    try:
-        host2 = t.get_host(search=True)
-        assert isinstance(host2, list)
-        assert isinstance(host2[0], Host)
-    except HTTPError:
-        # this means that the UIUC host search service is down
-        # and OTTER unit tests shouldn't be punished for that :)
-        pass
+    host2 = t.get_host(search=True)
+    assert isinstance(host2, list)
+    assert isinstance(host2[0], Host)
+    assert len(host2) == len(host) + 1, "BLAST host should be appended"
+    assert host2[-1].name == "FAKE-HOST-1"
 
 
 def test_clean_photometry():

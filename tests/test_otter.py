@@ -234,10 +234,10 @@ def test_query():
     assert len(res) == 2
 
 
-def test_from_csvs():
+def test_from_csvs(fake_ads):
     """
     This tests the "from_csvs" method which allows for interaction with locally
-    stored datasets
+    stored datasets (the ADS reference lookup is mocked)
     """
 
     metapath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "meta-test.csv")

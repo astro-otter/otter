@@ -2,10 +2,10 @@
 Test the otter Host class
 """
 
-import pytest
 from otter import Host
 from astropy.coordinates import SkyCoord
-from urllib.error import URLError
+from astropy.table import Table
+from astroquery.utils import TableList
 
 
 def test_constructor():
@@ -36,10 +36,17 @@ def test_constructor():
     assert h.transient_name == "ASASSN-14li"
 
 
-def test_pcc():
+def test_pcc(fake_astroquery):
     """
-    Test the PCC score testing
+    Test the PCC score testing (the VizieR SDSS magnitude lookup is mocked)
     """
+    fake_astroquery.result = TableList(
+        {
+            "II/294/sdss7": Table({"rmag": [20.0]}),
+            "V/147/sdss12": Table({"rmag": [16.6]}),  # should use the latest SDSS
+        }
+    )
+
     host_ra = 192.06249999999997
     host_dec = 17.77401111111111
     host_name = "SDSS J124815.23+174626.4"
@@ -64,15 +71,14 @@ def test_pcc():
     assert pcc2 > 0.9, "pcc seems too small for this input coordinate"
 
 
-@pytest.mark.skip_on_timeout(10)
-def test_query_blast():
+def test_query_blast(fake_blast):
     """
-    Test the query of BLAST
+    Test the query of BLAST (the BLAST API is mocked)
     """
 
-    try:
-        host = Host.query_blast(tns_name="AT2024advm")
-    except URLError:
-        return  # this isn't our fault, probably
+    host = Host.query_blast(tns_name="AT2024advm")
 
+    assert "name=2024advm" in fake_blast[0]
     assert host.transient_name == "2024advm", "name incorrect!"
+    assert host.name == "FAKE-HOST-1"
+    assert host.z == 0.05, "should prefer the spectroscopic redshift"
