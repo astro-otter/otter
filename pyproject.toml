@@ -33,10 +33,7 @@ dependencies = [
   "synphot",
   "typing-extensions",
   "pyarango",
-  "dustmaps",
-  "dust_extinction",
   "pydantic>=2",
-  "healpy>=1.18.0",  # healpy 1.18+ supports numpy 2.x
   "scipy>=1.14.0",  # scipy 1.14+ is compatible with numpy 2.x
 
   # only for windows OS b/c it doesn't ship with readline by default
@@ -48,13 +45,13 @@ Home = "https://github.com/astro-otter"
 
 [project.optional-dependencies]
 # other standard dependencies, that are technically optional
-standard = [
-  "tabulate",
-
+plotting = [
   # for the plotting
   "matplotlib",
   "plotly",
+]
 
+datafinder = [
   # for the DataFinder query tool
   "astroquery",
   "ads",
@@ -63,6 +60,18 @@ standard = [
   "astro-datalab",
   "sparclclient",
   "wiserep_api",
+]
+
+dust = [
+  # for dust extinction correction
+  "dustmaps",
+  "dust_extinction",
+  "healpy>=1.18.0",  # healpy 1.18+ supports numpy 2.x
+]
+
+standard = [
+  "tabulate",
+  "astro-otter[plotting,datafinder,dust]"
 ]
 
 # tools for building the readthedocs page

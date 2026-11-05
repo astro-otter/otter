@@ -2,6 +2,78 @@
 
 <!-- version list -->
 
+## v1.5.0 (2026-09-06)
+
+### Bug Fixes
+
+- Issue with mw ext correction in magnitude space
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+- Make sure we aren't double MW extinction correctinggit add .
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+- Query_blast host queries to align with their new api output
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+- Stop tracking various testing artifacts ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+- Try to fix issue with dustmaps fetch headers not be properly parsed when sent to dataverse
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+### Features
+
+- Handle the ignore flag in the photometry parsing
+  ([#68](https://github.com/astro-otter/otter/pull/68),
+  [`ae81f54`](https://github.com/astro-otter/otter/commit/ae81f542b3e82dc7a3ef5e059810671ca6106d5e))
+
+
+## v1.4.0 (2026-08-07)
+
+### Bug Fixes
+
+- Stop tracking various testing artifacts ([#67](https://github.com/astro-otter/otter/pull/67),
+  [`fa3ba72`](https://github.com/astro-otter/otter/commit/fa3ba729ff0c380e1f49191ce1f47588449da3af))
+
+### Features
+
+- Handle the ignore flag in the photometry parsing
+  ([#67](https://github.com/astro-otter/otter/pull/67),
+  [`fa3ba72`](https://github.com/astro-otter/otter/commit/fa3ba729ff0c380e1f49191ce1f47588449da3af))
+
+
+## v1.3.0 (2026-07-31)
+
+### Features
+
+- Lazy import dustmaps to enable it as an optional requirement
+  ([`0a5d19c`](https://github.com/astro-otter/otter/commit/0a5d19c89dadf4e0abeaf1354b4b39b6c8f3bb0e))
+
+
+## v1.2.6 (2026-07-16)
+
+### Bug Fixes
+
+- Add restriction to numpy version for older python versions
+  ([`b820853`](https://github.com/astro-otter/otter/commit/b820853e5aac4deba494ae28947e2ec71bcc692d))
+
+- Soften pandas dependency issue
+  ([`ba2e803`](https://github.com/astro-otter/otter/commit/ba2e8037b584b89c3371fa7c272d6e616a939013))
+
+- Some bugs in from_csvs
+  ([`4665d44`](https://github.com/astro-otter/otter/commit/4665d4469a960d560854acd3c987b1f39d0186a1))
+
+- Update documentation and API examples
+  ([`66df49e`](https://github.com/astro-otter/otter/commit/66df49e51de04f937fca223aa3a3a137c005cff4))
+
+- Workflow file for automated testing
+  ([`35a3a66`](https://github.com/astro-otter/otter/commit/35a3a663c54189a83681e12a5f2ae4e9e430917e))
+
+
 ## v1.2.5 (2026-04-28)
 
 ### Bug Fixes

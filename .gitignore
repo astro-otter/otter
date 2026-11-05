@@ -166,3 +166,5 @@ scripts/tns*.csv*
 # not the testing stuff
 ipac
 otter-test
+reference_map_local.json
+tests/from-csvs-out*
