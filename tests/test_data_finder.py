@@ -93,48 +93,121 @@ def test_iter():
     assert len(list({k for k, _ in df2} - keys2)) == 0
 
 
-def test_query_simbad():
+def test_query_simbad(fake_astroquery):
     """
-    Test the query_simbad method
+    Test the query_simbad method (SIMBAD is mocked)
     """
+    from astroquery.simbad import Simbad
+
+    fake_astroquery.result = Table({"main_id": ["ASASSN-14li"]})
     df1 = construct_data_finder()
     res = df1.query_simbad()
 
     assert len(res) == 1
+    module, args, kwargs = fake_astroquery.calls[0]
+    assert module is Simbad
+    assert args[0] == df1.coord
+    assert kwargs["radius"] == "5 arcsec"
 
 
-def test_query_vizier():
+def test_query_vizier(fake_astroquery):
     """
-    Test the query_vizier method
+    Test the query_vizier method (VizieR is mocked)
     """
+    from astroquery.vizier import Vizier
+    from otter.io.data_finder import VIZIER_LARGE_CATALOGS
+
+    fake_astroquery.result = TableList({"II/294/sdss7": Table({"rmag": [17.0]})})
     df1 = construct_data_finder()
     res = df1.query_vizier()
 
     assert isinstance(res, TableList)
-    assert len(res) >= 20, "missing some data"
     assert "II/294/sdss7" in res.keys()
+    module, _, kwargs = fake_astroquery.calls[0]
+    assert module is Vizier
+    assert kwargs["catalog"] == VIZIER_LARGE_CATALOGS
 
 
-@pytest.mark.skip_on_timeout(10)
-def test_query_atlas():
+class _FakeATLASResponse:
+    def __init__(self, status_code, json_data=None, text=""):
+        self.status_code = status_code
+        self._json = json_data
+        self.text = text
+
+    def json(self):
+        return self._json
+
+
+class _FakeATLASSession:
+    """Scripted ATLAS forced photometry server: queue -> finished task -> result"""
+
+    task_url = "https://fallingstar-data.com/forcedphot/queue/1/"
+    result_url = "https://fallingstar-data.com/forcedphot/static/results/1.txt"
+    result_text = "\n".join(
+        [
+            "###MJD m dm uJy duJy F err chi/N RA Dec x y maj min phi apfit "
+            "mag5sig Sky Obs"
+        ]
+        + [
+            f"{60000 + i:.5f} 18.0 0.05 230.0 15.0 {f} 0 1.2 192.06 17.77 "
+            "5000 5000 2.0 2.0 0 -0.4 19.5 20.0 01a"
+            for i in range(4)
+            for f in "co"
+        ]
+    )
+
+    def __init__(self):
+        self.posts = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        return False
+
+    def post(self, url, headers=None, data=None):
+        self.posts.append((url, headers, data))
+        return _FakeATLASResponse(201, {"url": self.task_url})
+
+    def get(self, url, headers=None):
+        if url == self.task_url:
+            return _FakeATLASResponse(
+                200,
+                {"finishtimestamp": "now", "result_url": self.result_url},
+            )
+        assert url == self.result_url
+        return _FakeATLASResponse(200, text=self.result_text)
+
+
+def test_query_atlas(monkeypatch):
     """
-    Test the query_atlas method
-
-    This one will inherently take a while!!! But it's because of atlas not us...
+    Test the query_atlas method (the ATLAS forced photometry server is mocked)
     """
+    session = _FakeATLASSession()
+    monkeypatch.setenv("ATLAS_API_TOKEN", "fake-token")
+    monkeypatch.setattr("otter.io.data_finder.requests.Session", lambda: session)
+
     df1 = construct_data_finder()
     res = df1.query_atlas(days_ago=7)
 
     assert "mjd" in res.columns
     assert "uJy" in res.columns
     assert "duJy" in res.columns
-    assert len(res) >= 0, "missing some data!"
+    assert len(res) > 0
+    assert session.posts[0][1]["Authorization"] == "Token fake-token"
+    assert session.posts[0][2]["ra"] == 192.06347
+    assert session.posts[0][2]["dec"] == 17.77402
 
 
-def test_query_ptf():
+def test_query_ptf(fake_astroquery):
     """
-    Test the method that queries palomer transient facility
+    Test the method that queries palomer transient facility (IRSA is mocked)
     """
+    from astroquery.ipac.irsa import Irsa
+
+    fake_astroquery.result = Table(
+        {"obsmjd": [55000.0], "mag_autocorr": [18.0], "meanmag": [18.1]}
+    )
     df1 = construct_data_finder()
     res = df1.query_ptf()
 
@@ -142,14 +215,32 @@ def test_query_ptf():
     assert "obsmjd" in res.columns
     assert "mag_autocorr" in res.columns
     assert "meanmag" in res.columns
-    assert len(res) >= 32, "Missing some PTF data!"
+    module, _, kwargs = fake_astroquery.calls[0]
+    assert module is Irsa
+    assert kwargs["catalog"] == "ptf_lightcurves"
 
 
-@pytest.mark.skip_on_timeout(10)
-def test_query_ztf():
+def test_query_ztf(monkeypatch):
     """
-    Test the method that queries the zwicky transient facility
+    Test the method that queries the zwicky transient facility (IRSA is mocked)
     """
+    import io
+    from astropy.io.votable import from_table
+    from conftest import FakeHTTPResponse
+
+    buf = io.BytesIO()
+    from_table(
+        Table({"mjd": [58000.0, 58001.0], "mag": [18.0, 18.1], "ra": [192.06, 192.06]})
+    ).to_xml(buf)
+
+    urls = []
+
+    def fake_urlopen(url):
+        urls.append(url)
+        return FakeHTTPResponse(buf.getvalue())
+
+    monkeypatch.setattr("otter.io.data_finder.urlopen", fake_urlopen)
+
     df1 = construct_data_finder()
     res = df1.query_ztf()
 
@@ -157,21 +248,41 @@ def test_query_ztf():
     assert "mjd" in res.columns
     assert "mag" in res.columns
     assert "ra" in res.columns
-    assert len(res) >= 1296, "Missing some ZTF data!"
+    assert len(res) == 2
+    assert "POS=CIRCLE%20192.06347%2017.77402" in urls[0]
 
 
-@pytest.mark.skip_on_timeout(10)
-def test_query_asassn():
+def test_query_asassn(monkeypatch):
     """
-    Test the method that queries the ASASSN survey
+    Test the method that queries the ASASSN survey (SkyPatrol is mocked)
     """
+    calls = []
+
+    class FakeSkyPatrolClient:
+        def cone_search(self, ra, dec, **kwargs):
+            calls.append((ra, dec, kwargs))
+
+            class LightCurve:
+                data = pd.DataFrame(
+                    {
+                        "asas_sn_id": [1, 1],
+                        "jd": [2458000.5, 2458001.5],
+                        "flux": [1.0, 2.0],
+                    }
+                )
+
+            return LightCurve()
+
+    monkeypatch.setattr("pyasassn.client.SkyPatrolClient", FakeSkyPatrolClient)
+
     df1 = construct_data_finder()
     res = df1.query_asassn()
     assert isinstance(res, pd.DataFrame)
     assert "asas_sn_id" in res.columns
     assert "jd" in res.columns
     assert "flux" in res.columns
-    assert len(res) >= 1158, "Missing some ZTF data!"
+    assert calls[0][:2] == (192.06347, 17.77402)
+    assert calls[0][2]["radius"] == 5.0
 
 
 def test_query_wise():
@@ -204,31 +315,33 @@ def test_query_alma():
     assert "access_url" in res.columns
 
 
-def test_query_first():
+def test_query_first(fake_astroquery):
     """
-    Test queryiung the FIRST radio survey
+    Test queryiung the FIRST radio survey (VizieR is mocked)
     """
+    fake_astroquery.result = TableList({"J/ApJ/737/45/table2": Table({"Fp": [1.0]})})
     df1 = construct_data_finder()
     res = df1.query_first()
 
     assert isinstance(res, TableList)
-    assert len(res) >= 1
     assert "J/ApJ/737/45/table2" in res.keys()
+    assert fake_astroquery.calls[0][2]["catalog"] == "J/ApJ/737/45/table2"
 
     # res, res_img = df1.query_first(get_image=True)
     # assert isinstance(res_img,
 
 
-def test_query_nvss():
+def test_query_nvss(fake_astroquery):
     """
-    Test querying the NVSS radio survey
+    Test querying the NVSS radio survey (VizieR is mocked)
     """
+    fake_astroquery.result = TableList({"J/ApJ/737/45/table1": Table({"S1.4": [1.0]})})
     df1 = construct_data_finder()
     res = df1.query_nvss()
 
     assert isinstance(res, TableList)
-    assert len(res) >= 1
     assert "J/ApJ/737/45/table1" in res.keys()
+    assert fake_astroquery.calls[0][2]["catalog"] == "J/ApJ/737/45/table1"
 
 
 @pytest.mark.skip(
