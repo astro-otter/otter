@@ -2,6 +2,42 @@
 
 <!-- version list -->
 
+## v1.5.1 (2026-11-05)
+
+### Bug Fixes
+
+- Add restriction to numpy version for older python versions
+  ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+- Improved logging when merging with local datasets
+  ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+- Make the ads bibcode search more robust to e.g., arxiv identifiers
+  ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+- Protect from a missing corr_av column ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+- Send the declination, not the RA, to the ATLAS forced photometry API
+  ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+- Soften pandas dependency issue ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+- Some bugs in from_csvs ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+- Update documentation and API examples ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+- Workflow file for automated testing ([#70](https://github.com/astro-otter/otter/pull/70),
+  [`ff3c875`](https://github.com/astro-otter/otter/commit/ff3c875700d0b292918cf3af076e7c07c65d1410))
+
+
 ## v1.5.0 (2026-09-06)
 
 ### Bug Fixes
