@@ -7,6 +7,7 @@ from __future__ import annotations
 import warnings
 from copy import deepcopy
 import re
+import functools
 from collections.abc import MutableMapping
 from typing import Callable
 from typing_extensions import Self
@@ -29,6 +30,17 @@ from ..util import XRAY_AREAS, _KNOWN_CLASS_ROOTS, _DuplicateFilter
 
 np.seterr(divide="ignore")
 logger = logging.getLogger(__name__)
+
+
+@functools.lru_cache(maxsize=1)
+def _vega_spectrum():
+    """
+    Load the Vega spectrum once per process; re-reading it for every data point in
+    clean_photometry is very slow.
+    """
+    from synphot.spectrum import SourceSpectrum
+
+    return SourceSpectrum.from_vega()
 
 
 class Transient(MutableMapping):
@@ -586,7 +598,6 @@ class Transient(MutableMapping):
         # these imports need to be here for some reason
         # otherwise the code breaks
         from synphot.units import VEGAMAG, convert_flux
-        from synphot.spectrum import SourceSpectrum
 
         # variable so this warning only displays a single time each time this
         # function is called
@@ -881,7 +892,7 @@ class Transient(MutableMapping):
                             wave,
                             xray_point,
                             u.Unit(flux_unit),
-                            vegaspec=SourceSpectrum.from_vega(),
+                            vegaspec=_vega_spectrum(),
                             area=area,
                         ).value
 
