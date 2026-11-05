@@ -259,7 +259,7 @@ class DataFinder(object):
                     headers=headers,
                     data={
                         "ra": self.coord.ra.value,
-                        "dec": self.coord.ra.value,
+                        "dec": self.coord.dec.value,
                         "send_email": False,
                         "mjd_min": t_querystart,
                         "mjd_max": t_queryend,

@@ -195,6 +195,8 @@ def test_query_atlas(monkeypatch):
     assert "duJy" in res.columns
     assert len(res) > 0
     assert session.posts[0][1]["Authorization"] == "Token fake-token"
+    assert session.posts[0][2]["ra"] == 192.06347
+    assert session.posts[0][2]["dec"] == 17.77402
 
 
 def test_query_ptf(fake_astroquery):
