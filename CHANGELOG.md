@@ -2,6 +2,45 @@
 
 <!-- version list -->
 
+## v1.5.2 (2026-11-15)
+
+### Bug Fixes
+
+- Add restriction to numpy version for older python versions
+  ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Improved logging when merging with local datasets
+  ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Make the ads bibcode search more robust to e.g., arxiv identifiers
+  ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Protect from a missing corr_av column ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Send the declination, not the RA, to the ATLAS forced photometry API
+  ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Skip dustmaps when OSError ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Soften pandas dependency issue ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Some bugs in from_csvs ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Update documentation and API examples ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+- Workflow file for automated testing ([#71](https://github.com/astro-otter/otter/pull/71),
+  [`0fa3246`](https://github.com/astro-otter/otter/commit/0fa32469ba0711a441605334794c10c0485d59c8))
+
+
 ## v1.5.1 (2026-11-05)
 
 ### Bug Fixes

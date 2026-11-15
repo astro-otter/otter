@@ -2,4 +2,4 @@
 Just define the package version in one place
 """
 
-__version__ = "1.5.1"
+__version__ = "1.5.2"
