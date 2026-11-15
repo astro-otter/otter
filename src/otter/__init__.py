@@ -30,7 +30,7 @@ try:
     if not os.path.exists(dustmaps_datapath):
         import dustmaps.sfd
         dustmaps.sfd.fetch()
-except ModuleNotFoundError:
+except (OSError, ModuleNotFoundError):
     logger.warning(
         "Not loading dustmaps module! This means the photometry may or may not be \
         MW extinction corrected. We suggest installing dustmaps and/or checking the \
